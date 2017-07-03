@@ -17,7 +17,7 @@ export default class drm_app extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          i am joephon!aha!!
+          i am joephon!aha!!2282222
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
