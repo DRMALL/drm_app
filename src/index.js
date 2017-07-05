@@ -1,4 +1,5 @@
 import store from './utils/store'
+import Launching from './components/Launching'
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -9,13 +10,14 @@ import {
 
 export default class App extends Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Hi I am React Native!!!!222
-        </Text>
-      </View>
-    );
+    return <Launching />
+    // return (
+    //   <View style={styles.container}>
+    //     <Text style={styles.welcome}>
+    //       Hi I aooxx222221
+    //     </Text>
+    //   </View>
+    // )
   }
 }
 
