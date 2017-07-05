@@ -10,7 +10,11 @@ import {
 
 export default class App extends Component {
   render() {
-    return <Launching />
+    return (
+      <View>
+        <Launching />
+      </View>
+    )
     // return (
     //   <View style={styles.container}>
     //     <Text style={styles.welcome}>
