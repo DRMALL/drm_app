@@ -1,3 +1,4 @@
+import store from './utils/store'
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -6,12 +7,12 @@ import {
   View
 } from 'react-native';
 
-export default class drm_app extends Component {
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Hi I am React Native
+          Hi I am React Native!!!!222
         </Text>
       </View>
     );
@@ -37,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('drm_app', () => drm_app);
+AppRegistry.registerComponent('drm_app', () => App);
