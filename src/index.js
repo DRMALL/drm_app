@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -17,14 +11,7 @@ export default class drm_app extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          i am joephon!aha!!2282222
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
+          Hi I am React Native
         </Text>
       </View>
     );
