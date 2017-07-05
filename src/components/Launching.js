@@ -1,9 +1,7 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { drmOne, drmTwo, drmThree } from '../common/strings'
-import {
-  launch
-} from '../styles'
+import { launch } from '../styles'
 
 const loadingScreenLogo = require('../images/loading_screen_logo.png')
 
