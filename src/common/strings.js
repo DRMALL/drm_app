@@ -1,3 +1,8 @@
 export const drmOne = '多元热流体设备'
 export const drmTwo = '信息及用户管理系统'
 export const drmThree = 'MMHFD'
+export const homeLabel = '首页'
+export const deviceLabel = '设备档案'
+export const statusLabel = '状态监控'
+export const diagnoseLabel = '故障诊断'
+export const seekLabel = '配件检索'
