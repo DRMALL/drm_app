@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 
-const deviceIconSelected = require('../images/tabbar_icons/tabbar_home_selected.png')
-    , homeIconNormal = require('../images/tabbar_icons/tabbar_home_normal.png')
+const deviceIconSelected = require('../images/tabbar_icons/tabbar_archives_selected.png')
+    , deviceIconNormal = require('../images/tabbar_icons/tabbar_archives_normal.png')
 
 export default class Device extends Component {
   static navigationOptions = {
