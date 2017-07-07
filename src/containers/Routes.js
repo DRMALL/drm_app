@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import { TabNavigator } from 'react-navigation'
+import { View, Text, Image } from 'react-native'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import Home from './Home'
 import Device from './Device'
 import Status from './Status'
@@ -10,7 +10,10 @@ import { primaryColor, subTitleColor } from '../common/constants'
 import { homeLabel, diagnoseLabel, deviceLabel, seekLabel, statusLabel } from '../common/strings'
 import { home } from '../styles'
 
-export default TabNavigator(
+const userIcon = require('../images/navigation_icons/user.png')
+const infoIcon = require('../images/navigation_icons/info.png')
+
+const Main = TabNavigator(
   {
     [homeLabel]: { screen: Home },
     [deviceLabel]: { screen: Device },
@@ -39,3 +42,28 @@ export default TabNavigator(
     }
   }
 )
+
+export default StackNavigator({
+  main: { 
+    screen: Main, 
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: primaryColor,
+      },
+      headerTintColor: '#fff',
+      title: (
+        navigation.state.index == 0 
+        ? '设备管理系统'
+        : navigation.state.index == 1
+          ? '设备档案'
+          : navigation.state.index == 2
+            ? '设备监控'
+            : ''
+      ),
+      headerLeft: <Image onPress={() => 'ox'} style={{marginLeft: 24}} source={userIcon}/>,
+      headerRight: <Image onPress={() => 'ox'} style={{marginRight: 24}} source={infoIcon}/>
+    }),
+  },
+})
+
+
