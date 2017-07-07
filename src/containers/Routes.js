@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation'
+import HeaderTitle from '../components/HeaderTitle'
 import Home from './Home'
 import Device from './Device'
 import Status from './Status'
@@ -50,16 +51,7 @@ export default StackNavigator({
       headerStyle: {
         backgroundColor: primaryColor,
       },
-      headerTintColor: '#fff',
-      title: (
-        navigation.state.index == 0 
-        ? '设备管理系统'
-        : navigation.state.index == 1
-          ? '设备档案'
-          : navigation.state.index == 2
-            ? '设备监控'
-            : ''
-      ),
+      headerTitle: <HeaderTitle navigation={navigation}/>,
       headerLeft: <Image onPress={() => 'ox'} style={{marginLeft: 24}} source={userIcon}/>,
       headerRight: <Image onPress={() => 'ox'} style={{marginRight: 24}} source={infoIcon}/>
     }),

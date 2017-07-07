@@ -5,14 +5,15 @@ const deviceIconSelected = require('../images/tabbar_icons/tabbar_archives_selec
     , deviceIconNormal = require('../images/tabbar_icons/tabbar_archives_normal.png')
 
 export default class Device extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     tabBarIcon: ({ tintColor }) => (
       <Image
+        // onPress={console.log(navigation.state.key)}
         source={deviceIconSelected}
         style={{tintColor: tintColor}}
       />
     ),
-  }
+  })
   render() {
     return(
       <View>

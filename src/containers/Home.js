@@ -5,9 +5,10 @@ const homeIconSelected = require('../images/tabbar_icons/tabbar_home_selected.pn
     , homeIconNormal = require('../images/tabbar_icons/tabbar_home_normal.png')
 
 export default class Home extends Component {
-  static navigationOptions = ({ navigation, screenProps}) => ({
+  static navigationOptions = (props) => ({
     tabBarIcon: ({ tintColor }) => (
       <Image
+        onPress={console.log(props)}
         source={homeIconSelected}
         style={{tintColor: tintColor}}
       />
