@@ -9,9 +9,26 @@ import Launching from './components/Launching'
 import Routes from './containers/Routes'
 
 export default class App extends Component {
+  constructor() {
+    super()
+    this.state = store.getState()
+  }
+
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState())
+      console.log('active', store.getState().home)
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
   render() {
+    // console.log(this.state)
     // return <Launching />
-    return <Routes />
+    return <Routes screenProps={this.state}/>
   }
 }
 
