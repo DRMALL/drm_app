@@ -4,6 +4,7 @@ import { View, Text, Image } from 'react-native'
 export default props => {
   return(
     <View>
+    hi
     </View>
   )
 }
