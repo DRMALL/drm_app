@@ -26,7 +26,6 @@ export default class App extends Component {
   }
 
   render() {
-    // console.log(this.state)
     // return <Launching />
     return <Routes screenProps={this.state}/>
   }

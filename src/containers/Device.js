@@ -8,7 +8,6 @@ export default class Device extends Component {
   static navigationOptions = ({ navigation }) => ({
     tabBarIcon: ({ tintColor }) => (
       <Image
-        // onPress={console.log(navigation.state.key)}
         source={deviceIconSelected}
         style={{tintColor: tintColor}}
       />
