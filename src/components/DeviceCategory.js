@@ -4,7 +4,7 @@ import { View, Text, Image } from 'react-native'
 export default props => {
   return(
     <View>
-    hi
+      <Text>Hi I Am Device!</Text>
     </View>
   )
 }
