@@ -7,6 +7,8 @@ import {
 import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
+import Login from './components/Login'
+import Information from './components/Information'
 
 export default class App extends Component {
   constructor() {
@@ -28,6 +30,8 @@ export default class App extends Component {
   render() {
     // return <Launching />
     return <Routes screenProps={this.state}/>
+    // return <Login />
+    // return <Information />
   }
 }
 

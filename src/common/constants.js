@@ -17,6 +17,8 @@ export const subTitleColor = 'rgba(0,0,0,.3)'
 export const contentColor = 'rgba(0,0,0,.6)'
 export const offlineColor = '#ff6260'
 export const onlineColor = '#3bde86'
+export const loginBackgroundColor = '#F7F7F7'
+export const loginBorderColor = '#7B7B7B'
 
 // dimension
 export const boxPadding = 32
