@@ -25,7 +25,7 @@ const Search = props => {
   return(
     <View 
       onPress={() => props.navigate('Home')}
-      style={{width:'100%', height:'70%',marginTop:5,borderRadius:3,backgroundColor: '#fff'}}>
+      style={{width:'96%', height:'70%', marginTop:5, marginLeft: '2%', borderRadius:3, backgroundColor: '#fff'}}>
 
     </View>
   )

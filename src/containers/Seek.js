@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 
-const seekIconSelected = require('../images/tabbar_icons/tabbar_search_selected.png')
+const seekIconSelected = require('../images/tabbar_icons/tabbar_search_selected_x.png')
     , seekIconNormal = require('../images/tabbar_icons/tabbar_search_normal.png')
 
 export default class Seek extends Component {
