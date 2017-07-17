@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
+import StatusCategory from '../components/StatusCategory'
+import StatusTab from '../components/units/StatusTab'
+import { statusList } from '../utils/virtualData'
 
-const statusIconSelected = require('../images/tabbar_icons/tabbar_monitor_selected.png')
+const statusIconSelected = require('../images/tabbar_icons/tabbar_monitor_selected_x.png')
     , statusIconNormal = require('../images/tabbar_icons/tabbar_monitor_normal.png')
 
 export default class Status extends Component {
@@ -16,7 +19,8 @@ export default class Status extends Component {
   render() {
     return(
       <View>
-        <Text>Hi I Am Status</Text>
+        <StatusTab />
+        <StatusCategory data={statusList} />
       </View>
     )
   }

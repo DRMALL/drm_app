@@ -1,29 +1,25 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import { mainColor, primaryColor, loginBackgroundColor } from '../common/constants'
+import { primaryColor, loginBackgroundColor } from '../common/constants'
 import { basicDocument, userName, companyName, phoneNumber, postalAddress, securitySetting, resetPassword, personalInformation } from '../common/strings'
 import { information } from '../styles'
 import TouchIntoText from './units/TouchIntoText'
 
-import UserName from './information/UserName'
-import CompanyName from './information/CompanyName'
-import Phone from './information/Phone'
-import Address from './information/Address'
-import ResetPassword from './information/ResetPassword'
-
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../images/navigation_icons/empty.png')
 
-class Information extends Component {
-  static navigationOptions = {
+export default class Information extends Component {
+  static navigationOptions = ({ navigation })=> ({
     headerStyle: {
       backgroundColor: primaryColor,
     },
-    headerTitle: <Text style={{ fontSize: 20, color: mainColor, alignSelf: 'center' }} >{personalInformation}</Text>,
-    headerLeft: <Image onPress={() => 'ox'} style={{marginLeft: 20}} source={gobackWhiteIcon}/>,
-    headerRight: <Image onPress={() => 'no'} style={{marginLeft: 20}} source={emptyIcon}/>,rRight: <Image onPress={() => 'no'} style={{marginLeft: 20}} source={emptyIcon}/>,
-  }
+    headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{personalInformation}</Text>,
+    headerLeft: <TouchableOpacity style={{paddingLeft: 20}} onPress={() => navigation.goBack()}>
+      <Image source={gobackWhiteIcon}/>
+    </TouchableOpacity>,
+    headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,rRight: <Image onPress={() => 'no'} style={{marginLeft: 20}} source={emptyIcon}/>,
+  })
   render() {
     return (
       <View style={information.wrap}>
@@ -38,24 +34,3 @@ class Information extends Component {
     )
   }
 }
-
-export default StackNavigator({
-  information: {
-    screen: Information,
-  },
-  username: {
-    screen: UserName,
-  },
-  companyname: {
-    screen: CompanyName,
-  },
-  phone: {
-    screen: Phone,
-  },
-  address: {
-    screen: Address,
-  },
-  resetpassword: {
-    screen: ResetPassword,
-  },
-})
