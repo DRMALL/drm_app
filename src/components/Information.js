@@ -18,7 +18,7 @@ export default class Information extends Component {
     headerLeft: <TouchableOpacity style={{paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,rRight: <Image onPress={() => 'no'} style={{marginLeft: 20}} source={emptyIcon}/>,
+    headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
   })
   render() {
     return (

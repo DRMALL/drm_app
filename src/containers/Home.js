@@ -20,7 +20,7 @@ export default class Home extends Component {
   render() {
     return(
       <View>
-        <HomeList data={homeList} />
+        <HomeList data={homeList} {...this.props} />
       </View>
     )
   }

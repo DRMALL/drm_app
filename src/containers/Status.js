@@ -18,9 +18,9 @@ export default class Status extends Component {
   }
   render() {
     return(
-      <View>
+      <View style={{paddingBottom: 50}}>
         <StatusTab />
-        <StatusCategory data={statusList} />
+        <StatusCategory data={statusList} {...this.props} />
       </View>
     )
   }

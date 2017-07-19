@@ -25,4 +25,5 @@ export const offline = '设备已离线。请检查通讯设备。'
 export const onToOffText = '最后一次成功连接的时间是'
 export const onState = '在线'
 export const offState = '离线'
+export const equipmentName = '设备名'
 

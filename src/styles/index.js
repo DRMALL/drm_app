@@ -5,6 +5,7 @@ import information from './information'
 import touchIntoText from './touchIntoText'
 import statusTab from './statusTab'
 import status from './status'
+import equipment from './equipment'
 import other from './other'
 
 export {
@@ -15,5 +16,6 @@ export {
   touchIntoText,
   statusTab,
   status,
+  equipment,
   other,
 }

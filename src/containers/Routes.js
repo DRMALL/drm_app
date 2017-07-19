@@ -17,6 +17,7 @@ import CompanyName from '../components/information/CompanyName'
 import Phone from '../components/information/Phone'
 import Address from '../components/information/Address'
 import ResetPassword from '../components/information/ResetPassword'
+import Equipment from '../components/Equipment'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -91,5 +92,8 @@ export default StackNavigator({
   },
   resetpassword: {
     screen: ResetPassword,
+  },
+  equipment: {
+    screen: Equipment,
   },
 })
