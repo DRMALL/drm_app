@@ -75,3 +75,93 @@ export const statusList = [
     stopTime: '2017-07-17',
   },
 ]
+
+export const equipmentDataList = [
+  {
+    id: 1,
+    title: '本类别数据名称1',
+    textArr: [
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+    ]
+  },
+  {
+    id: 2,
+    title: '本类别数据名称2',
+    textArr: [
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+    ]
+  },
+  {
+    id: 3,
+    title: '本类别数据名称3',
+    textArr: [
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+    ]
+  },
+  {
+    id: 4,
+    title: '本类别数据名称4',
+    textArr: [
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '氧气入口压力',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+    ]
+  },
+]
+
+export const equipmentLogList = [
+  {
+    id: 1,
+    time: '2017-05-01 15:21:32',
+  },
+  {
+    id: 2,
+    time: '2017-05-02 15:21:32',
+  },
+  {
+    id: 3,
+    time: '2017-05-03 15:21:32',
+  },
+  {
+    id: 4,
+    time: '2017-05-04 15:21:32',
+  },
+  {
+    id: 5,
+    time: '2017-05-05 15:21:32',
+  },
+]

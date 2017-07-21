@@ -1,4 +1,4 @@
-import { mainColor, backgroundColor, subTitleColor } from '../common/constants'
+import { mainColor, titleColor, backgroundColor, subTitleColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -64,6 +64,27 @@ export default {
     width: 15,
     position: 'absolute',
     right: 15,
+  },
+  iDataItemTouch: {
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderWidth: 0.5,
+    borderColor: subTitleColor,
+    paddingLeft: 15,
+    backgroundColor: backgroundColor
+  },
+  iDataItemText: {
+    fontSize: 14,
+  },
+  iDataItemText2: {
+    position: 'absolute',
+    fontSize: 10,
+  },
+  iDataItemImg: {
+    position: 'absolute',
+    right: 15,
+    tintColor: titleColor,
   },
   logView: {
     paddingVertical: 10,

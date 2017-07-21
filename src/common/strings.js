@@ -26,4 +26,10 @@ export const onToOffText = '最后一次成功连接的时间是'
 export const onState = '在线'
 export const offState = '离线'
 export const equipmentName = '设备名'
+export const equipmentRunState = '运行状态'
+export const equipmentRunImg = '运行图示（点击图片放大）'
+export const equipmentIndexData = '指标数据'
+export const indexDataUpdateTime = '更新时间: '
+export const equipmentRunningLog = '运行日志'
+
 
