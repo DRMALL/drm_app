@@ -11,6 +11,7 @@ import { primaryColor, subTitleColor } from '../common/constants'
 import { homeLabel, diagnoseLabel, deviceLabel, seekLabel, statusLabel } from '../common/strings'
 import { home } from '../styles'
 
+import Message from '../components/Message'
 import Information from '../components/Information'
 import UserName from '../components/information/UserName'
 import CompanyName from '../components/information/CompanyName'
@@ -70,10 +71,13 @@ export default StackNavigator({
       headerLeft: <TouchableOpacity style={{paddingLeft: 20}} onPress={() => navigation.navigate('information', {name: 'Information'})}>
         <Image source={userIcon}/>
       </TouchableOpacity>,
-      headerRight: <TouchableOpacity style={{paddingRight: 18, paddingLeft: 2}} onPress={() => 'ox'}>
+      headerRight: <TouchableOpacity style={{paddingRight: 18, paddingLeft: 2}} onPress={() => navigation.navigate('message', {name: 'Message'})}>
         <Image source={infoIcon}/>
       </TouchableOpacity>,
     }),
+  },
+  message: {
+    screen: Message,
   },
   information: {
     screen: Information,

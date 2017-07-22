@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
+import { subTitleColor } from '../common/constants'
 import StatusCategory from '../components/StatusCategory'
 import StatusTab from '../components/units/StatusTab'
 import { statusList } from '../utils/virtualData'
@@ -18,7 +19,7 @@ export default class Status extends Component {
   }
   render() {
     return(
-      <View style={{paddingBottom: 50}}>
+      <View style={{backgroundColor: subTitleColor, paddingBottom: 50}}>
         <StatusTab />
         <StatusCategory data={statusList} {...this.props} />
       </View>

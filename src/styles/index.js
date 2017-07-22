@@ -6,6 +6,8 @@ import touchIntoText from './touchIntoText'
 import statusTab from './statusTab'
 import status from './status'
 import equipment from './equipment'
+import device from './device'
+import message from './message'
 import other from './other'
 
 export {
@@ -17,5 +19,7 @@ export {
   statusTab,
   status,
   equipment,
+  device,
+  message,
   other,
 }

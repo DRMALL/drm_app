@@ -20,7 +20,7 @@ export default props => {
 const StatusListItem = ({ rowData, navigation }) => {
   const { photo, deviceNo, deviceState, stopTime } = rowData
   return(
-    <TouchableOpacity style={[status.wrap, {height: deviceState ? 90 : 120}]} onPress={() => navigation.navigate('equipment', {name: 'Equipment'})}>
+    <TouchableOpacity style={[status.wrap, {height: deviceState ? 90 : 120}]} activeOpacity={0.8} onPress={() => navigation.navigate('equipment', {name: 'Equipment'})}>
       <Image source={photo} style={status.img} />
       <View style={status.cover}>
         <Text style={status.NoText} numberOfLines={2}>{deviceNo}</Text>

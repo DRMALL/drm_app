@@ -5,61 +5,62 @@ import { equipment } from '../../styles'
 const dropdownNormal = require('../../images/dropdown_normal.png')
 const intoIcon = require('../../images/navigation_icons/into.png')
 
-export default props => {
-  let ds = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1 != r2
-  })
-  let indexDataDs = ds.cloneWithRows(props.indexData)
-  return(
-    <ListView 
-      dataSource={indexDataDs}
-      renderRow={(rowData) => <IndexDataItem rowData={rowData} />}
-    />
-  )
-}
-
-const IndexDataItem = ({ rowData }) => {
-  const { title, textArr } = rowData
-  return (
-    <View>
-      <TouchableOpacity style={equipment.dataTouch} onPress={()=> 'touch'}>
-        <Text style={equipment.textTouch}>{title}</Text>
-        <Image style={equipment.imgTouch} source={dropdownNormal} />
-      </TouchableOpacity>
-      <IndexDataItemList indexDataDetail={textArr} />
-    </View>
-  )
-}
-
-class IndexDataItemList extends Component {
+export default class IndexData extends Component {
   constructor(props) {
     super(props)
-    let ds2 = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 != r2
-    })
-    this.state = {
-      indexDataDetailDs: ds2.cloneWithRows(props.indexDataDetail),
-      textStyle : props.textStyle,
-    }
+    this.state = (props => {
+      // logic
+      let obj = {}
+      props.indexData.map((item, index) => {
+        obj[`row${index}`] = true
+      })
+      return obj
+    })(props)
   }
+
+  open(which) {
+    this.setState({[which]: !this.state[which]})
+  }
+
   render() {
-    return (
-      <ListView
-        dataSource={this.state.indexDataDetailDs}
-        renderRow={(rowData) => <DataItemList rowData={rowData} />}
-      />
+
+    return(
+      <View>
+        {
+          this.props.indexData.map((item, index) => {
+            return <IndexDataItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)}/>
+          })
+        }
+      </View>
     )
   }
 }
 
-const DataItemList = ({ rowData }) => {
-  const { text, num, unit } = rowData
+
+const IndexDataItem = ({ rowData, state, open, index }) => {
+  let { title, textArr } = rowData
+  textArr = state[`row${index}`] ? [] : textArr 
   return (
-    <TouchableOpacity style={equipment.iDataItemTouch} onPress={()=> {Alert.alert('I don not go to where')}}>
-      <Text style={equipment.iDataItemText}>{text}</Text>
-      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{num}</Text>
-      <Text style={[equipment.iDataItemText2, {right: 45}]}>{unit}</Text>
+    <View>
+      <TouchableOpacity style={equipment.dataTouch} onPress={()=> open(`row${index}`)}>
+        <Text style={equipment.textTouch}>{title}</Text>
+        <Image style={equipment.imgTouch} source={dropdownNormal} />
+      </TouchableOpacity>
+      <View>
+        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} />)}
+      </View>
+    </View>
+  )
+}
+
+const DataItemRow = props => {
+  return (
+    <TouchableOpacity style={equipment.iDataItemTouch} onPress={()=> {Alert.alert('I do not where to go')}}>
+      <Text style={equipment.iDataItemText}>{props.item.text}</Text>
+      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{props.item.num}</Text>
+      <Text style={[equipment.iDataItemText2, {right: 45}]}>{props.item.unit}</Text>
       <Image style={equipment.iDataItemImg} source={intoIcon} />
     </TouchableOpacity>
   )
+  
 }

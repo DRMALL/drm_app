@@ -19,6 +19,7 @@ export const offlineColor = '#ff6260'
 export const onlineColor = '#3bde86'
 export const loginBackgroundColor = '#F7F7F7'
 export const loginBorderColor = '#7B7B7B'
+export const lightBlueColor = '#4DADF7'
 
 // dimension
 export const boxPadding = 32

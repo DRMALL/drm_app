@@ -17,7 +17,7 @@ export default {
   stateText: {
     height: 60,
     fontSize: 18,
-    paddingVertical: 18,
+    paddingVertical: 21,
     paddingLeft: 15,
     backgroundColor: mainColor,
   },
@@ -28,8 +28,8 @@ export default {
   img: {
     width: '90%',
     height: 200,
-    marginVertical: 10,
-    marginHorizontal: 15,
+    marginVertical: 20,
+    marginHorizontal: 20,
     resizeMode: 'contain',
     backgroundColor: mainColor,
   },

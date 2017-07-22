@@ -4,9 +4,7 @@ export default {
   wrap: {
     width: '100%',
     flexDirection: 'row',
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0.5,
-    borderBottomWidth: 0.5,
+    borderWidth: 0.5,
     borderColor: subTitleColor,
     backgroundColor: mainColor,
   },

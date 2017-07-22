@@ -16,7 +16,7 @@ export default class Device extends Component {
   })
   render() {
     return(
-      <View>
+      <View style={{paddingBottom: 100}}>
         <DeviceCategory {...this.props}/>
       </View>
     )

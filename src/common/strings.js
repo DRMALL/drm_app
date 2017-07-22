@@ -31,5 +31,11 @@ export const equipmentRunImg = '运行图示（点击图片放大）'
 export const equipmentIndexData = '指标数据'
 export const indexDataUpdateTime = '更新时间: '
 export const equipmentRunningLog = '运行日志'
+export const deviceKindClassify = '分类'
+export const deviceKindSort = '排序'
+export const deviceKindFilter = '筛选'
+export const messageText = '消息'
+export const allSetAsRead = '全部设为已读'
+export const inTheEnd = ' ————  已经到底了  ———— '
 
 
