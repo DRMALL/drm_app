@@ -17,7 +17,7 @@ export default {
   stateText: {
     height: 60,
     fontSize: 18,
-    paddingVertical: 21,
+    paddingVertical: 20,
     paddingLeft: 15,
     backgroundColor: mainColor,
   },
@@ -56,6 +56,7 @@ export default {
     borderWidth: 0.5,
     borderColor: subTitleColor,
     paddingLeft: 15,
+    backgroundColor: mainColor,
   },
   textTouch: {
     fontSize: 15, 
