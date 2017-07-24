@@ -51,7 +51,7 @@ export default {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   archivesItemNo: {
     fontSize: 16,
@@ -85,5 +85,10 @@ export default {
     fontWeight: 'bold',
     color: subTitleColor,
     paddingRight: 16,
+  },
+  halfOpacityView: {
+    height: '100%', 
+    backgroundColor: 'black', 
+    opacity: 0.5
   },
 }

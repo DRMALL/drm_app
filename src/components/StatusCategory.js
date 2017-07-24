@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, Image, ListView, TouchableOpacity, Alert } from 'react-native'
 import { online, offline, onToOffText, onState, offState } from '../common/strings'
+import { lightGreenColor, lightRedColor } from '../common/constants'
 import { status } from '../styles'
 
 export default props => {
@@ -27,8 +28,8 @@ const StatusListItem = ({ rowData, navigation }) => {
         <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={2}>{deviceState ? online : offline}</Text>
         <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={3}>{deviceState ? '' : onToOffText + stopTime}</Text>
       </View>
-      <TouchableOpacity style={[status.touch, {borderColor: deviceState ? '#3BDE86' : '#FF6260'}]}>
-        <Text style={[status.touchText, {color: deviceState ? '#3BDE86' : '#FF6260'}]}>{deviceState ? onState : offState}</Text>
+      <TouchableOpacity style={[status.touch, {borderColor: deviceState ? lightGreenColor : lightRedColor}]}>
+        <Text style={[status.touchText, {color: deviceState ? lightGreenColor : lightRedColor}]}>{deviceState ? onState : offState}</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   )

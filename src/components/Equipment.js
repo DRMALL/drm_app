@@ -41,7 +41,7 @@ export default class Equipment extends Component {
         </View>
         <Text style={equipment.fixText}>{equipmentRunningLog}</Text>
         <View style={equipment.logView}>
-          <RunningLog logData={equipmentLogList} />
+          { equipmentLogList.map((log, i)=> <RunningLog key={i} log={log} /> ) }
         </View>
       </ScrollView>
     )

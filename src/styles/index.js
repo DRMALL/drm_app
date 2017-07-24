@@ -8,6 +8,7 @@ import status from './status'
 import equipment from './equipment'
 import device from './device'
 import message from './message'
+import classify from './classify'
 import other from './other'
 
 export {
@@ -21,5 +22,6 @@ export {
   equipment,
   device,
   message,
+  classify,
   other,
 }

@@ -21,7 +21,7 @@ export default class App extends Component {
       console.log('active', store.getState().home)
     })
   }
-
+  
   componentWillUnmount() {
     this.unsubscribe()
   }

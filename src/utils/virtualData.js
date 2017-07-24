@@ -243,3 +243,126 @@ export const deviceArchivesList = [
     createdAt: '2017-01-05',
   },
 ]
+
+export const messagesList = [
+  {
+    title: '工单信息',
+    abstract: '正常工作中正常工作中正常工作中正常工作中正正常正常工作中正常工作中正常工作中正常工作正常......',
+    content: '',
+    state: '已有回复',
+    author: 'admin', 
+    images: [],
+    published: true,
+    publish_time: '2017-01-01',
+    read: false,
+  },
+  {
+    title: '设备监测',
+    abstract: '设备编号01234567891',
+    content: '',
+    state: '出现异常',
+    author: 'admin', 
+    images: [],
+    published: true,
+    publish_time: '2017-01-02',
+    read: false,
+  },
+  {
+    title: '工单信息',
+    abstract: '正常工作中正常工作中正常工作中正常工作中正正常正常工作中正常工作中正常工作中正常工作正常......',
+    content: '',
+    state: '已有回复',
+    author: 'admin', 
+    images: [],
+    published: false,
+    publish_time: '2017-01-03',
+    read: true,
+  },
+  {
+    title: '工单信息',
+    abstract: '正常工作中正常工作中正常工作中正常工作中正正常正常工作中正常工作中正常工作中正常工作正常......',
+    content: '',
+    state: '已有回复',
+    author: 'admin', 
+    images: [],
+    published: true,
+    publish_time: '2017-01-04',
+    read: true,
+  },
+  {
+    title: '设备监测',
+    abstract: '设备编号01234567892',
+    content: '',
+    state: '出现异常',
+    author: 'admin', 
+    images: [],
+    published: true,
+    publish_time: '2017-01-05',
+    read: true,
+  },
+]
+
+export const classifyData = [
+  {
+    class: '排量', 
+    kinds: [
+      {
+        title: '单发生器',
+        num: 1234,
+      },
+      {
+        title: '双发生器',
+        num: 1234,
+      },
+      {
+        title: '三发生器',
+        num: 1234,
+      },
+      {
+        title: '四发生器',
+        num: 1234,
+      },
+    ],
+    num: 1234
+  },
+  {
+    class: '压力范围', 
+    kinds: [
+      {
+        title: '25Mpa',
+        num: 1234,
+      },
+      {
+        title: '30Mpa',
+        num: 1234,
+      },
+      {
+        title: '35Mpa',
+        num: 1234,
+      },
+      {
+        title: '50Mpa',
+        num: 1234,
+      },
+    ],
+    num: 1234
+  },
+  {
+    class: '使用燃料', 
+    kinds: [
+      {
+        title: '柴油型',
+        num: 1234,
+      },
+      {
+        title: '原油型',
+        num: 1234,
+      },
+      {
+        title: '天然气型',
+        num: 1234,
+      },
+    ],
+    num: 1234
+  },
+]
