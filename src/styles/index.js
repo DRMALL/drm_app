@@ -9,6 +9,8 @@ import equipment from './equipment'
 import device from './device'
 import message from './message'
 import classify from './classify'
+import sort from './sort'
+import filter from './filter'
 import other from './other'
 
 export {
@@ -23,5 +25,7 @@ export {
   device,
   message,
   classify,
+  sort,
+  filter,
   other,
 }

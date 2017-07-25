@@ -17,7 +17,7 @@ export default {
   stateText: {
     height: 60,
     fontSize: 18,
-    paddingVertical: 20,
+    paddingVertical: 19,
     paddingLeft: 15,
     backgroundColor: mainColor,
   },

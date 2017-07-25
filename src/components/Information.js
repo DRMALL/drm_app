@@ -24,12 +24,12 @@ export default class Information extends Component {
     return (
       <View style={information.wrap}>
         <Text style={information.text} >{basicDocument}</Text>
-        <TouchIntoText title={userName} value={'戴永明'} onPress={() => this.props.navigation.navigate('username', {name: 'UserName'})} />
-        <TouchIntoText title={companyName} value={'公司名称公司名称公司名称公司名称'} onPress={() => this.props.navigation.navigate('companyname', {name: 'CompanyName'})} />
-        <TouchIntoText title={phoneNumber} value={'18888888888'} onPress={() => this.props.navigation.navigate('phone', {name: 'Phone'})} />
-        <TouchIntoText title={postalAddress} value={'通讯地址通讯地址通讯'} onPress={() => this.props.navigation.navigate('address', {name: 'Address'})} />
+        <TouchIntoText title={userName} value={'戴永明'} activeOpacity={0.6} onPress={() => this.props.navigation.navigate('username', {name: 'UserName'})} />
+        <TouchIntoText title={companyName} value={'公司名称公司名称公司名称公司名称'} activeOpacity={0.6} onPress={() => this.props.navigation.navigate('companyname', {name: 'CompanyName'})} />
+        <TouchIntoText title={phoneNumber} value={'18888888888'} activeOpacity={0.6} onPress={() => this.props.navigation.navigate('phone', {name: 'Phone'})} />
+        <TouchIntoText title={postalAddress} value={'通讯地址通讯地址通讯'} activeOpacity={0.6} onPress={() => this.props.navigation.navigate('address', {name: 'Address'})} />
         <Text style={information.text} >{securitySetting}</Text>
-        <TouchIntoText title={resetPassword} onPress={() => this.props.navigation.navigate('resetpassword', {name: 'ResetPassword'})} />
+        <TouchIntoText title={resetPassword} activeOpacity={0.6} onPress={() => this.props.navigation.navigate('resetpassword', {name: 'ResetPassword'})} />
       </View>
     )
   }

@@ -57,7 +57,7 @@ const IndexDataItem = ({ rowData, state, open, index }) => {
 
 const DataItemRow = props => {
   return (
-    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> {Alert.alert('I do not where to go')}}>
+    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> {Alert.alert(`I don't know where to go`)}}>
       <Text style={equipment.iDataItemText}>{props.item.text}</Text>
       <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{props.item.num}</Text>
       <Text style={[equipment.iDataItemText2, {right: 45}]}>{props.item.unit}</Text>

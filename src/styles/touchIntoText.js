@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, loginBorderColor, titleColor } from '../common/constants'
+import { mainColor, subTitleColor, loginBorderColor, titleColor, backgroundColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -12,7 +12,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   textkey: {

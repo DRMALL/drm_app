@@ -1,4 +1,4 @@
-import { loginBackgroundColor, subTitleColor } from '../common/constants'
+import { loginBackgroundColor, subTitleColor, backgroundColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -12,8 +12,8 @@ export default {
     fontSize: 16,
     paddingVertical: 11,
     paddingLeft: 15,
-    // borderWidth: 0.5,
-    // borderColor: subTitleColor,
+    borderWidth: 0.5,
+    borderColor: backgroundColor,
     color: subTitleColor,
   },
 }

@@ -31,6 +31,7 @@ export const homeList = [
   },
 ]
 
+//状态监控数据
 export const statusList = [
   {
     id: 0,
@@ -76,6 +77,7 @@ export const statusList = [
   },
 ]
 
+//状态监控-设备名数据
 export const equipmentDataList = [
   {
     id: 1,
@@ -143,6 +145,7 @@ export const equipmentDataList = [
   },
 ]
 
+//状态监控-设备名-日志数据
 export const equipmentLogList = [
   {
     id: 1,
@@ -166,6 +169,7 @@ export const equipmentLogList = [
   },
 ]
 
+//设备档案数据
 export const deviceArchivesList = [
   {
     id: 1,
@@ -244,6 +248,7 @@ export const deviceArchivesList = [
   },
 ]
 
+//消息数据
 export const messagesList = [
   {
     title: '工单信息',
@@ -302,6 +307,7 @@ export const messagesList = [
   },
 ]
 
+//设备档案-分类数据
 export const classifyData = [
   {
     class: '排量', 
@@ -344,6 +350,14 @@ export const classifyData = [
         title: '50Mpa',
         num: 1234,
       },
+      {
+        title: '60Mpa',
+        num: 1234,
+      },
+      {
+        title: '80Mpa',
+        num: 1234,
+      },
     ],
     num: 1234
   },
@@ -364,5 +378,41 @@ export const classifyData = [
       },
     ],
     num: 1234
+  },
+]
+
+//设备档案-排序数据
+export const sortData = [
+  {
+    id: 1,
+    text: '添加时间最早',
+  },
+  {
+    id: 2,
+    text: '添加时间最晚',
+  },
+  {
+    id: 3,
+    text: '设备编号升序',
+  },
+  {
+    id: 4,
+    text: '设备编号降序',
+  },
+  {
+    id: 5,
+    text: '替代文本',
+  },
+  {
+    id: 6,
+    text: '替代文本',
+  },
+  {
+    id: 7,
+    text: '替代文本',
+  },
+  {
+    id: 8,
+    text: '替代文本',
   },
 ]
