@@ -416,3 +416,26 @@ export const sortData = [
     text: '替代文本',
   },
 ]
+
+export const timeLineData = [
+  {
+    time: '2017-12-14',
+    title: '保养',
+    content: '设备在江苏工厂排产制造。',
+  },
+  {
+    time: '2017-11-22',
+    title: '租凭',
+    content: '设备在江苏工厂排产制造。',
+  },
+  {
+    time: '2017-10-24',
+    title: '维修',
+    content: '设备在江苏工厂维修设备在江苏工设备在江苏工厂维修设备在江苏工工维修设备在江苏工工维修设备在江苏工工...',
+  },
+  {
+    time: '2017-07-13',
+    title: '安装',
+    content: '设备在江苏工厂排产制造。',
+  },
+]

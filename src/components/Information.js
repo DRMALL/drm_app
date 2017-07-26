@@ -15,7 +15,7 @@ export default class Information extends Component {
       backgroundColor: primaryColor,
     },
     headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{personalInformation}</Text>,
-    headerLeft: <TouchableOpacity style={{paddingLeft: 20}} onPress={() => navigation.goBack()}>
+    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,

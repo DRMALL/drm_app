@@ -7,7 +7,7 @@ import {
 import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
-import DeviceCategory from './components/DeviceCategory'
+import Detail from './components/archives/Detail'
 
 export default class App extends Component {
   constructor() {
@@ -29,7 +29,7 @@ export default class App extends Component {
   render() {
     // return <Launching />
     return <Routes screenProps={this.state}/>
-    // return <DeviceCategory />
+    // return <Detail />
   }
 }
 

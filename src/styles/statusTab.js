@@ -1,4 +1,4 @@
-import { primaryColor, subTitleColor, mainColor } from '../common/constants'
+import { primaryColor, subTitleColor, mainColor, backgroundColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -11,7 +11,7 @@ export default {
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
     borderBottomWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   text: {

@@ -19,6 +19,7 @@ import Phone from '../components/information/Phone'
 import Address from '../components/information/Address'
 import ResetPassword from '../components/information/ResetPassword'
 import Equipment from '../components/Equipment'
+import Detail from '../components/archives/Detail'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -68,10 +69,10 @@ export default StackNavigator({
         backgroundColor: primaryColor,
       },
       headerTitle: <HeaderTitle navigation={navigation}/>,
-      headerLeft: <TouchableOpacity style={{paddingLeft: 20}} onPress={() => navigation.navigate('information', {name: 'Information'})}>
+      headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', {name: 'Information'})}>
         <Image source={userIcon}/>
       </TouchableOpacity>,
-      headerRight: <TouchableOpacity style={{paddingRight: 18, paddingLeft: 2}} onPress={() => navigation.navigate('message', {name: 'Message'})}>
+      headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} onPress={() => navigation.navigate('message', {name: 'Message'})}>
         <Image source={infoIcon}/>
       </TouchableOpacity>,
     }),
@@ -99,5 +100,8 @@ export default StackNavigator({
   },
   equipment: {
     screen: Equipment,
+  },
+  detail: {
+    screen: Detail,
   },
 })

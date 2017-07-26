@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, lightBlueColor } from '../common/constants'
+import { mainColor, subTitleColor, lightBlueColor, backgroundColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -12,7 +12,7 @@ export default {
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   touchTab: {
@@ -22,7 +22,7 @@ export default {
     alignItems: 'center',
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
   },
   archivesTabText: {
     marginRight: 5,
@@ -35,7 +35,7 @@ export default {
     justifyContent: 'space-between',
     paddingVertical: 20,
     borderWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   archivesItemImg: {

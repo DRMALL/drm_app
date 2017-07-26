@@ -11,6 +11,7 @@ import message from './message'
 import classify from './classify'
 import sort from './sort'
 import filter from './filter'
+import detail from './detail'
 import other from './other'
 
 export {
@@ -27,5 +28,6 @@ export {
   classify,
   sort,
   filter,
+  detail,
   other,
 }

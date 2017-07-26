@@ -8,18 +8,19 @@ export default props => {
     rowHasChanged: (r1, r2) => r1 != r2
   })
   let archivesDataDs = ds.cloneWithRows(props.archivesData)
+  let navigation = props.navigation
   return(
     <ListView 
       dataSource={archivesDataDs}
-      renderRow={(rowData) => <ArchivesDataItem rowData={rowData} />}
+      renderRow={(rowData) => <ArchivesDataItem rowData={rowData} navigation={navigation} />}
     />
   )
 }
 
-const ArchivesDataItem = ({ rowData }) => {
+const ArchivesDataItem = ({ rowData, navigation }) => {
   const { number, images, cc, pressure, combustible, description, createdAt } = rowData
   return (
-    <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> alert('archives')}>
+    <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('detail', {name: 'Detail'})}>
       <Image style={device.archivesItemImg} source={images} />
       <View style={device.archivesItemOther}>
         <View style={device.archivesNoTime}>

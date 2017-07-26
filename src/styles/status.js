@@ -1,11 +1,11 @@
-import { mainColor, subTitleColor } from '../common/constants'
+import { mainColor, subTitleColor, backgroundColor } from '../common/constants'
 
 export default {
   wrap: {
     width: '100%',
     flexDirection: 'row',
     borderWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   img: {

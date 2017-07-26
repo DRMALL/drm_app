@@ -38,6 +38,9 @@ export const deviceKindSort = '排序'
 export const deviceKindFilter = '筛选'
 export const messageText = '消息'
 export const allSetAsRead = '全部设为已读'
+export const deviceSort = '设备分类'
+export const deviceTimeline = '设备时间线'
+export const deviceRemarks = '设备备注'
 export const inTheEnd = ' ————  已经到底了  ———— '
 
 

@@ -1,4 +1,4 @@
-import { mainColor, mainColorPressed, subTitleColor, contentColor, lightRedColor, lightBlueColor } from '../common/constants'
+import { mainColor, mainColorPressed, subTitleColor, contentColor, lightRedColor, lightBlueColor, backgroundColor } from '../common/constants'
 
 export default {
   scrollView: {
@@ -9,7 +9,7 @@ export default {
     paddingHorizontal: 15,
     flexDirection: 'row',
     borderWidth: 0.5,
-    borderColor: subTitleColor,
+    borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   empty: {

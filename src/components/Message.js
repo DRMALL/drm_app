@@ -13,10 +13,10 @@ export default class Message extends Component {
       backgroundColor: primaryColor,
     },
     headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{messageText}</Text>,
-    headerLeft: <TouchableOpacity style={{paddingLeft: 20}} onPress={() => navigation.goBack()}>
+    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{paddingRight: 20}} onPress={() => alert('已设为已读')}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 20}} onPress={() => alert('已设为已读')}>
       <Text style={{fontSize: 14, color: mainColor}}>{allSetAsRead}</Text>
     </TouchableOpacity>,
   })
