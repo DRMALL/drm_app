@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { mainColor, loginBorderColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
 import { deviceSort, deviceTimeline, deviceRemarks } from '../../common/strings'
@@ -45,10 +45,10 @@ export default class Detail extends Component {
           <View style={detail.fixTextView}>
             <Text style={detail.textFix}>{deviceTimeline}</Text>
             <View style={detail.iconView}>
-              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> alert('Calendar')}>
+              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('calendars', {name: 'Calendars'})} >
                 <Image source={calendarIcon}/>
               </TouchableOpacity>
-              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> alert('Edit')}>
+              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('timePoint', {name: 'TimePoint'})} >
                 <Image source={editIcon}/>
               </TouchableOpacity>
             </View>
@@ -58,7 +58,7 @@ export default class Detail extends Component {
           </View>
           <View style={detail.fixTextView}>
             <Text style={detail.textFix}>{deviceRemarks}</Text>
-            <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> alert('Edit')}>
+            <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {name: 'Remark'})} >
               <Image source={editIcon}/>
             </TouchableOpacity>
           </View>
@@ -73,7 +73,7 @@ export default class Detail extends Component {
 
 const SwiperHeader = props => {
   let { navigation } = props
-    , picArr = [pic5, pic6, pic5, pic6, pic7]
+    , picArr = [pic5, pic6, pic5, pic6, pic7]  //图片数组
   return (
     <View style={detail.headerView}>
       <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>

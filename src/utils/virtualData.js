@@ -439,3 +439,66 @@ export const timeLineData = [
     content: '设备在江苏工厂排产制造。',
   },
 ]
+
+export const allLineTypeData= [
+  {
+    id: 1,
+    types: '生产',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 2,
+    types: '仓储',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 3,
+    types: '购买',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 4,
+    types: '运输',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 5,
+    types: '安装',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 6,
+    types: '维修',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 7,
+    types: '租凭',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 8,
+    types: '保养',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 9,
+    types: '安装',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 10,
+    types: '维修',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 11,
+    types: '租凭',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+  {
+    id: 12,
+    types: '保养',
+    reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+]

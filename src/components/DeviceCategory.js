@@ -36,7 +36,6 @@ export default class DeviceCategory extends Component {
       , filterRow = this.state.filterRow
       , topView = this.state.topView
       , middleView = this.state.middleView
-      , bottomView = this.state.bottomView
     return(
       <View style={device.wrap}>
         <View style={device.archivesTab}>

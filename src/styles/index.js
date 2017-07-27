@@ -12,6 +12,7 @@ import classify from './classify'
 import sort from './sort'
 import filter from './filter'
 import detail from './detail'
+import timePoint from './timePoint'
 import other from './other'
 
 export {
@@ -29,5 +30,6 @@ export {
   sort,
   filter,
   detail,
+  timePoint,
   other,
 }

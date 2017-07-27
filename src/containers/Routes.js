@@ -20,6 +20,9 @@ import Address from '../components/information/Address'
 import ResetPassword from '../components/information/ResetPassword'
 import Equipment from '../components/Equipment'
 import Detail from '../components/archives/Detail'
+import Calendars from '../components/archives/Calendars'
+import TimePoint from '../components/archives/TimePoint'
+import Remark from '../components/archives/Remark'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -103,5 +106,14 @@ export default StackNavigator({
   },
   detail: {
     screen: Detail,
+  },
+  calendars: {
+    screen: Calendars,
+  },
+  timePoint: {
+    screen: TimePoint,
+  },
+  equipmentRemark: {
+    screen: Remark,
   },
 })
