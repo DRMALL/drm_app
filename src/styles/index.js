@@ -13,6 +13,8 @@ import sort from './sort'
 import filter from './filter'
 import detail from './detail'
 import timePoint from './timePoint'
+import diagnose from './diagnose'
+import diagnosisTab from './diagnosisTab'
 import other from './other'
 
 export {
@@ -31,5 +33,7 @@ export {
   filter,
   detail,
   timePoint,
+  diagnose,
+  diagnosisTab,
   other,
 }

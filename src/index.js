@@ -7,7 +7,8 @@ import {
 import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
-import Calendars from './components/archives/Calendars'
+import DiagnoseCategory from './components/DiagnoseCategory'
+import Diagnose from './containers/Diagnose'
 
 export default class App extends Component {
   constructor() {
@@ -29,7 +30,7 @@ export default class App extends Component {
   render() {
     // return <Launching />
     return <Routes screenProps={this.state}/>
-    // return <Calendars />
+    // return <Diagnose />
   }
 }
 

@@ -417,6 +417,7 @@ export const sortData = [
   },
 ]
 
+//时间线数据
 export const timeLineData = [
   {
     time: '2017-12-14',
@@ -440,6 +441,7 @@ export const timeLineData = [
   },
 ]
 
+//时间线类型数据
 export const allLineTypeData= [
   {
     id: 1,
@@ -500,5 +502,75 @@ export const allLineTypeData= [
     id: 12,
     types: '保养',
     reference: '参考文本：设备在江苏工厂排产制造。',
+  },
+]
+
+export const diagnosisData = [
+  {
+    id: 1,
+    title: '设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: false,
+  },
+  {
+    id: 2,
+    title: '设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+  {
+    id: 3,
+    title: '设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+  {
+    id: 4,
+    title: '设备忽然有较大噪音的原因较大的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+  {
+    id: 5,
+    title: '设备忽然有较大噪音的原因设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+  {
+    id: 6,
+    title: '设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+  {
+    id: 7,
+    title: '设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+  {
+    id: 8,
+    title: '设备忽然有较大噪音的原因',
+    kinds: '知识库·分类名',
+    solved: true,
+  },
+]
+
+//故障诊断TopTab数据
+export const diagnosisTabData = [
+  {
+    tabTypes: '常见问题',
+  },
+  {
+    tabTypes: '操作规范',
+  },
+  {
+    tabTypes: '安全规程',
+  },
+  {
+    tabTypes: '单位换算',
+  },
+  {
+    tabTypes: '其他分类',
   },
 ]

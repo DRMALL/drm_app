@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-
+import { all, onState, offState } from '../../common/strings'
 import { primaryColor } from '../../common/constants'
 import { statusTab } from '../../styles'
 
@@ -56,15 +56,15 @@ export default class StatusTab extends Component {
     return(
       <View style={statusTab.wrap}>
         <TouchableOpacity style={statusTab.touchHighlignt} onPress={this.pressAllStatus} activeOpacity={0.9}>
-          <Text style={[statusTab.text, this.state.textStyle1]}>全部</Text>
+          <Text style={[statusTab.text, this.state.textStyle1]}>{all}</Text>
           <View style={this.state.vuStyle1} />
         </TouchableOpacity>
         <TouchableOpacity style={statusTab.touchHighlignt} onPress={this.pressOnLine} activeOpacity={0.9}>
-          <Text style={[statusTab.text, this.state.textStyle2]}>在线</Text>
+          <Text style={[statusTab.text, this.state.textStyle2]}>{onState}</Text>
           <View style={this.state.vuStyle2} />
         </TouchableOpacity>
         <TouchableOpacity style={statusTab.touchHighlignt} onPress={this.pressOffLine} activeOpacity={0.9}>
-          <Text style={[statusTab.text, this.state.textStyle3]}>离线</Text>
+          <Text style={[statusTab.text, this.state.textStyle3]}>{offState}</Text>
           <View style={this.state.vuStyle3} />
         </TouchableOpacity>
       </View>

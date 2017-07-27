@@ -7,7 +7,7 @@ import Device from './Device'
 import Status from './Status'
 import Diagnose from './Diagnose'
 import Seek from './Seek'
-import { primaryColor, subTitleColor } from '../common/constants'
+import { primaryColor, subTitleColor, backgroundColor } from '../common/constants'
 import { homeLabel, diagnoseLabel, deviceLabel, seekLabel, statusLabel } from '../common/strings'
 import { home } from '../styles'
 
@@ -45,6 +45,8 @@ const Main = TabNavigator(
       inactiveTintColor: subTitleColor,
       style: {
         backgroundColor: '#fff',
+        borderWidth: 0.5,
+        borderColor: backgroundColor,
       },
       tabStyle: {
         height: 60,

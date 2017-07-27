@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { deviceKindClassify, deviceKindSort, deviceKindFilter } from '../common/strings'
 import { lightBlueColor, contentColor } from '../common/constants'
 import { device } from '../styles'
