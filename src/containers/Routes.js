@@ -25,6 +25,7 @@ import Calendars from '../components/archives/Calendars'
 import TimePoint from '../components/archives/TimePoint'
 import Remark from '../components/archives/Remark'
 import DiagDetail from '../components/diagnose/DiagDetail'
+import PushOrder from '../components/diagnose/PushOrder'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -125,5 +126,8 @@ export default StackNavigator({
   },
   diagDetail: {
     screen: DiagDetail,
+  },
+  pushOrder: {
+    screen: PushOrder,
   },
 })

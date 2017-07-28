@@ -63,6 +63,11 @@ export const verifyNewPassword = '确认新密码'
 export const orderDynamic = '工单动态'
 export const orderContent = '工单内容'
 export const orderReturn = '工单回复'
+export const unsolvedGoToPushOrder = '没有解决，提交工单'
+export const pushOrder = '提交工单'
+export const remarkPlaceholder = '请输入设备备注，可以多行多次输入'
+export const pushOrderPlaceholder1 = '请输入标题'
+export const pushOrderPlaceholder2 = '请详细描述遇到的问题或对产品的反馈'
 export const inTheEnd = ' ————  已经到底了  ———— '
 
 

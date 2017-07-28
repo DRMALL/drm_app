@@ -1,7 +1,7 @@
 import React, { Component }from 'react'
 import { View, Text, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import { primaryColor, mainColor, subTitleColor } from '../../common/constants'
-import { editDeviceRemarks, cancel, confirm } from '../../common/strings'
+import { editDeviceRemarks, cancel, confirm, remarkPlaceholder } from '../../common/strings'
 
 export default class Remark extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -21,7 +21,7 @@ export default class Remark extends Component {
       <View style={{height: '100%', backgroundColor: mainColor}}>
         <TextInput 
           style={{textAlignVertical: 'top', fontSize: 16, paddingHorizontal: 16, paddingTop: 20}} 
-          placeholder={'请输入设备备注，可以多行多次输入'} 
+          placeholder={remarkPlaceholder} 
           placeholderTextColor={subTitleColor}
           multiline={true} 
           numberOfLines={50} 

@@ -23,7 +23,7 @@ export default class DiagnoseCategory extends Component {
 const DiagnosisItem = props => {
   let { item, navigation } = props
   return (
-    <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> ''}>
+    <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {name: 'DiagDetail'})}>
       <View style={diagnose.titleView}>
         <Text style={diagnose.titleText}>{item.title}</Text>
         {
