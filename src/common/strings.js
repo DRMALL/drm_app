@@ -60,6 +60,9 @@ export const next = '下一步'
 export const originalPassword = '原密码'
 export const newPassword = '新密码'
 export const verifyNewPassword = '确认新密码'
+export const orderDynamic = '工单动态'
+export const orderContent = '工单内容'
+export const orderReturn = '工单回复'
 export const inTheEnd = ' ————  已经到底了  ———— '
 
 

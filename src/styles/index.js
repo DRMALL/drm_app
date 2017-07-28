@@ -17,6 +17,7 @@ import diagnose from './diagnose'
 import diagnosisTab from './diagnosisTab'
 import emailVerify from './emailVerify'
 import setPassword from './setPassword'
+import dynamicOrder from './dynamicOrder'
 import other from './other'
 
 export {
@@ -39,5 +40,6 @@ export {
   diagnosisTab,
   emailVerify,
   setPassword,
+  dynamicOrder,
   other,
 }

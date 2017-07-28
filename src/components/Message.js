@@ -21,9 +21,10 @@ export default class Message extends Component {
     </TouchableOpacity>,
   })
   render() {
+    let { navigation } = this.props
     return (
       <ScrollView style={message.scrollView}>
-        { messagesList.map((msgItem, i)=> <MessageItem key={i} msgItem={msgItem} />) }
+        { messagesList.map((msgItem, i)=> <MessageItem key={i} msgItem={msgItem} navigation={navigation}/>) }
         <Text style={message.endText}>{inTheEnd}</Text>
       </ScrollView>
     )
@@ -31,17 +32,20 @@ export default class Message extends Component {
 }
 
 const MessageItem = props => {
+  let { navigation, msgItem } = props
   return (
     <View style={message.itemView}>
-      <View style={props.msgItem.read ? message.empty : message.redDot} />
-      <View style={message.textPart}>
-        <View style={message.topLine}>
-          <Text style={message.textTitle}>{props.msgItem.title}</Text>
-          <Text style={message.textTime}>{props.msgItem.publish_time}</Text>
+      <TouchableOpacity style={message.itemTouchView} activeOpacity={0.8} onPress={()=> navigation.navigate('dynamicOrder', {name: 'DynamicOrder', msgItem: msgItem})}>
+        <View style={msgItem.read ? message.empty : message.redDot} />
+        <View style={message.textPart}>
+          <View style={message.topLine}>
+            <Text style={message.textTitle}>{msgItem.title}</Text>
+            <Text style={message.textTime}>{msgItem.publish_time}</Text>
+          </View>
+          <Text style={message.textAbstract}>{msgItem.abstract}</Text>
+          <Text style={message.textState}>{'状态：' + msgItem.state}</Text>
         </View>
-        <Text style={message.textAbstract}>{props.msgItem.abstract}</Text>
-        <Text style={message.textState}>{'状态：' + props.msgItem.state}</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   )
 }

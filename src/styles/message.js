@@ -5,6 +5,9 @@ export default {
     backgroundColor: mainColorPressed,
   },
   itemView: {
+    backgroundColor: subTitleColor,
+  },
+  itemTouchView: {
     paddingVertical: 20,
     paddingHorizontal: 15,
     flexDirection: 'row',
