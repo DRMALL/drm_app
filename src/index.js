@@ -8,7 +8,7 @@ import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
 import DiagnoseCategory from './components/DiagnoseCategory'
-import Diagnose from './containers/Diagnose'
+import DiagDetail from './components/diagnose/DiagDetail'
 
 export default class App extends Component {
   constructor() {
@@ -30,7 +30,7 @@ export default class App extends Component {
   render() {
     // return <Launching />
     return <Routes screenProps={this.state}/>
-    // return <Diagnose />
+    // return <DiagDetail />
   }
 }
 

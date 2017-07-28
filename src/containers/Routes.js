@@ -24,6 +24,7 @@ import Detail from '../components/archives/Detail'
 import Calendars from '../components/archives/Calendars'
 import TimePoint from '../components/archives/TimePoint'
 import Remark from '../components/archives/Remark'
+import DiagDetail from '../components/diagnose/DiagDetail'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -121,5 +122,8 @@ export default StackNavigator({
   },
   equipmentRemark: {
     screen: Remark,
+  },
+  diagDetail: {
+    screen: DiagDetail,
   },
 })
