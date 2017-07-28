@@ -12,6 +12,7 @@ import { homeLabel, diagnoseLabel, deviceLabel, seekLabel, statusLabel } from '.
 import { home } from '../styles'
 
 import Message from '../components/Message'
+import DynamicOrder from '../components/message/DynamicOrder'
 import Information from '../components/Information'
 import UserName from '../components/information/UserName'
 import CompanyName from '../components/information/CompanyName'
@@ -84,6 +85,9 @@ export default StackNavigator({
   },
   message: {
     screen: Message,
+  },
+  dynamicOrder: {
+    screen: DynamicOrder,
   },
   information: {
     screen: Information,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
+import TabBarItem from '../components/units/TabBarItem'
 import DiagnosisTab from '../components/units/DiagnosisTab'
 import DiagnoseCategory from '../components/DiagnoseCategory'
 import { diagnosisTabData } from '../utils/virtualData'
@@ -9,10 +10,12 @@ const diagnoseIconSelected = require('../images/tabbar_icons/tabbar_diagnosis_se
 
 export default class Diagnose extends Component {
   static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Image
-        source={diagnoseIconSelected}
-        style={{tintColor: tintColor}}
+    tabBarIcon: ({ focused, tintColor }) => (
+      <TabBarItem
+        tintColor={tintColor}
+        focused={focused}
+        normalImage={diagnoseIconNormal} 
+        selectedImage={diagnoseIconSelected} 
       />
     )
   };

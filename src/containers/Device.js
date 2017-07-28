@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
+import TabBarItem from '../components/units/TabBarItem'
 import DeviceCategory from '../components/DeviceCategory'
 
 const deviceIconSelected = require('../images/tabbar_icons/tabbar_archives_selected.png')
@@ -7,13 +8,15 @@ const deviceIconSelected = require('../images/tabbar_icons/tabbar_archives_selec
 
 export default class Device extends Component {
   static navigationOptions = ({ navigation }) => ({
-    tabBarIcon: ({ tintColor }) => (
-      <Image
-        source={deviceIconSelected}
-        style={{tintColor: tintColor}}
+    tabBarIcon: ({ focused, tintColor }) => (
+      <TabBarItem
+        tintColor={tintColor}
+        focused={focused}
+        normalImage={deviceIconNormal} 
+        selectedImage={deviceIconSelected} 
       />
-    ),
-  })
+    )
+  });
   render() {
     return(
       <View style={{paddingBottom: 100}}>
