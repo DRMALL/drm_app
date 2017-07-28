@@ -15,6 +15,8 @@ import detail from './detail'
 import timePoint from './timePoint'
 import diagnose from './diagnose'
 import diagnosisTab from './diagnosisTab'
+import emailVerify from './emailVerify'
+import setPassword from './setPassword'
 import other from './other'
 
 export {
@@ -35,5 +37,7 @@ export {
   timePoint,
   diagnose,
   diagnosisTab,
+  emailVerify,
+  setPassword,
   other,
 }

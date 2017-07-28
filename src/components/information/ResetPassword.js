@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { resetPassword, save } from '../../common/strings'
+import { resetPassword, save, originalPassword, newPassword, verifyNewPassword } from '../../common/strings'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 
@@ -22,9 +22,9 @@ export default class ResetPassword extends Component {
   render() {
     return (
       <View>
-        <TextInput style={other.textInput} placeholder={'原密码'} secureTextEntry={true} underlineColorAndroid="transparent" />
-        <TextInput style={other.textInput} placeholder={'新密码'} secureTextEntry={true} underlineColorAndroid="transparent" />
-        <TextInput style={other.textInput} placeholder={'确认新密码'} secureTextEntry={true} underlineColorAndroid="transparent" />
+        <TextInput style={other.textInput} placeholder={originalPassword} secureTextEntry={true} underlineColorAndroid="transparent" />
+        <TextInput style={other.textInput} placeholder={newPassword} secureTextEntry={true} underlineColorAndroid="transparent" />
+        <TextInput style={other.textInput} placeholder={verifyNewPassword} secureTextEntry={true} underlineColorAndroid="transparent" />
       </View>
     )
   }
