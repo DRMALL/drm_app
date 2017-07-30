@@ -26,6 +26,7 @@ import TimePoint from '../components/archives/TimePoint'
 import Remark from '../components/archives/Remark'
 import DiagDetail from '../components/diagnose/DiagDetail'
 import PushOrder from '../components/diagnose/PushOrder'
+import SeekDetail from '../components/seek/SeekDetail'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -129,5 +130,8 @@ export default StackNavigator({
   },
   pushOrder: {
     screen: PushOrder,
+  },
+  seekDetail: {
+    screen: SeekDetail,
   },
 })

@@ -1,5 +1,9 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { inputPartsKeywords } from '../common/strings'
+import { headerTitle } from '../styles'
+
+const searchIcon = require('../images/navigation_icons/search.png')
 
 export default ({ navigation, navigate }) => {
   const title = ((navigation, navigate) => {
@@ -9,7 +13,7 @@ export default ({ navigation, navigate }) => {
     else return <Search navigation={navigation} />
   })(navigation)
   return(
-    <View style={{width: '100%'}}>
+    <View style={headerTitle.wrap}>
       {title}
     </View>
   )
@@ -17,17 +21,19 @@ export default ({ navigation, navigate }) => {
 
 const Title = props => {
   return(
-    <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 18, textAlign:'center'}}>{props.title}</Text>
+    <Text style={headerTitle.titleText}>{props.title}</Text>
   )
 }
 
 const Search = props => {
   return(
     <TouchableOpacity 
+      style={headerTitle.searchTouch} 
+      activeOpacity={1} 
       onPress={() => props.navigation.navigate('main', {name: 'Main'})}
-      style={{width:'96%', height:'70%', marginTop:5, marginLeft: '2%', borderRadius:3, backgroundColor: '#fff'}}
     >
-
+      <Image style={headerTitle.searchImg} source={searchIcon}/>
+      <Text style={headerTitle.searchText}>{inputPartsKeywords}</Text>
     </TouchableOpacity>
   )
 }

@@ -560,6 +560,7 @@ export const allLineTypeData= [
   },
 ]
 
+//故障诊断数据
 export const diagnosisData = [
   {
     id: 1,
@@ -719,5 +720,81 @@ export const seekData = [
     materialName: '隔爆系统',
     models: '多拖多隔爆',
     unites: '套',
+  },
+  {
+    longCode: '02.5.0050',
+    materialName: '隔爆系统',
+    models: '一拖二FFSP',
+    unites: '件',
+  },
+  {
+    longCode: '02.5.0051',
+    materialName: '隔爆系统',
+    models: '一拖三FFSP',
+    unites: '件',
+  },
+]
+
+//配件搜索Tab-所有配件数据
+export const seekPartsData = [
+  {
+    id: 1,
+    parts: '配件1',
+  },
+  {
+    id: 2,
+    parts: '配件2',
+  },
+  {
+    id: 3,
+    parts: '配件3',
+  },
+  {
+    id: 4,
+    parts: '配件4',
+  },
+  {
+    id: 5,
+    parts: '配件5',
+  },
+  {
+    id: 6,
+    parts: '配件6',
+  },
+  {
+    id: 7,
+    parts: '配件7',
+  },
+]
+
+//配件搜索Tab-所有类型数据
+export const seekTypesData = [
+  {
+    id: 1,
+    types: '类型名1',
+  },
+  {
+    id: 2,
+    types: '类型名2',
+  },
+  {
+    id: 3,
+    types: '类型名3',
+  },
+  {
+    id: 4,
+    types: '类型名4',
+  },
+  {
+    id: 5,
+    types: '类型名5',
+  },
+  {
+    id: 6,
+    types: '类型名6',
+  },
+  {
+    id: 7,
+    types: '类型名7',
   },
 ]

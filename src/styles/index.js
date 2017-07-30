@@ -21,6 +21,9 @@ import dynamicOrder from './dynamicOrder'
 import diagDetail from './diagDetail'
 import pushOrderS from './pushOrderS'
 import seek from './seek'
+import seekTab from './seekTab'
+import seekDetail from './seekDetail'
+import headerTitle from './headerTitle'
 import other from './other'
 
 export {
@@ -47,5 +50,8 @@ export {
   diagDetail,
   pushOrderS,
   seek,
+  seekTab,
+  seekDetail,
+  headerTitle,
   other,
 }
