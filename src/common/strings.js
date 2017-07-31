@@ -80,6 +80,9 @@ export const inventoryStatus = '库存情况'
 export const inputPartsKeywords = '输入配件关键词'
 export const inputDeviceFault = '输入设备故障'
 export const inputDeviceNumber = '输入设备编号' 
+export const inputDeviceTypes = '输入设备类型' 
+export const historicalRecord = '历史记录' 
+export const hotSearch = '热门搜索' 
 export const inTheEnd = ' ————  已经到底了  ———— '
 
 

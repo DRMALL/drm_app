@@ -24,6 +24,7 @@ import seek from './seek'
 import seekTab from './seekTab'
 import seekDetail from './seekDetail'
 import headerTitle from './headerTitle'
+import search from './search'
 import other from './other'
 
 export {
@@ -53,5 +54,6 @@ export {
   seekTab,
   seekDetail,
   headerTitle,
+  search,
   other,
 }

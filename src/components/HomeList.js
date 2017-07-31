@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, ListView } from 'react-native'
+import { View, Text, Image, ListView, TouchableOpacity } from 'react-native'
 import { home } from '../styles'
 
 export default props => {
@@ -10,20 +10,24 @@ export default props => {
   return(
     <ListView 
       dataSource={finalDs}
-      renderRow={rowData => <HomeListItem rowData={rowData} />}
+      renderRow={rowData => <HomeListItem rowData={rowData} navigation={props.navigation}/>}
     />
   )
 }
 
-const HomeListItem = ({ rowData }) => {
-  const { title, img } = rowData
+const HomeListItem = ({ rowData, navigation }) => {
+  const { title, img, } = rowData
   return(
-    <View style={home.wrap}>
+    <TouchableOpacity 
+      style={home.wrap} 
+      activeOpacity={0.8} 
+      onPress={()=> navigation.navigate('homeDetail')}
+    >
       <Image source={img} style={home.img} />
       <View style={home.cover}>
         <Text style={home.title}>{title}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

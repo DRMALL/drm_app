@@ -27,6 +27,11 @@ import Remark from '../components/archives/Remark'
 import DiagDetail from '../components/diagnose/DiagDetail'
 import PushOrder from '../components/diagnose/PushOrder'
 import SeekDetail from '../components/seek/SeekDetail'
+import SearchDevice from '../components/search/SearchDevice'
+import SearchDiagnose from '../components/search/SearchDiagnose'
+import SearchSeek from '../components/search/SearchSeek'
+import SearchStatus from '../components/search/SearchStatus'
+import HomeDetail from '../components/HomeDetail'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -133,5 +138,20 @@ export default StackNavigator({
   },
   seekDetail: {
     screen: SeekDetail,
+  },
+  searchDevice: {
+    screen: SearchDevice,
+  },
+  searchDiagnose: {
+    screen: SearchDiagnose,
+  },
+  searchSeek: {
+    screen: SearchSeek,
+  },
+  searchStatus: {
+    screen: SearchStatus,
+  },
+  homeDetail: {
+    screen: HomeDetail,
   },
 })
