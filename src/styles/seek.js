@@ -4,6 +4,7 @@ export default {
 //Seek
   dataColumnView: {
     backgroundColor: mainColor,
+    opacity: 1,
   },
   itemTouch: {
     height: 55,

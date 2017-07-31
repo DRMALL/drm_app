@@ -16,4 +16,9 @@ export default {
     paddingHorizontal: 16,
     fontSize: 15,
   },
+  textInput2: {
+    textAlignVertical: 'top',
+    paddingHorizontal: 16,
+    fontSize: 15,
+  },
 }

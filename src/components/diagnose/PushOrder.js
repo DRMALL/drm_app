@@ -31,7 +31,7 @@ export default class PushOrder extends Component {
         />
         <View style={pushOrderS.empty}/>
         <TextInput 
-          style={[pushOrderS.textInput, {marginTop: 15}]}
+          style={[pushOrderS.textInput2, {marginTop: 15}]} 
           placeholder={pushOrderPlaceholder2} 
           placeholderTextColor={subTitleColor}
           multiline={true} 

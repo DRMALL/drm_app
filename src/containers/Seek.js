@@ -104,43 +104,47 @@ export default class Seek extends Component {
 const SeekPartsColumn = props => {
   let { partsData, state, openModal, pressPartColumn } = props
   return (
-    <ScrollView>
+    <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>
-        {
-          partsData.map((partItem, p)=> <TouchableOpacity key={p} 
-            style={seek.itemTouch} 
-            activeOpacity={0.8}
-            onPress={()=> pressPartColumn(p)}
-          >
-            <Text style={[seek.itemText, state[`partColumn${p}`] ? {color: lightBlueColor} : {}]}>{partItem.parts}</Text>
-          </TouchableOpacity>)
-        }
+        <ScrollView>
+          {
+            partsData.map((partItem, p)=> <TouchableOpacity key={p} 
+              style={seek.itemTouch} 
+              activeOpacity={0.8}
+              onPress={()=> pressPartColumn(p)}
+            >
+              <Text style={[seek.itemText, state[`partColumn${p}`] ? {color: lightBlueColor} : {}]}>{partItem.parts}</Text>
+            </TouchableOpacity>)
+          }
+        </ScrollView>
       </View>
       <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('seekPartRow')}>
         <View style={seek.halfOpacityView}/>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   )
 }
 
 const SeekTypesColumn = props => {
   let { typesData, state, openModal, pressTypeColumn } = props
   return (
-    <ScrollView>
+    <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>
-        {
-          typesData.map((typeItem, t)=> <TouchableOpacity key={t} 
-            style={seek.itemTouch} 
-            activeOpacity={0.8}
-            onPress={()=> pressTypeColumn(t)}
-          >
-            <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.types}</Text>
-          </TouchableOpacity>)
-        }
+        <ScrollView>
+          {
+            typesData.map((typeItem, t)=> <TouchableOpacity key={t} 
+              style={seek.itemTouch} 
+              activeOpacity={0.8}
+              onPress={()=> pressTypeColumn(t)}
+            >
+              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.types}</Text>
+            </TouchableOpacity>)
+          }
+        </ScrollView>
       </View>
       <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('seekTypeRow')}>
         <View style={seek.halfOpacityView}/>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   )
 }
