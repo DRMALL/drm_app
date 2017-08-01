@@ -15,14 +15,30 @@ export default class UserName extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => alert('ok')}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={UserName.pressSaveName}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
-  })
+  });
+
+  static pressSaveName() {
+    alert('ok')
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      user_name: props.navigation.state.params.user_name,
+    }
+  }
+
   render() {
     return (
-      <View>
-        <TextInput style={other.textInput} underlineColorAndroid="transparent" />
+      <View style={other.wrap}>
+        <TextInput style={other.textInput} 
+          value={this.state.user_name} 
+          onChangeText={(user_name)=> this.setState({user_name})}
+          underlineColorAndroid="transparent" 
+        />
       </View>
     )
   }

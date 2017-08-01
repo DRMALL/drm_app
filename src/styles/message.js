@@ -1,8 +1,8 @@
-import { mainColor, mainColorPressed, subTitleColor, contentColor, lightRedColor, lightBlueColor, backgroundColor } from '../common/constants'
+import { mainColor, loginBackgroundColor, subTitleColor, contentColor, lightRedColor, lightBlueColor, backgroundColor } from '../common/constants'
 
 export default {
   scrollView: {
-    backgroundColor: mainColorPressed,
+    backgroundColor: loginBackgroundColor,
   },
   itemView: {
     backgroundColor: subTitleColor,

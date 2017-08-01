@@ -18,11 +18,23 @@ export default class Phone extends Component {
     headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => alert('ok')}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
-  })
+  });
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      phone_number: props.navigation.state.params.phone_number,
+    }
+  }
+
   render() {
     return (
-      <View>
-        <TextInput style={other.textInput} underlineColorAndroid="transparent" />
+      <View style={other.wrap}>
+        <TextInput style={other.textInput} 
+          value={this.state.phone_number} 
+          onChangeText={(phone_number)=> this.setState({phone_number})}
+          underlineColorAndroid="transparent" 
+        />
       </View>
     )
   }

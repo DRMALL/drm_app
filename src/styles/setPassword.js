@@ -1,9 +1,9 @@
-import { mainColorPressed, backgroundColor, mainColor, subTitleColor, primaryColor } from '../common/constants'
+import { mainColorPressed, backgroundColor, mainColor, subTitleColor, primaryColor, loginBackgroundColor } from '../common/constants'
 
 export default {
   wrap: {
     height: '100%',
-    backgroundColor: mainColorPressed,
+    backgroundColor: loginBackgroundColor,
   },
   fixText: {
     fontSize: 15,

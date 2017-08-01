@@ -11,6 +11,9 @@ import { primaryColor, subTitleColor, backgroundColor } from '../common/constant
 import { homeLabel, diagnoseLabel, deviceLabel, seekLabel, statusLabel } from '../common/strings'
 import { home } from '../styles'
 
+import Login from '../components/Login'
+import EmailVerify from '../components/login/EmailVerify'
+import SetPassword from '../components/login/SetPassword'
 import Message from '../components/Message'
 import DynamicOrder from '../components/message/DynamicOrder'
 import Information from '../components/Information'
@@ -90,6 +93,15 @@ export default StackNavigator({
         <Image source={infoIcon}/>
       </TouchableOpacity>,
     }),
+  },
+  login: {
+    screen: Login,
+  },
+  emailVerify: {
+    screen: EmailVerify,
+  },
+  setPassword: {
+    screen: SetPassword,
   },
   message: {
     screen: Message,

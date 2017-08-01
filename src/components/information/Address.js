@@ -18,11 +18,21 @@ export default class Address extends Component {
     headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => alert('ok')}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
-  })
+  });
+  constructor(props) {
+    super(props)
+    this.state = {
+      postal_address: props.navigation.state.params.postal_address,
+    }
+  }
   render() {
     return (
-      <View>
-        <TextInput style={other.textInput} underlineColorAndroid="transparent" />
+      <View style={other.wrap}>
+        <TextInput style={other.textInput} 
+          value={this.state.postal_address} 
+          onChangeText={(postal_address)=> this.setState({postal_address})}
+          underlineColorAndroid="transparent" 
+        />
       </View>
     )
   }

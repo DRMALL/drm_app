@@ -1,9 +1,9 @@
-import { backgroundColor, subTitleColor, mainColor, mainColorPressed, contentColor, primaryColor } from '../common/constants'
+import { backgroundColor, subTitleColor, mainColor, mainColorPressed, contentColor, primaryColor, loginBackgroundColor } from '../common/constants'
 
 export default {
   wrap: {
     height: '100%',
-    backgroundColor: mainColorPressed,
+    backgroundColor: loginBackgroundColor,
   },
   fixContentText: {
     paddingHorizontal: 16,

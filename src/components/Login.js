@@ -10,6 +10,13 @@ const loginPasswordShow = require('../images/login_password_show.png')
 const loginPasswordHide = require('../images/login_password_hide.png')
 
 export default class Login extends Component {
+  static navigationOptions = {
+    headerStyle: {
+      height: 0,
+      top: 50,
+    }
+  };
+
   constructor(props) {
     super(props)
     this.state = { 
@@ -18,10 +25,10 @@ export default class Login extends Component {
     }
   }
   loginPressButton = ()=> {
-    alert('登录')
+    this.props.navigation.navigate('main')
   };
   forgetPressButton = ()=> {
-    alert('密码重设')
+    this.props.navigation.navigate('emailVerify')
   };
   render() {
     return (

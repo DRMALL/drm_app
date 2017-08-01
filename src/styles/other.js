@@ -1,6 +1,10 @@
-import { mainColor, subTitleColor } from '../common/constants'
+import { mainColor, subTitleColor, loginBackgroundColor } from '../common/constants'
 
 export default {
+  wrap: {
+    height: '100%',
+    backgroundColor: loginBackgroundColor,
+  },
   textInput: {
     width: '100%',
     height: 50,

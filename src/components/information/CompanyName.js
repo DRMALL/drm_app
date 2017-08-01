@@ -18,12 +18,23 @@ export default class CompanyName extends Component {
     headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => alert('ok')}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
-  })
+  });
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      company_name: props.navigation.state.params.company_name,
+    }
+  }
+
   render() {
     return (
-      <View>
-        <TextInput style={other.textInput} underlineColorAndroid="transparent" />
-        <Image />
+      <View style={other.wrap}>
+        <TextInput style={other.textInput} 
+          value={this.state.company_name} 
+          onChangeText={(company_name)=> this.setState({company_name})}
+          underlineColorAndroid="transparent" 
+        />
       </View>
     )
   }

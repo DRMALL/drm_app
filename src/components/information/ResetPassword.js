@@ -21,7 +21,7 @@ export default class ResetPassword extends Component {
   })
   render() {
     return (
-      <View>
+      <View style={other.wrap}>
         <TextInput style={other.textInput} placeholder={originalPassword} secureTextEntry={true} underlineColorAndroid="transparent" />
         <TextInput style={other.textInput} placeholder={newPassword} secureTextEntry={true} underlineColorAndroid="transparent" />
         <TextInput style={other.textInput} placeholder={verifyNewPassword} secureTextEntry={true} underlineColorAndroid="transparent" />

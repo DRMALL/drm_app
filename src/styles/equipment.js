@@ -1,9 +1,9 @@
-import { mainColor, titleColor, backgroundColor, subTitleColor } from '../common/constants'
+import { mainColor, titleColor, backgroundColor, subTitleColor, loginBackgroundColor } from '../common/constants'
 
 export default {
   wrap: {
     width: '100%',
-    backgroundColor: backgroundColor,
+    backgroundColor: loginBackgroundColor,
   },
   fixText: {
     height: 40,
