@@ -3,6 +3,9 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import { primaryColor, mainColor, backgroundColor, subTitleColor } from '../common/constants'
 import { messageText, allSetAsRead, inTheEnd } from '../common/strings'
 import { message } from '../styles'
+import { checkToken } from '../utils/handleToken'
+import { getPort } from '../utils/fetchMethod'
+import { getInfo } from '../apis'
 import { messagesList } from '../utils/virtualData'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')

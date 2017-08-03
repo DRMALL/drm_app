@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import { View, Text, Image, Button } from 'react-native'
 import TabBarItem from '../components/units/TabBarItem'
 import store from '../utils/store'
-import { homeList } from '../utils/virtualData'
 import HomeList from '../components/HomeList'
+import { checkToken } from '../utils/handleToken'
+import { getPort } from '../utils/fetchMethod'
+import { getNews } from '../apis'
+import { homeList } from '../utils/virtualData'
 
 const homeIconSelected = require('../images/tabbar_icons/tabbar_home_selected.png')
     , homeIconNormal = require('../images/tabbar_icons/tabbar_home_normal.png')
@@ -18,12 +21,36 @@ export default class Home extends Component {
         selectedImage={homeIconSelected} 
       />
     )
-  })
+  });
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      newsListData: {},
+    }
+  }
+
+  componentDidMount() {
+    this.getNewsList()
+  }
+
+  getNewsList() {
+    checkToken('drmAppToken')
+    .then(async token => {
+      let res = await getPort(`${getNews}?token=${token}`)
+      if(res.code == 200) {
+        this.setState({
+          newsListData: res.data,
+        })
+      }
+    })
+  }
 
   render() {
+    let { newsListData } = this.state
     return(
       <View>
-        <HomeList data={homeList} {...this.props} />
+        <HomeList data={newsListData} {...this.props} />
       </View>
     )
   }

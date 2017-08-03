@@ -501,62 +501,62 @@ export const allLineTypeData= [
   {
     id: 1,
     types: '生产',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂生产。',
   },
   {
     id: 2,
     types: '仓储',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂仓储。',
   },
   {
     id: 3,
     types: '购买',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂购买。',
   },
   {
     id: 4,
     types: '运输',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂运输。',
   },
   {
     id: 5,
     types: '安装',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂安装。',
   },
   {
     id: 6,
     types: '维修',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂维修。',
   },
   {
     id: 7,
     types: '租凭',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂租凭。',
   },
   {
     id: 8,
     types: '保养',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂保养。',
   },
   {
     id: 9,
     types: '安装',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂安装。',
   },
   {
     id: 10,
     types: '维修',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂维修。',
   },
   {
     id: 11,
     types: '租凭',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂租凭。',
   },
   {
     id: 12,
     types: '保养',
-    reference: '参考文本：设备在江苏工厂排产制造。',
+    reference: '设备在江苏工厂保养。',
   },
 ]
 
@@ -797,4 +797,9 @@ export const seekTypesData = [
     id: 7,
     types: '类型名7',
   },
+]
+
+export const orderTypesData = [
+  '故障处理工单',
+  '配件工单',
 ]

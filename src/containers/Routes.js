@@ -79,6 +79,9 @@ const Main = TabNavigator(
 )
 
 export default StackNavigator({
+  login: {
+    screen: Login,
+  },
   main: { 
     screen: Main, 
     navigationOptions: ({ navigation }) => ({
@@ -93,9 +96,6 @@ export default StackNavigator({
         <Image source={infoIcon}/>
       </TouchableOpacity>,
     }),
-  },
-  login: {
-    screen: Login,
   },
   emailVerify: {
     screen: EmailVerify,
@@ -167,3 +167,4 @@ export default StackNavigator({
     screen: HomeDetail,
   },
 })
+

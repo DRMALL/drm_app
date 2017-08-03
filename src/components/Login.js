@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord } from '../common/strings'
 import { login } from '../styles'
 import Button from './units/Button'
 import TextInputImg from './units/TextInputImg'
+import { checkToken, depositToken, clearToken } from '../utils/handleToken'
+import { postPort } from '../utils/fetchMethod'
+import { signIn } from '../apis'
+
 
 const loginScreenLogo = require('../images/login_screen_logo.png')
 const loginPasswordShow = require('../images/login_password_show.png')
@@ -24,12 +28,33 @@ export default class Login extends Component {
       textWord: '',
     }
   }
-  loginPressButton = ()=> {
-    this.props.navigation.navigate('main')
-  };
-  forgetPressButton = ()=> {
+
+  componentDidMount() {
+    checkToken('drmAppToken')
+    .then(token => {
+      if(token) this.props.navigation.navigate('main')
+    })
+    // clearToken()
+  }
+
+  async loginPressButton() {
+    let bodyData = {
+      email: this.state.textEmail,
+      password: this.state.textWord,
+    }
+    let res = await postPort(signIn, bodyData)
+    if(res.code == 201) {
+      depositToken('drmAppToken', res.data)
+      this.props.navigation.navigate('main')
+    } else {
+      alert('邮箱或密码输入有误')
+    }
+  }
+
+  forgetPressButton() {
     this.props.navigation.navigate('emailVerify')
-  };
+  }
+
   render() {
     return (
       <View style={login.wrap}>
@@ -65,13 +90,13 @@ export default class Login extends Component {
           title={loginText}
           titleStyle={login.touchLoginText}
           style={login.touchOpacity} 
-          onPress={this.loginPressButton}
+          onPress={this.loginPressButton.bind(this)}
         />
         <Button 
           title={loginForgetWord}
           titleStyle={login.touchForgetText}
           style={{height: 40, margin: 20, justifyContent: "center" }} 
-          onPress={this.forgetPressButton}
+          onPress={this.forgetPressButton.bind(this)}
         />
       </View>
     )

@@ -109,7 +109,7 @@ export default {
     flexDirection: 'row',
   },
   dateView: {
-    width: 65, 
+    width: 70, 
     height: '100%',
     justifyContent: 'flex-start',
     paddingHorizontal: 16,

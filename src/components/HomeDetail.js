@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
+import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor } from '../common/constants'
 import {  } from '../common/strings'
 import { seekDetail, detail } from '../styles'
+import { checkToken } from '../utils/handleToken'
+import { getPort } from '../utils/fetchMethod'
+import { getNewsOne } from '../apis'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const shareIcon = require('../images/navigation_icons/share.png')
-const pic5 = require('../images/pic5.png')
-const pic6 = require('../images/pic6.png')
-const pic7 = require('../images/pic7.png')
+const uploadPic = require('../images/uploadPic.png')
 
 export default class HomeDetail extends Component {
   static navigationOptions = {
@@ -17,17 +19,46 @@ export default class HomeDetail extends Component {
       height: 0,
       top: 50,
     }
+  };
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      newsOneData: {},
+    }
+  }
+
+  componentDidMount() {
+    this.getNewsOne()
+  }
+
+  getNewsOne() {
+    let id = this.props.navigation.state.params.newsId
+    checkToken('drmAppToken')
+    .then(async token => {
+      let res = await getPort(`${getNewsOne}?id=${id}&token=${token}`)
+      if(res.code == 201) {
+        this.setState({
+          newsOneData: res.data,
+        })
+      }
+    })
   }
 
   render() {
     let { navigation } = this.props
+      , { newsOneData } = this.state
     return (
       <ScrollView style={{backgroundColor: mainColor}}>
-        <HomeSwiperHeader navigation={navigation}/>
-        <Text style={[detail.titleText, {paddingHorizontal: 16}]}>多元热流体稠油增产技术在金海采油厂开始现场试验</Text>
-        <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>2017-01-01</Text>
+        <HomeSwiperHeader picData={newsOneData.images ? newsOneData.images : []} navigation={navigation} />
+        <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
+        <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
+          {
+            newsOneData.publish_time ? moment(newsOneData.publish_time).format('YYYY-MM-DD') : '0000-00-00'
+          }
+        </Text>
         <Text style={detail.ordinaryText}>
-          {`在油田公司领导的亲切关怀下，多元热流体稠油增产技术在金海采油厂开始现场试验。该项目得到采油处的精心指导、钻采院的技术支持、金海采油厂的大力配合、使试验得到顺利开展。第一口试井已经投产，效果有待进一步观察；第二口试验井正在注入当中。\n\n在油田公司领导的亲切关怀下，多元热流体稠油增产技术在金海采油厂开始现场试验。`}
+          {newsOneData.content}
         </Text>
       </ScrollView>
     )
@@ -35,15 +66,17 @@ export default class HomeDetail extends Component {
 }
 
 const HomeSwiperHeader = props => {
-  let { navigation } = props
-    , picArr = [pic5, pic6, pic5, pic6, pic7]  //图片数组
+  let { picData, navigation } = props
+    , arrpic = [uploadPic, uploadPic, uploadPic]
   return (
     <View style={seekDetail.headerView}>
       <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>
-        {
-          picArr.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
-            <Image style={seekDetail.pics} source={picItem}/>
-          </View>)
+        { 
+          picData[0] ? 
+          picData.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
+            <Image style={seekDetail.pics} source={{url: picItem.url}}/>
+          </View>) : 
+          <Image style={seekDetail.pics} source={uploadPic}/>
         }
       </Swiper>
       <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>

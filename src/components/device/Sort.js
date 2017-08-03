@@ -3,38 +3,17 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { lightBlueColor, subTitleColor } from '../../common/constants'
 import { sort } from '../../styles'
 
-export default class Sort extends Component {
-  constructor(props) {
-    super(props)
-    this.state = (props => {
-      let sortStateObj = {}
-      props.data.map((sortText, index)=> {
-        sortStateObj[`sortRow${index}`] = false
-      })
-      return sortStateObj
-    })(props)
-  }
-
-  pressSort(s) {
-    this.props.data.map((sortText, index)=> {
-      if(s == index) {
-        this.setState({ [`sortRow${s}`]: !this.state[`sortRow${s}`] })
-      } else this.setState({ [`sortRow${index}`]: false })
-    })
-  }
-
-  render() {
-    let { data } = this.props
-    return (
-      <View style={sort.modalWrap}>
-        <ScrollView>
-          {
-            data.map((sortItem, s)=> <SortItemRow key={s} sortItem={sortItem} s={s} state={this.state} pressSort={this.pressSort.bind(this)}/>)
-          }
-        </ScrollView>
-      </View>
-    )
-  }
+export default props => {
+  let { data, state, pressSort } = props
+  return (
+    <View style={sort.modalWrap}>
+      <ScrollView>
+        {
+          data.map((sortItem, s)=> <SortItemRow key={s} sortItem={sortItem} s={s} state={state} pressSort={pressSort}/>)
+        }
+      </ScrollView>
+    </View>
+  )
 }
 
 const SortItemRow = props => {

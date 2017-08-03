@@ -14,6 +14,7 @@ export default props => {
     <ListView 
       dataSource={finalDs}
       renderRow={(rowData) => <StatusListItem rowData={rowData} navigation={navigation}/>}
+      enableEmptySections={true}
     />
   )
 }

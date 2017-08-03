@@ -3,8 +3,12 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { companyName, save } from '../../common/strings'
+import { updateInfo } from '../../apis'
+import { postPort } from '../../utils/fetchMethod'
+import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
+let companynameData
 
 export default class CompanyName extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -15,10 +19,23 @@ export default class CompanyName extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => alert('ok')}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => CompanyName.pressSaveCName(navigation)}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
   });
+
+  static pressSaveCName(navigation) {
+    checkToken('drmAppToken')
+    .then(async token => {
+      let bodyData = {
+        company_name: companynameData,
+      }
+      let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
+      if(res.code == 201) {
+        navigation.navigate('information')
+      }
+    })
+  }
 
   constructor(props) {
     super(props)
@@ -27,13 +44,19 @@ export default class CompanyName extends Component {
     }
   }
 
+  onChangeCName(company_name) {
+    this.setState({ company_name })
+    companynameData = company_name
+  }
+
   render() {
     return (
       <View style={other.wrap}>
         <TextInput style={other.textInput} 
           value={this.state.company_name} 
-          onChangeText={(company_name)=> this.setState({company_name})}
-          underlineColorAndroid="transparent" 
+          onChangeText={this.onChangeCName.bind(this)}
+          underlineColorAndroid='transparent' 
+          autoCapitalize='none'
         />
       </View>
     )

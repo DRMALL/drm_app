@@ -30,7 +30,6 @@ export default {
     fontWeight: 'bold',
   },
   archivesItemTouch: {
-    height: 120,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 20,
@@ -39,9 +38,10 @@ export default {
     backgroundColor: mainColor,
   },
   archivesItemImg: {
-    width: 45,
-    height: 45,
-    resizeMode: 'contain',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    resizeMode: 'stretch',
     marginLeft: 16,
   },
   archivesItemOther: {
@@ -53,6 +53,9 @@ export default {
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  archivesNoTime2: {
+    justifyContent: 'center',
+  },
   archivesItemNo: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -62,6 +65,7 @@ export default {
     fontSize: 12,
   },
   archivesItemLabsView: {
+    paddingVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },

@@ -5,6 +5,9 @@ import { primaryColor, loginBackgroundColor } from '../common/constants'
 import { basicDocument, userName, companyName, phoneNumber, postalAddress, securitySetting, resetPassword, personalInformation } from '../common/strings'
 import { information } from '../styles'
 import TouchIntoText from './units/TouchIntoText'
+import { checkToken, depositToken, clearToken } from '../utils/handleToken'
+import { getPort } from '../utils/fetchMethod'
+import { getInfo } from '../apis'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../images/navigation_icons/empty.png')
@@ -15,7 +18,7 @@ export default class Information extends Component {
       backgroundColor: primaryColor,
     },
     headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{personalInformation}</Text>,
-    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
+    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('main')}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
@@ -31,19 +34,21 @@ export default class Information extends Component {
     }
   }
   componentDidMount() {
-    return fetch('https://api.wardenger.me/app/user?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5Njc0NzdjYjJjYzc0MzJhNDM0OGI4NyIsImlhdCI6MTUwMTUwNjYyN30.8PaoVD9s6ICu2Jfrj4xVBa3zLAOqbjwCkks0d9y4-LM')
-    .then((response)=> response.json())
-    .then((responseJson)=> {
-      let userInfo = responseJson.data
-      this.setState({
-        user_name: userInfo.name,
-        company_name: userInfo.company_name,
-        phone_number: userInfo.phone,
-        postal_address: userInfo.address,
-      })
-    })
-    .catch((error)=> {
-      console.error(error)
+    this.getInformation()
+  }
+
+  getInformation() {
+    checkToken('drmAppToken')
+    .then(async token => {
+      let res = await getPort(`${getInfo}?token=${token}`)
+      if(res.code == 200) {
+        this.setState({
+          user_name: res.data.name,
+          company_name: res.data.company_name,
+          phone_number: res.data.phone,
+          postal_address: res.data.address,
+        })
+      }
     })
   }
 
