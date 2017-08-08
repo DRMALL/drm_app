@@ -21,7 +21,7 @@ const DiagTabItem = props => {
     , tabSelectState = state[`tabTypeRow${dt}`]
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={()=> pressTab(dt)}>
-      <Text style={[diagnosisTab.tabText, {color: tabSelectState ? lightBlueColor : contentColor}]}>{tabItem.tabTypes}</Text>
+      <Text style={[diagnosisTab.tabText, {color: tabSelectState ? lightBlueColor : contentColor}]}>{tabItem.text}</Text>
       <View style={[diagnosisTab.tabLine, {backgroundColor: tabSelectState ? lightBlueColor : mainColor}]}/>
     </TouchableOpacity>
   )

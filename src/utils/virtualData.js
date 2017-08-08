@@ -38,42 +38,54 @@ export const statusList = [
     photo: require('../images/pic3.png'),
     deviceNo: '设备编号001',
     deviceState: true,
+    normal: true,
     stopTime: '2017-07-17',
+    updateTime: '2017-08-08 19:30',
   },
   {
     id: 1,
     photo: require('../images/pic3.png'),
     deviceNo: '设备编号002',
     deviceState: false,
-    stopTime: '2017-07-17',
+    normal: false,
+    stopTime: '2017-08-06',
+    updateTime: '2017-08-07 19:30',
   },
   {
     id: 2,
     photo: require('../images/pic3.png'),
     deviceNo: '设备编号003',
     deviceState: true,
-    stopTime: '2017-07-17',
+    normal: true,
+    stopTime: '2017-07-18',
+    updateTime: '2017-08-06 19:30',
   },
   {
     id: 3,
     photo: require('../images/pic3.png'),
     deviceNo: '设备编号004',
     deviceState: false,
-    stopTime: '2017-07-17',
+    normal: false,
+    stopTime: '2017-08-01',
+    updateTime: '2017-08-04 19:30',
   },
   {
     id: 4,
     photo: require('../images/pic3.png'),
     deviceNo: '设备编号005',
     deviceState: false,
-    stopTime: '2017-07-17',
+    normal: false,
+    stopTime: '2017-07-30',
+    updateTime: '2017-08-01 19:30',
   },
   {
     id: 5,
     photo: require('../images/pic3.png'),
     deviceNo: '设备编号006',
     deviceState: true,
-    stopTime: '2017-07-17',
+    normal: true,
+    stopTime: '2017-07-20',
+    updateTime: '2017-07-19 19:30',
   },
 ]
 
@@ -84,14 +96,89 @@ export const equipmentDataList = [
     title: '本类别数据名称1',
     textArr: [
       { 
-        text: '氧气入口压力',
+        text: '氧气入口压力1',
         num: 'NN.NN',
         unit: 'MPa',
       },
       { 
-        text: '氧气入口压力',
+        text: '氧气流量1',
+        num: 'NN.NN',
+        unit: 'Kg/h',
+      },
+      { 
+        text: '氧气累计流量1',
+        num: 'NN.NN',
+        unit: 'Kg',
+      },
+      { 
+        text: '天然气入口压力1',
         num: 'NN.NN',
         unit: 'MPa',
+      },
+      { 
+        text: '天然气出口压力1',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '天然气流量1',
+        num: 'NN.NN',
+        unit: 'Kg/h',
+      },
+      { 
+        text: '天然气流量2',
+        num: 'NN.NN',
+        unit: 'Kg/h',
+      },
+      { 
+        text: '天然气累计流量1',
+        num: 'NN.NN',
+        unit: 'Kg',
+      },
+      { 
+        text: '天然气累计流量2',
+        num: 'NN.NN',
+        unit: 'Kg',
+      },
+      { 
+        text: '水入口压力1',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '水入口压力2',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '水泵出口压力1',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '水泵出口压力2',
+        num: 'NN.NN',
+        unit: 'MPa',
+      },
+      { 
+        text: '水流量1',
+        num: 'NN.NN',
+        unit: 'T/h',
+      },
+      { 
+        text: '水流量2',
+        num: 'NN.NN',
+        unit: 'T/h',
+      },
+      { 
+        text: '水累计流量1',
+        num: 'NN.NN',
+        unit: 'T',
+      },
+      { 
+        text: '水累计流量2',
+        num: 'NN.NN',
+        unit: 'T',
       },
     ]
   },
@@ -100,14 +187,39 @@ export const equipmentDataList = [
     title: '本类别数据名称2',
     textArr: [
       { 
-        text: '氧气入口压力',
+        text: '热载体温度1',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '热载体温度2',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '热载体压力1',
         num: 'NN.NN',
         unit: 'MPa',
       },
       { 
-        text: '氧气入口压力',
+        text: '热载体压力2',
         num: 'NN.NN',
         unit: 'MPa',
+      },
+      { 
+        text: '冷却水温度1',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '冷却水温度2',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '空燃比1',
+        num: 'NN.NN',
+        unit: '无',
       },
     ]
   },
@@ -116,14 +228,19 @@ export const equipmentDataList = [
     title: '本类别数据名称3',
     textArr: [
       { 
-        text: '氧气入口压力',
+        text: '可燃气1含量',
         num: 'NN.NN',
-        unit: 'MPa',
+        unit: '%',
       },
       { 
-        text: '氧气入口压力',
+        text: '可燃气2含量',
         num: 'NN.NN',
-        unit: 'MPa',
+        unit: '%',
+      },
+      { 
+        text: '可燃气3含量',
+        num: 'NN.NN',
+        unit: '%',
       },
     ]
   },
@@ -132,12 +249,32 @@ export const equipmentDataList = [
     title: '本类别数据名称4',
     textArr: [
       { 
-        text: '氧气入口压力',
+        text: '水箱PV',
         num: 'NN.NN',
-        unit: 'MPa',
+        unit: 'm',
       },
       { 
-        text: '氧气入口压力',
+        text: '水箱SV',
+        num: 'NN.NN',
+        unit: 'm',
+      },
+      { 
+        text: '冷却水温度PV',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '冷取水温度SV',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '加热水箱',
+        num: 'NN.NN',
+        unit: '°C',
+      },
+      { 
+        text: '压缩空气',
         num: 'NN.NN',
         unit: 'MPa',
       },
@@ -369,18 +506,22 @@ export const classifyData = [
     kinds: [
       {
         title: '单发生器',
+        type: 'cc',
         num: 1234,
       },
       {
         title: '双发生器',
+        type: 'cc',
         num: 1234,
       },
       {
         title: '三发生器',
+        type: 'cc',
         num: 1234,
       },
       {
         title: '四发生器',
+        type: 'cc',
         num: 1234,
       },
     ],
@@ -391,26 +532,32 @@ export const classifyData = [
     kinds: [
       {
         title: '25Mpa',
+        type: 'pressure',
         num: 1234,
       },
       {
         title: '30Mpa',
+        type: 'pressure',
         num: 1234,
       },
       {
         title: '35Mpa',
+        type: 'pressure',
         num: 1234,
       },
       {
         title: '50Mpa',
+        type: 'pressure',
         num: 1234,
       },
       {
         title: '60Mpa',
+        type: 'pressure',
         num: 1234,
       },
       {
         title: '80Mpa',
+        type: 'pressure',
         num: 1234,
       },
     ],
@@ -421,14 +568,103 @@ export const classifyData = [
     kinds: [
       {
         title: '柴油型',
+        type: 'combustible',
         num: 1234,
       },
       {
         title: '原油型',
+        type: 'combustible',
         num: 1234,
       },
       {
         title: '天然气型',
+        type: 'combustible',
+        num: 1234,
+      },
+    ],
+    num: 1234
+  },
+]
+
+export const filterData = [
+  {
+    class: '排量', 
+    kinds: [
+      {
+        text: '单发生器',
+        type: 'cc',
+        num: 1234,
+      },
+      {
+        text: '双发生器',
+        type: 'cc',
+        num: 1234,
+      },
+      {
+        text: '三发生器',
+        type: 'cc',
+        num: 1234,
+      },
+      {
+        text: '四发生器',
+        type: 'cc',
+        num: 1234,
+      },
+    ],
+    num: 1234
+  },
+  {
+    class: '压力范围', 
+    kinds: [
+      {
+        text: '25Mpa',
+        type: 'pressure',
+        num: 1234,
+      },
+      {
+        text: '30Mpa',
+        type: 'pressure',
+        num: 1234,
+      },
+      {
+        text: '35Mpa',
+        type: 'pressure',
+        num: 1234,
+      },
+      {
+        text: '50Mpa',
+        type: 'pressure',
+        num: 1234,
+      },
+      {
+        text: '60Mpa',
+        type: 'pressure',
+        num: 1234,
+      },
+      {
+        text: '80Mpa',
+        type: 'pressure',
+        num: 1234,
+      },
+    ],
+    num: 1234
+  },
+  {
+    class: '使用燃料', 
+    kinds: [
+      {
+        text: '柴油型',
+        type: 'combustible',
+        num: 1234,
+      },
+      {
+        text: '原油型',
+        type: 'combustible',
+        num: 1234,
+      },
+      {
+        text: '天然气型',
+        type: 'combustible',
         num: 1234,
       },
     ],

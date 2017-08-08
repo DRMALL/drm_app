@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, Alert, StatusBar } from 'react-native'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, contentColor } from '../../common/constants'
@@ -106,6 +106,7 @@ export default class TimePoint extends Component {
           selectOne: typeRowOne ? item.types : pleaseSelect,
           [`typeRow${index}`]: typeRowOne,
           tline_description: typeRowOne ? item.reference : '',
+          touchSelect: typeRowOne ? false : !typeRowOne,
         })
       } else this.setState({[`typeRow${i}`]: false})
     })
@@ -137,6 +138,7 @@ export default class TimePoint extends Component {
       , displayView = this.state.displayView
     return (
       <View style={timePoint.wrap}>
+        <StatusBar backgroundColor={primaryColor} />
         <View style={timePoint.nextWrap}>
           <Text style={timePoint.fixText}>{timelineType}</Text>
           <TouchableOpacity style={timePoint.touch} activeOpacity={0.6} onPress={()=> this.pressTouch(`touchSelect`)}>

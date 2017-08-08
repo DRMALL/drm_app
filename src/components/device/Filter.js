@@ -6,13 +6,15 @@ import { filter } from '../../styles'
 import Button from '../units/Button'
 
 export default props => {
-  let { data, state, pressBotton, pressConfirmReturn } = props
+  let { data, cityData, state, pressBotton, pressConfirmReturn, pressFilterParams } = props
     , { confirmPress, cleanPress } = state
+    , citiesData = [{class: '所在地', kinds: cityData}]
+  data = data.concat(citiesData)
   return (
     <View style={filter.modalWrap}>
       <View>
         {
-          data.map((item, i)=> <FilterClassItem key={i} classItem={item} state={state}/>)
+          data.map((item, i)=> <FilterClassItem key={i} classItem={item} state={state} pressFilterParams={pressFilterParams}/>)
         }
       </View>
       <View style={filter.buttonView}>
@@ -30,7 +32,7 @@ export default props => {
           title={confirm} 
           titleStyle={[filter.buttonTitle, {color: confirmPress ? mainColor : contentColor} ]} 
           onPressIn={()=> pressBotton(`confirmPress`)} 
-          delayPressOut={200}
+          delayPressOut={0}
           onPressOut={()=> pressBotton(`confirmPress`)} 
           onPress={()=> pressConfirmReturn()}
           activeOpacity={0.8}
@@ -56,19 +58,19 @@ class FilterClassItem extends Component {
     this.props.classItem.kinds.map((kind, k)=> {
       if(f == k) {
         this.setState({ [`filterRow${f}`]: !this.state[`filterRow${f}`] })
+        this.props.pressFilterParams(kind.type, kind.text)
       } else this.setState({ [`filterRow${k}`]: false })
     })
   }
 
   componentWillUpdate() {
-    console.log(this.props.state.cleanPress)
     if(this.props.state.cleanPress) {
       this.pressFilter()
     }
   }
 
   render() {
-    let { classItem } = this.props
+    let { classItem, state } = this.props
     return (
       <View style={classItem.class == '排量' ? filter.pailiangView : filter.otherView}>
         <View style={classItem.class == '排量' ? filter.pailiangSecondView : filter.secondView}>
@@ -77,7 +79,7 @@ class FilterClassItem extends Component {
         </View>
         <ScrollView style={{marginHorizontal: 15}} horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={filter.kindView}>
-            {classItem.kinds.map((kindItem, f)=> <FilterKindItem key={f} kindItem={kindItem} f={f} state={this.state} pressFilter={this.pressFilter.bind(this)} />)}
+            {classItem.kinds.map((kindItem, f)=> <FilterKindItem key={f} kindItem={kindItem} f={f} state={state} sonstate={this.state} pressFilter={this.pressFilter.bind(this)} />)}
           </View>
         </ScrollView>
       </View>
@@ -86,11 +88,31 @@ class FilterClassItem extends Component {
 }
 
 const FilterKindItem = props => {
-  let { kindItem, f, state, pressFilter } = props
-    , selectFilterRow = state[`filterRow${f}`]
+  let { kindItem, f, state, sonstate, pressFilter } = props
+    , selectFilterRow = sonstate[`filterRow${f}`]
+    , pointedExist = kindExist(kindItem, state)
   return (
-    <TouchableOpacity style={[filter.kindTouch, {borderColor: selectFilterRow ? lightBlueColor : loginBorderColor}]} activeOpacity={0.8} onPress={()=> pressFilter(f)}>
-      <Text style={[filter.kindText, {color: selectFilterRow ? lightBlueColor : loginBorderColor}]}>{kindItem.title}</Text>
+    <TouchableOpacity style={[filter.kindTouch, {borderColor: selectFilterRow || pointedExist ? lightBlueColor : loginBorderColor}]} activeOpacity={0.8} onPress={()=> pressFilter(f)}>
+      <Text style={[filter.kindText, {color: selectFilterRow || pointedExist ? lightBlueColor : loginBorderColor}]}>{kindItem.text}</Text>
     </TouchableOpacity>
   )
+}
+
+const kindExist = (kindItem, state)=> {
+  let exist = false
+  switch(kindItem.type) {
+    case 'cc': {
+      exist = kindItem.text == state.filtercc ? true : false
+    }break
+    case 'pressure': {
+      exist = kindItem.text == state.filterpressure ? true : false
+    }break
+    case 'combustible': {
+      exist = kindItem.text == state.filtercombustible ? true : false
+    }break
+    default: {
+      exist = kindItem.text == state.filteraddress ? true : false
+    }
+  }
+  return exist
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Image, Button } from 'react-native'
+import { View, Text, Image, Button, StatusBar } from 'react-native'
+import { primaryColor, loginBackgroundColor } from '../common/constants'
 import TabBarItem from '../components/units/TabBarItem'
 import store from '../utils/store'
 import HomeList from '../components/HomeList'
@@ -49,7 +50,8 @@ export default class Home extends Component {
   render() {
     let { newsListData } = this.state
     return(
-      <View>
+      <View style={{backgroundColor: loginBackgroundColor}}>
+        <StatusBar backgroundColor={primaryColor} />
         <HomeList data={newsListData} {...this.props} />
       </View>
     )

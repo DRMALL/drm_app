@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Platform, StatusBar } from 'react-native'
 import { mainColor, primaryColor, subTitleColor } from '../../common/constants'
 import { inputPartsKeywords, historicalRecord, hotSearch } from '../../common/strings'
 import { search } from '../../styles'
@@ -39,6 +39,7 @@ export default class SearchSeek extends Component {
       , hotData = ['热门搜索词', '热门搜索词', '热门搜索词', '热门搜索词', '热门搜索词', '热门搜索词']
     return (
       <View style={{height: '100%'}}>
+        <StatusBar backgroundColor={primaryColor} />
         <HeaderSearch 
           state={this.state} 
           navigation={navigation} 

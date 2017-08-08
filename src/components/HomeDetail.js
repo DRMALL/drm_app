@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import Swiper from 'react-native-swiper'
 import moment from 'moment'
-import { primaryColor, mainColor, loginBorderColor } from '../common/constants'
+import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
 import {  } from '../common/strings'
 import { seekDetail, detail } from '../styles'
 import { checkToken } from '../utils/handleToken'
@@ -11,6 +11,7 @@ import { getNewsOne } from '../apis'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const shareIcon = require('../images/navigation_icons/share.png')
+const icInsertPhotoIcon = require('../images/navigation_icons/ic_insert_photo.png')
 const uploadPic = require('../images/uploadPic.png')
 
 export default class HomeDetail extends Component {
@@ -50,6 +51,7 @@ export default class HomeDetail extends Component {
       , { newsOneData } = this.state
     return (
       <ScrollView style={{backgroundColor: mainColor}}>
+        <StatusBar hidden={true}/>
         <HomeSwiperHeader picData={newsOneData.images ? newsOneData.images : []} navigation={navigation} />
         <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
         <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
@@ -67,17 +69,10 @@ export default class HomeDetail extends Component {
 
 const HomeSwiperHeader = props => {
   let { picData, navigation } = props
-    , arrpic = [uploadPic, uploadPic, uploadPic]
   return (
     <View style={seekDetail.headerView}>
-      <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>
-        { 
-          picData[0] ? 
-          picData.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
-            <Image style={seekDetail.pics} source={{url: picItem.url}}/>
-          </View>) : 
-          <Image style={seekDetail.pics} source={uploadPic}/>
-        }
+      <Swiper height={230} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
+        {renderSwiper(picData)}
       </Swiper>
       <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
         <Image source={gobackWhiteIcon}/>
@@ -88,3 +83,49 @@ const HomeSwiperHeader = props => {
     </View>
   )
 }
+
+const renderSwiper = (picData)=> {
+  return (
+    // picData[0] ? 
+    picData.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
+      <Image style={seekDetail.pics} source={{uri: picItem.url}}/>
+    </View>)
+     // : <TouchUploadPic />
+  )
+}
+
+const TouchUploadPic =  props => {
+  let { navigation } = props
+  return (
+    <TouchableOpacity style={detail.picsView} activeOpacity={0.8} disabled={true} onPress={()=> alert('upload')}>
+      <Image style={[detail.pics, {resizeMode: 'center', backgroundColor: loginBackgroundColor}]} source={icInsertPhotoIcon}/>
+    </TouchableOpacity>
+  )
+}
+
+
+// {
+//           picData[0] ? <View style={seekDetail.picsView}>
+//             <Image style={seekDetail.pics} source={{uri: picData[0].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picData[1] ? <View style={seekDetail.picsView}>
+//             <Image style={seekDetail.pics} source={{uri: picData[1].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picData[2] ? <View style={seekDetail.picsView}>
+//             <Image style={seekDetail.pics} source={{uri: picData[2].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picData[3] ? <View style={seekDetail.picsView}>
+//             <Image style={seekDetail.pics} source={{uri: picData[3].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picData[4] ? <View style={seekDetail.picsView}>
+//             <Image style={seekDetail.pics} source={{uri: picData[4].url}}/>
+//           </View> : <TouchUploadPic />
+//         }

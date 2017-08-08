@@ -17,24 +17,25 @@ export default class Equipment extends Component {
     headerStyle: {
       backgroundColor: primaryColor,
     },
-    headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{equipmentName}</Text>,
+    headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{navigation.state.params.statuItemData.deviceNo}</Text>,
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
   })
   render() {
+    let { statuItemData } = this.props.navigation.state.params
     return (
       <ScrollView style={equipment.wrap}>
         <Text style={equipment.fixText}>{equipmentRunState}</Text>
-        <Text style={equipment.stateText}>正常</Text>
+        <Text style={equipment.stateText}>{statuItemData.normal ? '正常' : '异常'}</Text>
         <Text style={equipment.fixText}>{equipmentRunImg}</Text>
-        <View style={equipment.imgView}>
+        <TouchableOpacity style={equipment.imgView}>
           <Image style={equipment.img} source={pic4}/>
-        </View>
+        </TouchableOpacity>
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>
-          <Text style={[equipment.fix2Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + '2017-07-19 19:30'}</Text>
+          <Text style={[equipment.fix2Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + statuItemData.updateTime}</Text>
         </View>
         <View style={equipment.dataView}>
           <IndexData indexData={equipmentDataList} />

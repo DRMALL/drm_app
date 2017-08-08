@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { primaryColor, loginBackgroundColor } from '../common/constants'
 import { basicDocument, userName, companyName, phoneNumber, postalAddress, securitySetting, resetPassword, personalInformation } from '../common/strings'

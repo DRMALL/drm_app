@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import { mainColor, primaryColor, subTitleColor } from '../../common/constants'
 import { inputDeviceTypes, historicalRecord, hotSearch } from '../../common/strings'
 import { search } from '../../styles'
@@ -38,6 +38,7 @@ export default class SearchDevice extends Component {
       , hotData = ['热门搜索词', '热门搜索词', '热门搜索词', '热门搜索词', '热门搜索词', '热门搜索词']
     return (
       <View style={{height: '100%'}}>
+        <StatusBar backgroundColor={primaryColor} />
         <HeaderSearch 
           state={this.state} 
           navigation={navigation} 

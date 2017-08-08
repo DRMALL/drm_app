@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, TextInput, StatusBar } from 'react-native'
 import { primaryColor, mainColor, subTitleColor } from '../../common/constants'
 import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey } from '../../common/strings'
 import { checkToken } from '../../utils/handleToken'
@@ -41,7 +41,7 @@ export default class Remark extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      device_remark: '',
+      device_remark: props.navigation.state.params.orgDeviceRemark,
     }
   }
 
@@ -53,6 +53,7 @@ export default class Remark extends Component {
   render() {
     return (
       <View style={{height: '100%', backgroundColor: mainColor}}>
+        <StatusBar backgroundColor={primaryColor} />
         <TextInput 
           style={{textAlignVertical: 'top', fontSize: 16, paddingHorizontal: 16, paddingTop: 20}} 
           placeholder={remarkPlaceholder} 
@@ -61,6 +62,7 @@ export default class Remark extends Component {
           numberOfLines={50} 
           underlineColorAndroid='transparent' 
           autoCapitalize='none'
+          value={this.state.device_remark}
           onChangeText={this.onChangeRemark.bind(this)} 
           // onSelectionChange={()=> 'onSelectionChange'} 
         />

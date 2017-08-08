@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord } from '../common/strings'
 import { login } from '../styles'
 import Button from './units/Button'
@@ -47,7 +47,12 @@ export default class Login extends Component {
       depositToken('drmAppToken', res.data)
       this.props.navigation.navigate('main')
     } else {
-      alert('邮箱或密码输入有误')
+      Alert.alert('❌错误', '邮箱或密码输入有误',
+        [
+          {text: 'OK', onPress: () => 'OK'},
+        ],
+        { cancelable: false }
+      )
     }
   }
 
@@ -68,10 +73,11 @@ export default class Login extends Component {
             placeholder={loginInputEmail}
             onChangeText={(textEmail) => this.setState({textEmail})}
             value={this.state.textEmail}
-            keyboardType="numeric"
+            // keyboardType='numeric'
             selectTextOnFocus={true}
             blurOnSubmit={true}
-            underlineColorAndroid="transparent"
+            underlineColorAndroid='transparent'
+            autoCapitalize='none'
           />
           <TextInputImg 
             viewStyle={{position: 'relative'}}

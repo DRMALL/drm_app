@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { resetPassword, save, originalPassword, newPassword, verifyNewPassword } from '../../common/strings'
@@ -76,27 +76,29 @@ export default class ResetPassword extends Component {
   render() {
     return (
       <View style={other.wrap}>
-        <TextInput style={other.textInput} 
-          placeholder={originalPassword} 
-          secureTextEntry={true} 
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-          onChangeText={this.onChangeOP.bind(this)}
-        />
-        <TextInput style={other.textInput} 
-          placeholder={newPassword} 
-          secureTextEntry={true} 
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-          onChangeText={this.onChangeNP.bind(this)}
-        />
-        <TextInput style={other.textInput} 
-          placeholder={verifyNewPassword} 
-          secureTextEntry={true} 
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-          onChangeText={this.onChangeVP.bind(this)}
-        />
+        <KeyboardAvoidingView behavior={'padding'} >
+          <TextInput style={other.textInput} 
+            placeholder={originalPassword} 
+            secureTextEntry={true} 
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+            onChangeText={this.onChangeOP.bind(this)}
+          />
+          <TextInput style={other.textInput} 
+            placeholder={newPassword} 
+            secureTextEntry={true} 
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+            onChangeText={this.onChangeNP.bind(this)}
+          />
+          <TextInput style={other.textInput} 
+            placeholder={verifyNewPassword} 
+            secureTextEntry={true} 
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+            onChangeText={this.onChangeVP.bind(this)}
+          />
+        </KeyboardAvoidingView>
       </View>
     )
   }

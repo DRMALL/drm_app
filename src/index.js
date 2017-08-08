@@ -7,7 +7,7 @@ import {
 import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
-import HomeDetail from './components/HomeDetail'
+import Calendars from './components/archives/Calendars'
 
 export default class App extends Component {
   constructor() {

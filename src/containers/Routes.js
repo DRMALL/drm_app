@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation'
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator'
 import HeaderTitle from '../components/HeaderTitle'
 import Home from './Home'
 import Device from './Device'
@@ -62,13 +63,15 @@ const Main = TabNavigator(
       },
       tabStyle: {
         height: 60,
-        paddingBottom: 3,
       },
       labelStyle: {
-        height: 15,
-        width: 76,
+        width: '130%',
+        alignSelf: 'center',
         fontSize: 12,
-        // paddingBottom: 5,
+        bottom: 1,
+      },
+      iconStyle: {
+        top: 6,
       },
       indicatorStyle: {
         height: 0,
@@ -166,5 +169,9 @@ export default StackNavigator({
   homeDetail: {
     screen: HomeDetail,
   },
+}, {
+  transitionConfig:()=>({  
+    screenInterpolator: CardStackStyleInterpolator.forHorizontal,  
+  }),
 })
 

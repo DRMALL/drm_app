@@ -4,70 +4,25 @@ import { all, onState, offState } from '../../common/strings'
 import { primaryColor } from '../../common/constants'
 import { statusTab } from '../../styles'
 
-export default class StatusTab extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      textStyle1: {color: primaryColor},
-      textStyle2: {},
-      textStyle3: {},
-      vuStyle1: statusTab.vuline,
-      vuStyle2: statusTab.vunoline,
-      vuStyle3: statusTab.vunoline,
-    }
-  }
-  pressAllStatus = ()=> {
-    this.setState((prevState) => {
-      return {
-        textStyle1: {color: primaryColor},
-        textStyle2: {},
-        textStyle3: {},
-        vuStyle1: statusTab.vuline,
-        vuStyle2: statusTab.vunoline,
-        vuStyle3: statusTab.vunoline,
+export default props => {
+  let { tabData, state, pressStatusTab} = props
+  return(
+    <View style={statusTab.wrap}>
+      {
+        tabData.map((item, index)=> <StatuTabItem key={index} item={item} index={index} state={state} pressStatusTab={pressStatusTab}/>)
       }
-    })
-  };
-  pressOnLine = ()=> {
-    this.setState((prevState) => {
-      return {
-        textStyle1: {},
-        textStyle2: {color: primaryColor},
-        textStyle3: {},
-        vuStyle1: statusTab.vunoline,
-        vuStyle2: statusTab.vuline,
-        vuStyle3: statusTab.vunoline,
-      }
-    })
-  };
-  pressOffLine = ()=> {
-    this.setState((prevState) => {
-      return {
-        textStyle1: {},
-        textStyle2: {},
-        textStyle3: {color: primaryColor},
-        vuStyle1: statusTab.vunoline,
-        vuStyle2: statusTab.vunoline,
-        vuStyle3: statusTab.vuline,
-      }
-    })
-  };
-  render() {
-    return(
-      <View style={statusTab.wrap}>
-        <TouchableOpacity style={statusTab.touchHighlignt} onPress={this.pressAllStatus} activeOpacity={0.9}>
-          <Text style={[statusTab.text, this.state.textStyle1]}>{all}</Text>
-          <View style={this.state.vuStyle1} />
-        </TouchableOpacity>
-        <TouchableOpacity style={statusTab.touchHighlignt} onPress={this.pressOnLine} activeOpacity={0.9}>
-          <Text style={[statusTab.text, this.state.textStyle2]}>{onState}</Text>
-          <View style={this.state.vuStyle2} />
-        </TouchableOpacity>
-        <TouchableOpacity style={statusTab.touchHighlignt} onPress={this.pressOffLine} activeOpacity={0.9}>
-          <Text style={[statusTab.text, this.state.textStyle3]}>{offState}</Text>
-          <View style={this.state.vuStyle3} />
-        </TouchableOpacity>
-      </View>
-    )
-  }
+    </View>
+  )
 }
+
+const StatuTabItem = props => {
+  let { item, index, state, pressStatusTab } = props
+    , selectedSTab = state[`StatuTabRow${index}`]
+  return (
+    <TouchableOpacity style={statusTab.touchHighlignt} onPress={()=> pressStatusTab(index)} activeOpacity={0.9}>
+      <Text style={[statusTab.text, selectedSTab ? {color: primaryColor} : {}]}>{item}</Text>
+      <View style={selectedSTab ? statusTab.vuline : statusTab.vunoline} />
+    </TouchableOpacity>
+  )
+}
+

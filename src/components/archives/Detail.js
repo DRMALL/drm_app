@@ -1,6 +1,7 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar } from 'react-native'
 import Swiper from 'react-native-swiper'
+import ViewPager from 'react-native-viewpager'
 import moment from 'moment'
 import { mainColor, loginBorderColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
 import { deviceSort, deviceTimeline, deviceRemarks, tokenKey } from '../../common/strings'
@@ -60,9 +61,10 @@ export default class Detail extends Component {
 
   render() {
     let { navigation } = this.props
-      , { oneDeviceData, isRefreshing } = this.state
+      , { oneDeviceData, isRefreshing, adDataSource } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
+    
     return (
       <ScrollView 
         refreshControl={<RefreshControl 
@@ -72,6 +74,7 @@ export default class Detail extends Component {
           progressBackgroundColor={mainColor}
         />}
       >
+        <StatusBar hidden={true}/>
         <View style={detail.wrap}>
           <SwiperHeader picsData={images == undefined ? [] : images} navigation={navigation}/>
           <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
@@ -100,12 +103,11 @@ export default class Detail extends Component {
             </View>
           </View>
           <View>
-            {console.log(timelines)}
             <TimeLineForm timelineData={timelines == undefined ? [] : timelines} />
           </View>
           <View style={detail.fixTextView}>
             <Text style={detail.textFix}>{deviceRemarks}</Text>
-            <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id})} >
+            <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id, orgDeviceRemark: remark})} >
               <Image source={editIcon}/>
             </TouchableOpacity>
           </View>
@@ -122,17 +124,44 @@ const SwiperHeader = props => {
     <View style={detail.headerView}>
       <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>
         {
-          picsData.length > 0 ? 
-          picsData.map((picItem, index)=> <View key={index} style={detail.picsView}>
-            <Image style={detail.pics} source={{url: picItem.url}}/>
-          </View>) : 
-          <Image style={detail.pics} source={uploadPic} />
+          picsData[0] ? <View style={detail.picsView}>
+            <Image style={detail.pics} source={{uri: picsData[0].url}}/>
+          </View> : <TouchUploadPic />
+        }
+        {
+          picsData[1] ? <View style={detail.picsView}>
+            <Image style={detail.pics} source={{uri: picsData[1].url}}/>
+          </View> : <TouchUploadPic />
+        }
+        {
+          picsData[2] ? <View style={detail.picsView}>
+            <Image style={detail.pics} source={{uri: picsData[2].url}}/>
+          </View> : <TouchUploadPic />
+        }
+        {
+          picsData[3] ? <View style={detail.picsView}>
+            <Image style={detail.pics} source={{uri: picsData[3].url}}/>
+          </View> : <TouchUploadPic />
+        }
+        {
+          picsData[4] ? <View style={detail.picsView}>
+            <Image style={detail.pics} source={{uri: picsData[4].url}}/>
+          </View> : <TouchUploadPic />
         }
       </Swiper>
       <TouchableOpacity style={detail.gobackIcon} onPress={() => navigation.goBack()}>
         <Image source={gobackWhiteIcon}/>
       </TouchableOpacity>
     </View>
+  )
+}
+
+const TouchUploadPic =  props => {
+  let { navigation } = props
+  return (
+    <TouchableOpacity style={detail.picsView} activeOpacity={0.8} onPress={()=> alert('upload')}>
+      <Image style={detail.pics} source={uploadPic}/>
+    </TouchableOpacity>
   )
 }
 
@@ -180,3 +209,17 @@ const LineItem = props => {
     </View>
   )
 }
+
+//   , picsUploadData = [uploadPic]
+  // picsData = picsData.concat(picsUploadData)
+
+// {
+//           picsData.map((picItem, index)=> 
+//             typeof picItem == 'object' ? <View key={index} style={detail.picsView}>
+//               <Image style={detail.pics} source={{uri: picItem.url}}/>
+//             </View>
+//              : <TouchableOpacity key={index} style={detail.picsView} activeOpacity={0.8} onPress={()=> alert('upload')}>
+//               <Image style={detail.pics} source={picItem}/>
+//             </TouchableOpacity>
+//           )
+//         }

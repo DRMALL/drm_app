@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { materialLongCode, materialName, materialModels, materialUnites } from '../common/strings'
-import { lightBlueColor, contentColor, mainColor } from '../common/constants'
+import { lightBlueColor, contentColor, mainColor, subTitleColor } from '../common/constants'
 import { seek } from '../styles'
 import { seekData } from '../utils/virtualData'
 
@@ -39,11 +39,13 @@ export default class SeekCategory extends Component {
 const SeekDataItem = props => {
   let { item, navigation } = props
   return (
-    <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {name: 'SeekDetail', seekItem: item})}>
-      <Text style={seek.text}>{item.longCode}</Text>
-      <Text style={seek.text}>{item.materialName}</Text>
-      <Text style={seek.text}>{item.models}</Text>
-      <Text style={seek.text}>{item.unites}</Text>
-    </TouchableOpacity>
+    <View style={{backgroundColor: subTitleColor}}>
+      <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {name: 'SeekDetail', seekItem: item})}>
+        <Text style={seek.text}>{item.longCode}</Text>
+        <Text style={seek.text}>{item.materialName}</Text>
+        <Text style={seek.text}>{item.models}</Text>
+        <Text style={seek.text}>{item.unites}</Text>
+      </TouchableOpacity>
+    </View>
   )
 }

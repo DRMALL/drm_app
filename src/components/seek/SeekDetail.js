@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { primaryColor, mainColor, loginBorderColor } from '../../common/constants'
 import { partParameter, applicableEquipment, inventoryStatus, materialLongCode, materialName, materialModels, materialUnites } from '../../common/strings'
@@ -26,6 +26,7 @@ export default class SeekDetail extends Component {
       // , seekItem = seekData[0]
     return (
       <ScrollView>
+        <StatusBar hidden={true}/>
         <SeekSwiperHeader navigation={navigation}/>
         <View style={{top: -20}}>
           <Text style={seekDetail.fixText}>{partParameter}</Text>

@@ -1,4 +1,4 @@
-import { subTitleColor, backgroundColor, mainColor, contentColor } from '../common/constants'
+import { subTitleColor, backgroundColor, mainColor, contentColor, loginBackgroundColor } from '../common/constants'
 
 export default {
 //Seek
@@ -28,7 +28,7 @@ export default {
 //SeekCategory
   wrap: {
     width: '100%',
-    backgroundColor: subTitleColor,
+    backgroundColor: loginBackgroundColor,
   },
   captionView: {
     flexDirection: 'row',

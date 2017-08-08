@@ -3,10 +3,11 @@ import { View, Text, Image } from 'react-native'
 import TabBarItem from '../components/units/TabBarItem'
 import DiagnosisTab from '../components/units/DiagnosisTab'
 import DiagnoseCategory from '../components/DiagnoseCategory'
+import { tokenKey } from '../common/strings'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
-import { getBugs } from '../apis'
-import { diagnosisTabData } from '../utils/virtualData'
+import { getBugs, getCate } from '../apis'
+// import { diagnosisTabData } from '../utils/virtualData'
 
 const diagnoseIconSelected = require('../images/tabbar_icons/tabbar_diagnosis_selected_x.png')
     , diagnoseIconNormal = require('../images/tabbar_icons/tabbar_diagnosis_normal.png')
@@ -28,44 +29,74 @@ export default class Diagnose extends Component {
     this.state = (()=> {
       let diagTabState = {
         allDiagnoseData: [],
+        allCateData: [],
+        selectedCate: '',
       }
-      diagnosisTabData.map((itemTabType, index)=> {
-        if(index == 0) diagTabState[`tabTypeRow${index}`] = true
-        else diagTabState[`tabTypeRow${index}`] = false
-      })
+      for(var i = 0; i < 10; i++) {
+        if(i == 0) diagTabState[`tabTypeRow${i}`] = true
+        else diagTabState[`tabTypeRow${i}`] = false
+      }
       return diagTabState
     })()
   }
 
   componentDidMount() {
     this.getDiagnosis()
+    this.getDiagnoseCate()
   }
 
   getDiagnosis() {
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(async token => {
       let res = await getPort(`${getBugs}?token=${token}`)
-      if(res.code == 200) {
+      if(!res) {
+        alert('result is null')
+      } else if(res.code == 200) {
         this.setState({
           allDiagnoseData: res.data,
         })
-      } else alert('getDiagnosis failed')
+      } else alert(JSON.stringify(res))
+    })
+  }
+
+  getDiagnoseCate() {
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await getPort(`${getCate}?token=${token}`)
+      if(!res) {
+        alert('result is null')
+      } else if(res.code == 200) {
+        this.setState({
+          allCateData: res.data,
+          selectedCate: res.data[0].text,
+        })
+      } else alert(JSON.stringify(res))
     })
   }
 
   pressTab(dt) {
-    diagnosisTabData.map((itemTabType, index)=> {
-      if(dt == index) this.setState({[`tabTypeRow${dt}`]: true})
-      else this.setState({[`tabTypeRow${index}`]: false})
+    this.state.allCateData.map((itemTabType, index)=> {
+      if(dt == index) {
+        this.setState({
+          [`tabTypeRow${dt}`]: true,
+          selectedCate: itemTabType.text,
+        })
+      } else this.setState({[`tabTypeRow${index}`]: false})
     })
   }
 
   render() {
-    let { allDiagnoseData } = this.state
+    let { allDiagnoseData, allCateData, selectedCate } = this.state
+      , sortDiagnoseData = []
+    allDiagnoseData.forEach((oneDiagnose)=> {
+      if(oneDiagnose.category.text == selectedCate) {
+        sortDiagnoseData = sortDiagnoseData.concat(oneDiagnose)
+      }
+    })
     return(
       <View style={{height: '100%', paddingBottom: 45}}>
-        <DiagnosisTab state={this.state} diagData={diagnosisTabData} pressTab={this.pressTab.bind(this)}/>
-        <DiagnoseCategory diagnoseData={allDiagnoseData} {...this.props} />
+        <DiagnosisTab state={this.state} diagData={allCateData} pressTab={this.pressTab.bind(this)}/>
+        <DiagnoseCategory diagnoseData={sortDiagnoseData} {...this.props} />
       </View>
     )
   }

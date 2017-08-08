@@ -29,7 +29,8 @@ export default class TextInputImg extends Component {
           secureTextEntry={!this.state.see}
           selectTextOnFocus={true}
           blurOnSubmit={true}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
+          autoCapitalize='none'
           onFocus={onFocus}
           onBlur={onBlur}
           onSubmitEditing={onBlur}

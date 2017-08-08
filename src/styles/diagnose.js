@@ -1,8 +1,9 @@
-import { mainColor, subTitleColor, lightBlueColor, lightRedColor, backgroundColor } from '../common/constants'
+import { mainColor, subTitleColor, lightBlueColor, lightRedColor, backgroundColor, loginBackgroundColor } from '../common/constants'
 
 export default {
   wrap: {
-    backgroundColor: subTitleColor,
+    height: '100%',
+    backgroundColor: loginBackgroundColor,
   },
   touchView: {
     borderWidth: 0.5,

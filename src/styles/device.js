@@ -1,9 +1,9 @@
-import { mainColor, subTitleColor, lightBlueColor, backgroundColor } from '../common/constants'
+import { mainColor, subTitleColor, lightBlueColor, backgroundColor, loginBackgroundColor } from '../common/constants'
 
 export default {
   wrap: {
     width: '100%',
-    backgroundColor: subTitleColor,
+    backgroundColor: loginBackgroundColor,
   },
   archivesTab: {
     width: '100%',
@@ -41,7 +41,7 @@ export default {
     width: 44,
     height: 44,
     borderRadius: 22,
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     marginLeft: 16,
   },
   archivesItemOther: {
