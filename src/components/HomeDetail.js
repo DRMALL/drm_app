@@ -72,14 +72,18 @@ export default class HomeDetail extends Component {
 
 const HomeSwiperHeader = props => {
   let { picData, navigation } = props
+  let picsDataView = []
+  for(var i = 0; i < picData.length; i++) {
+    picsDataView.push(
+      <View key={i} style={seekDetail.picsView}>
+        <Image style={seekDetail.pics} source={{uri: picData[i].url}}/>
+      </View>
+    )
+  }
   return (
     <View style={seekDetail.headerView}>
       <Swiper height={230} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
-      {
-        picData.map((picItem, index) => <View style={seekDetail.picsView}>
-          <Image style={seekDetail.pics} source={{uri: picItem.url}}/>
-        </View>)
-      }
+        {picsDataView}
       </Swiper>
       <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
         <Image source={gobackWhiteIcon}/>
@@ -90,16 +94,6 @@ const HomeSwiperHeader = props => {
     </View>
   )
 }
-
-// const renderSwiper = (picData) => {
-//   return (
-//     // picData[0] ? 
-//     picData.map((picItem, index) => <View key={index} style={seekDetail.picsView}>
-//         <Image style={seekDetail.pics} source={{uri: picItem.url}}/>
-//     </View>)
-//      // : <TouchUploadPic />
-//   )
-// }
 
 const TouchUploadPic =  props => {
   let { navigation } = props

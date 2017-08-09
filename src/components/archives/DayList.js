@@ -54,7 +54,7 @@ const DayItem = props => {
       <TouchableOpacity 
         style={[calendars.dayView, {backgroundColor: backV1 && backV2 ? loginBackgroundColor : (heightPointDay ? primaryColor : mainColor)}]} 
         onPress={()=> pressDayItem(thisDay, thisDayStamp)}
-        disabled={item == '' || item == undefined || thisDayStamp == startDayStamp ? true : false}
+        disabled={item == '' || item == undefined || thisDayStamp == startDayStamp || (thisDayStamp < startDayStamp && endDayStamp == 0) ? true : false}
       >
         <Text style={[calendars.dayText, heightPointDay ? {color: mainColor} : {}]}>{item}</Text>
       </TouchableOpacity>
