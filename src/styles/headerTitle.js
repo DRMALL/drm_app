@@ -9,8 +9,7 @@ export default {
   },
   titleText: {
     textAlign:'center',
-    fontSize: 18, 
-    fontWeight: 'bold', 
+    fontSize: 18,  
     color: '#fff', 
   },
   searchTouch: {
@@ -30,7 +29,6 @@ export default {
   },
   searchText: {
     fontSize: 12,
-    fontWeight: 'bold',
     color: subTitleColor,
   },
 }

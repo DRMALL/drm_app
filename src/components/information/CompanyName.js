@@ -8,6 +8,7 @@ import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
+const cancelIcon = require('../../images/navigation_icons/cancel.png')
 let companynameData
 
 export default class CompanyName extends Component {
@@ -49,15 +50,29 @@ export default class CompanyName extends Component {
     companynameData = company_name
   }
 
+  cleanText() {
+    this.setState({
+      company_name: '',
+    })
+  }
+
   render() {
+    let { company_name } = this.state
     return (
       <View style={other.wrap}>
-        <TextInput style={other.textInput} 
-          value={this.state.company_name} 
-          onChangeText={this.onChangeCName.bind(this)}
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-        />
+        <View style={other.inputView}>
+          <TextInput style={other.textInput} 
+            value={company_name} 
+            onChangeText={this.onChangeCName.bind(this)}
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+          />
+          {
+            company_name != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>
+              <Image style={other.cancelIcon} source={cancelIcon}/>
+            </TouchableOpacity> : <Image style={{height: 0}}/>
+          }
+        </View>
       </View>
     )
   }

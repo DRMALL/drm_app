@@ -14,6 +14,5 @@ export default {
   },
   sortText: {
     fontSize: 15,
-    fontWeight: 'bold',
   },
 }

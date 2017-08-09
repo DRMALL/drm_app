@@ -45,19 +45,17 @@ export default {
     color: subTitleColor,
   },
   textAbstract: {
+    marginVertical: 8,
     fontSize: 17,
     color: contentColor,
   },
   textState: {
-    lineHeight: 22,
-    fontWeight: 'bold',
-    color: lightBlueColor,
+    lineHeight: 20,
   },
   endText: {
     alignSelf: 'center', 
     paddingVertical: 15,
-    color: subTitleColor, 
-    fontWeight: 'bold', 
+    color: subTitleColor,  
     opacity: 0.8
   },
 }

@@ -55,7 +55,6 @@ export default class DiagDetail extends Component {
       if(!res) {
         alert('result is none')
       } else if(res.code == 200) {
-        console.log(res.data)
         this.setState({
           oneBugData: res.data,
         })

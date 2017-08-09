@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
-import { other } from '../../styles'
+import { other, search } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { userName, save } from '../../common/strings'
 import { updateInfo } from '../../apis'
@@ -8,6 +8,7 @@ import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
+const cancelIcon = require('../../images/navigation_icons/cancel.png')
 let nameData
 
 export default class UserName extends Component {
@@ -49,15 +50,29 @@ export default class UserName extends Component {
     nameData = user_name
   }
 
+  cleanText() {
+    this.setState({
+      user_name: '',
+    })
+  }
+
   render() {
+    let { user_name } = this.state
     return (
       <View style={other.wrap}>
-        <TextInput style={other.textInput} 
-          value={this.state.user_name} 
-          onChangeText={this.onChangeName.bind(this)}
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-        />
+        <View style={other.inputView}>
+          <TextInput style={other.textInput} 
+            value={user_name} 
+            onChangeText={this.onChangeName.bind(this)}
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+          />
+          {
+            user_name != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>
+              <Image style={other.cancelIcon} source={cancelIcon}/>
+            </TouchableOpacity> : <Image style={{height: 0}}/>
+          }
+        </View>
       </View>
     )
   }

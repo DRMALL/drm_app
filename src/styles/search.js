@@ -27,7 +27,6 @@ export default {
     paddingVertical: 5,
     borderRadius: 3,
     fontSize: 12,
-    fontWeight: 'bold',
     backgroundColor: mainColor,
   },
   searchIcon: {
@@ -53,6 +52,11 @@ export default {
     borderWidth: 0.5,
     borderColor: backgroundColor,
   },
+  deleteSweep: {
+    position: 'absolute', 
+    right: 10, 
+    padding: 10,
+  },
   mapView: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -75,7 +79,6 @@ export default {
   },
   historyText: {
     fontSize: 10,
-    fontWeight: 'bold',
     color: contentColor,
   },
   touchHot: {
@@ -94,7 +97,6 @@ export default {
   },
   hotText: {
     fontSize: 14,
-    fontWeight: 'bold',
     color: contentColor,
   },
 }

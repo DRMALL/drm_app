@@ -74,7 +74,6 @@ export default {
   },
   dayText: {
     fontSize: 15,
-    fontWeight: 'bold',
     color: contentColor,
     alignSelf: 'center',
   },

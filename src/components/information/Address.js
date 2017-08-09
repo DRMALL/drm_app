@@ -8,6 +8,7 @@ import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
+const cancelIcon = require('../../images/navigation_icons/cancel.png')
 let addressData
 
 export default class Address extends Component {
@@ -49,15 +50,29 @@ export default class Address extends Component {
     addressData = postal_address
   }
 
+  cleanText() {
+    this.setState({
+      postal_address: '',
+    })
+  }
+
   render() {
+    let { postal_address } = this.state
     return (
       <View style={other.wrap}>
-        <TextInput style={other.textInput} 
-          value={this.state.postal_address} 
-          onChangeText={this.onChangeAddress.bind(this)}
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-        />
+        <View style={other.inputView}>
+          <TextInput style={other.textInput} 
+            value={postal_address} 
+            onChangeText={this.onChangeAddress.bind(this)}
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+          />
+          {
+            postal_address != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>
+              <Image style={other.cancelIcon} source={cancelIcon}/>
+            </TouchableOpacity> : <Image style={{height: 0}}/>
+          }
+        </View>
       </View>
     )
   }

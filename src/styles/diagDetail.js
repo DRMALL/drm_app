@@ -19,7 +19,6 @@ export default {
     paddingHorizontal: 16,
     paddingVertical: 20,
     fontSize: 14,
-    fontWeight: 'bold',
     color: contentColor,
   },
   img: {

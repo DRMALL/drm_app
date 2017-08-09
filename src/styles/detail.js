@@ -1,4 +1,4 @@
-import { mainColor, lightBlueColor, contentColor, backgroundColor, mainColorPressed, subTitleColor } from '../common/constants'
+import { mainColor, lightBlueColor, contentColor, backgroundColor, mainColorPressed, subTitleColor, titleColor } from '../common/constants'
 
 export default {
   headerView: {
@@ -37,7 +37,7 @@ export default {
   },
   titleText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    color: titleColor,
   },
   titleTime: {
     fontSize: 12,
@@ -65,7 +65,6 @@ export default {
     fontSize: 14,
     lineHeight: 24,
     color: contentColor,
-    fontWeight: 'bold',
   },
   fixTextView: {
     height: 40,
@@ -80,14 +79,12 @@ export default {
   textFix: {
     fontSize: 15,
     color: subTitleColor,
-    fontWeight: 'bold',
   },
   sortText: {
     paddingHorizontal: 16,
     paddingVertical: 18,
     fontSize: 16,
     color: contentColor,
-    fontWeight: 'bold',
   },
   iconView: {
     flexDirection: 'row',
@@ -150,13 +147,11 @@ export default {
     borderColor: subTitleColor,
   },
   typeText: {
-    fontSize: 18, 
-    fontWeight: 'bold', 
+    fontSize: 18,  
     color: subTitleColor,
   },
   contentText: {
-    lineHeight: 17,
-    fontWeight: 'bold', 
+    lineHeight: 17, 
     color: subTitleColor,
   },
 }

@@ -77,27 +77,29 @@ export default class ResetPassword extends Component {
     return (
       <View style={other.wrap}>
         <KeyboardAvoidingView behavior={'padding'} >
-          <TextInput style={other.textInput} 
-            placeholder={originalPassword} 
-            secureTextEntry={true} 
-            underlineColorAndroid='transparent' 
-            autoCapitalize='none'
-            onChangeText={this.onChangeOP.bind(this)}
-          />
-          <TextInput style={other.textInput} 
-            placeholder={newPassword} 
-            secureTextEntry={true} 
-            underlineColorAndroid='transparent' 
-            autoCapitalize='none'
-            onChangeText={this.onChangeNP.bind(this)}
-          />
-          <TextInput style={other.textInput} 
-            placeholder={verifyNewPassword} 
-            secureTextEntry={true} 
-            underlineColorAndroid='transparent' 
-            autoCapitalize='none'
-            onChangeText={this.onChangeVP.bind(this)}
-          />
+          <View style={other.inputView}>
+            <TextInput style={other.textInput} 
+              placeholder={originalPassword} 
+              secureTextEntry={true} 
+              underlineColorAndroid='transparent' 
+              autoCapitalize='none'
+              onChangeText={this.onChangeOP.bind(this)}
+            />
+            <TextInput style={other.textInput} 
+              placeholder={newPassword} 
+              secureTextEntry={true} 
+              underlineColorAndroid='transparent' 
+              autoCapitalize='none'
+              onChangeText={this.onChangeNP.bind(this)}
+            />
+            <TextInput style={other.textInput} 
+              placeholder={verifyNewPassword} 
+              secureTextEntry={true} 
+              underlineColorAndroid='transparent' 
+              autoCapitalize='none'
+              onChangeText={this.onChangeVP.bind(this)}
+            />
+          </View>
         </KeyboardAvoidingView>
       </View>
     )

@@ -25,7 +25,7 @@ export default class HomeDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      newsOneData: {},
+      newsOneData: null,
     }
   }
 
@@ -49,10 +49,12 @@ export default class HomeDetail extends Component {
   render() {
     let { navigation } = this.props
       , { newsOneData } = this.state
+
+    if (!newsOneData) return <View />
     return (
       <ScrollView style={{backgroundColor: mainColor}}>
         <StatusBar hidden={true}/>
-        <HomeSwiperHeader picData={newsOneData.images ? newsOneData.images : []} navigation={navigation} />
+        <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
         <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
         <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
           {
@@ -67,12 +69,17 @@ export default class HomeDetail extends Component {
   }
 }
 
+
 const HomeSwiperHeader = props => {
   let { picData, navigation } = props
   return (
     <View style={seekDetail.headerView}>
       <Swiper height={230} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
-        {renderSwiper(picData)}
+      {
+        picData.map((picItem, index) => <View style={seekDetail.picsView}>
+          <Image style={seekDetail.pics} source={{uri: picItem.url}}/>
+        </View>)
+      }
       </Swiper>
       <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
         <Image source={gobackWhiteIcon}/>
@@ -84,15 +91,15 @@ const HomeSwiperHeader = props => {
   )
 }
 
-const renderSwiper = (picData)=> {
-  return (
-    // picData[0] ? 
-    picData.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
-      <Image style={seekDetail.pics} source={{uri: picItem.url}}/>
-    </View>)
-     // : <TouchUploadPic />
-  )
-}
+// const renderSwiper = (picData) => {
+//   return (
+//     // picData[0] ? 
+//     picData.map((picItem, index) => <View key={index} style={seekDetail.picsView}>
+//         <Image style={seekDetail.pics} source={{uri: picItem.url}}/>
+//     </View>)
+//      // : <TouchUploadPic />
+//   )
+// }
 
 const TouchUploadPic =  props => {
   let { navigation } = props
@@ -102,30 +109,3 @@ const TouchUploadPic =  props => {
     </TouchableOpacity>
   )
 }
-
-
-// {
-//           picData[0] ? <View style={seekDetail.picsView}>
-//             <Image style={seekDetail.pics} source={{uri: picData[0].url}}/>
-//           </View> : <TouchUploadPic />
-//         }
-//         {
-//           picData[1] ? <View style={seekDetail.picsView}>
-//             <Image style={seekDetail.pics} source={{uri: picData[1].url}}/>
-//           </View> : <TouchUploadPic />
-//         }
-//         {
-//           picData[2] ? <View style={seekDetail.picsView}>
-//             <Image style={seekDetail.pics} source={{uri: picData[2].url}}/>
-//           </View> : <TouchUploadPic />
-//         }
-//         {
-//           picData[3] ? <View style={seekDetail.picsView}>
-//             <Image style={seekDetail.pics} source={{uri: picData[3].url}}/>
-//           </View> : <TouchUploadPic />
-//         }
-//         {
-//           picData[4] ? <View style={seekDetail.picsView}>
-//             <Image style={seekDetail.pics} source={{uri: picData[4].url}}/>
-//           </View> : <TouchUploadPic />
-//         }

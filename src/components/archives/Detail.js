@@ -59,12 +59,16 @@ export default class Detail extends Component {
     }, 1000)
   }
 
+  pressUploadPic() {
+    alert('upload')
+  }
+
   render() {
     let { navigation } = this.props
       , { oneDeviceData, isRefreshing, adDataSource } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
-    
+    if (!images) return <View />
     return (
       <ScrollView 
         refreshControl={<RefreshControl 
@@ -76,7 +80,7 @@ export default class Detail extends Component {
       >
         <StatusBar hidden={true}/>
         <View style={detail.wrap}>
-          <SwiperHeader picsData={images == undefined ? [] : images} navigation={navigation}/>
+          <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
           <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
             <Text style={detail.titleText}>{name + number}</Text>
             <Text style={detail.titleTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
@@ -119,34 +123,19 @@ export default class Detail extends Component {
 }
 
 const SwiperHeader = props => {
-  let { picsData, navigation } = props
+  let { picsData, navigation, pressUploadPic } = props
+    , picsUploadData = [uploadPic]
+  picsData = picsData.concat(picsUploadData)
   return (
     <View style={detail.headerView}>
       <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>
         {
-          picsData[0] ? <View style={detail.picsView}>
-            <Image style={detail.pics} source={{uri: picsData[0].url}}/>
-          </View> : <TouchUploadPic />
-        }
-        {
-          picsData[1] ? <View style={detail.picsView}>
-            <Image style={detail.pics} source={{uri: picsData[1].url}}/>
-          </View> : <TouchUploadPic />
-        }
-        {
-          picsData[2] ? <View style={detail.picsView}>
-            <Image style={detail.pics} source={{uri: picsData[2].url}}/>
-          </View> : <TouchUploadPic />
-        }
-        {
-          picsData[3] ? <View style={detail.picsView}>
-            <Image style={detail.pics} source={{uri: picsData[3].url}}/>
-          </View> : <TouchUploadPic />
-        }
-        {
-          picsData[4] ? <View style={detail.picsView}>
-            <Image style={detail.pics} source={{uri: picsData[4].url}}/>
-          </View> : <TouchUploadPic />
+          picsData.map((picItem, index)=> 
+            typeof picItem == 'object' ? <View style={detail.picsView}>
+              <Image style={detail.pics} source={{uri: picItem.url}}/>
+            </View>
+             : <TouchUploadPic pressUploadPic={pressUploadPic}/>
+          )
         }
       </Swiper>
       <TouchableOpacity style={detail.gobackIcon} onPress={() => navigation.goBack()}>
@@ -157,9 +146,9 @@ const SwiperHeader = props => {
 }
 
 const TouchUploadPic =  props => {
-  let { navigation } = props
+  let { pressUploadPic } = props
   return (
-    <TouchableOpacity style={detail.picsView} activeOpacity={0.8} onPress={()=> alert('upload')}>
+    <TouchableOpacity style={detail.picsView} activeOpacity={0.8} onPress={()=> pressUploadPic()}>
       <Image style={detail.pics} source={uploadPic}/>
     </TouchableOpacity>
   )
@@ -210,8 +199,33 @@ const LineItem = props => {
   )
 }
 
-//   , picsUploadData = [uploadPic]
-  // picsData = picsData.concat(picsUploadData)
+// {
+//           picsData[0] ? <View style={detail.picsView}>
+//             <Image style={detail.pics} source={{uri: picsData[0].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picsData[1] ? <View style={detail.picsView}>
+//             <Image style={detail.pics} source={{uri: picsData[1].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picsData[2] ? <View style={detail.picsView}>
+//             <Image style={detail.pics} source={{uri: picsData[2].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picsData[3] ? <View style={detail.picsView}>
+//             <Image style={detail.pics} source={{uri: picsData[3].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+//         {
+//           picsData[4] ? <View style={detail.picsView}>
+//             <Image style={detail.pics} source={{uri: picsData[4].url}}/>
+//           </View> : <TouchUploadPic />
+//         }
+
+
 
 // {
 //           picsData.map((picItem, index)=> 

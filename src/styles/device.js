@@ -27,7 +27,6 @@ export default {
   archivesTabText: {
     marginRight: 5,
     fontSize: 15,
-    fontWeight: 'bold',
   },
   archivesItemTouch: {
     flexDirection: 'row',
@@ -58,7 +57,6 @@ export default {
   },
   archivesItemNo: {
     fontSize: 16,
-    fontWeight: 'bold',
   },
   archivesItemTime: {
     marginRight: 16,
@@ -86,7 +84,6 @@ export default {
   archivesItemDetail: {
     width: '100%',
     lineHeight: 23,
-    fontWeight: 'bold',
     color: subTitleColor,
     paddingRight: 16,
   },

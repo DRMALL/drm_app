@@ -1,6 +1,6 @@
 import React, { Component }from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
-import { primaryColor, mainColor, subTitleColor, lightBlueColor } from '../../common/constants'
+import { primaryColor, mainColor, subTitleColor, lightBlueColor, titleColor } from '../../common/constants'
 import { pushOrder, cancel, publish, pushOrderPlaceholder1, pushOrderPlaceholder2, pushOrderPlaceholder3 } from '../../common/strings'
 import { pushOrderS } from '../../styles'
 import { postNewOrder } from '../../apis'
@@ -37,9 +37,14 @@ export default class PushOrder extends Component {
         content: contentData,
       }
       let res = await postPort(`${postNewOrder}?token=${token}`, bodyData)
-      if(res.code == 201) {
-        navigation.goBack()
-      } else alert(res.message)
+      if(!res) {
+        alert('server error')
+      } else if(res.code == 201) {
+        alert('已发送')
+        setTimeout(() => {
+          navigation.goBack()
+        }, 2000)
+      } else alert(JSON.stringify(res.message))
     })
   }
 
@@ -107,7 +112,7 @@ export default class PushOrder extends Component {
           activeOpacity={0.8} 
           onPress={this.pressCategory.bind(this)}
         > 
-          <Text style={[pushOrderS.touchText, categoryPress ? {color: lightBlueColor} : {}]}>{order_category}</Text>
+          <Text style={[pushOrderS.touchText, categoryPress ? {color: lightBlueColor} : (order_category != pushOrderPlaceholder3 ? { color: titleColor } : {})]}>{order_category}</Text>
           <Image style={pushOrderS.touchImg} source={categoryPress ? dropdownSelected : dropdownNormal}/>
         </TouchableOpacity>
         <View>

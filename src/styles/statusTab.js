@@ -16,7 +16,6 @@ export default {
   },
   text: {
     fontSize: 16,
-    fontWeight: 'bold',
     height: '90%',
     paddingVertical: 10,
 

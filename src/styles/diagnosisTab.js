@@ -11,7 +11,6 @@ export default {
     paddingTop: 15,
     paddingBottom: 10,
     fontSize: 15,
-    fontWeight: 'bold',
   },
   tabLine: {
     height: 4,

@@ -10,13 +10,12 @@ export default {
     height: 55,
     paddingHorizontal: 16,
     justifyContent: 'center',
-    borderWidth: 0.5,
+    borderBottomWidth: 0.5,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
   itemText: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: subTitleColor,
   },
   halfOpacityView: {
@@ -59,7 +58,6 @@ export default {
     alignSelf: 'center',
     fontSize: 14,
     color: subTitleColor,
-    fontWeight: 'bold',
   },
   touchView: {
     flexDirection: 'row',
@@ -74,7 +72,6 @@ export default {
   },
   text: {
     fontSize: 14,
-    fontWeight: 'bold',
     color: contentColor,
   },
 }

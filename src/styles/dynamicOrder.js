@@ -21,7 +21,6 @@ export default {
     paddingVertical: 15,
     fontSize: 16,
     color: contentColor,
-    fontWeight: 'bold',
   },
   describeText: {
     paddingHorizontal: 16,

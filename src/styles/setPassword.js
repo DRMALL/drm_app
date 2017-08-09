@@ -7,7 +7,6 @@ export default {
   },
   fixText: {
     fontSize: 15,
-    fontWeight: 'bold',
     color: subTitleColor,
     paddingLeft: 16,
     paddingVertical: 10,

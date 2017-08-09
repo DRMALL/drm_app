@@ -20,11 +20,11 @@ export default {
     backgroundColor: 'rgba(0,0,0,.2)'
   },
   title: {
+    width: '95%',
     padding: 16,
     fontSize: 20,
     lineHeight: 30,
-    fontWeight: 'bold',
-    color: '#fff'
+    color: '#fff',
   },
 }
 

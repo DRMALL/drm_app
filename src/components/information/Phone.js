@@ -8,6 +8,7 @@ import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
+const cancelIcon = require('../../images/navigation_icons/cancel.png')
 let phoneData
 
 export default class Phone extends Component {
@@ -49,15 +50,29 @@ export default class Phone extends Component {
     phoneData = phone_number
   }
 
+  cleanText() {
+    this.setState({
+      phone_number: '',
+    })
+  }
+
   render() {
+    let { phone_number } = this.state
     return (
       <View style={other.wrap}>
-        <TextInput style={other.textInput} 
-          value={this.state.phone_number} 
-          onChangeText={this.onChangePhone.bind(this)}
-          underlineColorAndroid='transparent' 
-          autoCapitalize='none'
-        />
+        <View style={other.inputView}>
+          <TextInput style={other.textInput} 
+            value={phone_number} 
+            onChangeText={this.onChangePhone.bind(this)}
+            underlineColorAndroid='transparent' 
+            autoCapitalize='none'
+          />
+          {
+            phone_number != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>
+              <Image style={other.cancelIcon} source={cancelIcon}/>
+            </TouchableOpacity> : <Image style={{height: 0}}/>
+          }
+        </View>
       </View>
     )
   }

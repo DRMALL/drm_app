@@ -24,7 +24,6 @@ export default {
   },
   buttonTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
   },
   pailiangView: {
     height: 80,
@@ -50,12 +49,10 @@ export default {
   },
   classText: {
     fontSize: 11,
-    fontWeight: 'bold',
     marginLeft: 15,
   },
   attachText: {
     fontSize: 10,
-    fontWeight: 'bold',
     color: subTitleColor,
     marginLeft: 10,
   },
@@ -75,6 +72,5 @@ export default {
   },
   kindText: {
     fontSize: 11,
-    fontWeight: 'bold',
   },
 }

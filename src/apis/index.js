@@ -1,4 +1,4 @@
-const apiUrl = 'https://api.wardenger.me/app/'
+const apiUrl = 'https://api.wardenger.me/app/'//'http://192.168.2.236:3000/app/'
 
 export const signIn = apiUrl + 'session'
 export const getInfo = apiUrl + 'user'
@@ -21,3 +21,5 @@ export const getNotices = apiUrl + 'notices'
 export const getNoticesOne = apiUrl + 'notices/one'
 export const setAllNoticesRead = apiUrl + 'notices/all/read'
 export const setOneNoticesRead = apiUrl + 'notices/one/read'
+export const setOrderSolved = apiUrl + 'order/solved'
+

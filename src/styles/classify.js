@@ -18,7 +18,6 @@ export default {
     marginLeft: 15,
     fontSize: 14,
     color: contentColor,
-    fontWeight: 'bold',
   },
   numImgView: {
     flexDirection: 'row',

@@ -20,7 +20,6 @@ export default {
   titleText: {
     width: 230,
     fontSize: 17,
-    fontWeight: 'bold',
   },
   solvedText: {
     paddingVertical: 1,
@@ -40,7 +39,6 @@ export default {
   },
   kindsText: {
     fontSize: 12,
-    fontWeight: 'bold',
     lineHeight: 20,
     color: subTitleColor,
   },

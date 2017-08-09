@@ -15,7 +15,6 @@ export default {
   fixText: {
     paddingHorizontal: 16,
     fontSize: 15,
-    fontWeight: 'bold',
     color: contentColor,
   },
   touch: {
@@ -29,7 +28,6 @@ export default {
   },
   dateText: {
     fontSize: 15,
-    fontWeight: 'bold',
     color: subTitleColor,
   },
   emptyView: {

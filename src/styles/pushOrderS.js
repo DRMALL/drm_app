@@ -43,7 +43,6 @@ export default {
   },
   oneCategoryText: {
     fontSize: 14,
-    fontWeight: 'bold',
     color: subTitleColor,
   },
 }

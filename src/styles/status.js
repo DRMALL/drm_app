@@ -29,7 +29,6 @@ export default {
   NoText: {
     width: '100%',
     fontSize: 18, 
-    fontWeight: 'bold',
   },
   text: {
     width: '86%',
