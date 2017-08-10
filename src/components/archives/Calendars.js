@@ -1,8 +1,8 @@
 import React, { Component }from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
-// import { Calendar, CalendarList, Agenda, LocaleConfig } from 'react-native-calendars'
+import { NavigationActions } from 'react-navigation'
 import { primaryColor, mainColor, subTitleColor, backgroundColor } from '../../common/constants'
-import { timeLineScreening, cancel, confirm, pleaseSelectStartTime, pleaseSelectEndTime } from '../../common/strings'
+import { timeLineScreening, cancel, confirm, pleaseSelectStartTime, pleaseSelectEndTime, deviceLabel } from '../../common/strings'
 import { calendars } from '../../styles'
 
 import DayList from './DayList'
@@ -59,7 +59,7 @@ export default class Calendars extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 15}} onPress={() => navigation.goBack()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{cancel}</Text>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => alert('ok')}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.comeToDetail()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{confirm}</Text>
     </TouchableOpacity>,
   });
@@ -78,7 +78,7 @@ export default class Calendars extends Component {
         startTime: '',
         startTimestamp: 0,
         endTime: '',
-        endTimestamp: 0,
+        endTimestamp: 0, 
         pointNum: 0,
         selectTextTF: false,
         resetTime: false,
@@ -88,7 +88,30 @@ export default class Calendars extends Component {
   }
 
   componentDidMount() {
-    let { year, month } = this.state
+    this.props.navigation.setParams({
+      comeToDetail: this.comeToDetail.bind(this),
+    })
+  }
+
+  comeToDetail() {
+    let { deviceId } = this.props.navigation.state.params
+      , { startTime, endTime } = this.state
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'main' }),
+        NavigationActions.navigate({ 
+          routeName: 'detail', 
+          params: {
+            deviceId: deviceId, 
+            startTime: startTime, 
+            endTime: endTime,
+          }, 
+        })
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+    
   }
 
   pressMinusMonth() {
@@ -139,7 +162,7 @@ export default class Calendars extends Component {
     let { year, month, dayArray, selectTextTF } = this.state
     return (
       <ScrollView style={calendars.wrap}>
-        <StatusBar backgroundColor={primaryColor} />
+        <StatusBar hidden={false} backgroundColor={primaryColor} />
         <Text style={calendars.selectText}>{selectTextTF ? pleaseSelectEndTime : pleaseSelectStartTime}</Text>
         <View style={{backgroundColor: mainColor}}>
           <View style={calendars.ymView}>

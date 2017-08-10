@@ -90,6 +90,6 @@ export default {
   halfOpacityView: {
     height: '100%', 
     backgroundColor: 'black', 
-    opacity: 0.5
+    opacity: 0.5,
   },
 }

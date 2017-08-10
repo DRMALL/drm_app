@@ -7,7 +7,7 @@ import {
 import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
-import Calendars from './components/archives/Calendars'
+import UploadImage from './components/archives/UploadImage'
 
 export default class App extends Component {
   constructor() {
@@ -25,6 +25,7 @@ export default class App extends Component {
   render() {
     // return <Launching />
     return <Routes />
+    // return <UploadImage />
   }
 }
 

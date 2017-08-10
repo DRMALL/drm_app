@@ -36,6 +36,7 @@ import SearchDiagnose from '../components/search/SearchDiagnose'
 import SearchSeek from '../components/search/SearchSeek'
 import SearchStatus from '../components/search/SearchStatus'
 import HomeDetail from '../components/HomeDetail'
+import UploadImage from '../components/archives/UploadImage'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -168,6 +169,9 @@ export default StackNavigator({
   },
   homeDetail: {
     screen: HomeDetail,
+  },
+  uploadImage: {
+    screen: UploadImage,
   },
 }, {
   transitionConfig:()=>({  

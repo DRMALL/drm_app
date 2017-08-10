@@ -15,12 +15,6 @@ const calendarIcon = require('../../images/navigation_icons/calendar.png')
 const editIcon = require('../../images/navigation_icons/edit.png')
 const uploadPic = require('../../images/uploadPic.png')
 
-let fetchParams = {
-  first: 6,
-  groupTypes: 'All',
-  assetType: 'Photos'
-}
-
 export default class Detail extends Component {
   static navigationOptions = {
     headerStyle: {
@@ -40,32 +34,23 @@ export default class Detail extends Component {
 
   componentDidMount() {
     this.getOneDevice()
-    // let _that = this
-    // let promise = CameraRoll.getPhotos(fetchParams)
-    // promise.then( data => {
-    //   let edges = data.edges
-    //   let photos = []
-    //   for (let i in edges) {
-    //       photos.push(edges[i].node.image.uri)
-    //   }
-    //   _that.setState({
-    //       photos: photos
-    //   })
-    // }, err => {
-    //     alert('获取照片失败！')
-    // })
   }
 
   getOneDevice() {
-    let deviceId = this.props.navigation.state.params.deviceId
+    let { deviceId, startTime, endTime } = this.props.navigation.state.params
+      , res
     checkToken(tokenKey)
     .then(async token => {
-      let res = await getPort(`${getDevice}?deviceId=${deviceId}&token=${token}`)
+      if(startTime != undefined || endTime != undefined) {
+        res = await getPort(`${getDevice}?deviceId=${deviceId}&start=${startTime}&end=${endTime}&token=${token}`)
+      } else {
+        res = await getPort(`${getDevice}?deviceId=${deviceId}&token=${token}`)
+      }
       if(!res) {
         alert('result is none')
       } else if(res.code == 200) {
         this.setState({
-          oneDeviceData: res.data[0],
+          oneDeviceData: res.data,
         })
       } else alert(JSON.stringify(res))
     })
@@ -81,19 +66,7 @@ export default class Detail extends Component {
 
   pressUploadPic() {
     let { deviceId } = this.props.navigation.state.params
-    checkToken(tokenKey)
-    .then(async token => {
-      let bodyData = {
-        id: deviceId,
-      }
-      let res = await postPort(`${getDeviceImages}?deviceId=${deviceId}&token=${token}`, bodyData)
-      if(!res) {
-        alert('server error')
-      } else if(res.code == 201) {
-        console.log(res)
-        alert('上传成功')
-      } else alert(JSON.stringify(res))
-    })
+    this.props.navigation.navigate('uploadImage', {deviceId: deviceId})
   }
 
   render() {
@@ -101,21 +74,7 @@ export default class Detail extends Component {
       , { oneDeviceData, isRefreshing, adDataSource, photos } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
-    // photos = photos || []
-    // let photosView = []
-    // for(var i = 0; i < 6 ; i += 2) {
-    //   photosView.push(
-    //     <View key={i} style={styles.row}>
-    //       <View style={styles.flex}>
-    //         <Image resizeMode="stretch" style={styles.image} source={{uri:photos[i]}}/>
-    //       </View>
-    //       <View style={styles.flex}>
-    //         <Image resizeMode="stretch" style={styles.image} source={{uri:photos[i+1]}}/>
-    //       </View>
-    //     </View>
-    //   )
-    // }
-    if (!images) return <View />
+    if (!oneDeviceData || !images || !_id) return <View />
     return (
       <ScrollView 
         refreshControl={<RefreshControl 
@@ -128,8 +87,6 @@ export default class Detail extends Component {
         <StatusBar hidden={true}/>
         <View style={detail.wrap}>
           <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
-
-          
 
           <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
             <Text style={detail.titleText}>{name + number}</Text>
@@ -264,29 +221,3 @@ const LineItem = props => {
 //             </TouchableOpacity>
 //           )
 //         }
-
-// <View style={styles.container}>
-//             {photosView}
-//           </View>
-
-// const styles = StyleSheet.create({
-//   flex:{
-//    flex:1
-//  },
-//  container: {
-//    flex: 1,
-//    paddingTop: 30,
-//    alignItems:'center'
-//  },
-//  row:{
-//    flexDirection: 'row'
-//  },
-//  image:{
-//    height: 120,
-//    marginTop: 10,
-//    marginLeft: 5,
-//    marginRight: 5,
-//    borderWidth: 1,
-//    borderColor: '#ddd'
-//  },
-// })

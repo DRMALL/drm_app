@@ -81,6 +81,7 @@ export default class DynamicOrder extends Component {
         alert('server error')
       } else if(res.code == 201) {
         console.log(res)
+        alert('已解决')
       } else alert(JSON.stringify(res))
     })
   }
@@ -121,7 +122,7 @@ export default class DynamicOrder extends Component {
             title={solved} 
             titleStyle={{color: mainColor}} 
             activeOpacity={0.8} 
-            onPress={()=> alert('已解决')} 
+            onPress={()=> this.postOrderSolved(oneNoticeData.order._id)} 
           />
         </View>
       </ScrollView>

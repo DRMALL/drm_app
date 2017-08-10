@@ -53,5 +53,9 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>DRM需要访问您的照相机</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>DRM需要访问您的麦克风</string>
 </dict>
 </plist>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, Alert, StatusBar } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, contentColor } from '../../common/constants'
@@ -8,13 +9,10 @@ import { allLineTypeData } from '../../utils/virtualData'
 import { timePoint } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { postPort } from '../../utils/fetchMethod'
-import { getDeviceTimelines } from '../../apis'
+import { postDeviceTimelines } from '../../apis'
 
 const dropdownNormal = require('../../images/dropdown_normal.png')
 const dropdownSelected = require('../../images/dropdown_selected.png')
-let typeData
-  , timeData
-  , descriptionData
 
 export default class TimePoint extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -25,45 +23,10 @@ export default class TimePoint extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 15}} onPress={() => navigation.goBack()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{cancel}</Text>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => TimePoint.postTimelines(navigation)}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.postTimelines()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{publish}</Text>
     </TouchableOpacity>,
   });
-
-  static postTimelines(navigation) {
-    checkToken(tokenKey)
-    .then(async token => {
-      let bodyData = {
-        deviceId: navigation.state.params.deviceId,
-        line_type: typeData,
-        line_time: timeData,
-        line_des: descriptionData,
-      }
-      if(bodyData.line_type == '请选择') {
-        Alert.alert('⚠️警告', '请选择类型',
-          [
-            {text: 'OK', onPress: () => 'OK'},
-          ],
-          { cancelable: false }
-        )
-      } else if(bodyData.line_des == '') {
-        Alert.alert('⚠️警告', '文本不能为空',
-          [
-            {text: 'OK', onPress: () => 'OK'},
-          ],
-          { cancelable: false }
-        )
-      } else {
-        let res = await postPort(`${getDeviceTimelines}?token=${token}`, bodyData)
-        console.log(bodyData, res)
-        if(!res) {
-          alert('result is null')
-        } else if(res.code == 201) {
-          navigation.goBack() //.navigate('detail', {deviceId: bodyData.deviceId})
-        } else alert(JSON.stringify(res))
-      }
-    })
-  }
 
   constructor(props) {
     super(props)
@@ -84,14 +47,52 @@ export default class TimePoint extends Component {
   }
 
   componentDidMount() {
-    typeData = this.state.selectOne
-    timeData = this.state.date
-    descriptionData = this.state.tline_description
+    this.props.navigation.setParams({
+      postTimelines: this.postTimelines.bind(this),
+    })
   }
 
-  componentWillUpdate() {
-    typeData = this.state.selectOne
-    descriptionData = this.state.tline_description
+  postTimelines() {
+    checkToken(tokenKey)
+    .then(async token => {
+      let { navigation } = this.props
+      let bodyData = {
+        deviceId: navigation.state.params.deviceId,
+        line_type: this.state.selectOne,
+        line_time: this.state.date,
+        line_des: this.state.tline_description,
+      }
+      if(bodyData.line_type == '请选择') {
+        Alert.alert('⚠️警告', '请选择类型',
+          [{text: 'OK', onPress: () => 'OK'},],
+          { cancelable: false }
+        )
+      } else if(bodyData.line_des == '') {
+        Alert.alert('⚠️警告', '文本不能为空',
+          [{text: 'OK', onPress: () => 'OK'},],
+          { cancelable: false }
+        )
+      } else {
+        let res = await postPort(`${postDeviceTimelines}?token=${token}`, bodyData)
+        if(!res) {
+          alert('result is null')
+        } else if(res.code == 201) {
+          const resetAction = NavigationActions.reset({
+            index: 1,
+            actions: [
+              NavigationActions.navigate({ routeName: 'main' }),
+              NavigationActions.navigate({ 
+                routeName: 'detail', 
+                params: {
+                  deviceId: navigation.state.params.deviceId, 
+                }, 
+              })
+            ]
+          })
+          navigation.dispatch(resetAction)
+        } else alert(JSON.stringify(res))
+      }
+    })
   }
 
   pressTouch(which) {
@@ -121,15 +122,12 @@ export default class TimePoint extends Component {
   }
 
   _handleDatePicked(date) {
-    console.log('A date has been picked: ', date)
-    timeData = date
     this.setState({ date: date })
     this._hideDateTimePicker()
   }
 
   onChangeDescription(tline_description) {
     this.setState({ tline_description })
-    descriptionData = tline_description
   }
 
   render() {
@@ -138,7 +136,7 @@ export default class TimePoint extends Component {
       , displayView = this.state.displayView
     return (
       <View style={timePoint.wrap}>
-        <StatusBar backgroundColor={primaryColor} />
+        <StatusBar hidden={false} backgroundColor={primaryColor} />
         <View style={timePoint.nextWrap}>
           <Text style={timePoint.fixText}>{timelineType}</Text>
           <TouchableOpacity style={timePoint.touch} activeOpacity={0.6} onPress={()=> this.pressTouch(`touchSelect`)}>

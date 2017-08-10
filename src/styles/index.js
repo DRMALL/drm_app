@@ -26,6 +26,7 @@ import seekDetail from './seekDetail'
 import headerTitle from './headerTitle'
 import search from './search'
 import calendars from './calendars'
+import uploadImage from './uploadImage'
 import other from './other'
 
 export {
@@ -57,5 +58,6 @@ export {
   headerTitle,
   search,
   calendars,
+  uploadImage,
   other,
 }
