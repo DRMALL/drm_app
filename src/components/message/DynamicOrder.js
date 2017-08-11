@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import moment from 'moment'
+import { NavigationActions } from 'react-navigation'
 import Button from '../units/Button'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
 import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey } from '../../common/strings'
@@ -28,13 +29,19 @@ export default class DynamicOrder extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isMounted: false,
       oneNoticeData: null,
     }
   }
 
   componentDidMount() {
+    this.setState({isMounted: true})
     this.postNoticeRead()
     this.getNotice()
+  }
+
+  componentWillUnmount(){
+    this.setState({isMounted: false})
   }
 
   postNoticeRead() {
@@ -63,25 +70,38 @@ export default class DynamicOrder extends Component {
       if(!res) {
         alert('server error')
       } else if(res.code == 200) {
-        this.setState({
-          oneNoticeData: res.data,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            oneNoticeData: res.data,
+          })
+        }
       } else alert(JSON.stringify(res))
     })
   }
 
-  postOrderSolved(id) {
+  postOrderSolved() {
     checkToken(tokenKey)
     .then(async token => {
+      let { oneNoticeData } = this.state
       let bodyData = {
-        id: id,
+        id: oneNoticeData.order.id,
       }
       let res = await postPort(`${setOrderSolved}?token=${token}`, bodyData)
       if(!res) {
         alert('server error')
       } else if(res.code == 201) {
-        console.log(res)
-        alert('已解决')
+        const resetAction = NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: 'main'}),
+            NavigationActions.navigate({ routeName: 'message'})
+          ]
+        })
+        this.props.navigation.dispatch(resetAction)
+        // Alert.alert('提示', '发送成功',
+        //   [ {text: 'OK', onPress: () => 'OK'}, ],
+        //   { cancelable: false }
+        // )
       } else alert(JSON.stringify(res))
     })
   }
@@ -106,7 +126,7 @@ export default class DynamicOrder extends Component {
         </View>
         <View style={dynamicOrder.returnTimeView}>
           <Text style={dynamicOrder.fixReturnText}>{orderReturn}</Text>
-          <Text style={dynamicOrder.returnTime}>{moment(new Date(oneNoticeData.order.time)).format('YYYY-MM-DD')}</Text>
+          <Text style={dynamicOrder.returnTime}>{moment(new Date(oneNoticeData.createdAt)).format('YYYY-MM-DD')}</Text>
         </View>
         <Text style={dynamicOrder.returnDescribe}>{oneNoticeData.order.feedback}</Text>
         <View style={dynamicOrder.buttonView}>
@@ -122,7 +142,7 @@ export default class DynamicOrder extends Component {
             title={solved} 
             titleStyle={{color: mainColor}} 
             activeOpacity={0.8} 
-            onPress={()=> this.postOrderSolved(oneNoticeData.order._id)} 
+            onPress={()=> this.postOrderSolved()} 
           />
         </View>
       </ScrollView>

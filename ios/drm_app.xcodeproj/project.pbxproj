@@ -37,6 +37,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9D39A446F2354E5E8B5081B4 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E010D222CBD46CF8AA99291 /* libimageCropPicker.a */; };
+		C78FF89E1F3D609E00E956E8 /* bundle in Resources */ = {isa = PBXBuildFile; fileRef = C78FF89D1F3D609D00E956E8 /* bundle */; };
 		C7D16D291F3B48AE0048BF58 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D16D121F3B43B90048BF58 /* libRCTCameraRoll.a */; };
 		C7D16D581F3BFE760048BF58 /* ImageCropPickerSDK in Resources */ = {isa = PBXBuildFile; fileRef = C7D16D571F3BFE760048BF58 /* ImageCropPickerSDK */; };
 		C7D16D5A1F3BFEE30048BF58 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D16D591F3BFEE30048BF58 /* RSKImageCropper.framework */; };
@@ -293,6 +294,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8E010D222CBD46CF8AA99291 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		C2FEEF8F5EA44DCDADB20481 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		C78FF89D1F3D609D00E956E8 /* bundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundle; sourceTree = "<group>"; };
 		C7D16D0A1F3B43B90048BF58 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		C7D16D571F3BFE760048BF58 /* ImageCropPickerSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ImageCropPickerSDK; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK"; sourceTree = "<group>"; };
 		C7D16D591F3BFEE30048BF58 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +437,7 @@
 		13B07FAE1A68108700A75B9A /* drm_app */ = {
 			isa = PBXGroup;
 			children = (
+				C78FF89D1F3D609D00E956E8 /* bundle */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -929,6 +932,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C78FF89E1F3D609E00E956E8 /* bundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C7D16D581F3BFE760048BF58 /* ImageCropPickerSDK in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,

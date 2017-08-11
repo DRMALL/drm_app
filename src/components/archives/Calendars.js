@@ -99,7 +99,11 @@ export default class Calendars extends Component {
     const resetAction = NavigationActions.reset({
       index: 1,
       actions: [
-        NavigationActions.navigate({ routeName: 'main' }),
+        NavigationActions.navigate({ 
+          routeName: 'main', 
+          params: {},
+          action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
+        }),
         NavigationActions.navigate({ 
           routeName: 'detail', 
           params: {

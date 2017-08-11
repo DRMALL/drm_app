@@ -20,6 +20,7 @@ export default class DeviceCategory extends Component {
     super(props)
     this.state = (props => {
       let stateObj = {
+        isMounted: false,
         classifyRow: false,
         sortRow: false,
         filterRow: false,
@@ -53,8 +54,13 @@ export default class DeviceCategory extends Component {
   }
 
   componentDidMount() {
+    this.setState({isMounted: true})
     this.getAllDevices()
     this.getHotCities()
+  }
+
+  componentWillUnmount(){
+    this.setState({isMounted: false})
   }
 
   openModal(which) {
@@ -91,13 +97,15 @@ export default class DeviceCategory extends Component {
         res = await getPort(`${getDevices}?token=${token}`)
       }
       if(res.code == 200) {
-        this.setState({
-          allDevicesData: res.data,
-          filtercc: 'null',
-          filterpressure: 'null',
-          filtercombustible: 'null',
-          filteraddress: 'null',
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            allDevicesData: res.data,
+            filtercc: 'null',
+            filterpressure: 'null',
+            filtercombustible: 'null',
+            filteraddress: 'null',
+          })
+        }
       }
     })
   }
@@ -107,9 +115,11 @@ export default class DeviceCategory extends Component {
     .then(async token => {
       let res = await getPort(`${getDeviceAddress}?token=${token}`)
       if(res.code == 200) {
-        this.setState({
-          allCities: res.data,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            allCities: res.data,
+          })
+        }
       }
     })
   }
@@ -117,76 +127,88 @@ export default class DeviceCategory extends Component {
   pressClass(index) {
     let lengthNum = this.state.classRowNum
     for(let i = 0; i < lengthNum; i++) {
-      if(index == i) {
-        this.setState({[`classRow${index}`]: true})
+      if(this.state.isMounted) {
+        if(index == i) {
+          this.setState({[`classRow${index}`]: true})
+        }
+        else this.setState({[`classRow${i}`]: false})
       }
-      else this.setState({[`classRow${i}`]: false})
     }
   }
 
   pressBotton(which) {
-    this.setState(bfoState=> {
-      return {
-        [which]: !this.state[which],
-        filterSearch: which == 'confirmPress' ? true : false,
-        filtercc: which == 'cleanPress' ? 'null' : bfoState.filtercc,
-        filterpressure: which == 'cleanPress' ? 'null' : bfoState.filterpressure,
-        filtercombustible: which == 'cleanPress' ? 'null' : bfoState.filtercombustible,
-        filteraddress: which == 'cleanPress' ? 'null' : bfoState.filteraddress,
-      }
-    })
+    if(this.state.isMounted) {
+      this.setState(bfoState=> {
+        return {
+          [which]: !this.state[which],
+          filterSearch: which == 'confirmPress' ? true : false,
+          filtercc: which == 'cleanPress' ? 'null' : bfoState.filtercc,
+          filterpressure: which == 'cleanPress' ? 'null' : bfoState.filterpressure,
+          filtercombustible: which == 'cleanPress' ? 'null' : bfoState.filtercombustible,
+          filteraddress: which == 'cleanPress' ? 'null' : bfoState.filteraddress,
+        }
+      })
+    }
   }
 
   pressFilterParams(type, kind) {
-    switch(type) {
-      case 'cc': {
-        this.setState({filtercc: kind})
-      }break
-      case 'pressure': {
-        this.setState({filterpressure: kind})
-      }break
-      case 'combustible': {
-        this.setState({filtercombustible: kind})
-      }break
-      default: {
-        this.setState({filteraddress: kind})
+    if(this.state.isMounted) {
+      switch(type) {
+        case 'cc': {
+          this.setState({filtercc: kind})
+        }break
+        case 'pressure': {
+          this.setState({filterpressure: kind})
+        }break
+        case 'combustible': {
+          this.setState({filtercombustible: kind})
+        }break
+        default: {
+          this.setState({filteraddress: kind})
+        }
       }
     }
   }
 
   pressConfirmReturn() {
-    this.setState({
-      filterRow: false,
-    })
+    if(this.state.isMounted) {
+      this.setState({
+        filterRow: false,
+      })
+    }
     this.getAllDevices()
   }
 
   pressSort(s) {
     sortData.map((sortText, index)=> {
-      if(s == index) {
-        this.setState({ 
-          [`sortRow${s}`]: !this.state[`sortRow${s}`], 
-          sortTypesNum: !this.state[`sortRow${s}`] ? s+1 : 0,
-          sortRow: !this.state[`sortRow${s}`] ? false : true,
-          classj: !this.state[`sortRow${s}`] ? 0 : this.state.classj,
-          kindk: !this.state[`sortRow${s}`] ? 0 : this.state.kindk,
-        })
-      } else this.setState({ [`sortRow${index}`]: false })
+      if(this.state.isMounted) {
+        if(s == index) {
+          this.setState({ 
+            [`sortRow${s}`]: !this.state[`sortRow${s}`], 
+            sortTypesNum: !this.state[`sortRow${s}`] ? s+1 : 0,
+            sortRow: !this.state[`sortRow${s}`] ? false : true,
+            classj: !this.state[`sortRow${s}`] ? 0 : this.state.classj,
+            kindk: !this.state[`sortRow${s}`] ? 0 : this.state.kindk,
+          })
+        } else this.setState({ [`sortRow${index}`]: false })
+      }
     })
     this.getAllDevices()
   }
 
   changeClassKinds(j, k, type, kind) {
     let stNum = this.state.sortTypesNum-1
-    this.setState({
-      classj: j,
-      kindk: k,
-      classKindsType: type,
-      classKinds: kind,
-      classifyRow: false,
-      sortTypesNum: 0,
-      [`sortRow${stNum}`]: false,
-    })
+    if(this.state.isMounted) {
+      this.setState({
+        classj: j,
+        kindk: k,
+        classKindsType: type,
+        classKinds: kind,
+        classifyRow: false,
+        sortTypesNum: 0,
+        [`sortRow${stNum}`]: false,
+      })
+    }
     this.getAllDevices()
   }
 

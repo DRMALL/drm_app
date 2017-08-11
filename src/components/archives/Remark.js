@@ -2,7 +2,7 @@ import React, { Component }from 'react'
 import { View, Text, ScrollView, TouchableOpacity, TextInput, StatusBar } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { primaryColor, mainColor, subTitleColor } from '../../common/constants'
-import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey } from '../../common/strings'
+import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey, deviceLabel } from '../../common/strings'
 import { checkToken } from '../../utils/handleToken'
 import { postPort } from '../../utils/fetchMethod'
 import { postDeviceRemark } from '../../apis'
@@ -49,7 +49,11 @@ export default class Remark extends Component {
         const resetAction = NavigationActions.reset({
           index: 1,
           actions: [
-            NavigationActions.navigate({ routeName: 'main' }),
+            NavigationActions.navigate({ 
+              routeName: 'main', 
+              params: {},
+              action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
+            }),
             NavigationActions.navigate({ 
               routeName: 'detail', 
               params: {

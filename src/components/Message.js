@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import moment from 'moment'
-import { primaryColor, mainColor, backgroundColor, subTitleColor } from '../common/constants'
+import { primaryColor, mainColor, backgroundColor, subTitleColor, lightBlueColor } from '../common/constants'
 import { messageText, allSetAsRead, inTheEnd, tokenKey, orderInformat, equipMonitorin, 
         unknown, replyAlready, replyWaiting, abnormal, normal } from '../common/strings'
 import { message } from '../styles'
@@ -29,17 +29,23 @@ export default class Message extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isMounted: false,
       noticeData: null,
     }
   }
 
   componentDidMount() {
+    this.setState({isMounted: true})
     this.props.navigation.setParams({  
       setAllRead: () => {
         this.postNoticeRead()
       }, 
     })
     this.getNotices()
+  }
+
+  componentWillUnmount(){
+    this.setState({isMounted: false})
   }
 
   postNoticeRead() {
@@ -62,9 +68,11 @@ export default class Message extends Component {
       if(!res) {
         alert('server error')
       } else if(res.code == 200) {
-        this.setState({
-          noticeData: res.data,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            noticeData: res.data,
+          })
+        }
       } else alert(JSON.stringify(res))
     })
   }

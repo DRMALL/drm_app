@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, contentColor } from '../../common/constants'
-import { newTimeLine, cancel, publish, timelineType, createdTime, pleaseSelect, tokenKey } from '../../common/strings'
+import { newTimeLine, cancel, publish, timelineType, createdTime, pleaseSelect, tokenKey, deviceLabel } from '../../common/strings'
 import { allLineTypeData } from '../../utils/virtualData'
 import { timePoint } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
@@ -80,7 +80,11 @@ export default class TimePoint extends Component {
           const resetAction = NavigationActions.reset({
             index: 1,
             actions: [
-              NavigationActions.navigate({ routeName: 'main' }),
+              NavigationActions.navigate({ 
+                routeName: 'main', 
+                params: {},
+                action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
+              }),
               NavigationActions.navigate({ 
                 routeName: 'detail', 
                 params: {

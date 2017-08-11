@@ -27,12 +27,18 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isMounted: false,
       newsListData: {},
     }
   }
 
   componentDidMount() {
+    this.setState({isMounted: true})
     this.getNewsList()
+  }
+
+  componentWillUnmount(){
+    this.setState({isMounted: false})
   }
 
   getNewsList() {
@@ -40,9 +46,11 @@ export default class Home extends Component {
     .then(async token => {
       let res = await getPort(`${getNews}?token=${token}`)
       if(res.code == 200) {
-        this.setState({
-          newsListData: res.data,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            newsListData: res.data,
+          })
+        }
       }
     })
   }

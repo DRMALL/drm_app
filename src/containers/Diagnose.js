@@ -28,6 +28,7 @@ export default class Diagnose extends Component {
     super(props)
     this.state = (()=> {
       let diagTabState = {
+        isMounted: false,
         allDiagnoseData: [],
         allCateData: [],
         selectedCate: '',
@@ -41,8 +42,13 @@ export default class Diagnose extends Component {
   }
 
   componentDidMount() {
+    this.setState({isMounted: true})
     this.getDiagnosis()
     this.getDiagnoseCate()
+  }
+
+  componentWillUnmount(){
+    this.setState({isMounted: false})
   }
 
   getDiagnosis() {
@@ -52,9 +58,11 @@ export default class Diagnose extends Component {
       if(!res) {
         alert('result is null')
       } else if(res.code == 200) {
-        this.setState({
-          allDiagnoseData: res.data,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            allDiagnoseData: res.data,
+          })
+        }
       } else alert(JSON.stringify(res))
     })
   }
@@ -66,22 +74,26 @@ export default class Diagnose extends Component {
       if(!res) {
         alert('result is null')
       } else if(res.code == 200) {
-        this.setState({
-          allCateData: res.data,
-          selectedCate: res.data[0].text,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            allCateData: res.data,
+            selectedCate: res.data[0].text,
+          })
+        }
       } else alert(JSON.stringify(res))
     })
   }
 
   pressTab(dt) {
     this.state.allCateData.map((itemTabType, index)=> {
-      if(dt == index) {
-        this.setState({
-          [`tabTypeRow${dt}`]: true,
-          selectedCate: itemTabType.text,
-        })
-      } else this.setState({[`tabTypeRow${index}`]: false})
+      if(this.state.isMounted) {
+        if(dt == index) {
+          this.setState({
+            [`tabTypeRow${dt}`]: true,
+            selectedCate: itemTabType.text,
+          })
+        } else this.setState({[`tabTypeRow${index}`]: false})
+      }
     })
   }
 
