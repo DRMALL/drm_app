@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import moment from 'moment'
+import Loading from './units/Loading'
 import { primaryColor, mainColor, backgroundColor, subTitleColor, lightBlueColor } from '../common/constants'
 import { messageText, allSetAsRead, inTheEnd, tokenKey, orderInformat, equipMonitorin, 
         unknown, replyAlready, replyWaiting, abnormal, normal } from '../common/strings'
@@ -80,7 +81,8 @@ export default class Message extends Component {
   render() {
     let { navigation } = this.props
       , { noticeData } = this.state
-    if(!noticeData) return <View />
+
+    if(!noticeData) return <Loading animating={!noticeData ? true : false}/>
     noticeData.sort((a, b)=> {
       return new Date(b.order.time) - new Date(a.order.time)
     })

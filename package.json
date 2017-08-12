@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "bundle-ios":"node node_modules/react-native/local-cli/cli.js bundle --entry-file index.ios.js  --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle"
+    "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.ios.js  --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle"
   },
   "dependencies": {
     "moment": "^2.18.1",
@@ -13,6 +13,7 @@
     "react-native": "^0.44.0",
     "react-native-image-crop-picker": "^0.15.1",
     "react-native-modal-datetime-picker": "^4.9.0",
+    "react-native-splash-screen": "^2.1.0",
     "react-native-swiper": "^1.5.4",
     "react-navigation": "^1.0.0-beta.11",
     "redux": "^3.7.1"

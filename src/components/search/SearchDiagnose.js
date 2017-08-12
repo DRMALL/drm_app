@@ -4,6 +4,7 @@ import { mainColor, primaryColor, subTitleColor, contentColor, mainColorPressed 
 import { inputDeviceFault, historicalRecord, hotSearch, unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
 import { search, diagnose, diagDetail } from '../../styles'
 import Button from '../units/Button'
+import Loading from '../units/Loading'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
@@ -27,7 +28,7 @@ export default class SearchDiagnose extends Component {
     this.state = {
       text: '',
       jumpData: false,
-      bugsData: [],
+      bugsData: null,
       historyData: [],
       hotwordData: [],
     }
@@ -126,6 +127,16 @@ export default class SearchDiagnose extends Component {
   render() {
     let { navigation } = this.props
       , { bugsData, historyData, hotwordData, jumpData } = this.state
+      , dataBugsView
+    if(!bugsData) {
+      dataBugsView = <Loading animating={!bugsData ? true : false}/>
+    } else {
+      dataBugsView = <ScrollView>
+        {
+          bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
+        }
+      </ScrollView>
+    }
     return (
       <View style={{height: '100%'}}>
         <StatusBar backgroundColor={primaryColor} />
@@ -137,11 +148,7 @@ export default class SearchDiagnose extends Component {
           cleanText={()=> this.pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
-          <ScrollView>
-            {
-              bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
-            }
-          </ScrollView>
+          {dataBugsView}
           <View style={[diagDetail.buttonView, { bottom: 0, borderWidth: 0.5, borderColor: mainColorPressed, opacity: 1 }]}>
             <Button 
               style={diagDetail.button} 

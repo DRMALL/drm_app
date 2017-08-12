@@ -1,8 +1,8 @@
 import React, { Component }from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar, CameraRoll, StyleSheet } from 'react-native'
 import Swiper from 'react-native-swiper'
-import ViewPager from 'react-native-viewpager'
 import moment from 'moment'
+import Loading from '../units/Loading'
 import { mainColor, loginBorderColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
 import { deviceSort, deviceTimeline, deviceRemarks, tokenKey } from '../../common/strings'
 import { detail } from '../../styles'
@@ -13,6 +13,8 @@ import { getDevice, getDeviceImages } from '../../apis'
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const calendarIcon = require('../../images/navigation_icons/calendar.png')
 const editIcon = require('../../images/navigation_icons/edit.png')
+const openDownIcon = require('../../images/navigation_icons/open_down.png')
+const closeUpIcon = require('../../images/navigation_icons/close_up.png')
 const uploadPic = require('../../images/uploadPic.png')
 
 export default class Detail extends Component {
@@ -29,6 +31,7 @@ export default class Detail extends Component {
       isRefreshing: false,
       oneDeviceData: {},
       photos: null,
+      downUpPress: false,
     }
   }
 
@@ -71,10 +74,10 @@ export default class Detail extends Component {
 
   render() {
     let { navigation } = this.props
-      , { oneDeviceData, isRefreshing, adDataSource, photos } = this.state
+      , { oneDeviceData, isRefreshing, adDataSource, photos, downUpPress } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
-    if (!oneDeviceData || !images || !_id) return <View />
+    if (!oneDeviceData || !images) return <Loading animating={!oneDeviceData || !images ? true : false}/>
     return (
       <ScrollView 
         refreshControl={<RefreshControl 
@@ -113,16 +116,21 @@ export default class Detail extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View>
+          <View style={downUpPress ? {} : {height: 350, overflow: 'hidden'}}>
             <TimeLineForm timelineData={timelines == undefined ? [] : timelines} />
           </View>
-          <View style={detail.fixTextView}>
-            <Text style={detail.textFix}>{deviceRemarks}</Text>
-            <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id, orgDeviceRemark: remark})} >
-              <Image source={editIcon}/>
+          <View style={{opacity: 1, backgroundColor: mainColor}}>
+            <TouchableOpacity style={detail.downUpView} onPress={()=> this.setState({downUpPress: !downUpPress})}>
+              <Image source={downUpPress ? closeUpIcon : openDownIcon}/>
             </TouchableOpacity>
+            <View style={detail.fixTextView}>
+              <Text style={detail.textFix}>{deviceRemarks}</Text>
+              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id, orgDeviceRemark: remark})} >
+                <Image source={editIcon}/>
+              </TouchableOpacity>
+            </View>
+            <Text style={detail.ordinaryText} selectable={true}>{remark ? remark : '暂无'}</Text>
           </View>
-          <Text style={detail.ordinaryText} selectable={true}>{remark ? remark : '暂无'}</Text>
         </View>
       </ScrollView>
     )

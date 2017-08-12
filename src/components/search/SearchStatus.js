@@ -7,6 +7,7 @@ import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffe
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
+import Loading from '../units/Loading'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
@@ -126,6 +127,16 @@ export default class SearchStatus extends Component {
   render() {
     let { navigation } = this.props
       , { bugsData, historyData, hotwordData, jumpData } = this.state
+      , dataBugsView
+    if(!bugsData) {
+      dataBugsView = <Loading animating={!bugsData ? true : false}/>
+    } else {
+      dataBugsView = <ScrollView>
+        {
+          bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
+        }
+      </ScrollView>
+    }
     return (
       <View style={{height: '100%'}}>
         <StatusBar backgroundColor={primaryColor} />
@@ -137,11 +148,8 @@ export default class SearchStatus extends Component {
           cleanText={()=> this.pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
-          <ScrollView>
-            {
-              bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
-            }
-          </ScrollView>
+          {dataBugsView}
+          <View style={{height: 1}} />
         </View>
         <View style={{height: jumpData ? 0 : '100%'}}>
           <ScrollView>

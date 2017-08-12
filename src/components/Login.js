@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord } from '../common/strings'
 import { login } from '../styles'
 import Button from './units/Button'
@@ -34,6 +35,7 @@ export default class Login extends Component {
     .then(token => {
       if(token) this.props.navigation.navigate('main')
     })
+    SplashScreen.hide()
     // clearToken()
   }
 

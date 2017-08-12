@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import moment from 'moment'
 import { NavigationActions } from 'react-navigation'
 import Button from '../units/Button'
+import Loading from '../units/Loading'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
 import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey } from '../../common/strings'
 import { dynamicOrder } from '../../styles'
@@ -109,7 +110,7 @@ export default class DynamicOrder extends Component {
   render() {
     let { oneNoticeData } = this.state
       , { navigation } = this.props
-    if (!oneNoticeData) return <View />
+    if (!oneNoticeData) return <Loading animating={!oneNoticeData ? true : false}/>
     return (
       <ScrollView style={dynamicOrder.wrap}>
         <Text style={dynamicOrder.fixContentText}>{orderContent}</Text>

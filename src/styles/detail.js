@@ -94,6 +94,15 @@ export default {
     marginLeft: 12,
     padding: 3,
   },
+  downUpView: {
+    width: '100%',
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: backgroundColor,
+  },
 
 //
   oneTimeView: {

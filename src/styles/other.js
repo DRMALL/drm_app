@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, loginBackgroundColor, backgroundColor } from '../common/constants'
+import { mainColor, subTitleColor, loginBackgroundColor, backgroundColor, loginBorderColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -28,5 +28,20 @@ export default {
     height: 20,
     width: 20,
     resizeMode: 'contain',
+  },
+
+  //
+  loadingView: {
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: 8,
+  },
+  activityInd: {
+    height: 50, 
+    marginTop: 150,
+  },
+  loadingText: {
+    fontSize: 11, 
+    color: loginBorderColor,
   },
 }

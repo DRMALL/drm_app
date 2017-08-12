@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, ActivityIndicator } from 'react-native'
 import Swiper from 'react-native-swiper'
 import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
 import {  } from '../common/strings'
+import Loading from './units/Loading'
 import { seekDetail, detail } from '../styles'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
@@ -50,7 +51,7 @@ export default class HomeDetail extends Component {
     let { navigation } = this.props
       , { newsOneData } = this.state
 
-    if (!newsOneData) return <View />
+    if(!newsOneData) return <Loading animating={!newsOneData ? true : false}/>
     return (
       <ScrollView style={{backgroundColor: mainColor}}>
         <StatusBar hidden={true}/>
