@@ -35,7 +35,9 @@ export default class Login extends Component {
     .then(token => {
       if(token) this.props.navigation.navigate('main')
     })
-    SplashScreen.hide()
+    setTimeout(() => {
+      SplashScreen.hide()
+    }, 2000)
     // clearToken()
   }
 

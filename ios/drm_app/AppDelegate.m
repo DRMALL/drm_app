@@ -8,10 +8,10 @@
  */
 
 #import "AppDelegate.h"
-#import "SplashScreen.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "SplashScreen.h"
 
 @implementation AppDelegate
 
