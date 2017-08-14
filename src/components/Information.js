@@ -27,6 +27,7 @@ export default class Information extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isMounted: false,
       user_name: '',
       company_name: '',
       phone_number: '',
@@ -34,7 +35,12 @@ export default class Information extends Component {
     }
   }
   componentDidMount() {
+    this.setState({isMounted: true})
     this.getInformation()
+  }
+
+  componentWillUnmount(){
+    this.setState({isMounted: false})
   }
 
   getInformation() {
@@ -42,12 +48,14 @@ export default class Information extends Component {
     .then(async token => {
       let res = await getPort(`${getInfo}?token=${token}`)
       if(res.code == 200) {
-        this.setState({
-          user_name: res.data.name,
-          company_name: res.data.company_name,
-          phone_number: res.data.phone,
-          postal_address: res.data.address,
-        })
+        if(this.state.isMounted) {
+          this.setState({
+            user_name: res.data.name,
+            company_name: res.data.company_name,
+            phone_number: res.data.phone,
+            postal_address: res.data.address,
+          })
+        }
       }
     })
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { postalAddress, save } from '../../common/strings'
@@ -32,9 +32,14 @@ export default class Address extends Component {
         address: addressData,
       }
       let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
-      if(res.code == 201) {
+      if(!res) {
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 201) {
         navigation.navigate('information')
-      }
+      } else alert(JSON.stringify(res))
     })
   }
 
@@ -66,6 +71,7 @@ export default class Address extends Component {
             onChangeText={this.onChangeAddress.bind(this)}
             underlineColorAndroid='transparent' 
             autoCapitalize='none'
+            maxLength={50}
           />
           {
             postal_address != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>
