@@ -4,6 +4,7 @@ import { primaryColor, mainColor } from '../../common/constants'
 import { unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
 import { diagDetail } from '../../styles'
 import Button from '../units/Button'
+import ShareModal from '../units/ShareModal'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBug } from '../../apis'
@@ -34,6 +35,9 @@ export default class DiagDetail extends Component {
     super(props)
     this.state = {
       oneBugData: {},
+      shareShow: false,
+      topView: {position: 'relative', zIndex: 3},
+      nextView: {position: 'absolute', zIndex: 2},
     }
   }
   componentDidMount () {  
@@ -44,7 +48,9 @@ export default class DiagDetail extends Component {
   }
 
   shareFun() {  
-    alert('share')  
+    this.setState({
+      shareShow: true,
+    })
   }
 
   getOneBug() {
@@ -62,26 +68,35 @@ export default class DiagDetail extends Component {
     })
   }
 
+  pressShareCancel() {
+    this.setState({
+      shareShow: false,
+    })
+  }
+
   render() {
     let { navigation } = this.props
-      , { oneBugData } = this.state
+      , { oneBugData, shareShow, topView, nextView } = this.state
       , { categoryText } = navigation.state.params
     return (
-      <ScrollView style={diagDetail.wrap}>
-        <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
-        <Text style={diagDetail.kindText}>{categoryText}</Text>
-        <Text style={diagDetail.contentText}>{oneBugData.content}</Text>
-        
-        <View style={diagDetail.buttonView}>
-          <Button 
-            style={diagDetail.button} 
-            title={unsolvedGoToPushOrder} 
-            titleStyle={{fontSize: 14, color: mainColor}} 
-            activeOpacity={0.8} 
-            onPress={()=> navigation.navigate('pushOrder', {name: 'PushOrder'})}
-          />
-        </View>
-      </ScrollView>
+      <View>
+        <ScrollView style={[diagDetail.wrap, shareShow ? nextView : topView]}>
+          <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
+          <Text style={diagDetail.kindText}>{categoryText}</Text>
+          <Text style={diagDetail.contentText}>{oneBugData.content}</Text>
+          
+          <View style={diagDetail.buttonView}>
+            <Button 
+              style={diagDetail.button} 
+              title={unsolvedGoToPushOrder} 
+              titleStyle={{fontSize: 14, color: mainColor}} 
+              activeOpacity={0.8} 
+              onPress={()=> navigation.navigate('pushOrder', {name: 'PushOrder'})}
+            />
+          </View>
+        </ScrollView>
+        <ShareModal state={this.state} pressShareCancel={this.pressShareCancel.bind(this)}/>
+      </View>
     )
   }
 }

@@ -39,7 +39,7 @@ export default class DeviceCategory extends Component {
         filteraddress: 'null',
         filterSearch: false,
         topView: {position: 'relative', zIndex: 3},
-        middleView: {position: 'absolute', zIndex: 2},
+        middleView: {width: '100%', position: 'absolute', zIndex: 2},
         allDevicesData: [],
         allCities: [],
       }
@@ -100,10 +100,12 @@ export default class DeviceCategory extends Component {
         if(this.state.isMounted) {
           this.setState({
             allDevicesData: res.data,
-            filtercc: 'null',
-            filterpressure: 'null',
-            filtercombustible: 'null',
-            filteraddress: 'null',
+            filtercc: filterSearch ? filtercc : 'null',
+            filterpressure: filterSearch ? filterpressure : 'null',
+            filtercombustible: filterSearch ? filtercombustible : 'null',
+            filteraddress: filterSearch ? filteraddress : 'null',
+            filterRow: false,
+            cleanPress: false,
           })
         }
       }
@@ -141,30 +143,44 @@ export default class DeviceCategory extends Component {
       this.setState(bfoState=> {
         return {
           [which]: !this.state[which],
-          filterSearch: which == 'confirmPress' ? true : false,
-          filtercc: which == 'cleanPress' ? 'null' : bfoState.filtercc,
-          filterpressure: which == 'cleanPress' ? 'null' : bfoState.filterpressure,
-          filtercombustible: which == 'cleanPress' ? 'null' : bfoState.filtercombustible,
-          filteraddress: which == 'cleanPress' ? 'null' : bfoState.filteraddress,
+          filterSearch: false,
+          confirmPress: false,
+          filtercc: !bfoState.cleanPress ? 'null' : bfoState.filtercc,
+          filterpressure: !bfoState.cleanPress ? 'null' : bfoState.filterpressure,
+          filtercombustible: !bfoState.cleanPress ? 'null' : bfoState.filtercombustible,
+          filteraddress: !bfoState.cleanPress ? 'null' : bfoState.filteraddress,
         }
       })
     }
+    if(which == 'cleanPress' && !this.state[which]) this.getAllDevices()
   }
 
   pressFilterParams(type, kind) {
     if(this.state.isMounted) {
       switch(type) {
         case 'cc': {
-          this.setState({filtercc: kind})
+          this.setState({
+            filtercc: kind,
+            confirmPress: false,
+          })
         }break
         case 'pressure': {
-          this.setState({filterpressure: kind})
+          this.setState({
+            filterpressure: kind,
+            confirmPress: false,
+          })
         }break
         case 'combustible': {
-          this.setState({filtercombustible: kind})
+          this.setState({
+            filtercombustible: kind,
+            confirmPress: false,
+          })
         }break
         default: {
-          this.setState({filteraddress: kind})
+          this.setState({
+            filteraddress: kind,
+            confirmPress: false,
+          })
         }
       }
     }
@@ -173,6 +189,8 @@ export default class DeviceCategory extends Component {
   pressConfirmReturn() {
     if(this.state.isMounted) {
       this.setState({
+        filterSearch: true,
+        confirmPress: true,
         filterRow: false,
       })
     }

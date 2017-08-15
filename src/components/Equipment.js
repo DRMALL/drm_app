@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, ListView, ScrollView, TouchableOpacity } from 'react-native'
+import { Navigator } from 'react-native-deprecated-custom-components'
+import Lightbox from 'react-native-lightbox'
 import { equipmentName, equipmentRunState, equipmentRunImg, equipmentIndexData, indexDataUpdateTime, equipmentRunningLog } from '../common/strings'
 import { subTitleColor, primaryColor } from '../common/constants'
 import { equipment } from '../styles'
@@ -30,15 +32,15 @@ export default class Equipment extends Component {
         <Text style={equipment.fixText}>{equipmentRunState}</Text>
         <Text style={equipment.stateText}>{statuItemData.normal ? '正常' : '异常'}</Text>
         <Text style={equipment.fixText}>{equipmentRunImg}</Text>
-        <TouchableOpacity style={equipment.imgView}>
-          <Image style={equipment.img} source={pic4}/>
-        </TouchableOpacity>
+        <Lightbox style={equipment.imgView}>
+          <Image style={equipment.img} source={pic4}/> 
+        </Lightbox>
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>
           <Text style={[equipment.fix2Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + statuItemData.updateTime}</Text>
         </View>
         <View style={equipment.dataView}>
-          <IndexData indexData={equipmentDataList} />
+          <IndexData indexData={equipmentDataList} {...this.props}/>
         </View>
         <Text style={equipment.fixText}>{equipmentRunningLog}</Text>
         <View style={equipment.logView}>

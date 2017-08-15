@@ -44,7 +44,12 @@ export default class Phone extends Component {
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 

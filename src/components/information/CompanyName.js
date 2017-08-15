@@ -39,7 +39,12 @@ export default class CompanyName extends Component {
         )
       } else if(res.code == 201) {
         navigation.navigate('information')
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -71,7 +76,6 @@ export default class CompanyName extends Component {
             onChangeText={this.onChangeCName.bind(this)}
             underlineColorAndroid='transparent' 
             autoCapitalize='none'
-            maxLength={20}
           />
           {
             company_name != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>

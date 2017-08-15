@@ -5,6 +5,7 @@ import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
 import {  } from '../common/strings'
 import Loading from './units/Loading'
+import ShareModal from './units/ShareModal'
 import { seekDetail, detail } from '../styles'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
@@ -27,6 +28,9 @@ export default class HomeDetail extends Component {
     super(props)
     this.state = {
       newsOneData: null,
+      shareShow: false,
+      topView: {position: 'relative', zIndex: 3},
+      nextView: {position: 'absolute', zIndex: 2},
     }
   }
 
@@ -47,32 +51,47 @@ export default class HomeDetail extends Component {
     })
   }
 
+  pressShareShow() {
+    this.setState({
+      shareShow: true,
+    })
+  }
+
+  pressShareCancel() {
+    this.setState({
+      shareShow: false,
+    })
+  }
+
   render() {
     let { navigation } = this.props
-      , { newsOneData } = this.state
+      , { newsOneData, shareShow, topView, nextView } = this.state
 
     if(!newsOneData) return <Loading animating={!newsOneData ? true : false}/>
     return (
-      <ScrollView style={{backgroundColor: mainColor}}>
-        <StatusBar hidden={true}/>
-        <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
-        <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
-        <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
-          {
-            newsOneData.publish_time ? moment(newsOneData.publish_time).format('YYYY-MM-DD') : '0000-00-00'
-          }
-        </Text>
-        <Text style={detail.ordinaryText}>
-          {newsOneData.content}
-        </Text>
-      </ScrollView>
+      <View>
+        <ScrollView style={[{backgroundColor: mainColor}, shareShow ? nextView : topView]}>
+          <StatusBar hidden={true}/>
+          <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} pressShareShow={this.pressShareShow.bind(this)}/>
+          <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
+          <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
+            {
+              newsOneData.publish_time ? moment(newsOneData.publish_time).format('YYYY-MM-DD') : '0000-00-00'
+            }
+          </Text>
+          <Text style={detail.ordinaryText}>
+            {newsOneData.content}
+          </Text>
+        </ScrollView>
+        <ShareModal state={this.state} pressShareCancel={this.pressShareCancel.bind(this)}/>
+      </View>
     )
   }
 }
 
 
 const HomeSwiperHeader = props => {
-  let { picData, navigation } = props
+  let { picData, navigation, pressShareShow } = props
   let picsDataView = []
   for(var i = 0; i < picData.length; i++) {
     picsDataView.push(
@@ -89,7 +108,7 @@ const HomeSwiperHeader = props => {
       <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
         <Image source={gobackWhiteIcon}/>
       </TouchableOpacity>
-      <TouchableOpacity style={seekDetail.shareIcon} onPress={() => alert('share')}>
+      <TouchableOpacity style={seekDetail.shareIcon} onPress={() => pressShareShow()}>
         <Image source={shareIcon}/>
       </TouchableOpacity>
     </View>

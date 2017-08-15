@@ -19,22 +19,24 @@ export default props => {
       </View>
       <View style={filter.buttonView}>
         <Button 
-          style={[filter.button, cleanPress ? {backgroundColor: lightBlueColor, borderColor: lightBlueColor} : {} ]} 
+          style={[filter.button, !cleanPress ? {backgroundColor: lightBlueColor, borderColor: lightBlueColor} : {} ]} 
           title={cleanUp} 
-          titleStyle={[filter.buttonTitle, {color: cleanPress ? mainColor : contentColor} ]} 
-          onPressIn={()=> pressBotton(`cleanPress`)} 
-          delayPressOut={50}
-          onPressOut={()=> pressBotton(`cleanPress`)} 
+          titleStyle={[filter.buttonTitle, {color: !cleanPress ? mainColor : contentColor} ]} 
+          // onPressIn={()=> pressBotton(`cleanPress`)} 
+          // delayPressOut={10}
+          // onPressOut={()=> pressBotton(`cleanPress`)} 
+          onPress={()=> pressBotton(`cleanPress`)}
           activeOpacity={0.8}
         />
         <Button 
-          style={[filter.button, confirmPress ? {backgroundColor: lightBlueColor, borderColor: lightBlueColor} : {} ]} 
+          style={[filter.button, !confirmPress ? {backgroundColor: lightBlueColor, borderColor: lightBlueColor} : {} ]} 
           title={confirm} 
-          titleStyle={[filter.buttonTitle, {color: confirmPress ? mainColor : contentColor} ]} 
-          onPressIn={()=> pressBotton(`confirmPress`)} 
-          delayPressOut={0}
-          onPressOut={()=> pressBotton(`confirmPress`)} 
+          titleStyle={[filter.buttonTitle, {color: !confirmPress ? mainColor : contentColor} ]} 
+          // onPressIn={()=> pressBotton(`confirmPress`)} 
+          // delayPressOut={100}
+          // onPressOut={()=> pressBotton(`confirmPress`)} 
           onPress={()=> pressConfirmReturn()}
+          disabled={confirmPress ? true : false}
           activeOpacity={0.8}
         />
       </View>

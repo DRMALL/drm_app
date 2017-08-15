@@ -39,7 +39,12 @@ export default class UserName extends Component {
         )
       } else if(res.code == 201) {
         navigation.navigate('information')
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -71,7 +76,6 @@ export default class UserName extends Component {
             onChangeText={this.onChangeName.bind(this)}
             underlineColorAndroid='transparent' 
             autoCapitalize='none'
-            maxLength={20}
           />
           {
             user_name != '' ? <TouchableOpacity style={other.cancelTouch} onPress={this.cleanText.bind(this)}>

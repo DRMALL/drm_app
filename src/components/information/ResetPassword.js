@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { resetPassword, save, originalPassword, newPassword, verifyNewPassword } from '../../common/strings'
@@ -34,17 +34,44 @@ export default class ResetPassword extends Component {
         newPass: newPwData,
         confirmPass: verifyNewPwData,
       }
+      if(bodyData.password == undefined || bodyData.password == '') {
+        return Alert.alert('❌错误', '原密码不能为空',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(bodyData.newPass == undefined || bodyData.newPass == '') {
+        return Alert.alert('❌错误', '新密码不能为空',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(bodyData.confirmPass == undefined || bodyData.confirmPass == '') {
+        return Alert.alert('❌错误', '确认新密码不能为空',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+
       let res = await postPort(`${updatePassword}?token=${token}`, bodyData)
       
       if(res == null) {
-        alert('Internal Server Error')
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
         clearToken()
         navigation.navigate('login')
       } else if(res.code == 201) {
+        Alert.alert('✅成功', '修改成功',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
         clearToken()
         navigation.navigate('login')
       } else {
-        alert(JSON.stringify(res))
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
     })
   }

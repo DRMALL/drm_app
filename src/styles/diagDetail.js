@@ -2,6 +2,7 @@ import { mainColor, subTitleColor, contentColor, primaryColor } from '../common/
 
 export default {
   wrap: {
+    width: '100%',
     height: '100%',
     backgroundColor: mainColor,
   },

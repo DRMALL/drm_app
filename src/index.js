@@ -7,7 +7,7 @@ import {
 import store from './utils/store'
 import Launching from './components/Launching'
 import Routes from './containers/Routes'
-import UploadImage from './components/archives/UploadImage'
+import ShareModal from './components/units/ShareModal'
 
 export default class App extends Component {
   constructor() {
@@ -25,7 +25,7 @@ export default class App extends Component {
   render() {
     // return <Launching />
     return <Routes />
-    // return <UploadImage />
+    // return <ShareModal />
   }
 }
 

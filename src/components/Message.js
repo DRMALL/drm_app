@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import moment from 'moment'
 import Loading from './units/Loading'
 import { primaryColor, mainColor, backgroundColor, subTitleColor, lightBlueColor } from '../common/constants'
@@ -56,7 +56,10 @@ export default class Message extends Component {
       if(!res) {
         alert('server error')
       } else if(res.code == 201) {
-        alert('全部已设置成已读')
+        Alert.alert('通知', '全部已设置成已读',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
         this.getNotices()
       } else alert(JSON.stringify(res))
     })

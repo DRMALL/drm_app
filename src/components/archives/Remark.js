@@ -63,7 +63,7 @@ export default class Remark extends Component {
           ]
         })
         navigation.dispatch(resetAction)
-      } else alert(JSON.stringify(res))
+      } else alert(JSON.stringify(res.message))
     })
   }
 

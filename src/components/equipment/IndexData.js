@@ -29,7 +29,7 @@ export default class IndexData extends Component {
       <View style={{backgroundColor: backgroundColor}}>
         {
           this.props.indexData.map((item, index) => {
-            return <IndexDataItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)}/>
+            return <IndexDataItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)} {...this.props}/>
           })
         }
       </View>
@@ -38,7 +38,7 @@ export default class IndexData extends Component {
 }
 
 
-const IndexDataItem = ({ rowData, state, open, index }) => {
+const IndexDataItem = ({ rowData, state, open, index, navigation }) => {
   let { title, textArr } = rowData
   let selectRow = state[`row${index}`]
   textArr = selectRow ? textArr : [] 
@@ -49,15 +49,16 @@ const IndexDataItem = ({ rowData, state, open, index }) => {
         <Image style={equipment.imgTouch} source={selectRow ? dropdownSelected : dropdownNormal} />
       </TouchableOpacity>
       <View style={{backgroundColor: mainColor}}>
-        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} />)}
+        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation}/>)}
       </View>
     </View>
   )
 }
 
 const DataItemRow = props => {
+  let { navigation } = props
   return (
-    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> {Alert.alert(`I don't know where to go`)}}>
+    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram')}>
       <Text style={equipment.iDataItemText}>{props.item.text}</Text>
       <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{props.item.num}</Text>
       <Text style={[equipment.iDataItemText2, {right: 45}]}>{props.item.unit}</Text>

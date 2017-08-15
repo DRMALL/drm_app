@@ -37,6 +37,7 @@ import SearchSeek from '../components/search/SearchSeek'
 import SearchStatus from '../components/search/SearchStatus'
 import HomeDetail from '../components/HomeDetail'
 import UploadImage from '../components/archives/UploadImage'
+import Datagram from '../components/equipment/Datagram'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -173,6 +174,9 @@ export default StackNavigator({
   uploadImage: {
     screen: UploadImage,
   },
+  datagram: {
+    screen: Datagram,
+  }
 }, {
   transitionConfig:()=>({  
     screenInterpolator: CardStackStyleInterpolator.forHorizontal,  

@@ -26,7 +26,7 @@ const HomeListItem = ({ rowData, navigation }) => {
     >
       <Image source={{uri: images[0].url}} style={home.img} />
       <View style={home.cover}>
-        <Text style={home.title}>{title}</Text>
+        <Text style={home.title} numberOfLines={2}>{title}</Text>
       </View>
     </TouchableOpacity>
   )

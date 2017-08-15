@@ -23,13 +23,14 @@ export default {
   },
   imgView: {
     width: '100%',
+    height: 280,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: mainColor,
   },
   img: {
-    width: '90%',
-    height: 200,
-    marginVertical: 20,
-    marginHorizontal: 20,
+    width: '100%',
+    height: 260,
     resizeMode: 'contain',
     backgroundColor: mainColor,
   },

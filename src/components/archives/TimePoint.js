@@ -94,7 +94,7 @@ export default class TimePoint extends Component {
             ]
           })
           navigation.dispatch(resetAction)
-        } else alert(JSON.stringify(res))
+        } else alert(JSON.stringify(res.message))
       }
     })
   }

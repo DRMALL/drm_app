@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar, CameraRoll, StyleSheet } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar, CameraRoll, Alert } from 'react-native'
 import Swiper from 'react-native-swiper'
 import moment from 'moment'
 import Loading from '../units/Loading'
@@ -50,12 +50,26 @@ export default class Detail extends Component {
         res = await getPort(`${getDevice}?deviceId=${deviceId}&token=${token}`)
       }
       if(!res) {
-        alert('result is none')
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         this.setState({
           oneDeviceData: res.data,
         })
-      } else alert(JSON.stringify(res))
+      } else if(res.code == 503) {
+        Alert.alert('❌错误', '暂无权限查看',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+        this.props.navigation.goBack()
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
