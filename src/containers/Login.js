@@ -1,18 +1,29 @@
 import React, { Component } from 'react'
 import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
-import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord } from '../common/strings'
+import { NavigationActions } from 'react-navigation'
+import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord, tokenKey } from '../common/strings'
 import { login } from '../styles'
-import Button from './units/Button'
-import TextInputImg from './units/TextInputImg'
+import Button from '../components/units/Button'
+import TextInputImg from '../components/units/TextInputImg'
 import { checkToken, depositToken, clearToken } from '../utils/handleToken'
 import { postPort } from '../utils/fetchMethod'
 import { signIn } from '../apis'
 
+import store from '../utils/store'
+import changeLoginEmail from '../actions/changeLoginEmail'
+import changeLoginWord from '../actions/changeLoginWord'
 
 const loginScreenLogo = require('../images/login_screen_logo.png')
 const loginPasswordShow = require('../images/login_password_show.png')
 const loginPasswordHide = require('../images/login_password_hide.png')
+
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'main'}),
+  ]
+})
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -24,21 +35,26 @@ export default class Login extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { 
-      textEmail: '', 
-      textWord: '',
-    }
+    this.state = store.getState().login
   }
 
   componentDidMount() {
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(token => {
-      if(token) this.props.navigation.navigate('main')
+      if(token) this.props.navigation.dispatch(resetAction)
     })
     setTimeout(() => {
       SplashScreen.hide()
     }, 2000)
     // clearToken()
+  }
+
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().login) )
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   async loginPressButton() {
@@ -48,8 +64,8 @@ export default class Login extends Component {
     }
     let res = await postPort(signIn, bodyData)
     if(res.code == 201) {
-      depositToken('drmAppToken', res.data)
-      this.props.navigation.navigate('main')
+      depositToken(tokenKey, res.data)
+      this.props.navigation.dispatch(resetAction)
     } else {
       Alert.alert('❌错误', '邮箱或密码输入有误',
         [
@@ -65,6 +81,7 @@ export default class Login extends Component {
   }
 
   render() {
+    let { textEmail, textWord } = this.state
     return (
       <View style={login.wrap}>
         <Image style={login.image} source={loginScreenLogo}/>
@@ -75,8 +92,8 @@ export default class Login extends Component {
           <TextInput 
             style={login.textInput}
             placeholder={loginInputEmail}
-            onChangeText={(textEmail) => this.setState({textEmail})}
-            value={this.state.textEmail}
+            onChangeText={changeLoginEmail}
+            value={textEmail}
             // keyboardType='numeric'
             selectTextOnFocus={true}
             blurOnSubmit={true}
@@ -87,10 +104,10 @@ export default class Login extends Component {
             viewStyle={{position: 'relative'}}
             inputStyle={login.textInput}
             placeholder={loginInputWord}
-            onChangeText={(textWord) => this.setState({textWord})}
-            value={this.state.textWord}
+            onChangeText={changeLoginWord}
+            value={textWord}
             secureTextEntry={true}
-            onFocus={this.onFocusInput}
+            // onFocus={this.onFocusInput}
             imgStyle={{width: 25, resizeMode: 'contain', marginBottom: 10 }}
             imgSourceT={loginPasswordShow}
             imgSourceF={loginPasswordHide}

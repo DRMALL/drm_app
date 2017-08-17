@@ -7,7 +7,7 @@ import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffe
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
-import Loading from '../units/Loading'
+import Loading from '../../components/units/Loading'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')

@@ -10,8 +10,8 @@ import Routes from './containers/Routes'
 import ShareModal from './components/units/ShareModal'
 
 export default class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
   componentDidMount() {

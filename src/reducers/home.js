@@ -1,12 +1,11 @@
 const home = {
-  active: true
+  newsListData: null,
 }
 
 export default (state = home, action) => {
   switch (action.type) {
-    case 'change':
-      console.log('active')
-      return Object.assign({}, state, { active: !state.home.active })
+    case 'HOME_DATA_GET':
+      return Object.assign({}, state, { newsListData: action.payload })
     default:
       return state
   }

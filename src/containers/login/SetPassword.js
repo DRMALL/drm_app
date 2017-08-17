@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import { primaryColor, lightBlueColor, mainColor } from '../../common/constants'
 import { resettingPassword, newPassword, verifyNewPassword, confirm } from '../../common/strings'
 import { setPassword } from '../../styles'
-import Button from '../units/Button'
+import Button from '../../components/units/Button'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../../images/navigation_icons/empty.png')

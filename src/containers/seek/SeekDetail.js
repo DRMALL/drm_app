@@ -1,7 +1,7 @@
 import React, { Component }from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import Swiper from 'react-native-swiper'
-import ShareModal from '../units/ShareModal'
+import ShareModal from '../../components/units/ShareModal'
 import { primaryColor, mainColor, loginBorderColor } from '../../common/constants'
 import { partParameter, applicableEquipment, inventoryStatus, materialLongCode, materialName, materialModels, materialUnites } from '../../common/strings'
 import { seekDetail } from '../../styles'

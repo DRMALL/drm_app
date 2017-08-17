@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { View, Text, Image, Button, StatusBar } from 'react-native'
 import { primaryColor, loginBackgroundColor } from '../common/constants'
+import { tokenKey } from '../common/strings'
 import TabBarItem from '../components/units/TabBarItem'
-import store from '../utils/store'
+import Loading from '../components/units/Loading'
 import HomeList from '../components/HomeList'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
 import { getNews } from '../apis'
 import { homeList } from '../utils/virtualData'
+
+import store from '../utils/store'
 
 const homeIconSelected = require('../images/tabbar_icons/tabbar_home_selected.png')
     , homeIconNormal = require('../images/tabbar_icons/tabbar_home_normal.png')
@@ -26,37 +29,37 @@ export default class Home extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      isMounted: false,
-      newsListData: {},
-    }
+    this.state = store.getState()
   }
 
   componentDidMount() {
-    this.setState({isMounted: true})
     this.getNewsList()
   }
 
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState()) )
+  }
+
   componentWillUnmount(){
-    this.setState({isMounted: false})
+    this.unsubscribe()
   }
 
   getNewsList() {
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(async token => {
       let res = await getPort(`${getNews}?token=${token}`)
       if(res.code == 200) {
-        if(this.state.isMounted) {
-          this.setState({
-            newsListData: res.data,
-          })
-        }
+        store.dispatch({
+          type: 'HOME_DATA_GET',
+          payload: res.data,
+        })
       }
     })
   }
 
   render() {
-    let { newsListData } = this.state
+    let { newsListData } = this.state.home
+    if(!newsListData) return <Loading animating={!newsListData ? true : false}/>
     return(
       <View style={{backgroundColor: loginBackgroundColor}}>
         <StatusBar backgroundColor={primaryColor} />

@@ -6,7 +6,7 @@ import { classify } from '../../styles'
 const intoIcon = require('../../images/navigation_icons/into.png')
 
 export default props => {
-  let { data, state, pressClass, changeClassKinds } = props
+  let { data, state, pressClass, changeClassKinds, deviceData } = props
   let allKinds = []
     , allNum = 0
   data.forEach((one)=> {
@@ -22,12 +22,12 @@ export default props => {
   return (
     <View style={classify.modalWrap}>
       <ScrollView style={{width: '50%', backgroundColor: backgroundColor}}>
-        {data.map((item, i)=> <ClassRow key={i} item={item} index={i} state={state} pressClass={pressClass} />)}
+        {data.map((item, i)=> <ClassRow key={i} item={item} index={i} state={state} deviceData={deviceData} pressClass={pressClass} />)}
       </ScrollView>
       <ScrollView style={{width: '50%'}}>
           {
             data.map((item, j)=> 
-              state[`classRow${j}`] == true ? <KindRow key={j} item={item} j={j} state={state} changeClassKinds={changeClassKinds}/> : <Text key={j} style={{height: 0}}></Text>
+              state[`classRow${j}`] == true ? <KindRow key={j} item={item} j={j} state={state} deviceData={deviceData} changeClassKinds={changeClassKinds}/> : <Text key={j} style={{height: 0}}></Text>
             )
           }
       </ScrollView>
@@ -36,14 +36,14 @@ export default props => {
 }
 
 const ClassRow = props => {
-  let { item, index, state, pressClass } = props
+  let { item, index, state, pressClass, deviceData } = props
     , selectClassRow = state[`classRow${index}`]
   return (
     <TouchableOpacity style={[classify.classTouch, {backgroundColor: selectClassRow ? mainColor : backgroundColor}]} activeOpacity={0.8} onPress={()=> pressClass(index)}>
       <Text style={classify.textClass}>{item.class == '全部' ? item.class : '按' + item.class}</Text>
       <View style={classify.numImgView}>
         <View style={classify.numBorder}>
-          <Text style={classify.textNum}>{item.num}</Text>
+          <Text style={classify.textNum}>{deviceData.length}</Text>
         </View>
         <Image style={classify.imgItem} source={intoIcon}/>
       </View>
@@ -77,7 +77,7 @@ class KindRow extends Component {
   }
 
   render() {
-    let { item, j } = this.props
+    let { item, j, deviceData } = this.props
     let { kinds } = item
     let allKindNum = 0
     kinds.forEach((one)=> {
@@ -92,7 +92,7 @@ class KindRow extends Component {
     return (
       <View>
         {
-          kinds.map((kindItem, k)=> <KindItemRow key={k} kindItem={kindItem} j={j} index={k} state={this.state} pressKind={this.pressKind.bind(this)}/>)
+          kinds.map((kindItem, k)=> <KindItemRow key={k} kindItem={kindItem} j={j} index={k} state={this.state} deviceData={deviceData} pressKind={this.pressKind.bind(this)}/>)
         }
       </View>
     )
@@ -100,13 +100,28 @@ class KindRow extends Component {
 }
 
 const KindItemRow = props => {
-  let { kindItem, j, index, state, pressKind } = props
+  let { kindItem, j, index, state, pressKind, deviceData } = props
     , selectKindRow = state[`kindsRow${index}`]
+    , thisKindNum = 0
+  deviceData.forEach((deviceOne)=> {
+    switch(kindItem.type) {
+      case 'cc': {
+        if(kindItem.title == deviceOne.cc) thisKindNum += 1
+      };break
+      case 'pressure': {
+        if(kindItem.title == deviceOne.pressure) thisKindNum += 1
+      };break
+      case 'combustible': {
+        if(kindItem.title == deviceOne.combustible) thisKindNum += 1
+      };break
+      default: thisKindNum = deviceData.length
+    }
+  })
   return (
     <TouchableOpacity style={classify.classTouch} activeOpacity={0.8} onPress={()=> pressKind(j, index, kindItem.type, kindItem.title)}>
       <Text style={[classify.textClass, {color: selectKindRow ? lightBlueColor : contentColor}]}>{kindItem.title}</Text>
       <View style={[classify.numBorder, {backgroundColor: selectKindRow ? lightBlueColor : subTitleColor, marginRight: 15}]}>
-        <Text style={classify.textNum}>{kindItem.num}</Text>
+        <Text style={classify.textNum}>{thisKindNum}</Text>
       </View>
     </TouchableOpacity>
   )

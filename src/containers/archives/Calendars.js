@@ -5,7 +5,7 @@ import { primaryColor, mainColor, subTitleColor, backgroundColor } from '../../c
 import { timeLineScreening, cancel, confirm, pleaseSelectStartTime, pleaseSelectEndTime, deviceLabel } from '../../common/strings'
 import { calendars } from '../../styles'
 
-import DayList from './DayList'
+import DayList from '../../components/archives/DayList'
 
 const splitDate = (date)=> {
   let objectDate = { year: null, month: null, day: null, week: null, hour: null, minute: null, second: null}

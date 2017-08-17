@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import moment from 'moment'
-import Loading from './units/Loading'
+import Loading from '../components/units/Loading'
 import { primaryColor, mainColor, backgroundColor, subTitleColor, lightBlueColor } from '../common/constants'
 import { messageText, allSetAsRead, inTheEnd, tokenKey, orderInformat, equipMonitorin, 
         unknown, replyAlready, replyWaiting, abnormal, normal } from '../common/strings'

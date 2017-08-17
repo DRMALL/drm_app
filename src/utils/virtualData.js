@@ -550,16 +550,16 @@ export const classifyData = [
         type: 'pressure',
         num: 1234,
       },
-      {
-        title: '60Mpa',
-        type: 'pressure',
-        num: 1234,
-      },
-      {
-        title: '80Mpa',
-        type: 'pressure',
-        num: 1234,
-      },
+      // {
+      //   title: '60Mpa',
+      //   type: 'pressure',
+      //   num: 1234,
+      // },
+      // {
+      //   title: '80Mpa',
+      //   type: 'pressure',
+      //   num: 1234,
+      // },
     ],
     num: 1234
   },
@@ -636,16 +636,16 @@ export const filterData = [
         type: 'pressure',
         num: 1234,
       },
-      {
-        text: '60Mpa',
-        type: 'pressure',
-        num: 1234,
-      },
-      {
-        text: '80Mpa',
-        type: 'pressure',
-        num: 1234,
-      },
+      // {
+      //   text: '60Mpa',
+      //   type: 'pressure',
+      //   num: 1234,
+      // },
+      // {
+      //   text: '80Mpa',
+      //   type: 'pressure',
+      //   num: 1234,
+      // },
     ],
     num: 1234
   },

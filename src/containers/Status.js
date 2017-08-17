@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
-import TabBarItem from '../components/units/TabBarItem'
 import { subTitleColor, loginBackgroundColor } from '../common/constants'
 import { all, onState, offState } from '../common/strings'
 import StatusCategory from '../components/StatusCategory'
+import TabBarItem from '../components/units/TabBarItem'
 import StatusTab from '../components/units/StatusTab'
 import { statusList } from '../utils/virtualData'
 

@@ -1,21 +1,20 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Platform, StatusBar } from 'react-native'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import { mainColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
-import { inputPartsKeywords, historicalRecord, hotSearch, tokenKey } from '../../common/strings'
+import { inputDeviceTypes, historicalRecord, hotSearch, tokenKey } from '../../common/strings'
 import { search, diagnose } from '../../styles'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
-import Loading from '../units/Loading'
-import {  } from '../../utils/virtualData'
+import Loading from '../../components/units/Loading'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
 const deleteSweepIcon = require('../../images/navigation_icons/delete_sweep.png')
 
-export default class SearchSeek extends Component {
+export default class SearchDevice extends Component {
   static navigationOptions = {
     headerStyle: {
       height: 0,
@@ -37,9 +36,9 @@ export default class SearchSeek extends Component {
   componentDidMount () {
     let diagwordRe = []
     this.getBugsHotword()
-    getKeyNum('seek')
+    getKeyNum('device')
     .then( num => {
-      getWord('seek', num)
+      getWord('device', num)
       .then(diagword => {
         diagword.map((item, d)=> {
           diagwordRe = diagwordRe.concat(item[1])
@@ -96,7 +95,7 @@ export default class SearchSeek extends Component {
           this.setState({
             historyData: prevHistoryData,
           })
-          saveWord('seek', prevHistoryData)
+          saveWord('device', prevHistoryData)
         }
       } else alert(JSON.stringify(res))
     })
@@ -115,9 +114,9 @@ export default class SearchSeek extends Component {
   }
 
   pressDeleteSweep() {
-    getKeyNum('seek')
+    getKeyNum('device')
     .then( num => {
-      clearWord('seek', num)
+      clearWord('device', num)
     })
     this.setState({
       historyData: [],
@@ -212,7 +211,7 @@ const HeaderSearch = props => {
         <TextInput 
           autoCapitalize='none' 
           style={search.inputText} 
-          placeholder={inputPartsKeywords} 
+          placeholder={inputDeviceTypes} 
           placeholderTextColor={subTitleColor}
           underlineColorAndroid='transparent'
           autoFocus={true}

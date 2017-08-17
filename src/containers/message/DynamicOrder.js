@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import moment from 'moment'
 import { NavigationActions } from 'react-navigation'
-import Button from '../units/Button'
-import Loading from '../units/Loading'
+import Button from '../../components/units/Button'
+import Loading from '../../components/units/Loading'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
 import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey } from '../../common/strings'
 import { dynamicOrder } from '../../styles'
@@ -95,7 +95,7 @@ export default class DynamicOrder extends Component {
           index: 1,
           actions: [
             NavigationActions.navigate({ routeName: 'main'}),
-            NavigationActions.navigate({ routeName: 'message'})
+            NavigationActions.navigate({ routeName: 'message'}),
           ]
         })
         this.props.navigation.dispatch(resetAction)

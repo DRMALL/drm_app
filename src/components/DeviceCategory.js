@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import { deviceKindClassify, deviceKindSort, deviceKindFilter } from '../common/strings'
+import { deviceKindClassify, deviceKindSort, deviceKindFilter, tokenKey } from '../common/strings'
 import { lightBlueColor, contentColor, mainColor } from '../common/constants'
 import { device } from '../styles'
 import Archives from './Archives'
@@ -41,6 +41,7 @@ export default class DeviceCategory extends Component {
         topView: {position: 'relative', zIndex: 3},
         middleView: {width: '100%', position: 'absolute', zIndex: 2},
         allDevicesData: [],
+        allDevicesData2: [],
         allCities: [],
       }
       sortData.map((sortText, index)=> {
@@ -56,6 +57,7 @@ export default class DeviceCategory extends Component {
   componentDidMount() {
     this.setState({isMounted: true})
     this.getAllDevices()
+    this.getAllDevices2()
     this.getHotCities()
   }
 
@@ -72,9 +74,23 @@ export default class DeviceCategory extends Component {
     })
   }
 
+  getAllDevices2() {
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await getPort(`${getDevices}?token=${token}`)
+      if(res.code == 200) {
+        if(this.state.isMounted) {
+          this.setState({
+            allDevicesData2: res.data,
+          })
+        }
+      }
+    })
+  }
+
   getAllDevices() {
     let res
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(async token => {
       let { 
         filterSearch, 
@@ -113,7 +129,7 @@ export default class DeviceCategory extends Component {
   }
 
   getHotCities() {
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(async token => {
       let res = await getPort(`${getDeviceAddress}?token=${token}`)
       if(res.code == 200) {
@@ -231,7 +247,7 @@ export default class DeviceCategory extends Component {
   }
 
   render() {
-    let { classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allCities } = this.state
+    let { classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities } = this.state
     return(
       <View style={device.wrap}>
         <View style={device.archivesTab}>
@@ -256,6 +272,7 @@ export default class DeviceCategory extends Component {
             {
               classifyRow ? <View style={{height: '100%'}}>
                 <Classify data={classifyData} 
+                  deviceData={allDevicesData2}
                   state={this.state} 
                   pressClass={this.pressClass.bind(this)} 
                   changeClassKinds={this.changeClassKinds.bind(this)}

@@ -7,8 +7,8 @@ import { subTitleColor, primaryColor } from '../common/constants'
 import { equipment } from '../styles'
 import { equipmentDataList, equipmentLogList } from '../utils/virtualData'
 
-import IndexData from './equipment/IndexData'
-import RunningLog from './equipment/RunningLog'
+import IndexData from '../components/equipment/IndexData'
+import RunningLog from '../components/equipment/RunningLog'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../images/navigation_icons/empty.png')

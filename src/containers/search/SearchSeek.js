@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
-import { mainColor, primaryColor, subTitleColor, contentColor, mainColorPressed } from '../../common/constants'
-import { inputDeviceFault, historicalRecord, hotSearch, unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
-import { search, diagnose, diagDetail } from '../../styles'
-import Button from '../units/Button'
-import Loading from '../units/Loading'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Platform, StatusBar } from 'react-native'
+import { mainColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
+import { inputPartsKeywords, historicalRecord, hotSearch, tokenKey } from '../../common/strings'
+import { search, diagnose } from '../../styles'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
+import Loading from '../../components/units/Loading'
+import {  } from '../../utils/virtualData'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
 const deleteSweepIcon = require('../../images/navigation_icons/delete_sweep.png')
 
-export default class SearchDiagnose extends Component {
+export default class SearchSeek extends Component {
   static navigationOptions = {
     headerStyle: {
       height: 0,
@@ -28,7 +28,7 @@ export default class SearchDiagnose extends Component {
     this.state = {
       text: '',
       jumpData: false,
-      bugsData: null,
+      bugsData: [],
       historyData: [],
       hotwordData: [],
     }
@@ -37,9 +37,9 @@ export default class SearchDiagnose extends Component {
   componentDidMount () {
     let diagwordRe = []
     this.getBugsHotword()
-    getKeyNum('diagnose')
+    getKeyNum('seek')
     .then( num => {
-      getWord('diagnose', num)
+      getWord('seek', num)
       .then(diagword => {
         diagword.map((item, d)=> {
           diagwordRe = diagwordRe.concat(item[1])
@@ -96,7 +96,7 @@ export default class SearchDiagnose extends Component {
           this.setState({
             historyData: prevHistoryData,
           })
-          saveWord('diagnose', prevHistoryData)
+          saveWord('seek', prevHistoryData)
         }
       } else alert(JSON.stringify(res))
     })
@@ -115,14 +115,15 @@ export default class SearchDiagnose extends Component {
   }
 
   pressDeleteSweep() {
-    getKeyNum('diagnose')
+    getKeyNum('seek')
     .then( num => {
-      clearWord('diagnose', num)
+      clearWord('seek', num)
     })
     this.setState({
       historyData: [],
     })
   }
+
 
   render() {
     let { navigation } = this.props
@@ -149,15 +150,7 @@ export default class SearchDiagnose extends Component {
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
           {dataBugsView}
-          <View style={[diagDetail.buttonView, { bottom: 0, borderWidth: 0.5, borderColor: mainColorPressed, opacity: 1 }]}>
-            <Button 
-              style={diagDetail.button} 
-              title={unsolvedGoToPushOrder} 
-              titleStyle={{fontSize: 14, color: mainColor}} 
-              activeOpacity={0.8} 
-              onPress={()=> navigation.navigate('pushOrder', {name: 'PushOrder'})}
-            />
-          </View>
+          <View style={{height: 1}} />
         </View>
         <View style={{height: jumpData ? 0 : '100%'}}>
           <ScrollView>
@@ -219,7 +212,7 @@ const HeaderSearch = props => {
         <TextInput 
           autoCapitalize='none' 
           style={search.inputText} 
-          placeholder={inputDeviceFault} 
+          placeholder={inputPartsKeywords} 
           placeholderTextColor={subTitleColor}
           underlineColorAndroid='transparent'
           autoFocus={true}
