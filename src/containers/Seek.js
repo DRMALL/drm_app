@@ -8,6 +8,9 @@ import { allParts, allTypes } from '../common/strings'
 import { seek } from '../styles'
 import { seekPartsData, seekTypesData } from '../utils/virtualData'
 
+import store from '../utils/store'
+import seekAC from '../actions/seekAC'
+
 const seekIconSelected = require('../images/tabbar_icons/tabbar_search_selected_x.png')
     , seekIconNormal = require('../images/tabbar_icons/tabbar_search_normal.png')
 
@@ -24,76 +27,36 @@ export default class Seek extends Component {
   });
   constructor(props) {
     super(props)
-    this.state = (props => {
-      let seekStateObj = {
-        seekPartRow: false,
-        seekTypeRow: false,
-        selectedPart: allParts,
-        selectedType: allTypes,
-        topView: {position: 'relative', zIndex: 3},
-        secondView: {position: 'absolute', zIndex: 2},
-      }
-      seekPartsData.map((partItem, indexp)=> {
-        seekStateObj[`partColumn${indexp}`] = false
-      })
-
-      seekTypesData.map((typeItem, indext)=> {
-        seekStateObj[`typeColumn${indext}`] = false
-      })
-      return seekStateObj
-    })(props)
+    this.state = store.getState().seek
   }
 
-  openModal(which) {
-    this.setState({
-      seekPartRow: which == 'seekPartRow' ? !this.state.seekPartRow : false,
-      seekTypeRow: which == 'seekTypeRow' ? !this.state.seekTypeRow : false,
-    })
+  componentDidMount() {
+    seekAC.createPartTypeState(seekPartsData, seekTypesData)
   }
 
-  pressPartColumn(p) {
-    let partColumnOne = !this.state[`partColumn${p}`]
-    seekPartsData.map((partItem, index)=> {
-      if(p == index) {
-        this.setState({
-          selectedPart: partColumnOne ? partItem.parts : allParts,
-          [`partColumn${p}`]: partColumnOne,
-        })
-      }
-      else this.setState({[`partColumn${index}`]: false})
-    })
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().seek) )
   }
 
-  pressTypeColumn(t) {
-    let typeColumnOne = !this.state[`typeColumn${t}`]
-    seekTypesData.map((typeItem, index)=> {
-      if(t == index) {
-        this.setState({
-          selectedType: typeColumnOne ? typeItem.types : allTypes,
-          [`typeColumn${t}`]: typeColumnOne,
-        })
-      }
-      else this.setState({[`typeColumn${index}`]: false})
-    })
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   render() {
-    let selectPartRow = this.state.seekPartRow
-      , selectTypeRow = this.state.seekTypeRow
-      , topView = this.state.topView
-      , secondView = this.state.secondView
+    let { seekPartRow, seekTypeRow, topView, secondView } = this.state
+      , { openModal } = seekAC
     return(
       <View style={{paddingBottom: 80}}>
-        <SeekTab partsData={seekPartsData} typesData={seekTypesData} state={this.state} openModal={this.openModal.bind(this)} />
+        <SeekTab partsData={seekPartsData} typesData={seekTypesData} state={this.state} openModal={openModal} />
         <View style={{height: '100%'}}>
-          <View style={[!selectPartRow && !selectTypeRow ? topView : secondView, {height: '100%', paddingBottom: 50}]}>
+          <View style={[!seekPartRow && !seekTypeRow ? topView : secondView, {height: '100%', paddingBottom: 50}]}>
             <SeekCategory {...this.props} />
           </View>
-          <View style={[topView, {height: selectPartRow ? '100%' : 0}]}>
-            <SeekPartsColumn partsData={seekPartsData} state={this.state} openModal={this.openModal.bind(this)} pressPartColumn={this.pressPartColumn.bind(this)}/>
+          <View style={[topView, {height: seekPartRow ? '100%' : 0}]}>
+            <SeekPartsColumn partsData={seekPartsData} state={this.state} />
           </View>
-          <View style={[topView, {height: selectTypeRow ? '100%' : 0}]}>
-            <SeekTypesColumn typesData={seekTypesData} state={this.state} openModal={this.openModal.bind(this)} pressTypeColumn={this.pressTypeColumn.bind(this)}/>
+          <View style={[topView, {height: seekTypeRow ? '100%' : 0}]}>
+            <SeekTypesColumn typesData={seekTypesData} state={this.state} />
           </View>
         </View>
       </View>
@@ -102,7 +65,8 @@ export default class Seek extends Component {
 }
 
 const SeekPartsColumn = props => {
-  let { partsData, state, openModal, pressPartColumn } = props
+  let { partsData, state } = props
+    , { openModal, pressPartColumn } = seekAC
   return (
     <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>
@@ -111,7 +75,7 @@ const SeekPartsColumn = props => {
             partsData.map((partItem, p)=> <TouchableOpacity key={p} 
               style={seek.itemTouch} 
               activeOpacity={0.8}
-              onPress={()=> pressPartColumn(p)}
+              onPress={()=> pressPartColumn(p, partsData)}
             >
               <Text style={[seek.itemText, state[`partColumn${p}`] ? {color: lightBlueColor} : {}]}>{partItem.parts}</Text>
             </TouchableOpacity>)
@@ -126,7 +90,8 @@ const SeekPartsColumn = props => {
 }
 
 const SeekTypesColumn = props => {
-  let { typesData, state, openModal, pressTypeColumn } = props
+  let { typesData, state } = props
+    , { openModal, pressTypeColumn } = seekAC
   return (
     <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>
@@ -135,7 +100,7 @@ const SeekTypesColumn = props => {
             typesData.map((typeItem, t)=> <TouchableOpacity key={t} 
               style={seek.itemTouch} 
               activeOpacity={0.8}
-              onPress={()=> pressTypeColumn(t)}
+              onPress={()=> pressTypeColumn(t, typesData)}
             >
               <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.types}</Text>
             </TouchableOpacity>)

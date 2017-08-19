@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StatusBar, Alert } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { primaryColor, loginBackgroundColor } from '../common/constants'
-import { basicDocument, userName, companyName, phoneNumber, postalAddress, securitySetting, resetPassword, personalInformation } from '../common/strings'
+import { basicDocument, 
+        userName, 
+        companyName, 
+        phoneNumber, 
+        postalAddress, 
+        securitySetting, 
+        resetPassword, 
+        personalInformation, 
+        tokenKey,
+} from '../common/strings'
 import { information } from '../styles'
 import TouchIntoText from '../components/units/TouchIntoText'
 import { checkToken, depositToken, clearToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
 import { getInfo } from '../apis'
+
+import store from '../utils/store'
+import infoAC from '../actions/infoAC'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../images/navigation_icons/empty.png')
@@ -26,68 +38,80 @@ export default class Information extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      isMounted: false,
-      user_name: '',
-      company_name: '',
-      phone_number: '',
-      postal_address: '',
-    }
+    this.state = store.getState().information
   }
   componentDidMount() {
-    this.setState({isMounted: true})
     this.getInformation()
   }
 
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().information) )
+  }
+
   componentWillUnmount(){
-    this.setState({isMounted: false})
+    this.unsubscribe()
   }
 
   getInformation() {
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(async token => {
       let res = await getPort(`${getInfo}?token=${token}`)
-      if(res.code == 200) {
-        if(this.state.isMounted) {
-          this.setState({
-            user_name: res.data.name,
-            company_name: res.data.company_name,
-            phone_number: res.data.phone,
-            postal_address: res.data.address,
-          })
-        }
+      if(!res) {
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 200) {
+        infoAC.getInfomationData({
+          user_name: res.data.name,
+          company_name: res.data.company_name,
+          phone_number: res.data.phone,
+          postal_address: res.data.address,
+        })
+      } else if(res.code == 404) {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
     })
   }
 
   render() {
+    let { user_name, company_name, phone_number, postal_address } = this.state
+      , { navigation } = this.props
     return (
       <View style={information.wrap}>
         <Text style={information.text} >{basicDocument}</Text>
         <TouchIntoText title={userName} 
-          value={this.state.user_name} 
+          value={user_name} 
           activeOpacity={0.6} 
-          onPress={() => this.props.navigation.navigate('username', {user_name: this.state.user_name})} 
+          onPress={() => navigation.navigate('username', {user_name: user_name})} 
         />
         <TouchIntoText title={companyName} 
-          value={this.state.company_name} 
+          value={company_name} 
           activeOpacity={0.6} 
-          onPress={() => this.props.navigation.navigate('companyname', {company_name: this.state.company_name})} 
+          onPress={() => navigation.navigate('companyname', {company_name: company_name})} 
         />
         <TouchIntoText title={phoneNumber} 
-          value={this.state.phone_number} 
+          value={phone_number} 
           activeOpacity={0.6} 
-          onPress={() => this.props.navigation.navigate('phone', {phone_number: `${this.state.phone_number}`})} 
+          onPress={() => navigation.navigate('phone', {phone_number: `${phone_number}`})} 
         />
         <TouchIntoText title={postalAddress} 
-          value={this.state.postal_address} 
+          value={postal_address} 
           activeOpacity={0.6} 
-          onPress={() => this.props.navigation.navigate('address', {postal_address: this.state.postal_address})} 
+          onPress={() => navigation.navigate('address', {postal_address: postal_address})} 
         />
         <Text style={information.text} >{securitySetting}</Text>
         <TouchIntoText title={resetPassword} 
           activeOpacity={0.6} 
-          onPress={() => this.props.navigation.navigate('resetpassword', {name: 'ResetPassword'})} 
+          onPress={() => navigation.navigate('resetpassword', {name: 'ResetPassword'})} 
         />
       </View>
     )

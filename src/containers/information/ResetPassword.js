@@ -2,15 +2,12 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { resetPassword, save, originalPassword, newPassword, verifyNewPassword } from '../../common/strings'
+import { resetPassword, save, originalPassword, newPassword, verifyNewPassword, tokenKey } from '../../common/strings'
 import { updatePassword } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
-let origPwData
-  , newPwData
-  , verifyNewPwData
 
 export default class ResetPassword extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -21,18 +18,34 @@ export default class ResetPassword extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => ResetPassword.pressSavePassword(navigation)}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.pressSavePassword()}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
   });
 
-  static pressSavePassword(navigation) {
-    checkToken('drmAppToken')
+  constructor(props) {
+    super(props)
+    this.state = {
+      original_password: '',
+      new_password: '',
+      verify_password: '',
+    }
+  }
+
+  componentDidMount() { 
+    this.props.navigation.setParams({  
+      pressSavePassword: () => this.pressSavePassword(), 
+    })
+  }
+
+  pressSavePassword() {
+    checkToken(tokenKey)
     .then(async token => {
+      let { original_password, new_password, verify_password } = this.state
       let bodyData = {
-        password: origPwData,
-        newPass: newPwData,
-        confirmPass: verifyNewPwData,
+        password: original_password,
+        newPass: new_password,
+        confirmPass: verify_password,
       }
       if(bodyData.password == undefined || bodyData.password == '') {
         return Alert.alert('❌错误', '原密码不能为空',
@@ -59,14 +72,14 @@ export default class ResetPassword extends Component {
           { cancelable: false }
         )
         clearToken()
-        navigation.navigate('login')
+        this.props.navigation.navigate('login')
       } else if(res.code == 201) {
         Alert.alert('✅成功', '修改成功',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
         clearToken()
-        navigation.navigate('login')
+        this.props.navigation.navigate('login')
       } else {
         Alert.alert('❌错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -76,28 +89,16 @@ export default class ResetPassword extends Component {
     })
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      original_password: '',
-      new_password: '',
-      verify_password: '',
-    }
-  }
-
   onChangeOP(original_password) {
     this.setState({ original_password })
-    origPwData = original_password
   }
 
   onChangeNP(new_password) {
     this.setState({ new_password })
-    newPwData = new_password
   }
 
   onChangeVP(verify_password) {
     this.setState({ verify_password })
-    verifyNewPwData = verify_password
   }
 
   render() {

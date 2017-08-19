@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
-import moment from 'moment'
 import Loading from '../components/units/Loading'
-import { primaryColor, mainColor, backgroundColor, subTitleColor, lightBlueColor } from '../common/constants'
-import { messageText, allSetAsRead, inTheEnd, tokenKey, orderInformat, equipMonitorin, 
-        unknown, replyAlready, replyWaiting, abnormal, normal } from '../common/strings'
+import { primaryColor, mainColor } from '../common/constants'
+import { messageText, 
+        allSetAsRead, 
+        inTheEnd, 
+        tokenKey, 
+} from '../common/strings'
 import { message } from '../styles'
 import { checkToken } from '../utils/handleToken'
 import { getPort, postPort } from '../utils/fetchMethod'
 import { getNotices, setAllNoticesRead } from '../apis'
-import { messagesList } from '../utils/virtualData'
+
+import MessageItem from '../components/message/MessageItem'
+import store from '../utils/store'
+import messageAC from '../actions/messageAC'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 
@@ -29,14 +34,10 @@ export default class Message extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      isMounted: false,
-      noticeData: null,
-    }
+    this.state = store.getState().message
   }
 
   componentDidMount() {
-    this.setState({isMounted: true})
     this.props.navigation.setParams({  
       setAllRead: () => {
         this.postNoticeRead()
@@ -45,8 +46,12 @@ export default class Message extends Component {
     this.getNotices()
   }
 
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().message) )
+  }
+
   componentWillUnmount(){
-    this.setState({isMounted: false})
+    this.unsubscribe()
   }
 
   postNoticeRead() {
@@ -54,14 +59,22 @@ export default class Message extends Component {
     .then(async token => {
       let res = await postPort(`${setAllNoticesRead}?token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 201) {
         Alert.alert('通知', '全部已设置成已读',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
         this.getNotices()
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -70,14 +83,18 @@ export default class Message extends Component {
     .then(async token => {
       let res = await getPort(`${getNotices}?token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
-        if(this.state.isMounted) {
-          this.setState({
-            noticeData: res.data,
-          })
-        }
-      } else alert(JSON.stringify(res))
+        messageAC.getAll(res.data)
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -96,34 +113,5 @@ export default class Message extends Component {
       </ScrollView>
     )
   }
-}
-
-const MessageItem = props => {
-  let { navigation, msgItem } = props
-  return (
-    <View style={message.itemView}>
-      <TouchableOpacity style={message.itemTouchView} activeOpacity={0.8} onPress={()=> navigation.navigate('dynamicOrder', { msgId: msgItem._id, msgReaded: msgItem.readed })}>
-        <View style={msgItem.readed ? message.empty : message.redDot} />
-        <View style={message.textPart}>
-          <View style={message.topLine}>
-            <Text style={message.textTitle}>
-              {msgItem.types == 'order' ? orderInformat : (msgItem.types == 'order' ? equipMonitorin : unknown)}
-            </Text>
-            <Text style={message.textTime}>{moment(new Date(msgItem.order.time)).format('YYYY-MM-DD')}</Text>
-          </View>
-          <Text style={message.textAbstract}>{msgItem.des}</Text>
-          <Text style={[message.textState, { color: msgItem.readed ? subTitleColor : lightBlueColor }]}>状态：
-            {
-              msgItem.types == 'order' && msgItem.status ? replyAlready : (
-                msgItem.types == 'order' && !msgItem.status ? replyWaiting : (
-                  !msgItem.status ? abnormal : normal
-                )
-              )
-            }
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )
 }
 

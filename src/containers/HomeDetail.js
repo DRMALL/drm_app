@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, ActivityIndicator } from 'react-native'
-import Swiper from 'react-native-swiper'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
 import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
-import {  } from '../common/strings'
+import { tokenKey } from '../common/strings'
 import Loading from '../components/units/Loading'
 import ShareModal from '../components/units/ShareModal'
 import { seekDetail, detail } from '../styles'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
 import { getNewsOne } from '../apis'
+
+import HomeSwiperHeader from '../components/home/HomeSwiperHeader'
+import store from '../utils/store'
+import homeDetailAC from '../actions/homeDetailAC'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const shareIcon = require('../images/navigation_icons/share.png')
@@ -26,53 +29,52 @@ export default class HomeDetail extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      newsOneData: null,
-      shareShow: false,
-      topView: {position: 'relative', zIndex: 3},
-      nextView: {position: 'absolute', zIndex: 2},
-    }
+    this.state = store.getState().home
   }
 
   componentDidMount() {
     this.getNewsOne()
   }
 
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().home) )
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
+  }
+
   getNewsOne() {
     let id = this.props.navigation.state.params.newsId
-    checkToken('drmAppToken')
+    checkToken(tokenKey)
     .then(async token => {
       let res = await getPort(`${getNewsOne}?id=${id}&token=${token}`)
-      if(res.code == 201) {
-        this.setState({
-          newsOneData: res.data,
-        })
+      if(!res) {
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 201) {
+        homeDetailAC.getOneData(res.data)
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
-    })
-  }
-
-  pressShareShow() {
-    this.setState({
-      shareShow: true,
-    })
-  }
-
-  pressShareCancel() {
-    this.setState({
-      shareShow: false,
     })
   }
 
   render() {
     let { navigation } = this.props
       , { newsOneData, shareShow, topView, nextView } = this.state
-
+      , { hiddenShare } = homeDetailAC
     if(!newsOneData) return <Loading animating={!newsOneData ? true : false}/>
     return (
-      <View>
+      <View style={{height: '100%'}}>
         <ScrollView style={[{backgroundColor: mainColor}, shareShow ? nextView : topView]}>
           <StatusBar hidden={true}/>
-          <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} pressShareShow={this.pressShareShow.bind(this)}/>
+          <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
           <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
           <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
             {
@@ -83,43 +85,17 @@ export default class HomeDetail extends Component {
             {newsOneData.content}
           </Text>
         </ScrollView>
-        <ShareModal state={this.state} pressShareCancel={this.pressShareCancel.bind(this)}/>
+        <ShareModal state={this.state} pressShareCancel={hiddenShare}/>
       </View>
     )
   }
 }
 
-
-const HomeSwiperHeader = props => {
-  let { picData, navigation, pressShareShow } = props
-  let picsDataView = []
-  for(var i = 0; i < picData.length; i++) {
-    picsDataView.push(
-      <View key={i} style={seekDetail.picsView}>
-        <Image style={seekDetail.pics} source={{uri: picData[i].url}}/>
-      </View>
-    )
-  }
-  return (
-    <View style={seekDetail.headerView}>
-      <Swiper height={230} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
-        {picsDataView}
-      </Swiper>
-      <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
-        <Image source={gobackWhiteIcon}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={seekDetail.shareIcon} onPress={() => pressShareShow()}>
-        <Image source={shareIcon}/>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
-const TouchUploadPic =  props => {
-  let { navigation } = props
-  return (
-    <TouchableOpacity style={detail.picsView} activeOpacity={0.8} disabled={true} onPress={()=> alert('upload')}>
-      <Image style={[detail.pics, {resizeMode: 'center', backgroundColor: loginBackgroundColor}]} source={icInsertPhotoIcon}/>
-    </TouchableOpacity>
-  )
-}
+// const TouchUploadPic =  props => {
+//   let { navigation } = props
+//   return (
+//     <TouchableOpacity style={detail.picsView} activeOpacity={0.8} disabled={true} onPress={()=> alert('upload')}>
+//       <Image style={[detail.pics, {resizeMode: 'center', backgroundColor: loginBackgroundColor}]} source={icInsertPhotoIcon}/>
+//     </TouchableOpacity>
+//   )
+// }

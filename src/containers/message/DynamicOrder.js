@@ -10,7 +10,6 @@ import { dynamicOrder } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { getPort, postPort } from '../../utils/fetchMethod'
 import { getNoticesOne, setOneNoticesRead, setOrderSolved } from '../../apis'
-// import { messagesList } from '../../utils/virtualData'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../../images/navigation_icons/empty.png')

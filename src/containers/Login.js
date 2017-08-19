@@ -63,14 +63,17 @@ export default class Login extends Component {
       password: this.state.textWord,
     }
     let res = await postPort(signIn, bodyData)
-    if(res.code == 201) {
+    if(!res) {
+      Alert.alert('❌错误', 'Internal Server Error',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    } else if(res.code == 201) {
       depositToken(tokenKey, res.data)
       this.props.navigation.dispatch(resetAction)
     } else {
       Alert.alert('❌错误', '邮箱或密码输入有误',
-        [
-          {text: 'OK', onPress: () => 'OK'},
-        ],
+        [ {text: 'OK', onPress: () => 'OK'}, ],
         { cancelable: false }
       )
     }

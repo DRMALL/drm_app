@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { primaryColor, mainColor } from '../../common/constants'
 import { unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
 import { diagDetail } from '../../styles'
@@ -40,7 +40,7 @@ export default class DiagDetail extends Component {
       nextView: {position: 'absolute', zIndex: 2},
     }
   }
-  componentDidMount () {  
+  componentDidMount() {  
     this.props.navigation.setParams({  
       share: () => this.shareFun(), 
     })
@@ -59,12 +59,20 @@ export default class DiagDetail extends Component {
     .then(async token => {
       let res = await getPort(`${getBug}?id=${bugsId}&token=${token}`)
       if(!res) {
-        alert('result is none')
+        Alert.alert('❌错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         this.setState({
           oneBugData: res.data,
         })
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('❌错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
