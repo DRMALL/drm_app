@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar, CameraRoll, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar, Alert, Platform } from 'react-native'
 import Swiper from 'react-native-swiper'
 import moment from 'moment'
 import Loading from '../../components/units/Loading'
@@ -93,60 +93,62 @@ export default class Detail extends Component {
       , nameNumLength = `${name + number}`.split('').length
     if (!oneDeviceData || !images) return <Loading animating={!oneDeviceData || !images ? true : false}/>
     return (
-      <ScrollView 
-        refreshControl={<RefreshControl 
-          refreshing={isRefreshing}
-          onRefresh={this.onIsRefresh.bind(this)}
-          colors={['#ff0000', '#00ff00', '#0000ff']}
-          progressBackgroundColor={mainColor}
-        />}
-      >
-        <StatusBar hidden={true}/>
-        <View style={detail.wrap}>
-          <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
+      <View style={{height: '100%', top: Platform.OS === 'ios' ? -20 : 0}}>
+        <ScrollView 
+          refreshControl={<RefreshControl 
+            refreshing={isRefreshing}
+            onRefresh={this.onIsRefresh.bind(this)}
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor={mainColor}
+          />}
+        >
+          <StatusBar hidden={true}/>
+          <View style={detail.wrap}>
+            <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
 
-          <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
-            <Text style={detail.titleText}>{name + number}</Text>
-            <Text style={detail.titleTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
-          </View>
-          <View style={detail.lebalView}>
-            <Text style={detail.lebalText}>{cc}</Text>
-            <Text style={detail.lebalText}>{pressure}</Text>
-            <Text style={detail.lebalText}>{combustible}</Text>
-          </View>
-          <Text style={detail.ordinaryText}>{description}</Text>
-          <View style={detail.fixTextView}>
-            <Text style={detail.textFix}>{deviceSort}</Text>
-          </View>
-          <Text style={detail.sortText}>纯氧复合热载体发生器</Text>
-          <View style={detail.fixTextView}>
-            <Text style={detail.textFix}>{deviceTimeline}</Text>
-            <View style={detail.iconView}>
-              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('calendars', {deviceId: _id})} >
-                <Image source={calendarIcon}/>
-              </TouchableOpacity>
-              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('timePoint', {deviceId: _id})} >
-                <Image source={editIcon}/>
-              </TouchableOpacity>
+            <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
+              <Text style={detail.titleText}>{name + number}</Text>
+              <Text style={detail.titleTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
             </View>
-          </View>
-          <View style={downUpPress ? {} : {height: 350, overflow: 'hidden'}}>
-            <TimeLineForm timelineData={timelines == undefined ? [] : timelines} />
-          </View>
-          <View style={{opacity: 1, backgroundColor: mainColor}}>
-            <TouchableOpacity style={detail.downUpView} onPress={()=> this.setState({downUpPress: !downUpPress})}>
-              <Image source={downUpPress ? closeUpIcon : openDownIcon}/>
-            </TouchableOpacity>
+            <View style={detail.lebalView}>
+              <Text style={detail.lebalText}>{cc}</Text>
+              <Text style={detail.lebalText}>{pressure}</Text>
+              <Text style={detail.lebalText}>{combustible}</Text>
+            </View>
+            <Text style={detail.ordinaryText}>{description}</Text>
             <View style={detail.fixTextView}>
-              <Text style={detail.textFix}>{deviceRemarks}</Text>
-              <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id, orgDeviceRemark: remark})} >
-                <Image source={editIcon}/>
-              </TouchableOpacity>
+              <Text style={detail.textFix}>{deviceSort}</Text>
             </View>
-            <Text style={detail.ordinaryText} selectable={true}>{remark ? remark : '暂无'}</Text>
+            <Text style={detail.sortText}>纯氧复合热载体发生器</Text>
+            <View style={detail.fixTextView}>
+              <Text style={detail.textFix}>{deviceTimeline}</Text>
+              <View style={detail.iconView}>
+                <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('calendars', {deviceId: _id})} >
+                  <Image source={calendarIcon}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('timePoint', {deviceId: _id})} >
+                  <Image source={editIcon}/>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={downUpPress ? {} : {height: 350, overflow: 'hidden'}}>
+              <TimeLineForm timelineData={timelines == undefined ? [] : timelines} />
+            </View>
+            <View style={{opacity: 1, backgroundColor: mainColor}}>
+              <TouchableOpacity style={detail.downUpView} onPress={()=> this.setState({downUpPress: !downUpPress})}>
+                <Image source={downUpPress ? closeUpIcon : openDownIcon}/>
+              </TouchableOpacity>
+              <View style={detail.fixTextView}>
+                <Text style={detail.textFix}>{deviceRemarks}</Text>
+                <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id, orgDeviceRemark: remark})} >
+                  <Image source={editIcon}/>
+                </TouchableOpacity>
+              </View>
+              <Text style={detail.ordinaryText} selectable={true}>{remark ? remark : '暂无'}</Text>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }

@@ -89,12 +89,12 @@ export default class Information extends Component {
       <View style={information.wrap}>
         <Text style={information.text} >{basicDocument}</Text>
         <TouchIntoText title={userName} 
-          value={user_name} 
+          value={user_name === 'null' ? '' : user_name} 
           activeOpacity={0.6} 
           onPress={() => navigation.navigate('username', {user_name: user_name})} 
         />
         <TouchIntoText title={companyName} 
-          value={company_name} 
+          value={company_name === 'null' || company_name === 'undefined' ? '' : company_name} 
           activeOpacity={0.6} 
           onPress={() => navigation.navigate('companyname', {company_name: company_name})} 
         />
@@ -104,7 +104,7 @@ export default class Information extends Component {
           onPress={() => navigation.navigate('phone', {phone_number: `${phone_number}`})} 
         />
         <TouchIntoText title={postalAddress} 
-          value={postal_address} 
+          value={postal_address === 'null' || postal_address === 'undefined' ? '' : postal_address} 
           activeOpacity={0.6} 
           onPress={() => navigation.navigate('address', {postal_address: postal_address})} 
         />

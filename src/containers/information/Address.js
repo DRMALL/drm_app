@@ -50,8 +50,9 @@ export default class Address extends Component {
 
   constructor(props) {
     super(props)
+    let { postal_address } = props.navigation.state.params
     this.state = {
-      postal_address: props.navigation.state.params.postal_address,
+      postal_address: postal_address === 'null' || postal_address === 'undefined' ? '' : postal_address,
     }
   }
 

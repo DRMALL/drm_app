@@ -50,8 +50,9 @@ export default class UserName extends Component {
 
   constructor(props) {
     super(props)
+    let { user_name } = props.navigation.state.params
     this.state = {
-      user_name: props.navigation.state.params.user_name,
+      user_name: user_name === 'null' ? '' : user_name,
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Platform } from 'react-native'
 import Swiper from 'react-native-swiper'
 import ShareModal from '../../components/units/ShareModal'
 import { primaryColor, mainColor, loginBorderColor } from '../../common/constants'
@@ -48,7 +48,7 @@ export default class SeekDetail extends Component {
       , { shareShow, topView, nextView } = this.state
       // , seekItem = seekData[0]
     return (
-      <View>
+      <View style={{height: '100%', top: Platform.OS === 'ios' ? -20 : 0}}>
         <ScrollView style={[{width: '100%'}, shareShow ? nextView : topView]}>
           <StatusBar hidden={true}/>
           <SeekSwiperHeader navigation={navigation} pressShareShow={this.pressShareShow.bind(this)}/>

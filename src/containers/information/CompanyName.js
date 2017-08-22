@@ -50,8 +50,9 @@ export default class CompanyName extends Component {
 
   constructor(props) {
     super(props)
+    let { company_name } = props.navigation.state.params
     this.state = {
-      company_name: props.navigation.state.params.company_name,
+      company_name: company_name === 'null' || company_name === 'undefined' ? '' : company_name,
     }
   }
 

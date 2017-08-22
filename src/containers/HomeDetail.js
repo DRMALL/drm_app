@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert, Platform } from 'react-native'
 import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
 import { tokenKey } from '../common/strings'
@@ -73,7 +73,7 @@ export default class HomeDetail extends Component {
     return (
       <View style={{height: '100%'}}>
         <ScrollView style={[{backgroundColor: mainColor}, shareShow ? nextView : topView]}>
-          <StatusBar hidden={true}/>
+          <StatusBar hidden={false} translucent={true}/>
           <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
           <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
           <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
