@@ -37,7 +37,7 @@ export default class Equipment extends Component {
         </Lightbox>
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>
-          <Text style={[equipment.fix2Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + statuItemData.updateTime}</Text>
+          <Text style={[equipment.fix3Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + statuItemData.updateTime}</Text>
         </View>
         <View style={equipment.dataView}>
           <IndexData indexData={equipmentDataList} {...this.props}/>

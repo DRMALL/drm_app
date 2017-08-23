@@ -166,7 +166,7 @@ export default class Calendars extends Component {
     let { year, month, dayArray, selectTextTF } = this.state
     return (
       <ScrollView style={calendars.wrap}>
-        <StatusBar hidden={false} backgroundColor={primaryColor} />
+        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
         <Text style={calendars.selectText}>{selectTextTF ? pleaseSelectEndTime : pleaseSelectStartTime}</Text>
         <View style={{backgroundColor: mainColor}}>
           <View style={calendars.ymView}>

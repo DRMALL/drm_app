@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
-import { mainColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
-import { inputDeviceTypes, historicalRecord, hotSearch, tokenKey } from '../../common/strings'
-import { search, diagnose } from '../../styles'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
+import moment from 'moment'
+import { mainColor, primaryColor, subTitleColor, contentColor, loginBackgroundColor } from '../../common/constants'
+import { inputDeviceTypes, historicalRecord, hotSearch, tokenKey, inTheEnd } from '../../common/strings'
+import { search, device, home } from '../../styles'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
-import { getBugs, getBugsHot } from '../../apis'
+import { getDevicesSearch, getDevicesHots } from '../../apis'
 import Loading from '../../components/units/Loading'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
@@ -17,8 +18,10 @@ const deleteSweepIcon = require('../../images/navigation_icons/delete_sweep.png'
 export default class SearchDevice extends Component {
   static navigationOptions = {
     headerStyle: {
+      width: '200%',
       height: 0,
-      top: 50,
+      left: -50,
+      backgroundColor: primaryColor,
     }
   };
 
@@ -27,7 +30,7 @@ export default class SearchDevice extends Component {
     this.state = {
       text: '',
       jumpData: false,
-      bugsData: [],
+      deviceData: [],
       historyData: [],
       hotwordData: [],
     }
@@ -53,14 +56,22 @@ export default class SearchDevice extends Component {
   getBugsHotword() {
     checkToken(tokenKey)
     .then(async token => {
-      let res = await getPort(`${getBugsHot}?token=${token}`)
+      let res = await getPort(`${getDevicesHots}?token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         this.setState({
           hotwordData: res.data,
         })
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -71,23 +82,34 @@ export default class SearchDevice extends Component {
     })
     checkToken(tokenKey)
     .then(async token => {
-      let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
+      let res = await getPort(`${getDevicesSearch}?type=onchange&search=${this.state.text}&token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         this.setState({
-          bugsData: res.data,
+          deviceData: res.data,
         })
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
   getBugsSubmit() {
     checkToken(tokenKey)
     .then(async token => {
-      let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
+      let res = await getPort(`${getDevicesSearch}?type=submit&search=${this.state.text}&token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         let prevHistoryData = this.state.historyData
         if(res.data.text != null && res.data.text != undefined) {
@@ -97,7 +119,12 @@ export default class SearchDevice extends Component {
           })
           saveWord('device', prevHistoryData)
         }
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -123,23 +150,22 @@ export default class SearchDevice extends Component {
     })
   }
 
-
   render() {
     let { navigation } = this.props
-      , { bugsData, historyData, hotwordData, jumpData } = this.state
-      , dataBugsView
-    if(!bugsData) {
-      dataBugsView = <Loading animating={!bugsData ? true : false}/>
+      , { deviceData, historyData, hotwordData, jumpData } = this.state
+      , dataDeviceView
+    if(!deviceData) {
+      dataDeviceView = <Loading animating={!deviceData ? true : false}/>
     } else {
-      dataBugsView = <ScrollView>
+      dataDeviceView = <ScrollView>
         {
-          bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
+          deviceData.map((deviceOne, index)=> <DeviceItem key={index} index={index} deviceDataLength={deviceData.length} deviceOne={deviceOne} navigation={navigation} />)
         }
       </ScrollView>
     }
     return (
       <View style={{height: '100%'}}>
-        <StatusBar backgroundColor={primaryColor} />
+        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
         <HeaderSearch 
           state={this.state} 
           navigation={navigation} 
@@ -148,7 +174,7 @@ export default class SearchDevice extends Component {
           cleanText={()=> this.pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
-          {dataBugsView}
+          {dataDeviceView}
           <View style={{height: 1}} />
         </View>
         <View style={{height: jumpData ? 0 : '100%'}}>
@@ -185,17 +211,35 @@ export default class SearchDevice extends Component {
   }
 }
 
-const DiagBugsItem = props => {
-  let { bugOne, navigation } = props
+const DeviceItem = props => {
+  let { deviceOne, index, deviceDataLength, navigation } = props
+    , nameNumLength = `${deviceOne.name + deviceOne.number}`.split('').length
   return (
     <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {bugsId: bugOne._id, bugsTitle: bugOne.title, categoryText: bugOne.category.text})}>
-        <View style={diagnose.titleView}>
-          <Text style={diagnose.titleText}>{bugOne.title}</Text>
+      <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('detail', {deviceId: deviceOne._id})}> 
+        <Image style={device.archivesItemImg} source={{uri: deviceOne.images[0].url}} />
+        <View style={device.archivesItemOther}>
+          <View style={nameNumLength < 16 ? device.archivesNoTime : device.archivesNoTime2}>
+            <Text style={device.archivesItemNo}>{deviceOne.name + deviceOne.number}</Text>
+            <Text style={device.archivesItemTime}>{moment(deviceOne.createdAt).format('YYYY-MM-DD')}</Text>
+          </View>
+          <View style={device.archivesItemLabsView}>
+            <View style={device.archivesItemLabBorder}>
+              <Text style={device.archivesItemLab}>{deviceOne.cc}</Text>
+            </View>
+            <View style={device.archivesItemLabBorder}>
+              <Text style={device.archivesItemLab}>{deviceOne.pressure}</Text>
+            </View>
+            <View style={device.archivesItemLabBorder}>
+              <Text style={device.archivesItemLab}>{deviceOne.combustible}</Text>
+            </View>
+          </View>
+          <Text style={device.archivesItemDetail}>{deviceOne.description}</Text>
         </View>
-        <Text style={{color: contentColor, fontWeight: 'bold' }}>{bugOne.content}</Text>
-        <Text style={diagnose.kindsText}>{bugOne.category.text}</Text>
       </TouchableOpacity>
+      <View style={{backgroundColor: mainColor, opacity: 1}}>
+        <Text style={[home.endText, index == (deviceDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+      </View>
     </View>
   )
 }

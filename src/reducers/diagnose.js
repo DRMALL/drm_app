@@ -1,5 +1,6 @@
 const diagnose = (()=> {
   let diagTabState = {
+    isRefreshing: false,
     allDiagnoseData: [],
     allCateData: [],
     selectedCate: '',
@@ -13,6 +14,10 @@ const diagnose = (()=> {
 
 export default (state = diagnose, action) => {
   switch (action.type) {
+    case 'SEEK_DIAGNOSE_TRUE':
+      return Object.assign({}, state, { isRefreshing: true } )
+    case 'SEEK_DIAGNOSE_FALSE':
+      return Object.assign({}, state, { isRefreshing: false } )
     case 'DIAGNOSE_DATA_GET':
       return Object.assign({}, state, { allDiagnoseData: action.payload })
     case 'DIAGNOSE_CATE_GET':

@@ -13,6 +13,6 @@ export default {
     borderColor: backgroundColor,
   },
   sortText: {
-    fontSize: 15,
+    fontSize: 16,
   },
 }

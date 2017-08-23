@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other, search } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { userName, save } from '../../common/strings'
+import { userName, save, tokenKey } from '../../common/strings'
 import { updateInfo } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
-let nameData
 
 export default class UserName extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -20,33 +19,10 @@ export default class UserName extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => UserName.pressSaveName(navigation)}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.pressSaveName()}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
   });
-
-  static pressSaveName(navigation) {
-    checkToken('drmAppToken')
-    .then(async token => {
-      let bodyData = {
-        name: nameData,
-      }
-      let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
-      if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 201) {
-        navigation.navigate('information')
-      } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
 
   constructor(props) {
     super(props)
@@ -56,9 +32,37 @@ export default class UserName extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.navigation.setParams({  
+      pressSaveName: () => this.pressSaveName(), 
+    })
+  }
+
+  pressSaveName() {
+    checkToken(tokenKey)
+    .then(async token => {
+      let bodyData = {
+        name: this.state.user_name,
+      }
+      let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
+      if(!res) {
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 201) {
+        this.props.navigation.navigate('information')
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
+  }
+
   onChangeName(user_name) {
     this.setState({ user_name })
-    nameData = user_name
   }
 
   cleanText() {

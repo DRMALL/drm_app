@@ -1,26 +1,35 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ListView, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ListView, ScrollView, TouchableOpacity, RefreshControl } from 'react-native'
 import moment from 'moment'
-import { subTitleColor, primaryColor } from '../common/constants'
-import { device } from '../styles'
+import { subTitleColor, primaryColor, loginBackgroundColor, mainColor } from '../common/constants'
+import { inTheEnd } from '../common/strings'
+import { device, home } from '../styles'
 
 export default props => {
   let ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 != r2
   })
   let archivesDataDs = ds.cloneWithRows(props.archivesData)
-  let navigation = props.navigation
+    , navigation = props.navigation
+    , archivesDataLength = props.archivesData.length
   return(
     <ListView 
+      refreshControl={<RefreshControl 
+        refreshing={props.isRefreshing}
+        onRefresh={props.onDeviceRefresh}
+        colors={['#ff0000', '#00ff00', '#0000ff']}
+        progressBackgroundColor={mainColor}
+        title='下拉刷新'
+      />}
       style={{height: '100%'}}
       dataSource={archivesDataDs}
-      renderRow={(rowData) => <ArchivesDataItem rowData={rowData} navigation={navigation} />}
+      renderRow={(rowData, sectionID, rowID) => <ArchivesDataItem rowData={rowData} rowID={rowID} archivesDataLength={archivesDataLength} navigation={navigation} />}
       enableEmptySections={true}
     />
   )
 }
 
-const ArchivesDataItem = ({ rowData, navigation }) => {
+const ArchivesDataItem = ({ rowData, rowID, archivesDataLength, navigation }) => {
   const { _id, name, number, images, cc, pressure, combustible, description, createdAt } = rowData
     , nameNumLength = `${name + number}`.split('').length
   return (
@@ -46,6 +55,9 @@ const ArchivesDataItem = ({ rowData, navigation }) => {
           <Text style={device.archivesItemDetail}>{description}</Text>
         </View>
       </TouchableOpacity>
+      <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
+        <Text style={[home.endText, rowID == (archivesDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+      </View>
     </View>
   )
 }

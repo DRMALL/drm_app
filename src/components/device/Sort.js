@@ -1,6 +1,6 @@
 import React, { Component }from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { lightBlueColor, subTitleColor } from '../../common/constants'
+import { lightBlueColor, contentColor } from '../../common/constants'
 import { sort } from '../../styles'
 
 export default props => {
@@ -21,7 +21,7 @@ const SortItemRow = props => {
     , selectSortRow = state[`sortRow${s}`]
   return (
     <TouchableOpacity style={sort.sortTouch} activeOpacity={0.8} onPress={()=> pressSort(s)}>
-      <Text style={[sort.sortText, {color: selectSortRow ? lightBlueColor : subTitleColor}]}>{sortItem.text}</Text>
+      <Text style={[sort.sortText, {color: selectSortRow ? lightBlueColor : contentColor}]}>{sortItem.text}</Text>
     </TouchableOpacity>
   )
 }

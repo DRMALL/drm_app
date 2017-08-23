@@ -64,7 +64,7 @@ export default class Login extends Component {
     }
     let res = await postPort(signIn, bodyData)
     if(!res) {
-      Alert.alert('❌错误', 'Internal Server Error',
+      Alert.alert('错误', 'Internal Server Error',
         [ {text: 'OK', onPress: () => 'OK'}, ],
         { cancelable: false }
       )
@@ -72,7 +72,7 @@ export default class Login extends Component {
       depositToken(tokenKey, res.data)
       this.props.navigation.dispatch(resetAction)
     } else {
-      Alert.alert('❌错误', '邮箱或密码输入有误',
+      Alert.alert('错误', '邮箱或密码输入有误',
         [ {text: 'OK', onPress: () => 'OK'}, ],
         { cancelable: false }
       )

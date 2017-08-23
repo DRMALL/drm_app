@@ -1,8 +1,11 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl, StatusBar, Alert, Platform } from 'react-native'
+import { View, Text, Image, 
+        ScrollView, TouchableOpacity, RefreshControl, 
+        StatusBar, Alert, Platform, ActivityIndicator
+} from 'react-native'
 import Swiper from 'react-native-swiper'
 import moment from 'moment'
-import Loading from '../../components/units/Loading'
+import Loading2 from '../../components/units/Loading2'
 import { mainColor, loginBorderColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
 import { deviceSort, deviceTimeline, deviceRemarks, tokenKey } from '../../common/strings'
 import { detail } from '../../styles'
@@ -15,6 +18,7 @@ const calendarIcon = require('../../images/navigation_icons/calendar.png')
 const editIcon = require('../../images/navigation_icons/edit.png')
 const openDownIcon = require('../../images/navigation_icons/open_down.png')
 const closeUpIcon = require('../../images/navigation_icons/close_up.png')
+const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 const uploadPic = require('../../images/uploadPic.png')
 
 export default class Detail extends Component {
@@ -50,7 +54,7 @@ export default class Detail extends Component {
         res = await getPort(`${getDevice}?deviceId=${deviceId}&token=${token}`)
       }
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -59,13 +63,13 @@ export default class Detail extends Component {
           oneDeviceData: res.data,
         })
       } else if(res.code == 503) {
-        Alert.alert('❌错误', '暂无权限查看',
+        Alert.alert('错误', '暂无权限查看',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
         this.props.navigation.goBack()
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -91,9 +95,9 @@ export default class Detail extends Component {
       , { oneDeviceData, isRefreshing, adDataSource, photos, downUpPress } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
-    if (!oneDeviceData || !images) return <Loading animating={!oneDeviceData || !images ? true : false}/>
+    // if (!images) return <Loading animating={!images ? true : false}/>
     return (
-      <View style={{height: '100%', top: Platform.OS === 'ios' ? -20 : 0}}>
+      <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
         <ScrollView 
           refreshControl={<RefreshControl 
             refreshing={isRefreshing}
@@ -104,8 +108,9 @@ export default class Detail extends Component {
         >
           <StatusBar hidden={true}/>
           <View style={detail.wrap}>
-            <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
-
+            { !images ? <Loading2 animating={!images ? true : false} /> : 
+              <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
+            }
             <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
               <Text style={detail.titleText}>{name + number}</Text>
               <Text style={detail.titleTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
@@ -165,6 +170,7 @@ const SwiperHeader = props => {
       picsDataView.push(
         <View key={i} style={detail.picsView}>
           <Image style={detail.pics} source={{uri: picsData[i].url}}/>
+          <Image style={{width: '100%', height: '100%', resizeMode: 'stretch', position: 'absolute' }} source={picMaskIcon}/>
         </View>
       )
     }

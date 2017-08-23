@@ -11,6 +11,7 @@ import { getBug } from '../../apis'
 import { diagnosisData } from '../../utils/virtualData'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
+const emptyIcon = require('../../images/navigation_icons/empty.png')
 const shareIcon = require('../../images/navigation_icons/share.png')
 
 export default class DiagDetail extends Component {
@@ -26,11 +27,11 @@ export default class DiagDetail extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 20}} onPress={()=> navigation.state.params.share()}>
-      <Image source={shareIcon}/>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 20}} onPress={()=> ''}>
+      <Image source={emptyIcon}/>
     </TouchableOpacity>,
   });
-
+  //navigation.state.params.share()
   constructor(props) {
     super(props)
     this.state = {
@@ -59,7 +60,7 @@ export default class DiagDetail extends Component {
     .then(async token => {
       let res = await getPort(`${getBug}?id=${bugsId}&token=${token}`)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -68,7 +69,7 @@ export default class DiagDetail extends Component {
           oneBugData: res.data,
         })
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

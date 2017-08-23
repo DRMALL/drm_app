@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import moment from 'moment'
 import { NavigationActions } from 'react-navigation'
 import Button from '../../components/units/Button'
@@ -54,10 +54,18 @@ export default class DynamicOrder extends Component {
         }
         let res = await postPort(`${setOneNoticesRead}?token=${token}`, bodyData)
         if(!res) {
-          alert('server error')
+          Alert.alert('错误', 'Internal Server Error',
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
         } else if(res.code == 201) {
           console.log('readed one')
-        } else alert(JSON.stringify(res))
+        } else {
+          Alert.alert('错误', JSON.stringify(res.message),
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        }
       })
     }
   }
@@ -68,14 +76,22 @@ export default class DynamicOrder extends Component {
     .then(async token => {
       let res = await getPort(`${getNoticesOne}?id=${msgId}&token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         if(this.state.isMounted) {
           this.setState({
             oneNoticeData: res.data,
           })
         }
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -88,7 +104,10 @@ export default class DynamicOrder extends Component {
       }
       let res = await postPort(`${setOrderSolved}?token=${token}`, bodyData)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 201) {
         const resetAction = NavigationActions.reset({
           index: 1,
@@ -102,7 +121,12 @@ export default class DynamicOrder extends Component {
         //   [ {text: 'OK', onPress: () => 'OK'}, ],
         //   { cancelable: false }
         // )
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 

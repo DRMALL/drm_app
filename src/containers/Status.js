@@ -29,6 +29,7 @@ export default class Status extends Component {
       let statuStateObj = {
         statusArr: statusArr,
         situation: all,
+        isRefreshing: false,
       }
       statusArr.map((item, index)=> {
         if(index == 0) statuStateObj[`StatuTabRow${index}`] = true
@@ -49,8 +50,16 @@ export default class Status extends Component {
     })
   }
 
+  onStatusRefresh() {
+    this.setState({isRefreshing: true})
+    // this.getNewsList()
+    setTimeout(() => {
+      this.setState({isRefreshing: false})
+    }, 2000)
+  }
+
   render() {
-    let { statusArr, situation } = this.state
+    let { statusArr, situation, isRefreshing } = this.state
       , statusTabList = []
     statusList.map((oneData)=> {
       if(situation == all) statusTabList = statusList
@@ -67,7 +76,7 @@ export default class Status extends Component {
     return(
       <View style={{height: '100%', backgroundColor: loginBackgroundColor}}>
         <StatusTab tabData={statusArr} state={this.state} pressStatusTab={this.pressStatusTab.bind(this)}/>
-        <StatusCategory data={statusTabList} {...this.props} />
+        <StatusCategory data={statusTabList} isRefreshing={isRefreshing} onStatusRefresh={this.onStatusRefresh.bind(this)} {...this.props} />
       </View>
     )
   }

@@ -1,4 +1,4 @@
-import { mainColor, titleColor, backgroundColor, subTitleColor, loginBackgroundColor } from '../common/constants'
+import { mainColor, titleColor, backgroundColor, subTitleColor, loginBackgroundColor, contentColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -47,6 +47,10 @@ export default {
     fontSize: 16,
     color: subTitleColor,
   },
+  fix3Text: {
+    fontSize: 12,
+    color: contentColor,
+  },
   dataView: {
     backgroundColor: mainColor,
   },
@@ -78,10 +82,12 @@ export default {
   },
   iDataItemText: {
     fontSize: 14,
+    color: contentColor,
   },
   iDataItemText2: {
     position: 'absolute',
     fontSize: 10,
+    color: subTitleColor,
   },
   iDataItemImg: {
     position: 'absolute',
@@ -94,7 +100,7 @@ export default {
   },
   logText: {
     fontSize: 15, 
-    color: subTitleColor, 
+    color: contentColor, 
     paddingLeft: 15,
     lineHeight: 22,
   },

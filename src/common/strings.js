@@ -94,6 +94,7 @@ export const historicalRecord = '历史记录'
 export const hotSearch = '热门搜索' 
 export const pleaseSelectStartTime = '请选择时间段起始时间' 
 export const pleaseSelectEndTime = '请选择时间段结束时间' 
+export const logOut = '退出登录'
 export const inTheEnd = ' ————  已经到底了  ———— '
 
 

@@ -18,8 +18,10 @@ const deleteSweepIcon = require('../../images/navigation_icons/delete_sweep.png'
 export default class SearchSeek extends Component {
   static navigationOptions = {
     headerStyle: {
+      width: '200%',
       height: 0,
-      top: 50,
+      left: -50,
+      backgroundColor: primaryColor,
     }
   };
 
@@ -56,12 +58,20 @@ export default class SearchSeek extends Component {
     .then(async token => {
       let res = await getPort(`${getBugsHot}?token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         this.setState({
           hotwordData: res.data,
         })
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -74,12 +84,20 @@ export default class SearchSeek extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         this.setState({
           bugsData: res.data,
         })
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -88,7 +106,10 @@ export default class SearchSeek extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
       if(!res) {
-        alert('server error')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 200) {
         let prevHistoryData = this.state.historyData
         if(res.data.text != null && res.data.text != undefined) {
@@ -98,7 +119,12 @@ export default class SearchSeek extends Component {
           })
           saveWord('seek', prevHistoryData)
         }
-      } else alert(JSON.stringify(res))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -140,7 +166,7 @@ export default class SearchSeek extends Component {
     }
     return (
       <View style={{height: '100%'}}>
-        <StatusBar backgroundColor={primaryColor} />
+        <StatusBar backgroundColor={primaryColor} barStyle='light-content' />
         <HeaderSearch 
           state={this.state} 
           navigation={navigation} 

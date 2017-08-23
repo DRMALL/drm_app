@@ -1,11 +1,25 @@
-import { mainColor, lightBlueColor } from '../common/constants'
+import { mainColor, lightBlueColor, subTitleColor } from '../common/constants'
 
 export default {
   addPicView: {
-
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2.5,
+    borderColor: subTitleColor,
+    borderStyle: 'dashed',
+    backgroundColor: mainColor,
+  },
+  addPicText: {
+    fontSize: 150,
+    color: subTitleColor,
+    fontWeight: '100',
+    lineHeight: 160,
   },
   addPicTouch: {
-    padding: 16,
+    width: '100%',
+    paddingTop: 5,
+    paddingHorizontal: 16,
   },
   addPicImg: {
     height: 50, 
@@ -27,8 +41,7 @@ export default {
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
-    borderColor: lightBlueColor,
+    margin: 0.5,
     backgroundColor: mainColor,
   },
   actionText: {

@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, Image, ScrollView, Platform, Alert, StatusBar, Dimensions } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import ImagePicker from 'react-native-image-crop-picker'
 import { primaryColor, loginBackgroundColor } from '../../common/constants'
-import { tokenKey } from '../../common/strings'
+import { tokenKey, deviceLabel } from '../../common/strings'
 import { uploadImage } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { postFormDataPort } from '../../utils/fetchMethod'
 import { postDeviceImages } from '../../apis'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
-const addPicIcon = require('../../images/addPic.png')
+const deleteIcon = require('../../images/delete.png')
+const addIcon = require('../../images/add.png')
 let dataToPost = []
 
 export default class UploadImage extends Component {
@@ -21,7 +23,7 @@ export default class UploadImage extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={()=> navigation.state.params.commitPage()}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={()=> navigation.state.params.commitPageConfirm()}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >上传</Text>
     </TouchableOpacity>,
   });
@@ -40,8 +42,23 @@ export default class UploadImage extends Component {
 
   componentWillMount(){
     this.props.navigation.setParams({
-      commitPage: this.commitPage.bind(this),
+      commitPageConfirm: this.commitPageConfirm.bind(this),
     })
+  }
+
+  commitPageConfirm() {
+    if(this.state.images[0] == null){
+      Alert.alert('警告', '没有选择图片',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    } else {
+      Alert.alert('提示', `确认上传这${this.state.images.length}张图片`,
+        [ {text: '取消', onPress: () => 'OK'}, 
+          {text: '确定', onPress: () => this.commitPage()}, ],
+        { cancelable: false }
+      )
+    }
   }
 
   actionShow(stateField, imgData) {
@@ -53,6 +70,7 @@ export default class UploadImage extends Component {
 
   //拍照
   pickSingleWithCamera() {
+    dataToPost = this.state.images
     ImagePicker.openCamera({
       cropping: false,
       width: Math.round((Dimensions.get('window').width-20)),
@@ -64,15 +82,20 @@ export default class UploadImage extends Component {
         height: image.height,
       })
       this.setState({
-        images: dataToPost
+        images: dataToPost,
+        actionButtonShow: false,
       })
-    }).catch(
-      e => alert(e)
+    }).catch(e => 
+      Alert.alert('错误', '调取拍照出错',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
     )
   }
 
   //相册
   openPicLib() {
+    dataToPost = this.state.images
     if(Platform.OS === 'ios'){
       ImagePicker.openPicker({
         width: 480,
@@ -91,10 +114,14 @@ export default class UploadImage extends Component {
           })
         }
         this.setState({
-          images: dataToPost
+          images: dataToPost,
+          actionButtonShow: false,
         })
       }).catch(e =>
-        alert(e)
+        Alert.alert('错误', '调取相册出错',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       )
     }else{
       ImagePicker.openPicker({
@@ -115,13 +142,15 @@ export default class UploadImage extends Component {
           mime: image.mime
         })
         this.setState({
-          images: dataToPost
+          images: dataToPost,
+          actionButtonShow: false,
         })
-      }).catch(e => {
-        Alert.alert(e.message
-          ? e.message
-          : e)
-      })
+      }).catch(e => 
+        Alert.alert('错误', '调取相册出错',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      )
     }
   }
 
@@ -129,47 +158,91 @@ export default class UploadImage extends Component {
   commitPage() {
     let formData = new FormData()
       , { deviceId } = this.props.navigation.state.params
-    if(this.state.images[0] == null){
-      Alert.alert('⚠️警告', '没有选择图片',
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    } else {
-      dataToPost = []
-      for(var i = 0;i < this.state.images.length; i++){
-        var uri = this.state.images[i].uri
-        var index = uri.lastIndexOf("\/")
-        var name  = uri.substring(index + 1, uri.length)
-        let file = {uri: uri, type: 'multipart/form-data', name: name } 
-        formData.append('devices', file)
-      }
-      checkToken(tokenKey)
-      .then(async token => {
-        let res = await postFormDataPort(`${postDeviceImages}?deviceId=${deviceId}&token=${token}`, formData)
-        if(!res) {
-          alert('result is null')
-        } else if(res.code == 413) {
-          Alert.alert('❌错误', '图片过大',
-            [ {text: 'OK', onPress: () => 'OK'}, ],
-            { cancelable: false }
-          )
-        } else if(res.code == 201) {
-          this.setState({
-            images: [],
-          })
-          Alert.alert('✅成功', '已上传',
-            [ {text: 'OK', onPress: () => 'OK'}, ],
-            { cancelable: false }
-          )
-        } else alert(JSON.stringify(res))
-      })
+    dataToPost = []
+    for(var i = 0;i < this.state.images.length; i++){
+      var uri = this.state.images[i].uri
+      var index = uri.lastIndexOf("\/")
+      var name  = uri.substring(index + 1, uri.length)
+      let file = {uri: uri, type: 'multipart/form-data', name: name } 
+      formData.append('devices', file)
     }
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await postFormDataPort(`${postDeviceImages}?deviceId=${deviceId}&token=${token}`, formData)
+      if(!res) {
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 413) {
+        Alert.alert('错误', '图片过大',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 201) {
+        this.setState({
+          images: [],
+          actionButtonShow: false,
+        })
+        Alert.alert('成功', '已上传',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+        const resetAction = NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ 
+              routeName: 'main', 
+              params: {},
+              action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
+            }),
+            NavigationActions.navigate({ 
+              routeName: 'detail', 
+              params: {
+                deviceId: deviceId, 
+              }, 
+            })
+          ]
+        })
+        this.props.navigation.dispatch(resetAction)
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
   }
 
-  renderImage(image) {
-    return <TouchableOpacity style={{ alignItems: 'center', paddingHorizontal: 16}} onPress={()=> ''}>
-      <Image style={{width: 250, height: 250, resizeMode: 'contain' }} source={image} />
-    </TouchableOpacity>
+  deletePic(len) {
+    let newImages = []
+    this.state.images.map((imageOne, index)=> {
+      if(len == index) newImages = newImages
+      else {
+        newImages.push(imageOne)
+      }
+    })
+    this.setState({
+      images: newImages,
+    })
+    dataToPost = newImages
+  }
+
+  renderImage(image, mainView, len) {
+    let imagesLength = this.state.images.length
+    return (
+      <View>
+        <View style={{ alignItems: 'center', paddingHorizontal: 16, paddingTop: 10}}>
+          <Image style={{width: '100%', height: 230, resizeMode: 'contain' }} source={image} />
+          <TouchableOpacity style={{position: 'absolute', bottom: 10, right: 26}} onPress={()=> this.deletePic(len)}>
+            <Image source={deleteIcon}/>
+          </TouchableOpacity>
+        </View>
+        {
+          (len+1) == imagesLength ? mainView : null
+        }
+      </View>
+    )
   }
 
   render(){
@@ -178,20 +251,24 @@ export default class UploadImage extends Component {
     if(this.state.images != null && this.state.images.length >= 6){
       mainView = null
     }else{
-      mainView = <TouchableOpacity style={uploadImage.addPicTouch} onPress={()=>{this.actionShow('actionButtonShow')}}>
-        <Image style={uploadImage.addPicImg} source={addPicIcon} />
+      mainView = <TouchableOpacity style={uploadImage.addPicTouch} onPress={()=>{this.actionShow('actionButtonShow')}} activeOpacity={0.7} >
+        <Image style={{width: '100%', height: 180, resizeMode: 'contain' }} source={addIcon}/>
       </TouchableOpacity>
     }
     return(
       <View style={{height: '100%', width: '100%'}}>
-      <StatusBar hidden={false} backgroundColor={primaryColor} />
+      <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
         <View style={[nextView, {height: '100%', width: '100%'}]}>
+          {
+            //<Image style={uploadImage.addPicImg} source={addPicIcon} />
+            // <View style={uploadImage.addPicView}>
+            //   <Text style={uploadImage.addPicText}>+</Text>
+            // </View>
+            this.state.images.length == 0 ? mainView : null
+          }
           <ScrollView>
-            {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderImage(i)}</View>) : null}
+            {this.state.images ? this.state.images.map((i, len) => <View key={i.uri}>{this.renderImage(i, mainView, len)}</View>) : null}
           </ScrollView>
-          <View style={uploadImage.addPicView}>
-            {mainView}
-          </View>
         </View>
         <View style={[topView, actionButtonShow ? {} : {height: 0}]}>
           <TouchableOpacity onPress={()=> this.actionShow('actionButtonShow')}>

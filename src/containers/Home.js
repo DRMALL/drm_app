@@ -12,6 +12,7 @@ import { homeList } from '../utils/virtualData'
 
 import store from '../utils/store'
 import getHomeData from '../actions/getHomeData'
+import homeDetailAC from '../actions/homeDetailAC'
 
 const homeIconSelected = require('../images/tabbar_icons/tabbar_home_selected.png')
     , homeIconNormal = require('../images/tabbar_icons/tabbar_home_normal.png')
@@ -50,14 +51,14 @@ export default class Home extends Component {
     .then(async token => {
       let res = await getPort(`${getNews}?token=${token}`)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 200) {
         getHomeData(res.data)
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -65,13 +66,23 @@ export default class Home extends Component {
     })
   }
 
+  onHomeRefresh() {
+    homeDetailAC.isRefresh()
+    this.getNewsList()
+    setTimeout(() => {
+      homeDetailAC.isnotRefresh()
+    }, 2000)
+  }
+
   render() {
-    let { newsListData } = this.state
+    let { newsListData, isRefreshing } = this.state
     if(!newsListData) return <Loading animating={!newsListData ? true : false}/>
     return(
       <View style={{backgroundColor: loginBackgroundColor}}>
-        <StatusBar backgroundColor={primaryColor} />
-        <HomeList data={newsListData} {...this.props} />
+        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
+        <View>
+          <HomeList data={newsListData} isRefreshing={isRefreshing} onHomeRefresh={this.onHomeRefresh.bind(this)} {...this.props} />
+        </View>
       </View>
     )
   }

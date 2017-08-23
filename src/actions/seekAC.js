@@ -2,6 +2,14 @@ import store from '../utils/store'
 import dispatch from './dispatch'
 import { allParts, allTypes } from '../common/strings'
 
+const isRefresh = ()=> {
+  dispatch('SEEK_REFRESH_TRUE')
+}
+
+const isnotRefresh = ()=> {
+  dispatch('SEEK_REFRESH_FALSE')
+}
+
 const createPartTypeState = async (seekPartsData, seekTypesData)=> {
   const seekStateObj = {}
   seekPartsData.map((partItem, indexp)=> {
@@ -64,6 +72,8 @@ const pressTypeColumn = (t, seekTypesData)=> {
 }
 
 export default {
+  isRefresh,
+  isnotRefresh,
   createPartTypeState,
   openModal,
   pressPartColumn,

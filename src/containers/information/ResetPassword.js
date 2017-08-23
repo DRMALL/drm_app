@@ -48,17 +48,17 @@ export default class ResetPassword extends Component {
         confirmPass: verify_password,
       }
       if(bodyData.password == undefined || bodyData.password == '') {
-        return Alert.alert('❌错误', '原密码不能为空',
+        return Alert.alert('错误', '原密码不能为空',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(bodyData.newPass == undefined || bodyData.newPass == '') {
-        return Alert.alert('❌错误', '新密码不能为空',
+        return Alert.alert('错误', '新密码不能为空',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(bodyData.confirmPass == undefined || bodyData.confirmPass == '') {
-        return Alert.alert('❌错误', '确认新密码不能为空',
+        return Alert.alert('错误', '确认新密码不能为空',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -67,21 +67,21 @@ export default class ResetPassword extends Component {
       let res = await postPort(`${updatePassword}?token=${token}`, bodyData)
       
       if(res == null) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
         clearToken()
         this.props.navigation.navigate('login')
       } else if(res.code == 201) {
-        Alert.alert('✅成功', '修改成功',
+        Alert.alert('成功', '修改成功',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
         clearToken()
         this.props.navigation.navigate('login')
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

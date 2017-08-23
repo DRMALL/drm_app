@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, StatusBar, Alert } from 'react-native'
-import { StackNavigator } from 'react-navigation'
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import { primaryColor, loginBackgroundColor } from '../common/constants'
 import { basicDocument, 
         userName, 
@@ -11,9 +11,11 @@ import { basicDocument,
         resetPassword, 
         personalInformation, 
         tokenKey,
+        logOut,
 } from '../common/strings'
 import { information } from '../styles'
 import TouchIntoText from '../components/units/TouchIntoText'
+import Button from '../components/units/Button'
 import { checkToken, depositToken, clearToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
 import { getInfo } from '../apis'
@@ -57,7 +59,7 @@ export default class Information extends Component {
     .then(async token => {
       let res = await getPort(`${getInfo}?token=${token}`)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -69,17 +71,36 @@ export default class Information extends Component {
           postal_address: res.data.address,
         })
       } else if(res.code == 404) {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       }
     })
+  }
+
+  confirmLogOut() {
+    clearToken()
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'login'}),
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+  pressLogOut() {
+    Alert.alert('提示', '您将退出？',
+      [ {text: '取消', onPress: () => 'OK'}, 
+        {text: '确定', onPress: () => this.confirmLogOut()}, ],
+      { cancelable: false }
+    )
   }
 
   render() {
@@ -113,6 +134,14 @@ export default class Information extends Component {
           activeOpacity={0.6} 
           onPress={() => navigation.navigate('resetpassword', {name: 'ResetPassword'})} 
         />
+        <View style={{alignItems: 'center'}}>
+          <Button title={logOut} 
+            titleStyle={information.buttonText} 
+            style={information.buttonView} 
+            activeOpacity={0.8}
+            onPress={()=> this.pressLogOut()}
+          />
+        </View>
       </View>
     )
   }

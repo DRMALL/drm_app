@@ -42,15 +42,23 @@ export default class Seek extends Component {
     this.unsubscribe()
   }
 
+  onSeekRefresh() {
+    seekAC.isRefresh()
+    // this.getNewsList()
+    setTimeout(() => {
+      seekAC.isnotRefresh()
+    }, 2000)
+  }
+
   render() {
-    let { seekPartRow, seekTypeRow, topView, secondView } = this.state
+    let { seekPartRow, seekTypeRow, topView, secondView, isRefreshing } = this.state
       , { openModal } = seekAC
     return(
       <View style={{paddingBottom: 80}}>
         <SeekTab partsData={seekPartsData} typesData={seekTypesData} state={this.state} openModal={openModal} />
         <View style={{height: '100%'}}>
           <View style={[!seekPartRow && !seekTypeRow ? topView : secondView, {height: '100%', paddingBottom: 50}]}>
-            <SeekCategory {...this.props} />
+            <SeekCategory isRefreshing={isRefreshing} onSeekRefresh={this.onSeekRefresh.bind(this)} {...this.props} />
           </View>
           <View style={[topView, {height: seekPartRow ? '100%' : 0}]}>
             <SeekPartsColumn partsData={seekPartsData} state={this.state} />

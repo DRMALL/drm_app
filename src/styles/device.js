@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, lightBlueColor, backgroundColor, loginBackgroundColor } from '../common/constants'
+import { mainColor, subTitleColor, lightBlueColor, backgroundColor, loginBackgroundColor, contentColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -62,6 +62,7 @@ export default {
   archivesItemTime: {
     marginRight: 16,
     fontSize: 12,
+    color: contentColor,
   },
   archivesItemLabsView: {
     paddingVertical: 5,
@@ -85,7 +86,7 @@ export default {
   archivesItemDetail: {
     width: '100%',
     lineHeight: 23,
-    color: subTitleColor,
+    color: contentColor,
     paddingRight: 16,
   },
   halfOpacityView: {

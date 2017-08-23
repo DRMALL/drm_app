@@ -1,6 +1,7 @@
 import { allParts, allTypes } from '../common/strings'
 
 const seek = {
+  isRefreshing: false,
   seekPartRow: false,
   seekTypeRow: false,
   selectedPart: allParts,
@@ -11,6 +12,10 @@ const seek = {
 
 export default (state = seek, action) => {
   switch (action.type) {
+    case 'SEEK_REFRESH_TRUE':
+      return Object.assign({}, state, { isRefreshing: true } )
+    case 'SEEK_REFRESH_FALSE':
+      return Object.assign({}, state, { isRefreshing: false } )
     case 'SEEK_MAKE_PARAMS':
       return Object.assign({}, state, action.payload )
     case 'SEEK_OPEN_MODAL':

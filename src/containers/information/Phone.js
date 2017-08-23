@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { phoneNumber, save } from '../../common/strings'
+import { phoneNumber, save, tokenKey } from '../../common/strings'
 import { updateInfo } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
-let phoneData
 
 export default class Phone extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -20,32 +19,46 @@ export default class Phone extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => Phone.pressSavePhone(navigation)}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.pressSavePhone()}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{save}</Text>
     </TouchableOpacity>,
   });
 
-  static pressSavePhone(navigation) {
-    checkToken('drmAppToken')
+  constructor(props) {
+    super(props)
+    let { phone_number } = props.navigation.state.params
+    this.state = {
+      phone_number: phone_number == null || phone_number == 'null' ? '' : phone_number,
+    }
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({  
+      pressSavePhone: () => this.pressSavePhone(), 
+    })
+  }
+
+  pressSavePhone() {
+    checkToken(tokenKey)
     .then(async token => {
       let bodyData = {
-        phone: phoneData,
+        phone: this.state.phone_number,
       }
       let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 201) {
-        navigation.navigate('information')
+        this.props.navigation.navigate('information')
       } else if(res.code == 402) {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -53,16 +66,8 @@ export default class Phone extends Component {
     })
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      phone_number: props.navigation.state.params.phone_number,
-    }
-  }
-
   onChangePhone(phone_number) {
     this.setState({ phone_number })
-    phoneData = phone_number
   }
 
   cleanText() {

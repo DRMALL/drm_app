@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert, Plat
 import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
 import { tokenKey } from '../common/strings'
-import Loading from '../components/units/Loading'
+import Loading2 from '../components/units/Loading2'
 import ShareModal from '../components/units/ShareModal'
 import { seekDetail, detail } from '../styles'
 import { checkToken } from '../utils/handleToken'
@@ -50,14 +50,14 @@ export default class HomeDetail extends Component {
     .then(async token => {
       let res = await getPort(`${getNewsOne}?id=${id}&token=${token}`)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 201) {
         homeDetailAC.getOneData(res.data)
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -69,12 +69,15 @@ export default class HomeDetail extends Component {
     let { navigation } = this.props
       , { newsOneData, shareShow, topView, nextView } = this.state
       , { hiddenShare } = homeDetailAC
-    if(!newsOneData) return <Loading animating={!newsOneData ? true : false}/>
+
     return (
-      <View style={{height: '100%'}}>
+      <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
         <ScrollView style={[{backgroundColor: mainColor}, shareShow ? nextView : topView]}>
-          <StatusBar hidden={false} translucent={true}/>
-          <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
+          <StatusBar hidden={true}/>
+          {
+            !newsOneData.images ? <Loading2 animating={!newsOneData.images ? true : false} /> : 
+            <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
+          }
           <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
           <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
             {

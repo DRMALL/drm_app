@@ -1,5 +1,13 @@
 import dispatch from './dispatch'
 
+const isRefresh = ()=> {
+  dispatch('SEEK_DIAGNOSE_TRUE')
+}
+
+const isnotRefresh = ()=> {
+  dispatch('SEEK_DIAGNOSE_FALSE')
+}
+
 const normalCate = (payload)=> {
   dispatch('DIAGNOSE_DATA_GET', payload)
 }
@@ -17,6 +25,8 @@ const selectCate = (payload)=> {
 }
 
 export default {
+  isRefresh,
+  isnotRefresh,
   normalCate,
   getDiagnoseData,
   getDiagCate,

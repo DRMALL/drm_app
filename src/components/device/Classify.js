@@ -42,7 +42,7 @@ const ClassRow = props => {
     <TouchableOpacity style={[classify.classTouch, {backgroundColor: selectClassRow ? mainColor : backgroundColor}]} activeOpacity={0.8} onPress={()=> pressClass(index)}>
       <Text style={classify.textClass}>{item.class == '全部' ? item.class : '按' + item.class}</Text>
       <View style={classify.numImgView}>
-        <View style={classify.numBorder}>
+        <View style={[classify.numBorder, {backgroundColor: subTitleColor}]}>
           <Text style={classify.textNum}>{deviceData.length}</Text>
         </View>
         <Image style={classify.imgItem} source={intoIcon}/>

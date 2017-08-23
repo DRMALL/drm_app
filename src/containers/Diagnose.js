@@ -50,14 +50,14 @@ export default class Diagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?token=${token}`)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 200) {
         diagnoseAC.normalCate(res.data)
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -70,7 +70,7 @@ export default class Diagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getCate}?token=${token}`)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -80,7 +80,7 @@ export default class Diagnose extends Component {
           selectedCate: res.data[0].text,
         })
       } else {
-        Alert.alert('❌错误', JSON.stringify(res.message),
+        Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -99,8 +99,16 @@ export default class Diagnose extends Component {
     })
   }
 
+  onDiagRefresh() {
+    diagnoseAC.isRefresh()
+    this.getDiagnosis()
+    setTimeout(() => {
+      diagnoseAC.isnotRefresh()
+    }, 2000)
+  }
+
   render() {
-    let { allDiagnoseData, allCateData, selectedCate } = this.state
+    let { allDiagnoseData, allCateData, selectedCate, isRefreshing } = this.state
       , sortDiagnoseData = []
     allDiagnoseData.forEach((oneDiagnose)=> {
       if(oneDiagnose.category && oneDiagnose.category.text == selectedCate) {
@@ -110,7 +118,7 @@ export default class Diagnose extends Component {
     return(
       <View style={{height: '100%', paddingBottom: 45}}>
         <DiagnosisTab state={this.state} diagData={allCateData} pressTab={this.pressTab.bind(this)}/>
-        <DiagnoseCategory diagnoseData={sortDiagnoseData} {...this.props} />
+        <DiagnoseCategory diagnoseData={sortDiagnoseData} isRefreshing={isRefreshing} onDiagRefresh={this.onDiagRefresh.bind(this)} {...this.props} />
       </View>
     )
   }

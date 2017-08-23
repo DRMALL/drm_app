@@ -16,7 +16,7 @@ export default {
   },
   itemText: {
     fontSize: 16,
-    color: subTitleColor,
+    color: contentColor,
   },
   halfOpacityView: {
     height: '100%', 

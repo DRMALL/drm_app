@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { primaryColor, lightBlueColor, mainColor } from '../../common/constants'
 import { resettingPassword, email, verificationCode, getVCode, next } from '../../common/strings'
 import { emailVerify } from '../../styles'
@@ -20,9 +20,16 @@ export default class EmailVerify extends Component {
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
   });
 
-  pressNext = ()=> {
+  pressNext() {
     this.props.navigation.navigate('setPassword')
-  };
+  }
+
+  pressSendCode() {
+    Alert.alert('提示', '已发送验证码！',
+      [ {text: 'OK', onPress: () => 'OK'}, ],
+      { cancelable: false }
+    )
+  }
 
   render() {
     return (
@@ -41,7 +48,7 @@ export default class EmailVerify extends Component {
               title={getVCode} 
               titleStyle={{color: lightBlueColor}}
               activeOpacity={0.6} 
-              onPress={()=> alert('send code')}
+              onPress={this.pressSendCode}
             />
           </View>
         </View>
@@ -58,7 +65,7 @@ export default class EmailVerify extends Component {
             title={next} 
             titleStyle={emailVerify.nextButtonText} 
             activeOpacity={0.6}
-            onPress={this.pressNext}
+            onPress={()=> this.pressNext()}
           />
         </View>
       </View>

@@ -16,7 +16,7 @@ export default {
   },
   textClass: {
     marginLeft: 15,
-    fontSize: 14,
+    fontSize: 16,
     color: contentColor,
   },
   numImgView: {
@@ -24,16 +24,14 @@ export default {
     alignItems: 'center',
   },
   numBorder: {
-    width: 35,
-    height: 12,
+    width: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 5,
-    borderRadius: 3,
-    backgroundColor: subTitleColor,
+    borderRadius: 2,
   },
   textNum: {
-    fontSize: 10,
+    fontSize: 12,
     color: mainColor,
   },
   imgItem: {

@@ -21,6 +21,7 @@ export default class DeviceCategory extends Component {
     this.state = (props => {
       let stateObj = {
         isMounted: false,
+        isRefreshing: false,
         classifyRow: false,
         sortRow: false,
         filterRow: false,
@@ -32,7 +33,7 @@ export default class DeviceCategory extends Component {
         kindk: 0,
         confirmPress: false,
         cleanPress: false,
-        sortTypesNum: 0,
+        sortTypesNum: 1,
         filtercc: 'null',
         filterpressure: 'null',
         filtercombustible: 'null',
@@ -114,15 +115,21 @@ export default class DeviceCategory extends Component {
       }
       if(res.code == 200) {
         if(this.state.isMounted) {
-          this.setState({
-            allDevicesData: res.data,
-            filtercc: filterSearch ? filtercc : 'null',
-            filterpressure: filterSearch ? filterpressure : 'null',
-            filtercombustible: filterSearch ? filtercombustible : 'null',
-            filteraddress: filterSearch ? filteraddress : 'null',
-            filterRow: false,
-            cleanPress: false,
-          })
+          if(this.state.cleanPress) {
+            this.setState({
+              allDevicesData: res.data,
+              cleanPress: false,
+            })
+          } else {
+            this.setState({
+              allDevicesData: res.data,
+              filtercc: filterSearch ? filtercc : 'null',
+              filterpressure: filterSearch ? filterpressure : 'null',
+              filtercombustible: filterSearch ? filtercombustible : 'null',
+              filteraddress: filterSearch ? filteraddress : 'null',
+              filterRow: false,
+            })
+          }
         }
       }
     })
@@ -172,30 +179,27 @@ export default class DeviceCategory extends Component {
   }
 
   pressFilterParams(type, kind) {
+    let { filtercc, filterpressure, filtercombustible, filteraddress } = this.state
     if(this.state.isMounted) {
       switch(type) {
         case 'cc': {
           this.setState({
-            filtercc: kind,
-            confirmPress: false,
+            filtercc: kind == filtercc ? 'null' : kind,
           })
         }break
         case 'pressure': {
           this.setState({
-            filterpressure: kind,
-            confirmPress: false,
+            filterpressure: kind == filterpressure ? 'null' : kind,
           })
         }break
         case 'combustible': {
           this.setState({
-            filtercombustible: kind,
-            confirmPress: false,
+            filtercombustible: kind == filtercombustible ? 'null' : kind,
           })
         }break
         default: {
           this.setState({
-            filteraddress: kind,
-            confirmPress: false,
+            filteraddress: kind == filteraddress ? 'null' : kind,
           })
         }
       }
@@ -206,7 +210,6 @@ export default class DeviceCategory extends Component {
     if(this.state.isMounted) {
       this.setState({
         filterSearch: true,
-        confirmPress: true,
         filterRow: false,
       })
     }
@@ -239,15 +242,23 @@ export default class DeviceCategory extends Component {
         classKindsType: type,
         classKinds: kind,
         classifyRow: false,
-        sortTypesNum: 0,
+        sortTypesNum: 1,
         [`sortRow${stNum}`]: false,
       })
     }
     this.getAllDevices()
   }
 
+  onDeviceRefresh() {
+    this.setState({isRefreshing: true})
+    this.getAllDevices()
+    setTimeout(() => {
+      this.setState({isRefreshing: false})
+    }, 2000)
+  }
+
   render() {
-    let { classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities } = this.state
+    let { isRefreshing, classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities } = this.state
     return(
       <View style={device.wrap}>
         <View style={device.archivesTab}>
@@ -266,7 +277,7 @@ export default class DeviceCategory extends Component {
         </View>
         <View style={{height: '100%', paddingBottom: 50}}>
           <View style={!classifyRow && !sortRow && !filterRow ? topView : middleView}>
-            <Archives archivesData={allDevicesData} {...this.props} />
+            <Archives archivesData={allDevicesData} isRefreshing={isRefreshing} onDeviceRefresh={this.onDeviceRefresh.bind(this)} {...this.props} />
           </View>
           <View style={[topView, {height: classifyRow ? '100%' : 0}]}>
             {

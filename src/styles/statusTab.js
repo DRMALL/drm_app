@@ -1,4 +1,4 @@
-import { primaryColor, subTitleColor, mainColor, backgroundColor } from '../common/constants'
+import { primaryColor, subTitleColor, mainColor, backgroundColor, contentColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -18,7 +18,7 @@ export default {
     fontSize: 16,
     height: '90%',
     paddingVertical: 10,
-
+    color: contentColor,
   },
   vunoline: {
     width: '100%',

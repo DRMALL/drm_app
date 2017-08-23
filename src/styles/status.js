@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, backgroundColor } from '../common/constants'
+import { mainColor, subTitleColor, backgroundColor, contentColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -31,8 +31,9 @@ export default {
     fontSize: 18, 
   },
   text: {
-    width: '86%',
+    width: '83%',
     fontSize: 16,
+    color: contentColor,
   },
   touch: {
     width: 45,

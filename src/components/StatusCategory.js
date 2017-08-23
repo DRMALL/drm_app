@@ -1,25 +1,33 @@
 import React from 'react'
-import { View, Text, Image, ListView, TouchableOpacity, Alert } from 'react-native'
-import { online, offline, onToOffText, onState, offState } from '../common/strings'
-import { lightGreenColor, lightRedColor, subTitleColor } from '../common/constants'
-import { status } from '../styles'
+import { View, Text, Image, ListView, TouchableOpacity, Alert, RefreshControl } from 'react-native'
+import { online, offline, onToOffText, onState, offState, inTheEnd } from '../common/strings'
+import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor } from '../common/constants'
+import { status, home } from '../styles'
 
 export default props => {
   let ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 != r2
   })
   let finalDs = ds.cloneWithRows(props.data)
-  let navigation = props.navigation
+    , navigation = props.navigation
+    , dataLength = props.data.length
   return(
     <ListView 
+      refreshControl={<RefreshControl 
+        refreshing={props.isRefreshing}
+        onRefresh={props.onStatusRefresh}
+        colors={['#ff0000', '#00ff00', '#0000ff']}
+        progressBackgroundColor={mainColor}
+        title='下拉刷新'
+      />}
       dataSource={finalDs}
-      renderRow={(rowData) => <StatusListItem rowData={rowData} navigation={navigation}/>}
+      renderRow={(rowData, sectionID, rowID) => <StatusListItem rowData={rowData} rowID={rowID} dataLength={dataLength} navigation={navigation}/>}
       enableEmptySections={true}
     />
   )
 }
 
-const StatusListItem = ({ rowData, navigation }) => {
+const StatusListItem = ({ rowData, rowID, dataLength, navigation }) => {
   const { photo, deviceNo, deviceState, stopTime } = rowData
   return(
     <View style={{backgroundColor: subTitleColor}}>
@@ -36,6 +44,9 @@ const StatusListItem = ({ rowData, navigation }) => {
           <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={3}>{deviceState ? '' : onToOffText + stopTime}</Text>
         </View>
       </TouchableOpacity>
+      <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
+        <Text style={[home.endText, rowID == (dataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+      </View>
     </View>
   )
 }

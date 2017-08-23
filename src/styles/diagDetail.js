@@ -13,7 +13,7 @@ export default {
   },
   kindText: {
     paddingHorizontal: 16,
-    fontSize: 10,
+    fontSize: 12,
     color: subTitleColor,
   },
   contentText: {

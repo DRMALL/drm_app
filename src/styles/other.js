@@ -45,6 +45,15 @@ export default {
     fontSize: 11, 
     color: loginBorderColor,
   },
+  loadingView2: {
+    width: '100%',
+    height: 220,
+    alignItems: 'center', 
+    justifyContent: 'center', 
+  },
+  activityInd2: {
+    height: 50, 
+  },
 
   
   //

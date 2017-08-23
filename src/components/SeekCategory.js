@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { materialLongCode, materialName, materialModels, materialUnites } from '../common/strings'
-import { lightBlueColor, contentColor, mainColor, subTitleColor } from '../common/constants'
-import { seek } from '../styles'
+import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl } from 'react-native'
+import { materialLongCode, materialName, materialModels, materialUnites, inTheEnd } from '../common/strings'
+import { lightBlueColor, contentColor, mainColor, subTitleColor, loginBackgroundColor } from '../common/constants'
+import { seek, home } from '../styles'
 import { seekData } from '../utils/virtualData'
 
 export default class SeekCategory extends Component {
   render() {
-    let { navigation } = this.props
+    let { navigation, isRefreshing, onSeekRefresh } = this.props
+      , seekDataLength = seekData.length
     return (
       <View style={seek.wrap}>
         <View style={{backgroundColor: mainColor}}>
@@ -26,9 +27,17 @@ export default class SeekCategory extends Component {
             </View>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView 
+          refreshControl={<RefreshControl 
+            refreshing={isRefreshing}
+            onRefresh={onSeekRefresh}
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor={mainColor}
+            title='下拉刷新'
+          />}
+        >
           {
-            seekData.map((item, s)=> <SeekDataItem key={s} item={item} navigation={navigation}/>)
+            seekData.map((item, s)=> <SeekDataItem key={s} item={item} s={s} seekDataLength={seekDataLength} navigation={navigation}/>)
           }
         </ScrollView>
       </View>
@@ -37,7 +46,7 @@ export default class SeekCategory extends Component {
 }
 
 const SeekDataItem = props => {
-  let { item, navigation } = props
+  let { item, s, seekDataLength, navigation } = props
   return (
     <View style={{backgroundColor: subTitleColor}}>
       <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {name: 'SeekDetail', seekItem: item})}>
@@ -46,6 +55,9 @@ const SeekDataItem = props => {
         <Text style={seek.text}>{item.models}</Text>
         <Text style={seek.text}>{item.unites}</Text>
       </TouchableOpacity>
+      <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
+        <Text style={[home.endText, s == (seekDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+      </View>
     </View>
   )
 }

@@ -1,4 +1,4 @@
-import { backgroundColor } from '../common/constants'
+import { backgroundColor, subTitleColor, mainColor } from '../common/constants'
 
 export default {
   wrap: {
@@ -23,8 +23,14 @@ export default {
     width: '95%',
     padding: 16,
     fontSize: 20,
-    lineHeight: 30,
-    color: '#fff',
+    lineHeight: 22,
+    color: mainColor,
+  },
+  endText: {
+    paddingVertical: 30,
+    alignSelf: 'center',
+    fontSize: 14,
+    color: subTitleColor,
   },
 }
 

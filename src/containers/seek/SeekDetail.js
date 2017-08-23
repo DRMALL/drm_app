@@ -9,6 +9,7 @@ import { seekDetail } from '../../styles'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const shareIcon = require('../../images/navigation_icons/share.png')
+const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 const pic5 = require('../../images/pic5.png')
 const pic6 = require('../../images/pic6.png')
 const pic7 = require('../../images/pic7.png')
@@ -48,7 +49,7 @@ export default class SeekDetail extends Component {
       , { shareShow, topView, nextView } = this.state
       // , seekItem = seekData[0]
     return (
-      <View style={{height: '100%', top: Platform.OS === 'ios' ? -20 : 0}}>
+      <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
         <ScrollView style={[{width: '100%'}, shareShow ? nextView : topView]}>
           <StatusBar hidden={true}/>
           <SeekSwiperHeader navigation={navigation} pressShareShow={this.pressShareShow.bind(this)}/>
@@ -91,15 +92,18 @@ const SeekSwiperHeader = props => {
         {
           picArr.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
             <Image style={seekDetail.pics} source={picItem}/>
+            <Image style={{width: '100%', height: '100%', resizeMode: 'stretch', position: 'absolute' }} source={picMaskIcon}/>
           </View>)
         }
       </Swiper>
       <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
         <Image source={gobackWhiteIcon}/>
       </TouchableOpacity>
-      <TouchableOpacity style={seekDetail.shareIcon} onPress={() => pressShareShow()}>
-        <Image source={shareIcon}/>
-      </TouchableOpacity>
+      {
+      // <TouchableOpacity style={seekDetail.shareIcon} onPress={() => pressShareShow()}>
+      //   <Image source={shareIcon}/>
+      // </TouchableOpacity>
+      }
     </View>
   )
 }

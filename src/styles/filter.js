@@ -1,4 +1,4 @@
-import { mainColor, backgroundColor, subTitleColor } from '../common/constants'
+import { mainColor, backgroundColor, subTitleColor, contentColor } from '../common/constants'
 
 export default {
   modalWrap: {
@@ -26,51 +26,53 @@ export default {
     fontSize: 15,
   },
   pailiangView: {
-    height: 80,
+    // height: 80,
     justifyContent: 'center',
+    paddingVertical: 5,
     borderWidth: 0.5,
     borderColor: backgroundColor,
   },
   otherView: {
-    height: 60,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 0.5,
     borderColor: backgroundColor,
   },
   pailiangSecondView: {
-    height: 35,
+    paddingVertical: 5,
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   secondView: {
     height: 30,
     justifyContent: 'center',
   },
   classText: {
-    fontSize: 11,
+    fontSize: 12,
     marginLeft: 15,
   },
   attachText: {
     fontSize: 10,
-    color: subTitleColor,
+    color: contentColor,
     marginLeft: 10,
   },
   kindView: {
     flexDirection: 'row',
     alignItems: 'center',
-    overflow: 'visible',
+    flexWrap: 'wrap',
+    // overflow: 'visible',
   },
   kindTouch: {
-    width: 55,
-    height: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
-    borderRadius: 2,
-    marginRight: 5,
+    marginRight: 10,
+    marginVertical: 5,
   },
   kindText: {
-    fontSize: 11,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderWidth: 0.5,
+    borderRadius: 3,
+    fontSize: 14,
   },
 }

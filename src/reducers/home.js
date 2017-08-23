@@ -1,6 +1,7 @@
 const home = {
-  newsListData: null,
-  newsOneData: null,
+  isRefreshing: false,
+  newsListData: [],
+  newsOneData: {},
   shareShow: false,
   topView: {position: 'relative', zIndex: 3},
   nextView: {position: 'absolute', zIndex: 2},
@@ -8,6 +9,10 @@ const home = {
 
 export default (state = home, action) => {
   switch (action.type) {
+    case 'SEEK_HOME_TRUE':
+      return Object.assign({}, state, { isRefreshing: true } )
+    case 'SEEK_HOME_FALSE':
+      return Object.assign({}, state, { isRefreshing: false } )
     case 'HOME_DATA_GET':
       return Object.assign({}, state, { newsListData: action.payload })
     case 'HOME_ONE_DATA_GET':

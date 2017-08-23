@@ -44,7 +44,10 @@ export default class Remark extends Component {
       }
       let res = await postPort(`${postDeviceRemark}?token=${token}`, bodyData)
       if(!res) {
-        alert('result is null')
+        Alert.alert('错误', 'Internal Server Error',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       } else if(res.code == 201) {
         const resetAction = NavigationActions.reset({
           index: 1,
@@ -63,7 +66,12 @@ export default class Remark extends Component {
           ]
         })
         navigation.dispatch(resetAction)
-      } else alert(JSON.stringify(res.message))
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 
@@ -74,7 +82,7 @@ export default class Remark extends Component {
   render() {
     return (
       <View style={{height: '100%', backgroundColor: mainColor}}>
-        <StatusBar hidden={false} backgroundColor={primaryColor} />
+        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
         <TextInput 
           style={{textAlignVertical: 'top', fontSize: 16, paddingHorizontal: 16, paddingTop: 20}} 
           placeholder={remarkPlaceholder} 

@@ -20,7 +20,7 @@ export default class PushOrder extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 15}} onPress={() => navigation.goBack()}>
      <Text style={{ fontSize: 15, color: '#FFF'}} >{cancel}</Text>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.pressPublish()}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.pressPublishConfirm()}>
       <Text style={{ fontSize: 15, color: '#FFF'}} >{publish}</Text>
     </TouchableOpacity>,
   });
@@ -43,8 +43,33 @@ export default class PushOrder extends Component {
 
   componentDidMount() {  
     this.props.navigation.setParams({  
-      pressPublish: () => this.pressPublish(), 
+      pressPublishConfirm: () => this.pressPublishConfirm(), 
     })
+  }
+
+  pressPublishConfirm() {
+    let { order_title, order_category, order_content } = this.state
+    if(order_title == undefined || order_title == '') {
+      return Alert.alert('错误', '标题不能为空',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    } else if(order_category == undefined || order_category == pushOrderPlaceholder3) {
+      return Alert.alert('错误', pushOrderPlaceholder3,
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    } else if(order_content == undefined || order_content == '') {
+      return Alert.alert('错误', '反馈不能为空',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    }
+    Alert.alert('提示', `确认提交工单？`,
+      [ {text: '取消', onPress: () => 'OK'}, 
+        {text: '确定', onPress: () => this.pressPublish()}, ],
+      { cancelable: false }
+    )
   }
 
   pressPublish() {
@@ -56,34 +81,26 @@ export default class PushOrder extends Component {
         category: order_category,
         content: order_content,
       }
-      if(bodyData.title == undefined || bodyData.title == '') {
-        return Alert.alert('❌错误', '标题不能为空',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(bodyData.category == undefined || bodyData.category == pushOrderPlaceholder3) {
-        return Alert.alert('❌错误', pushOrderPlaceholder3,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(bodyData.content == undefined || bodyData.content == '') {
-        return Alert.alert('❌错误', '反馈不能为空',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
       let res = await postPort(`${postNewOrder}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('❌错误', 'Internal Server Error',
+        Alert.alert('错误', 'Internal Server Error',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 201) {
-        alert('已发送')
+        Alert.alert('通知', '已发送',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
         setTimeout(() => {
           this.props.navigation.goBack()
         }, 2000)
-      } else alert(JSON.stringify(res.message))//401
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
     })
   }
 

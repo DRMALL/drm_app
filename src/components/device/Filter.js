@@ -19,9 +19,9 @@ export default props => {
       </View>
       <View style={filter.buttonView}>
         <Button 
-          style={[filter.button, !cleanPress ? {backgroundColor: lightBlueColor, borderColor: lightBlueColor} : {} ]} 
+          style={filter.button} 
           title={cleanUp} 
-          titleStyle={[filter.buttonTitle, {color: !cleanPress ? mainColor : contentColor} ]} 
+          titleStyle={filter.buttonTitle} 
           // onPressIn={()=> pressBotton(`cleanPress`)} 
           // delayPressOut={10}
           // onPressOut={()=> pressBotton(`cleanPress`)} 
@@ -29,14 +29,13 @@ export default props => {
           activeOpacity={0.8}
         />
         <Button 
-          style={[filter.button, !confirmPress ? {backgroundColor: lightBlueColor, borderColor: lightBlueColor} : {} ]} 
+          style={[filter.button, {backgroundColor: lightBlueColor, borderColor: lightBlueColor}]} 
           title={confirm} 
-          titleStyle={[filter.buttonTitle, {color: !confirmPress ? mainColor : contentColor} ]} 
+          titleStyle={[filter.buttonTitle, {color: mainColor} ]} 
           // onPressIn={()=> pressBotton(`confirmPress`)} 
           // delayPressOut={100}
           // onPressOut={()=> pressBotton(`confirmPress`)} 
           onPress={()=> pressConfirmReturn()}
-          disabled={confirmPress ? true : false}
           activeOpacity={0.8}
         />
       </View>
@@ -44,7 +43,7 @@ export default props => {
   )
 }
 
-class FilterClassItem extends Component {
+class FilterClassItem extends Component {cleanPress
   constructor(props) {
     super(props)
     this.state = (props => {
@@ -59,7 +58,7 @@ class FilterClassItem extends Component {
   pressFilter(f) {
     this.props.classItem.kinds.map((kind, k)=> {
       if(f == k) {
-        this.setState({ [`filterRow${f}`]: !this.state[`filterRow${f}`] })
+        // this.setState({ [`filterRow${f}`]: !this.state[`filterRow${f}`] })
         this.props.pressFilterParams(kind.type, kind.text)
       } else this.setState({ [`filterRow${k}`]: false })
     })
@@ -74,16 +73,16 @@ class FilterClassItem extends Component {
   render() {
     let { classItem, state } = this.props
     return (
-      <View style={classItem.class == '排量' ? filter.pailiangView : filter.otherView}>
-        <View style={classItem.class == '排量' ? filter.pailiangSecondView : filter.secondView}>
+      <View style={classItem.class == '其他的' ? filter.otherView : filter.pailiangView}>
+        <View style={classItem.class == '其他的' ? filter.secondView : filter.pailiangSecondView}>
           <Text style={filter.classText}>{'按' + classItem.class}</Text>
-          <Text style={classItem.class == '排量' ? filter.attachText : {height: 0}}>{classItem.class == '排量' ? '单发生器热载体质量3t/h' : ''}</Text>
+          <Text style={classItem.class == '其他的' ? filter.attachText : {height: 0}}>{classItem.class == '其他的' ? '' : ''}</Text>
         </View>
-        <ScrollView style={{marginHorizontal: 15}} horizontal={true} showsHorizontalScrollIndicator={false}>
+        <View style={{marginHorizontal: 15}}>
           <View style={filter.kindView}>
             {classItem.kinds.map((kindItem, f)=> <FilterKindItem key={f} kindItem={kindItem} f={f} state={state} sonstate={this.state} pressFilter={this.pressFilter.bind(this)} />)}
           </View>
-        </ScrollView>
+        </View>
       </View>
     )
   }
@@ -94,8 +93,8 @@ const FilterKindItem = props => {
     , selectFilterRow = sonstate[`filterRow${f}`]
     , pointedExist = kindExist(kindItem, state)
   return (
-    <TouchableOpacity style={[filter.kindTouch, {borderColor: selectFilterRow || pointedExist ? lightBlueColor : loginBorderColor}]} activeOpacity={0.8} onPress={()=> pressFilter(f)}>
-      <Text style={[filter.kindText, {color: selectFilterRow || pointedExist ? lightBlueColor : loginBorderColor}]}>{kindItem.text}</Text>
+    <TouchableOpacity style={filter.kindTouch} activeOpacity={0.8} onPress={()=> pressFilter(f)}>
+      <Text style={[filter.kindText, selectFilterRow || pointedExist ? {color: lightBlueColor, borderColor: lightBlueColor } : {color: loginBorderColor, borderColor: loginBorderColor }]}>{kindItem.text}</Text>
     </TouchableOpacity>
   )
 }
