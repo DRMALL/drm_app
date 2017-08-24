@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image, ListView, TouchableOpacity, Alert, RefreshControl } from 'react-native'
 import { online, offline, onToOffText, onState, offState, inTheEnd } from '../common/strings'
-import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor } from '../common/constants'
+import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor, contentColor } from '../common/constants'
 import { status, home } from '../styles'
 
 export default props => {
@@ -19,6 +19,7 @@ export default props => {
         colors={['#ff0000', '#00ff00', '#0000ff']}
         progressBackgroundColor={mainColor}
         title='下拉刷新'
+        titleColor={contentColor}
       />}
       dataSource={finalDs}
       renderRow={(rowData, sectionID, rowID) => <StatusListItem rowData={rowData} rowID={rowID} dataLength={dataLength} navigation={navigation}/>}

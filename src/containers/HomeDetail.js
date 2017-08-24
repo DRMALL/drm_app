@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert, Platform } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert, Platform, WebView } from 'react-native'
 import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
 import { tokenKey } from '../common/strings'
@@ -69,7 +69,7 @@ export default class HomeDetail extends Component {
     let { navigation } = this.props
       , { newsOneData, shareShow, topView, nextView } = this.state
       , { hiddenShare } = homeDetailAC
-
+      , contentLength = newsOneData.content ? newsOneData.content.split('').length : 0
     return (
       <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
         <ScrollView style={[{backgroundColor: mainColor}, shareShow ? nextView : topView]}>
@@ -84,9 +84,12 @@ export default class HomeDetail extends Component {
               newsOneData.publish_time ? moment(newsOneData.publish_time).format('YYYY-MM-DD') : '0000-00-00'
             }
           </Text>
-          <Text style={detail.ordinaryText}>
-            {newsOneData.content}
-          </Text>
+          <View style={{height: Math.round(contentLength*4/3), paddingHorizontal: 16}}>
+            <WebView 
+              style={{height: '100%'}}
+              source={{html: newsOneData.content}}
+            />
+          </View>
         </ScrollView>
         <ShareModal state={this.state} pressShareCancel={hiddenShare}/>
       </View>
@@ -94,6 +97,9 @@ export default class HomeDetail extends Component {
   }
 }
 
+// <Text style={detail.ordinaryText}>
+//             {newsOneData.content}
+//           </Text>
 // const TouchUploadPic =  props => {
 //   let { navigation } = props
 //   return (

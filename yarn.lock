@@ -3018,6 +3018,10 @@ react-native-image-crop-picker@^0.15.1:
   version "0.15.1"
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.15.1.tgz#344595473dcb13ca382ecf47f8c51894b3b1cda7"
 
+"react-native-image-crop-picker@https://github.com/ivpusic/react-native-image-crop-picker.git":
+  version "0.15.3"
+  resolved "https://github.com/ivpusic/react-native-image-crop-picker.git#8aa334e1c07427bd0417cd15280715357db8faf5"
+
 react-native-lightbox@^0.6.0:
   version "0.6.0"
   resolved "http://registry.npm.taobao.org/react-native-lightbox/download/react-native-lightbox-0.6.0.tgz#291701fb3dd0d7eaf88cebb5f105d7891bea5452"

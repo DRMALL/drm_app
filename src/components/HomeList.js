@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, ListView, TouchableOpacity, RefreshControl } from 'react-native'
-import { mainColor } from '../common/constants'
+import { mainColor, contentColor } from '../common/constants'
 import { inTheEnd } from '../common/strings'
 import { home } from '../styles'
 
@@ -20,6 +20,7 @@ export default props => {
         colors={['#ff0000', '#00ff00', '#0000ff']}
         progressBackgroundColor={mainColor}
         title='下拉刷新'
+        titleColor={contentColor}
       />}
       dataSource={finalDs}
       renderRow={(rowData, sectionID, rowID) => <HomeListItem rowData={rowData} rowID={rowID} dataLength={dataLength} navigation={props.navigation} />} 

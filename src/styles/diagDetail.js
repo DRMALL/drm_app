@@ -28,11 +28,11 @@ export default {
     alignSelf: 'center',
   },
   buttonView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-    marginBottom: 50,
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 20,
+    // paddingHorizontal: 16,
+    // paddingVertical: 20,
   },
   button: {
     paddingHorizontal: 57,

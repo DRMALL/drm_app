@@ -184,10 +184,10 @@ export default class UploadImage extends Component {
           images: [],
           actionButtonShow: false,
         })
-        Alert.alert('成功', '已上传',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
+        // Alert.alert('成功', '已上传',
+        //   [ {text: 'OK', onPress: () => 'OK'}, ],
+        //   { cancelable: false }
+        // )
         const resetAction = NavigationActions.reset({
           index: 1,
           actions: [

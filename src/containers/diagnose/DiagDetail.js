@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView } from 'react-native'
 import { primaryColor, mainColor } from '../../common/constants'
 import { unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
 import { diagDetail } from '../../styles'
@@ -87,13 +87,20 @@ export default class DiagDetail extends Component {
     let { navigation } = this.props
       , { oneBugData, shareShow, topView, nextView } = this.state
       , { categoryText } = navigation.state.params
+      , contentLength = oneBugData.content ? oneBugData.content.split('').length : 0
     return (
       <View>
-        <ScrollView style={[diagDetail.wrap, shareShow ? nextView : topView]}>
-          <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
-          <Text style={diagDetail.kindText}>{categoryText}</Text>
-          <Text style={diagDetail.contentText}>{oneBugData.content}</Text>
-          
+        <View style={[diagDetail.wrap, shareShow ? nextView : topView]}>
+          <ScrollView>
+            <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
+            <Text style={diagDetail.kindText}>{categoryText}</Text>
+            <View style={{height: Math.round(contentLength*3/2), paddingHorizontal: 16}}>
+              <WebView 
+                style={{height: '100%'}}
+                source={{html: oneBugData.content}}
+              />
+            </View>
+          </ScrollView>
           <View style={diagDetail.buttonView}>
             <Button 
               style={diagDetail.button} 
@@ -103,12 +110,13 @@ export default class DiagDetail extends Component {
               onPress={()=> navigation.navigate('pushOrder', {name: 'PushOrder'})}
             />
           </View>
-        </ScrollView>
+        </View>
         <ShareModal state={this.state} pressShareCancel={this.pressShareCancel.bind(this)}/>
       </View>
     )
   }
 }
 
+// <Text style={diagDetail.contentText}>{oneBugData.content}</Text>
 // <Image style={diagDetail.img} source={diagItemData.pic}/>
 //         <Text style={diagDetail.contentText}>{diagItemData.returnDescribe}</Text>

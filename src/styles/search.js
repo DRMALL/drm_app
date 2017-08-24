@@ -3,7 +3,7 @@ import { mainColor, primaryColor, backgroundColor, contentColor, subTitleColor }
 export default {
   header: {
     width: '100%',
-    height: 50,
+    height: 55,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

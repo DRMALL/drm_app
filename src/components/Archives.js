@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, ListView, ScrollView, TouchableOpacity, RefreshControl } from 'react-native'
 import moment from 'moment'
-import { subTitleColor, primaryColor, loginBackgroundColor, mainColor } from '../common/constants'
+import { subTitleColor, primaryColor, loginBackgroundColor, mainColor, contentColor } from '../common/constants'
 import { inTheEnd } from '../common/strings'
 import { device, home } from '../styles'
 
@@ -20,6 +20,7 @@ export default props => {
         colors={['#ff0000', '#00ff00', '#0000ff']}
         progressBackgroundColor={mainColor}
         title='下拉刷新'
+        titleColor={contentColor}
       />}
       style={{height: '100%'}}
       dataSource={archivesDataDs}

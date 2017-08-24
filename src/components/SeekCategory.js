@@ -34,6 +34,7 @@ export default class SeekCategory extends Component {
             colors={['#ff0000', '#00ff00', '#0000ff']}
             progressBackgroundColor={mainColor}
             title='下拉刷新'
+            titleColor={contentColor}
           />}
         >
           {
