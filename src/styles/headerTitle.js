@@ -14,6 +14,7 @@ export default {
   },
   searchTouch: {
     width: '100%',
+    height: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

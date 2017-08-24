@@ -79,7 +79,7 @@ export default class Home extends Component {
     if(!newsListData) return <Loading animating={!newsListData ? true : false}/>
     return(
       <View style={{backgroundColor: loginBackgroundColor}}>
-        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
+        <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
         <View>
           <HomeList data={newsListData} isRefreshing={isRefreshing} onHomeRefresh={this.onHomeRefresh.bind(this)} {...this.props} />
         </View>

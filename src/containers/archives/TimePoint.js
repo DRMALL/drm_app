@@ -148,7 +148,7 @@ export default class TimePoint extends Component {
       , displayView = this.state.displayView
     return (
       <View style={timePoint.wrap}>
-        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
+        <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
         <View style={timePoint.nextWrap}>
           <Text style={timePoint.fixText}>{timelineType}</Text>
           <TouchableOpacity style={timePoint.touch} activeOpacity={0.6} onPress={()=> this.pressTouch(`touchSelect`)}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
+import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert, StatusBar, Platform } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationActions } from 'react-navigation'
 import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord, tokenKey } from '../common/strings'
@@ -86,7 +86,9 @@ export default class Login extends Component {
   render() {
     let { textEmail, textWord } = this.state
     return (
-      <View style={login.wrap}>
+      <View style={[login.wrap, Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}]}>
+        <StatusBar hidden={true}/>
+        <View style={{ height: Platform.OS === 'ios' ? 60 : 40 }} />
         <Image style={login.image} source={loginScreenLogo}/>
         <Text style={login.text}>{drmOne}</Text>
         <Text style={login.text}>{drmTwo}</Text>

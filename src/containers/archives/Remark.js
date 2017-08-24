@@ -82,7 +82,7 @@ export default class Remark extends Component {
   render() {
     return (
       <View style={{height: '100%', backgroundColor: mainColor}}>
-        <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
+        <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
         <TextInput 
           style={{textAlignVertical: 'top', fontSize: 16, paddingHorizontal: 16, paddingTop: 20}} 
           placeholder={remarkPlaceholder} 

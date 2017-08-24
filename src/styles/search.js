@@ -21,7 +21,7 @@ export default {
   },
   inputText: {
     width: '100%',
-    height: 24,
+    height: 30,
     justifyContent: 'center',
     paddingHorizontal: 30,
     paddingVertical: 5,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import { deviceKindClassify, deviceKindSort, deviceKindFilter, tokenKey } from '../common/strings'
 import { lightBlueColor, contentColor, mainColor } from '../common/constants'
 import { device } from '../styles'
@@ -46,7 +46,8 @@ export default class DeviceCategory extends Component {
         allCities: [],
       }
       sortData.map((sortText, index)=> {
-        stateObj[`sortRow${index}`] = false
+        if(index == 0) stateObj[`sortRow${index}`] = true
+        else stateObj[`sortRow${index}`] = false
       })
       classifyData.map((item, index) => {
         stateObj[`classRow${index+1}`] = false
@@ -243,6 +244,7 @@ export default class DeviceCategory extends Component {
         classKinds: kind,
         classifyRow: false,
         sortTypesNum: 1,
+        sortRow0: true,
         [`sortRow${stNum}`]: false,
       })
     }
@@ -309,7 +311,7 @@ export default class DeviceCategory extends Component {
           </View>
           <View style={[topView, {height: filterRow ? '100%' : 0}]}>
             {
-              filterRow ? <View style={{height: '100%'}}>
+              filterRow ? <ScrollView style={{height: '100%'}}>
                 <Filter data={filterData} 
                   cityData={allCities} 
                   state={this.state} 
@@ -320,7 +322,7 @@ export default class DeviceCategory extends Component {
                 <TouchableOpacity activeOpacity={0.8} onPress={()=> this.openModal('filterRow')}>
                   <View style={device.halfOpacityView} />
                 </TouchableOpacity>
-              </View> : <View style={{height: 0}}/>
+              </ScrollView> : <View style={{height: 0}}/>
             }
           </View>
         </View>

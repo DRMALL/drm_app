@@ -257,7 +257,7 @@ export default class UploadImage extends Component {
     }
     return(
       <View style={{height: '100%', width: '100%'}}>
-      <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
+      <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
         <View style={[nextView, {height: '100%', width: '100%'}]}>
           {
             //<Image style={uploadImage.addPicImg} source={addPicIcon} />
