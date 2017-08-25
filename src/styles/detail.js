@@ -17,7 +17,7 @@ export default {
   pics: {
     width: '100%',
     height: '100%',
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     backgroundColor: backgroundColor,
   },
 

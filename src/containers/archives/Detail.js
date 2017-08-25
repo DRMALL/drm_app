@@ -93,7 +93,7 @@ export default class Detail extends Component {
   render() {
     let { navigation } = this.props
       , { oneDeviceData, isRefreshing, adDataSource, photos, downUpPress } = this.state
-      , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark } = oneDeviceData
+      , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark, classify } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
     // if (!images) return <Loading animating={!images ? true : false}/>
     return (
@@ -124,7 +124,7 @@ export default class Detail extends Component {
             <View style={detail.fixTextView}>
               <Text style={detail.textFix}>{deviceSort}</Text>
             </View>
-            <Text style={detail.sortText}>纯氧复合热载体发生器</Text>
+            <Text style={detail.sortText}>{classify}</Text>
             <View style={detail.fixTextView}>
               <Text style={detail.textFix}>{deviceTimeline}</Text>
               <View style={detail.iconView}>

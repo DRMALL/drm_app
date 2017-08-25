@@ -5,6 +5,8 @@ const home = {
   shareShow: false,
   topView: {position: 'relative', zIndex: 3},
   nextView: {position: 'absolute', zIndex: 2},
+  height: 0,
+  heightCash: 0,
 }
 
 export default (state = home, action) => {
@@ -21,6 +23,10 @@ export default (state = home, action) => {
       return Object.assign({}, state, { shareShow: true })
     case 'HOME_SHARE_HIDDEN':
       return Object.assign({}, state, { shareShow: false })
+    case 'HOME_WEBVIEW_HEIGHT':
+      return Object.assign({}, state, { height: action.payload })
+    case 'HOME_WEBVIEW_HEIGHTCASH':
+      return Object.assign({}, state, { heightCash: action.payload })
     default:
       return state
   }

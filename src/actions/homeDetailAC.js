@@ -20,10 +20,19 @@ const hiddenShare = (data)=> {
   dispatch('HOME_SHARE_HIDDEN')
 }
 
+const changeWVHeight = (payload)=> {
+  dispatch('HOME_WEBVIEW_HEIGHT', payload)
+}
+
+const changeWVHeightCash = (payload)=> {
+  dispatch('HOME_WEBVIEW_HEIGHTCASH', payload)
+}
+
 export default {
   isRefresh,
   isnotRefresh,
   getOneData,
   showShare,
   hiddenShare,
+  changeWVHeight,
 }

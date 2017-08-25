@@ -1,5 +1,7 @@
 import React, { Component }from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, WebView } from 'react-native'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
+import { RichTextEditor, RichTextToolbar } from 'react-native-zss-rich-text-editor'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, titleColor } from '../../common/constants'
 import { pushOrder, cancel, publish, pushOrderPlaceholder1, pushOrderPlaceholder2, pushOrderPlaceholder3, tokenKey } from '../../common/strings'
 import { pushOrderS } from '../../styles'
@@ -133,8 +135,10 @@ export default class PushOrder extends Component {
 
   render() {
     let { categoryPress, order_category } = this.state
+      , bodyForDisplay = '<p>Wow this is an <b>AMAZING</b> demo!</p>'
     return (
-      <View style={pushOrderS.wrap}>
+      <ScrollView style={pushOrderS.wrap}>
+        
         <TextInput 
           style={pushOrderS.textInput}
           placeholder={pushOrderPlaceholder1} 
@@ -180,7 +184,11 @@ export default class PushOrder extends Component {
           selectTextOnFocus={true}
           autoCapitalize='none'
         />
-      </View>
+        
+      </ScrollView>
     )
   }
 }
+
+// <KeyboardAvoidingView behavior={'padding'} >
+// </KeyboardAvoidingView>

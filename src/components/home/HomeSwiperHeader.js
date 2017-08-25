@@ -11,13 +11,13 @@ const shareIcon = require('../../images/navigation_icons/share.png')
 const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 
 export default props => {
-  let { picData, navigation } = props
+  let { picData, navigation,  } = props
     , { showShare } = homeDetailAC
   let picsDataView = []
   for(var i = 0; i < picData.length; i++) {
     picsDataView.push(
-      <View key={i} style={seekDetail.picsView}>
-        <Image style={seekDetail.pics} source={{uri: picData[i].url}}/>
+      <View key={i} style={seekDetail.picsView}> 
+        <Image style={seekDetail.pics} source={{uri: picData[i].url}} />
         <Image style={{width: '100%', height: '100%', resizeMode: 'stretch', position: 'absolute' }} source={picMaskIcon}/>
       </View>
     )
@@ -27,7 +27,12 @@ export default props => {
       <Swiper height={230} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
         {picsDataView}
       </Swiper>
-      <TouchableOpacity style={seekDetail.gobackIcon} onPress={() => navigation.goBack()}>
+      <TouchableOpacity 
+        style={seekDetail.gobackIcon} 
+        onPress={() => {
+          navigation.goBack()
+        }}
+      >
         <Image source={gobackWhiteIcon}/>
       </TouchableOpacity>
       {
