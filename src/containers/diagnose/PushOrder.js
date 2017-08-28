@@ -1,7 +1,6 @@
 import React, { Component }from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, WebView } from 'react-native'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
-import { RichTextEditor, RichTextToolbar } from 'react-native-zss-rich-text-editor'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, titleColor } from '../../common/constants'
 import { pushOrder, cancel, publish, pushOrderPlaceholder1, pushOrderPlaceholder2, pushOrderPlaceholder3, tokenKey } from '../../common/strings'
 import { pushOrderS } from '../../styles'

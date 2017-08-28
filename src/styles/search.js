@@ -96,6 +96,7 @@ export default {
     marginHorizontal: 16,
   },
   hotText: {
+    width: 130,
     fontSize: 14,
     color: contentColor,
   },

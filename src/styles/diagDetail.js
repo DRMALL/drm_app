@@ -31,8 +31,13 @@ export default {
     alignSelf: 'center',
     position: 'absolute',
     bottom: 20,
-    // paddingHorizontal: 16,
-    // paddingVertical: 20,
+  },
+  buttonViewSearch: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+    marginBottom: 50,
   },
   button: {
     paddingHorizontal: 57,

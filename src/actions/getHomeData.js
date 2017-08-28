@@ -1,7 +1,8 @@
 import dispatch from './dispatch'
+import { home_data_get } from '../common/actStrings'
 
 const getHomeData = (data)=> {
-  dispatch('HOME_DATA_GET', data)
+  dispatch(home_data_get, data)
 }
 
 export default getHomeData

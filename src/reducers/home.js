@@ -1,3 +1,14 @@
+import { 
+  home_refresh_T,
+  home_refresh_F,
+  home_data_get,
+  home_one_data_get,
+  home_share_show,
+  home_share_hidden,
+  home_webview_height,
+  home_webview_heightcash,
+} from '../common/actStrings'
+
 const home = {
   isRefreshing: false,
   newsListData: [],
@@ -11,21 +22,21 @@ const home = {
 
 export default (state = home, action) => {
   switch (action.type) {
-    case 'SEEK_HOME_TRUE':
+    case home_refresh_T:
       return Object.assign({}, state, { isRefreshing: true } )
-    case 'SEEK_HOME_FALSE':
+    case home_refresh_F:
       return Object.assign({}, state, { isRefreshing: false } )
-    case 'HOME_DATA_GET':
+    case home_data_get:
       return Object.assign({}, state, { newsListData: action.payload })
-    case 'HOME_ONE_DATA_GET':
+    case home_one_data_get:
       return Object.assign({}, state, { newsOneData: action.payload })
-    case 'HOME_SHARE_SHOW':
+    case home_share_show:
       return Object.assign({}, state, { shareShow: true })
-    case 'HOME_SHARE_HIDDEN':
+    case home_share_hidden:
       return Object.assign({}, state, { shareShow: false })
-    case 'HOME_WEBVIEW_HEIGHT':
+    case home_webview_height:
       return Object.assign({}, state, { height: action.payload })
-    case 'HOME_WEBVIEW_HEIGHTCASH':
+    case home_webview_heightcash:
       return Object.assign({}, state, { heightCash: action.payload })
     default:
       return state

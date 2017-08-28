@@ -27,7 +27,7 @@ export default class Message extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 20}} onPress={()=> navigation.state.params.setAllRead()}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 20}} onPress={()=> navigation.state.params.setAllRead()} disabled={navigation.state.params.disabledPress}>
       <Text style={{fontSize: 14, color: mainColor}}>{allSetAsRead}</Text>
     </TouchableOpacity>,
   });
@@ -42,6 +42,7 @@ export default class Message extends Component {
       setAllRead: () => {
         this.postNoticeRead()
       }, 
+      disabledPress: false,
     })
     this.getNotices()
   }
@@ -55,6 +56,9 @@ export default class Message extends Component {
   }
 
   postNoticeRead() {
+    this.props.navigation.setParams({ 
+      disabledPress: true,
+    })
     checkToken(tokenKey)
     .then(async token => {
       let res = await postPort(`${setAllNoticesRead}?token=${token}`)
@@ -65,7 +69,7 @@ export default class Message extends Component {
         )
       } else if(res.code == 201) {
         Alert.alert('通知', '全部已设置成已读',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
+          [ {text: 'OK', onPress: () => this.props.navigation.setParams({ disabledPress: false }) }, ],
           { cancelable: false }
         )
         this.getNotices()

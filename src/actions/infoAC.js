@@ -1,7 +1,8 @@
 import dispatch from './dispatch'
+import { info_data_get } from '../common/actStrings'
 
 const getInfomationData = (payload)=> {
-  dispatch('INFO_DATA_GET', payload)
+  dispatch(info_data_get, payload)
 }
 
 export default {

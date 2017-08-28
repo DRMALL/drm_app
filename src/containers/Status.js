@@ -7,6 +7,9 @@ import TabBarItem from '../components/units/TabBarItem'
 import StatusTab from '../components/units/StatusTab'
 import { statusList } from '../utils/virtualData'
 
+import store from '../utils/store'
+import statuAC from '../actions/statuAC'
+
 const statusIconSelected = require('../images/tabbar_icons/tabbar_monitor_selected_x.png')
     , statusIconNormal = require('../images/tabbar_icons/tabbar_monitor_normal.png')
 
@@ -24,37 +27,22 @@ export default class Status extends Component {
 
   constructor(props) {
     super(props)
-    let statusArr = [all, onState, offState]
-    this.state = (()=> {
-      let statuStateObj = {
-        statusArr: statusArr,
-        situation: all,
-        isRefreshing: false,
-      }
-      statusArr.map((item, index)=> {
-        if(index == 0) statuStateObj[`StatuTabRow${index}`] = true
-        else statuStateObj[`StatuTabRow${index}`] = false
-      })
-      return statuStateObj
-    })()
+    this.state = store.getState().statu
   }
 
-  pressStatusTab(index) {
-    this.state.statusArr.map((item, i)=> {
-      if(index == i) {
-        this.setState({
-          [`StatuTabRow${index}`]: true,
-          situation: item,
-        })
-      } else this.setState({[`StatuTabRow${i}`]: false})
-    })
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().statu) )
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   onStatusRefresh() {
-    this.setState({isRefreshing: true})
+    statuAC.isRefresh()
     // this.getNewsList()
     setTimeout(() => {
-      this.setState({isRefreshing: false})
+      statuAC.isnotRefresh()
     }, 2000)
   }
 
@@ -75,8 +63,8 @@ export default class Status extends Component {
     })
     return(
       <View style={{height: '100%', backgroundColor: loginBackgroundColor}}>
-        <StatusTab tabData={statusArr} state={this.state} pressStatusTab={this.pressStatusTab.bind(this)}/>
-        <StatusCategory data={statusTabList} isRefreshing={isRefreshing} onStatusRefresh={this.onStatusRefresh.bind(this)} {...this.props} />
+        <StatusTab tabData={statusArr} state={this.state} />
+        <StatusCategory data={statusTabList} onStatusRefresh={this.onStatusRefresh} {...this.props} />
       </View>
     )
   }

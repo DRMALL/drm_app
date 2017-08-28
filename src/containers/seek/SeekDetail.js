@@ -7,6 +7,9 @@ import { partParameter, applicableEquipment, inventoryStatus, materialLongCode, 
 import { seekDetail } from '../../styles'
 // import { seekData } from '../../utils/virtualData'
 
+import store from '../../utils/store'
+import seekAC from '../../actions/seekAC'
+
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const shareIcon = require('../../images/navigation_icons/share.png')
 const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
@@ -24,35 +27,28 @@ export default class SeekDetail extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      shareShow: false,
-      topView: {position: 'relative', zIndex: 3},
-      nextView: {position: 'absolute', zIndex: 2},
-    }
+    this.state = store.getState().seek
   }
 
-  pressShareShow() {
-    this.setState({
-      shareShow: true,
-    })
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().seek) )
   }
 
-  pressShareCancel() {
-    this.setState({
-      shareShow: false,
-    })
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   render() {
     let { seekItem } = this.props.navigation.state.params
-    let { navigation } = this.props
-      , { shareShow, topView, nextView } = this.state
+      , { navigation } = this.props
+      , { shareShow, topView, secondView } = this.state
+      , { pressShareCancel } = seekAC
       // , seekItem = seekData[0]
     return (
       <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
-        <ScrollView style={[{width: '100%'}, shareShow ? nextView : topView]}>
+        <ScrollView style={[{width: '100%'}, shareShow ? secondView : topView]}>
           <StatusBar hidden={true}/>
-          <SeekSwiperHeader navigation={navigation} pressShareShow={this.pressShareShow.bind(this)}/>
+          <SeekSwiperHeader navigation={navigation} />
           <View style={{top: -20}}>
             <Text style={seekDetail.fixText}>{partParameter}</Text>
             <View style={seekDetail.textView}>
@@ -77,15 +73,16 @@ export default class SeekDetail extends Component {
             <Text style={seekDetail.itemText}>库存充分</Text>
           </View>
         </ScrollView>
-        <ShareModal state={this.state} pressShareCancel={this.pressShareCancel.bind(this)}/>
+        <ShareModal state={this.state} pressShareCancel={pressShareCancel}/>
       </View>
     )
   }
 }
 
 const SeekSwiperHeader = props => {
-  let { navigation, pressShareShow } = props
+  let { navigation } = props
     , picArr = [pic5, pic6, pic5, pic6, pic7]  //图片数组
+    , { pressShareShow } = seekAC
   return (
     <View style={seekDetail.headerView}>
       <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>

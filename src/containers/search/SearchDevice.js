@@ -10,6 +10,9 @@ import { getPort } from '../../utils/fetchMethod'
 import { getDevicesSearch, getDevicesHots } from '../../apis'
 import Loading from '../../components/units/Loading'
 
+import store from '../../utils/store'
+import deviceAC from '../../actions/deviceAC'
+
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
@@ -27,13 +30,7 @@ export default class SearchDevice extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      text: '',
-      jumpData: false,
-      deviceData: [],
-      historyData: [],
-      hotwordData: [],
-    }
+    this.state = store.getState().device
   }
 
   componentDidMount () {
@@ -46,11 +43,17 @@ export default class SearchDevice extends Component {
         diagword.map((item, d)=> {
           diagwordRe = diagwordRe.concat(item[1])
         })
-        this.setState({
-          historyData: diagwordRe,
-        })
+        deviceAC.setHistoryData(diagwordRe)
       })
     })
+  }
+
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().device) )
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   getBugsHotword() {
@@ -63,9 +66,7 @@ export default class SearchDevice extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        this.setState({
-          hotwordData: res.data,
-        })
+        deviceAC.getHotword(res.data)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -76,7 +77,7 @@ export default class SearchDevice extends Component {
   }
 
   getBugsOnchange(text) {
-    this.setState({
+    deviceAC.setJumpData({
       text: text,
       jumpData: text == '' ? false : true,
     })
@@ -89,9 +90,7 @@ export default class SearchDevice extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        this.setState({
-          deviceData: res.data,
-        })
+        deviceAC.getDeviceData(res.data)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -114,9 +113,7 @@ export default class SearchDevice extends Component {
         let prevHistoryData = this.state.historyData
         if(res.data.text != null && res.data.text != undefined) {
           prevHistoryData = [res.data.text].concat(prevHistoryData)
-          this.setState({
-            historyData: prevHistoryData,
-          })
+          deviceAC.setHistoryData(prevHistoryData)
           saveWord('device', prevHistoryData)
         }
       } else {
@@ -125,13 +122,6 @@ export default class SearchDevice extends Component {
           { cancelable: false }
         )
       }
-    })
-  }
-
-  pressCleanText() {
-    this.setState({
-      text: '',
-      jumpData: false,
     })
   }
 
@@ -145,14 +135,13 @@ export default class SearchDevice extends Component {
     .then( num => {
       clearWord('device', num)
     })
-    this.setState({
-      historyData: [],
-    })
+    deviceAC.setHistoryData([])
   }
 
   render() {
     let { navigation } = this.props
       , { deviceData, historyData, hotwordData, jumpData } = this.state
+      , { pressCleanText } = deviceAC
       , dataDeviceView
     if(!deviceData) {
       dataDeviceView = <Loading animating={!deviceData ? true : false}/>
@@ -171,7 +160,7 @@ export default class SearchDevice extends Component {
           navigation={navigation} 
           onChangeText={this.getBugsOnchange.bind(this)}
           onSubmitEditing={this.getBugsSubmit.bind(this)}
-          cleanText={()=> this.pressCleanText()}
+          cleanText={()=> pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
           {dataDeviceView}
@@ -199,7 +188,7 @@ export default class SearchDevice extends Component {
               {
                 hotwordData.map((hotItem, h2)=> <TouchableOpacity key={h2} style={search.touchHot} onPress={()=> this.pressTextTouch(hotItem.text)}>
                   <Image style={search.hotSearchIcon} source={searchIcon}/>
-                  <Text style={search.hotText}>{hotItem.text}</Text>
+                  <Text style={search.hotText}  numberOfLines={2}>{hotItem.text}</Text>
                 </TouchableOpacity>)
               }
             </View>

@@ -10,6 +10,9 @@ import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
 
+import store from '../../utils/store'
+import diagnoseAC from '../../actions/diagnoseAC'
+
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
@@ -27,13 +30,7 @@ export default class SearchDiagnose extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      text: '',
-      jumpData: false,
-      bugsData: null,
-      historyData: [],
-      hotwordData: [],
-    }
+    this.state = store.getState().diagnose
   }
 
   componentDidMount () {
@@ -46,11 +43,17 @@ export default class SearchDiagnose extends Component {
         diagword.map((item, d)=> {
           diagwordRe = diagwordRe.concat(item[1])
         })
-        this.setState({
-          historyData: diagwordRe,
-        })
+        diagnoseAC.setHistoryData(diagwordRe)
       })
     })
+  }
+
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().diagnose) )
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   getBugsHotword() {
@@ -63,9 +66,7 @@ export default class SearchDiagnose extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        this.setState({
-          hotwordData: res.data,
-        })
+        diagnoseAC.getHotword(res.data)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -76,7 +77,7 @@ export default class SearchDiagnose extends Component {
   }
 
   getBugsOnchange(text) {
-    this.setState({
+    diagnoseAC.setJumpData({
       text: text,
       jumpData: text == '' ? false : true,
     })
@@ -89,9 +90,7 @@ export default class SearchDiagnose extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        this.setState({
-          bugsData: res.data,
-        })
+        diagnoseAC.getBugsData(res.data)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -114,9 +113,7 @@ export default class SearchDiagnose extends Component {
         let prevHistoryData = this.state.historyData
         if(res.data.text != null && res.data.text != undefined) {
           prevHistoryData = [res.data.text].concat(prevHistoryData)
-          this.setState({
-            historyData: prevHistoryData,
-          })
+          diagnoseAC.setHistoryData(prevHistoryData)
           saveWord('diagnose', prevHistoryData)
         }
       } else {
@@ -125,13 +122,6 @@ export default class SearchDiagnose extends Component {
           { cancelable: false }
         )
       }
-    })
-  }
-
-  pressCleanText() {
-    this.setState({
-      text: '',
-      jumpData: false,
     })
   }
 
@@ -145,14 +135,13 @@ export default class SearchDiagnose extends Component {
     .then( num => {
       clearWord('diagnose', num)
     })
-    this.setState({
-      historyData: [],
-    })
+    diagnoseAC.setHistoryData([])
   }
 
   render() {
     let { navigation } = this.props
       , { bugsData, historyData, hotwordData, jumpData } = this.state
+      , { pressCleanText } = diagnoseAC
       , dataBugsView
     if(!bugsData) {
       dataBugsView = <Loading animating={!bugsData ? true : false}/>
@@ -171,11 +160,11 @@ export default class SearchDiagnose extends Component {
           navigation={navigation} 
           onChangeText={this.getBugsOnchange.bind(this)}
           onSubmitEditing={this.getBugsSubmit.bind(this)}
-          cleanText={()=> this.pressCleanText()}
+          cleanText={()=> pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
           {dataBugsView}
-          <View style={[diagDetail.buttonView, { bottom: 0, borderWidth: 0.5, borderColor: mainColorPressed, opacity: 1 }]}>
+          <View style={[diagDetail.buttonViewSearch, { bottom: 0, borderWidth: 0.5, borderColor: mainColorPressed, opacity: 1 }]}>
             <Button 
               style={diagDetail.button} 
               title={unsolvedGoToPushOrder} 
@@ -207,7 +196,7 @@ export default class SearchDiagnose extends Component {
               {
                 hotwordData.map((hotItem, h2)=> <TouchableOpacity key={h2} style={search.touchHot} onPress={()=> this.pressTextTouch(hotItem.text)}>
                   <Image style={search.hotSearchIcon} source={searchIcon}/>
-                  <Text style={search.hotText}>{hotItem.text}</Text>
+                  <Text style={search.hotText} numberOfLines={2}>{hotItem.text}</Text>
                 </TouchableOpacity>)
               }
             </View>
@@ -227,8 +216,8 @@ const DiagBugsItem = props => {
         <View style={diagnose.titleView}>
           <Text style={diagnose.titleText}>{bugOne.title}</Text>
         </View>
-        <Text style={{color: contentColor, fontWeight: 'bold' }}>{bugOne.content}</Text>
-        <Text style={diagnose.kindsText}>{bugOne.category.text}</Text>
+        <Text style={{color: contentColor, fontWeight: 'bold' }} numberOfLines={3}>{bugOne.content}</Text>
+        <Text style={diagnose.kindsText}>{bugOne.category.text ? bugOne.category.text : '暂无分类'}</Text>
       </TouchableOpacity>
     </View>
   )

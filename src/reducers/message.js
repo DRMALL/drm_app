@@ -1,13 +1,16 @@
+import { msg_all_get, msg_dispress } from '../common/actStrings'
+
 const message = {
   noticeData: null,
+  disabledPress: false,
 }
 
 export default (state = message, action) => {
   switch (action.type) {
-    case 'MESSAGE_ALL_GET':
+    case msg_all_get:
       return Object.assign({}, state, { noticeData: action.payload })
-    case 'MESSAGE_':
-      return Object.assign({}, state, { noticeData: action.payload })
+    case msg_dispress:
+      return Object.assign({}, state, { disabledPress: action.payload })
     default:
       return state
   }

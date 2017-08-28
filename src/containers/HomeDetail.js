@@ -19,6 +19,8 @@ const shareIcon = require('../images/navigation_icons/share.png')
 const icInsertPhotoIcon = require('../images/navigation_icons/ic_insert_photo.png')
 const uploadPic = require('../images/uploadPic.png')
 
+let windowWidth = Math.round((Dimensions.get('window').width-60))
+
 export default class HomeDetail extends Component {
   static navigationOptions = {
     headerStyle: {
@@ -33,6 +35,7 @@ export default class HomeDetail extends Component {
   }
 
   componentDidMount() {
+    homeDetailAC.getOneData({})
     this.getNewsOne()
   }
 
@@ -70,26 +73,28 @@ export default class HomeDetail extends Component {
   }
 
   handleDom() {
-    let windowWidth = Math.round((Dimensions.get('window').width-60))
-    return [
-      "const arr = document.getElementsByTagName(\"img\")",
-      "for (let i = 0; i < arr.length; i ++) {",
-      `arr[i].width = ${windowWidth}`,
-      "}",
-      "let height = null",
-      "function changeHeight() {",
-        "if (document.body.scrollHeight != height) {",
-          "height = document.body.scrollHeight",
-          "if(window.postMessage) {",
-            "window.postMessage(JSON.stringify({",
-              "type: 'setHeight',",
-              "height: height,",
-            "}))",
-          "}",
-        "}",
-      "}",
-      "setInterval(changeHeight, 100)"
-    ].join('\n')
+    const injectdScript = `
+      (function () {
+        const arr = document.getElementsByTagName(\"img\")
+        let height = null
+        for (let i = 0; i < arr.length; i ++) {
+          arr[i].width = ${windowWidth}
+        }
+        function changeHeight() {
+          if (document.body.scrollHeight != height) {
+            height = document.body.scrollHeight
+            if (window.postMessage) {
+              window.postMessage(JSON.stringify({
+                type: 'setHeight',
+                height: height,
+              }))
+            }
+          }
+        }
+        setInterval(changeHeight, 100)
+      } () )`
+    // return [...].join('\n')
+    return injectdScript
   }
 
   onMessage(event) {
@@ -122,14 +127,14 @@ export default class HomeDetail extends Component {
               newsOneData.publish_time ? moment(newsOneData.publish_time).format('YYYY-MM-DD') : '0000-00-00'
             }
           </Text>
-          <View style={{height: Math.round(contentLength*17/12) , paddingHorizontal: 16}}>
+          <View style={{height: Math.round(contentLength*17/12), paddingHorizontal: 16}}>
             <WebView 
               style={{height: '100%'}}
               automaticallyAdjustContentInsets={false}
               javaScriptEnabled={true}
               domStorageEnabled={true}
               scrollEnabled={false}
-              onMessage={this.onMessage}
+              onMessage={this.onMessage.bind(this)}
               injectedJavaScript={this.handleDom()}
               source={{html: newsOneData.content}}
             />

@@ -1,13 +1,25 @@
 import store from '../utils/store'
 import dispatch from './dispatch'
 import { allParts, allTypes } from '../common/strings'
+import { 
+  seek_refresh_T,
+  seek_refresh_F,
+  seek_make_params,
+  seek_open_modal,
+  seek_part_T,
+  seek_part_F,
+  seek_type_T,
+  seek_type_F,
+  seek_detail_share_show,
+  seek_detail_share_hidden,
+} from '../common/actStrings'
 
 const isRefresh = ()=> {
-  dispatch('SEEK_REFRESH_TRUE')
+  dispatch(seek_refresh_T)
 }
 
 const isnotRefresh = ()=> {
-  dispatch('SEEK_REFRESH_FALSE')
+  dispatch(seek_refresh_F)
 }
 
 const createPartTypeState = async (seekPartsData, seekTypesData)=> {
@@ -18,7 +30,7 @@ const createPartTypeState = async (seekPartsData, seekTypesData)=> {
   seekTypesData.map((typeItem, indext)=> {
     seekStateObj[`typeColumn${indext}`] = false
   })
-  await dispatch('SEEK_MAKE_PARAMS', seekStateObj)
+  await dispatch(seek_make_params, seekStateObj)
 }
 
 const openModal = (which)=> {
@@ -39,7 +51,7 @@ const openModal = (which)=> {
     };break
     default: null
   }
-  dispatch('SEEK_OPEN_MODAL', seekRow)
+  dispatch(seek_open_modal, seekRow)
 }
 
 const pressPartColumn = (p, seekPartsData)=> {
@@ -47,12 +59,12 @@ const pressPartColumn = (p, seekPartsData)=> {
   let partColumnOne = !seekState[`partColumn${p}`]
   seekPartsData.map((partItem, index)=> {
     if(p == index) {
-      dispatch('SEEK_PART_TRUE', {
+      dispatch(seek_part_T, {
         selectedPart: partColumnOne ? partItem.parts : allParts,
         [`partColumn${p}`]: partColumnOne,
       })
     }
-    else dispatch('SEEK_PART_FALSE', {[`partColumn${index}`]: false})
+    else dispatch(seek_part_F, {[`partColumn${index}`]: false})
   })
 }
 
@@ -62,13 +74,21 @@ const pressTypeColumn = (t, seekTypesData)=> {
   console.log(!seekState[`typeColumn${t}`])
   seekTypesData.map((typeItem, index)=> {
     if(t == index) {
-      dispatch('SEEK_TYPE_TRUE', {
+      dispatch(seek_type_T, {
         selectedType: typeColumnOne ? typeItem.types : allTypes,
         [`typeColumn${t}`]: typeColumnOne,
       })
     }
-    else dispatch('SEEK_TYPE_FALSE', {[`typeColumn${index}`]: false})
+    else dispatch(seek_type_F, {[`typeColumn${index}`]: false})
   })
+}
+
+const pressShareShow = ()=> {
+  dispatch(seek_detail_share_show)
+}
+
+const pressShareCancel = ()=> {
+  dispatch(seek_detail_share_hidden)
 }
 
 export default {
@@ -78,4 +98,6 @@ export default {
   openModal,
   pressPartColumn,
   pressTypeColumn,
+  pressShareShow,
+  pressShareCancel,
 }

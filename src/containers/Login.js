@@ -11,8 +11,7 @@ import { postPort } from '../utils/fetchMethod'
 import { signIn } from '../apis'
 
 import store from '../utils/store'
-import changeLoginEmail from '../actions/changeLoginEmail'
-import changeLoginWord from '../actions/changeLoginWord'
+import { changeLoginEmail, changeLoginWord } from '../actions/loginAC'
 
 const loginScreenLogo = require('../images/login_screen_logo.png')
 const loginPasswordShow = require('../images/login_password_show.png')

@@ -4,6 +4,9 @@ import { online, offline, onToOffText, onState, offState, inTheEnd } from '../co
 import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor, contentColor } from '../common/constants'
 import { status, home } from '../styles'
 
+import store from '../utils/store'
+import statuAC from '../actions/statuAC'
+
 export default props => {
   let ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 != r2
@@ -11,10 +14,11 @@ export default props => {
   let finalDs = ds.cloneWithRows(props.data)
     , navigation = props.navigation
     , dataLength = props.data.length
+    , { isRefreshing } = store.getState().statu
   return(
     <ListView 
       refreshControl={<RefreshControl 
-        refreshing={props.isRefreshing}
+        refreshing={isRefreshing}
         onRefresh={props.onStatusRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
         progressBackgroundColor={mainColor}

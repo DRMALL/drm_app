@@ -20,9 +20,9 @@ export default class SetPassword extends Component {
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
   });
 
-  pressConfirm = ()=> {
+  pressConfirm() {
     this.props.navigation.navigate('login')
-  };
+  }
 
   render() {
     return (

@@ -1,31 +1,40 @@
 import dispatch from './dispatch'
+import { 
+  home_refresh_T,
+  home_refresh_F,
+  home_one_data_get,
+  home_share_show,
+  home_share_hidden,
+  home_webview_height,
+  home_webview_heightcash,
+} from '../common/actStrings'
 
 const isRefresh = ()=> {
-  dispatch('SEEK_HOME_TRUE')
+  dispatch(home_refresh_T)
 }
 
 const isnotRefresh = ()=> {
-  dispatch('SEEK_HOME_FALSE')
+  dispatch(home_refresh_F)
 }
 
 const getOneData = (payload)=> {
-  dispatch('HOME_ONE_DATA_GET', payload)
+  dispatch(home_one_data_get, payload)
 }
 
 const showShare = (data)=> {
-  dispatch('HOME_SHARE_SHOW')
+  dispatch(home_share_show)
 }
 
 const hiddenShare = (data)=> {
-  dispatch('HOME_SHARE_HIDDEN')
+  dispatch(home_share_hidden)
 }
 
 const changeWVHeight = (payload)=> {
-  dispatch('HOME_WEBVIEW_HEIGHT', payload)
+  dispatch(home_webview_height, payload)
 }
 
 const changeWVHeightCash = (payload)=> {
-  dispatch('HOME_WEBVIEW_HEIGHTCASH', payload)
+  dispatch(home_webview_heightcash, payload)
 }
 
 export default {
@@ -35,4 +44,5 @@ export default {
   showShare,
   hiddenShare,
   changeWVHeight,
+  changeWVHeightCash,
 }
