@@ -12,6 +12,7 @@ import {
   seek_type_F,
   seek_detail_share_show,
   seek_detail_share_hidden,
+  seek_selected_type_data,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -63,19 +64,25 @@ const pressPartColumn = (p, seekPartsData)=> {
         selectedPart: partColumnOne ? partItem.parts : allParts,
         [`partColumn${p}`]: partColumnOne,
       })
+      dispatch(seek_selected_type_data, partColumnOne ? partItem.types : [])
     }
     else dispatch(seek_part_F, {[`partColumn${index}`]: false})
   })
+  for(var i = 0; i < 10; i++) {
+    dispatch(seek_type_T, {
+      selectedType: allTypes,
+    })
+    dispatch(seek_type_F, {[`typeColumn${i}`]: false})
+  }
 }
 
 const pressTypeColumn = (t, seekTypesData)=> {
   let seekState = store.getState().seek
   let typeColumnOne = !seekState[`typeColumn${t}`]
-  console.log(!seekState[`typeColumn${t}`])
   seekTypesData.map((typeItem, index)=> {
     if(t == index) {
       dispatch(seek_type_T, {
-        selectedType: typeColumnOne ? typeItem.types : allTypes,
+        selectedType: typeColumnOne ? typeItem : allTypes,
         [`typeColumn${t}`]: typeColumnOne,
       })
     }

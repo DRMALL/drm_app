@@ -21,19 +21,19 @@ const isnotRefresh = ()=> {
   dispatch(diag_refresh_F)
 }
 
-const normalCate = (payload)=> {
+const getDiagnoseData = (payload)=> {
   dispatch(diag_data_get, payload)
 }
 
-const getDiagnoseData = (payload)=> {
+const getDiagCate = (payload)=> {
   dispatch(diag_cate_get, payload)
 }
 
-const getDiagCate = (payload)=> {
+const selectCate = (payload)=> {
   dispatch(diag_tab_T, payload)
 }
 
-const selectCate = (payload)=> {
+const normalCate = (payload)=> {
   dispatch(diag_tab_F, payload)
 }
 
