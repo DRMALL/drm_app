@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home test 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F7F7F7",
+    }
+  }
+>
+  <View>
+    <RCTScrollView
+      dataSource={
+        ListViewDataSource {
+          "items": 0,
+        }
+      }
+      enableEmptySections={true}
+      refreshControl={
+        <RefreshControlMock
+          colors={
+            Array [
+              "#ff0000",
+              "#00ff00",
+              "#0000ff",
+            ]
+          }
+          onRefresh={[Function]}
+          progressBackgroundColor="#fff"
+          refreshing={false}
+          title="下拉刷新"
+          titleColor="rgba(0,0,0,.6)"
+        />
+      }
+      renderRow={[Function]}
+      renderScrollComponent={[Function]}
+    >
+      <RCTRefreshControl />
+      <View />
+    </RCTScrollView>
+  </View>
+</View>
+`;
