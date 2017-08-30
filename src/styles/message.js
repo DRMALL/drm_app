@@ -1,4 +1,5 @@
 import { mainColor, loginBackgroundColor, subTitleColor, contentColor, lightRedColor, lightBlueColor, backgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   scrollView: {
@@ -11,7 +12,7 @@ export default {
     paddingVertical: 20,
     paddingHorizontal: 15,
     flexDirection: 'row',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

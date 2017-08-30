@@ -1,4 +1,5 @@
 import { mainColor, subTitleColor, contentColor, backgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   tabView: {
@@ -7,7 +8,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

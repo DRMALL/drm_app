@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
-import { mainColor, primaryColor, subTitleColor, contentColor, mainColorPressed } from '../../common/constants'
-import { inputDeviceFault, historicalRecord, hotSearch, unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
+import { mainColor, primaryColor, subTitleColor, contentColor, mainColorPressed, lightBlueColor } from '../../common/constants'
+import { inputDeviceFault, historicalRecord, hotSearch, unsolvedGoToPushOrder, tokenKey, internalServerError } from '../../common/strings'
 import { search, diagnose, diagDetail } from '../../styles'
 import Button from '../../components/units/Button'
 import Loading from '../../components/units/Loading'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
+import replaced from '../../funcs/replace'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
@@ -61,7 +62,7 @@ export default class SearchDiagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getBugsHot}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -85,7 +86,7 @@ export default class SearchDiagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -105,7 +106,7 @@ export default class SearchDiagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -131,11 +132,18 @@ export default class SearchDiagnose extends Component {
   }
 
   pressDeleteSweep() {
-    getKeyNum('diagnose')
-    .then( num => {
-      clearWord('diagnose', num)
-    })
-    diagnoseAC.setHistoryData([])
+    Alert.alert('提示', '是否删除历史记录',
+      [ {text: '取消', onPress: () => 'no'}, 
+        {text: '确定', onPress: () => {
+          getKeyNum('diagnose')
+          .then( num => {
+            clearWord('diagnose', num)
+          })
+          diagnoseAC.setHistoryData([])
+        }},
+      ],
+      { cancelable: false }
+    )
   }
 
   render() {
@@ -148,7 +156,7 @@ export default class SearchDiagnose extends Component {
     } else {
       dataBugsView = <ScrollView>
         {
-          bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
+          bugsData.map((bugOne, index)=> <DiagBugsItem key={index} state={this.state} bugOne={bugOne} navigation={navigation} />)
         }
       </ScrollView>
     }
@@ -209,14 +217,44 @@ export default class SearchDiagnose extends Component {
 }
 
 const DiagBugsItem = props => {
-  let { bugOne, navigation } = props
+  let { state, bugOne, navigation } = props
+    , titleArr = []
+    , contentArr = []
+  if(bugOne.title) {
+    let splitTitleArr = replaced.strArr(`${bugOne.title}`, state.text)
+    for(var i = 0; i < splitTitleArr.length; i++) {
+      if(i == splitTitleArr.length-1) {
+        titleArr.push(<Text key={(i*2)}>{splitTitleArr[i]}</Text>)
+      } else {
+        titleArr.push(<Text key={(i*2)}>{splitTitleArr[i]}</Text>)
+        titleArr.push(<Text key={(i*2+1)} style={{color: lightBlueColor}}>{state.text}</Text>)
+      }
+    }
+  }
+  if(bugOne.content) {
+    let splitContentArr = replaced.strArr(replaced.trim(`${bugOne.content}`), state.text)
+    for(var i = 0; i < splitContentArr.length; i++) {
+      if(i == splitContentArr.length-1) {
+        contentArr.push(<Text key={(i*2)}>{splitContentArr[i]}</Text>)
+      } else {
+        contentArr.push(<Text key={(i*2)}>{splitContentArr[i]}</Text>)
+        contentArr.push(<Text key={(i*2+1)} style={{color: lightBlueColor}}>{state.text}</Text>)
+      }
+    }
+  }
   return (
     <View style={{backgroundColor: subTitleColor}}>
       <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {bugsId: bugOne._id, bugsTitle: bugOne.title, categoryText: bugOne.category.text})}>
         <View style={diagnose.titleView}>
-          <Text style={diagnose.titleText}>{bugOne.title}</Text>
+          <Text style={[diagnose.titleText, {width: '100%'}]}>
+            { titleArr }
+          </Text> 
         </View>
-        <Text style={{color: contentColor, fontWeight: 'bold' }} numberOfLines={3}>{bugOne.content}</Text>
+        <View style={{paddingVertical: 5}}>
+          <Text style={{color: contentColor, fontWeight: 'bold' }} numberOfLines={3}>
+            { contentArr }
+          </Text>
+        </View>
         <Text style={diagnose.kindsText}>{bugOne.category.text ? bugOne.category.text : '暂无分类'}</Text>
       </TouchableOpacity>
     </View>

@@ -7,7 +7,7 @@ import Swiper from 'react-native-swiper'
 import moment from 'moment'
 import Loading2 from '../../components/units/Loading2'
 import { mainColor, loginBorderColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
-import { deviceSort, deviceTimeline, deviceRemarks, tokenKey } from '../../common/strings'
+import { deviceSort, deviceTimeline, deviceRemarks, tokenKey, internalServerError } from '../../common/strings'
 import { detail } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { getPort, postPort } from '../../utils/fetchMethod'
@@ -54,7 +54,7 @@ export default class Detail extends Component {
         res = await getPort(`${getDevice}?deviceId=${deviceId}&token=${token}`)
       }
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -111,8 +111,8 @@ export default class Detail extends Component {
             { !images ? <Loading2 animating={!images ? true : false} /> : 
               <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
             }
-            <View style={nameNumLength > 20 ? detail.titleViewColumn : detail.titleViewRow}>
-              <Text style={detail.titleText}>{name + number}</Text>
+            <View style={nameNumLength > 17 ? detail.titleViewColumn : detail.titleViewRow}>
+              <Text style={detail.titleText}>{`${name} (${number})`}</Text>
               <Text style={detail.titleTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
             </View>
             <View style={detail.lebalView}>

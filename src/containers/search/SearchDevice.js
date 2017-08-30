@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
 import moment from 'moment'
 import { mainColor, primaryColor, subTitleColor, contentColor, loginBackgroundColor } from '../../common/constants'
-import { inputDeviceTypes, historicalRecord, hotSearch, tokenKey, inTheEnd } from '../../common/strings'
+import { inputDeviceTypes, historicalRecord, hotSearch, tokenKey, inTheEnd, internalServerError } from '../../common/strings'
 import { search, device, home } from '../../styles'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
@@ -61,7 +61,7 @@ export default class SearchDevice extends Component {
     .then(async token => {
       let res = await getPort(`${getDevicesHots}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -85,7 +85,7 @@ export default class SearchDevice extends Component {
     .then(async token => {
       let res = await getPort(`${getDevicesSearch}?type=onchange&search=${this.state.text}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -105,7 +105,7 @@ export default class SearchDevice extends Component {
     .then(async token => {
       let res = await getPort(`${getDevicesSearch}?type=submit&search=${this.state.text}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -131,11 +131,18 @@ export default class SearchDevice extends Component {
   }
 
   pressDeleteSweep() {
-    getKeyNum('device')
-    .then( num => {
-      clearWord('device', num)
-    })
-    deviceAC.setHistoryData([])
+    Alert.alert('提示', '是否删除历史记录',
+      [ {text: '取消', onPress: () => 'no'}, 
+        {text: '确定', onPress: () => {
+          getKeyNum('device')
+          .then( num => {
+            clearWord('device', num)
+          })
+          deviceAC.setHistoryData([])
+        }},
+      ],
+      { cancelable: false }
+    )
   }
 
   render() {
@@ -209,7 +216,7 @@ const DeviceItem = props => {
         <Image style={device.archivesItemImg} source={{uri: deviceOne.images[0].url}} />
         <View style={device.archivesItemOther}>
           <View style={nameNumLength < 16 ? device.archivesNoTime : device.archivesNoTime2}>
-            <Text style={device.archivesItemNo}>{deviceOne.name + deviceOne.number}</Text>
+            <Text style={device.archivesItemNo}>{`${deviceOne.name} (${deviceOne.number})`}</Text>
             <Text style={device.archivesItemTime}>{moment(deviceOne.createdAt).format('YYYY-MM-DD')}</Text>
           </View>
           <View style={device.archivesItemLabsView}>

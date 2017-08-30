@@ -1,4 +1,5 @@
 import { mainColor, subTitleColor, lightBlueColor, backgroundColor, loginBackgroundColor, contentColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -11,7 +12,7 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
@@ -21,8 +22,8 @@ export default {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0.5,
+    borderLeftWidth: StyleSheet.hairlineWidth,
+    borderRightWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   archivesTabText: {
@@ -33,7 +34,7 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
@@ -74,7 +75,7 @@ export default {
     height: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 4,
     borderColor: lightBlueColor,
     marginRight: 8,

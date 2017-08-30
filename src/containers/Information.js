@@ -12,6 +12,7 @@ import { basicDocument,
         personalInformation, 
         tokenKey,
         logOut,
+        internalServerError,
 } from '../common/strings'
 import { information } from '../styles'
 import TouchIntoText from '../components/units/TouchIntoText'
@@ -59,7 +60,7 @@ export default class Information extends Component {
     .then(async token => {
       let res = await getPort(`${getInfo}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

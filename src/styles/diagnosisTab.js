@@ -1,8 +1,9 @@
 import { mainColor, subTitleColor, lightBlueColor, lightRedColor, backgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

@@ -1,4 +1,5 @@
 import { mainColor, backgroundColor, subTitleColor, contentColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   modalWrap: {
@@ -29,13 +30,13 @@ export default {
     // height: 80,
     justifyContent: 'center',
     paddingVertical: 5,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   otherView: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   pailiangSecondView: {
@@ -71,7 +72,7 @@ export default {
   kindText: {
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 3,
     fontSize: 14,
   },

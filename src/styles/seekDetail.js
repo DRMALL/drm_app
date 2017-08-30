@@ -1,4 +1,5 @@
 import { mainColor, lightBlueColor, contentColor, backgroundColor, mainColorPressed, subTitleColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   headerView: {
@@ -32,7 +33,7 @@ export default {
     width: '100%',
     paddingHorizontal: 16,
     paddingVertical: 10,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     fontSize: 14,
     color: subTitleColor,
@@ -41,7 +42,7 @@ export default {
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
@@ -60,7 +61,7 @@ export default {
   itemText: {
     paddingHorizontal: 16,
     paddingVertical: 20,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     fontSize: 16,
     color: contentColor,

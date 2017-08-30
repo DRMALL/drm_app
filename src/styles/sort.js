@@ -1,4 +1,5 @@
 import { mainColor, backgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   modalWrap: {
@@ -9,7 +10,7 @@ export default {
     height: 50,
     justifyContent: 'center',
     paddingLeft: 16,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   sortText: {

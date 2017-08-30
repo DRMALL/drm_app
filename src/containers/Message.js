@@ -6,6 +6,7 @@ import { messageText,
         allSetAsRead, 
         inTheEnd, 
         tokenKey, 
+        internalServerError,
 } from '../common/strings'
 import { message } from '../styles'
 import { checkToken } from '../utils/handleToken'
@@ -63,7 +64,7 @@ export default class Message extends Component {
     .then(async token => {
       let res = await postPort(`${setAllNoticesRead}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -87,7 +88,7 @@ export default class Message extends Component {
     .then(async token => {
       let res = await getPort(`${getNotices}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

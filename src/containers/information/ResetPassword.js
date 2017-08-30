@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { resetPassword, save, originalPassword, newPassword, verifyNewPassword, tokenKey } from '../../common/strings'
+import { resetPassword, save, originalPassword, newPassword, verifyNewPassword, tokenKey, internalServerError } from '../../common/strings'
 import { updatePassword } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
@@ -39,6 +39,7 @@ export default class ResetPassword extends Component {
   }
 
   pressSavePassword() {
+    const passwordReg = /[^a-zA-Z0-9\_]/ig
     checkToken(tokenKey)
     .then(async token => {
       let { original_password, new_password, verify_password } = this.state
@@ -62,12 +63,17 @@ export default class ResetPassword extends Component {
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
+      } else if(passwordReg.test(bodyData.newPass)) {
+        return Alert.alert('错误', '新密码只能由大小写、数字和下划线组成',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
 
       let res = await postPort(`${updatePassword}?token=${token}`, bodyData)
       
       if(res == null) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

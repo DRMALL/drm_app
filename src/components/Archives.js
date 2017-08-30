@@ -38,8 +38,8 @@ const ArchivesDataItem = ({ rowData, rowID, archivesDataLength, navigation }) =>
       <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('detail', {deviceId: _id})}> 
         <Image style={device.archivesItemImg} source={{uri: images[0].url}} />
         <View style={device.archivesItemOther}>
-          <View style={nameNumLength < 16 ? device.archivesNoTime : device.archivesNoTime2}>
-            <Text style={device.archivesItemNo}>{name + number}</Text>
+          <View style={nameNumLength < 13 ? device.archivesNoTime : device.archivesNoTime2}>
+            <Text style={device.archivesItemNo}>{`${name} (${number})`}</Text>
             <Text style={device.archivesItemTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
           </View>
           <View style={device.archivesItemLabsView}>

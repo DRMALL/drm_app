@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert, StatusBar, Platform } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationActions } from 'react-navigation'
-import { drmOne, drmTwo, drmThree, loginInputEmail, loginInputWord, loginText, loginForgetWord, tokenKey } from '../common/strings'
+import { 
+  drmOne, 
+  drmTwo, 
+  drmThree, 
+  loginInputEmail, 
+  loginInputWord, 
+  loginText, 
+  loginForgetWord, 
+  tokenKey,
+  internalServerError, 
+} from '../common/strings'
 import { login } from '../styles'
 import Button from '../components/units/Button'
 import TextInputImg from '../components/units/TextInputImg'
@@ -11,7 +21,7 @@ import { postPort } from '../utils/fetchMethod'
 import { signIn } from '../apis'
 
 import store from '../utils/store'
-import { changeLoginEmail, changeLoginWord } from '../actions/loginAC'
+import loginAC from '../actions/loginAC'
 
 const loginScreenLogo = require('../images/login_screen_logo.png')
 const loginPasswordShow = require('../images/login_password_show.png')
@@ -42,6 +52,8 @@ export default class Login extends Component {
     .then(token => {
       if(token) this.props.navigation.dispatch(resetAction)
     })
+    loginAC.changeLoginEmail('')
+    loginAC.changeLoginWord('')
     setTimeout(() => {
       SplashScreen.hide()
     }, 2000)
@@ -63,7 +75,7 @@ export default class Login extends Component {
     }
     let res = await postPort(signIn, bodyData)
     if(!res) {
-      Alert.alert('错误', 'Internal Server Error',
+      Alert.alert('错误', internalServerError,
         [ {text: 'OK', onPress: () => 'OK'}, ],
         { cancelable: false }
       )
@@ -84,6 +96,7 @@ export default class Login extends Component {
 
   render() {
     let { textEmail, textWord } = this.state
+      , { changeLoginEmail, changeLoginWord } = loginAC
     return (
       <View style={[login.wrap, Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}]}>
         <StatusBar hidden={true}/>

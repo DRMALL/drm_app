@@ -1,4 +1,5 @@
 import { mainColor, subTitleColor, lightBlueColor, lightRedColor, backgroundColor, loginBackgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -6,7 +7,7 @@ export default {
     backgroundColor: loginBackgroundColor,
   },
   touchView: {
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
     paddingVertical: 16,
@@ -25,7 +26,7 @@ export default {
     paddingVertical: 1,
     paddingHorizontal: 6,
     color: lightBlueColor,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 2,
     borderColor: lightBlueColor,
   },
@@ -33,7 +34,7 @@ export default {
     paddingVertical: 1,
     paddingHorizontal: 6,
     color: lightRedColor,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 2,
     borderColor: lightRedColor,
   },

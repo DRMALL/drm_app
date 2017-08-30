@@ -1,4 +1,5 @@
 import { backgroundColor, subTitleColor, mainColor, mainColorPressed, contentColor, primaryColor, loginBackgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -10,7 +11,7 @@ export default {
     paddingVertical: 10,
     fontSize: 14,
     color: subTitleColor,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   orderView: {
@@ -42,7 +43,7 @@ export default {
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 15,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   fixReturnText: {

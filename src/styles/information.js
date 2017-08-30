@@ -1,4 +1,5 @@
 import { loginBackgroundColor, subTitleColor, backgroundColor, mainColor, lightRedColor, lightBlueColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -12,7 +13,7 @@ export default {
     fontSize: 16,
     paddingVertical: 11,
     paddingLeft: 15,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     color: subTitleColor,
   },
@@ -21,7 +22,7 @@ export default {
     paddingHorizontal: 120,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: mainColor,
     borderRadius: 10,
     // backgroundColor: lightRedColor,

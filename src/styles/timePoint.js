@@ -1,4 +1,5 @@
 import { backgroundColor, mainColorPressed, contentColor, subTitleColor, mainColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -9,7 +10,7 @@ export default {
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   fixText: {
@@ -33,7 +34,7 @@ export default {
   emptyView: {
     width: '100%', 
     height: 10, 
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColorPressed,
   },
@@ -49,7 +50,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
     opacity: 1,

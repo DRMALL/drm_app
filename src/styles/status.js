@@ -1,10 +1,11 @@
 import { mainColor, subTitleColor, backgroundColor, contentColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
     width: '100%',
     flexDirection: 'row',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
@@ -40,7 +41,7 @@ export default {
     height: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 2,
   },
   touchText: {

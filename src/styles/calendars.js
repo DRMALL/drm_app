@@ -1,4 +1,5 @@
 import { mainColor, subTitleColor, backgroundColor, contentColor, loginBackgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -20,7 +21,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   ymText: {

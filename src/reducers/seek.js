@@ -10,6 +10,7 @@ import {
   seek_type_F,
   seek_detail_share_show,
   seek_detail_share_hidden,
+  seek_selected_type_data,
 } from '../common/actStrings'
 
 const seek = {
@@ -21,6 +22,7 @@ const seek = {
   topView: {position: 'relative', zIndex: 3},
   secondView: {position: 'absolute', zIndex: 2},
   shareShow: false,
+  selectedTypesData: [],
 }
 
 export default (state = seek, action) => {
@@ -45,6 +47,8 @@ export default (state = seek, action) => {
       return Object.assign({}, state, { shareShow: true } )
     case seek_detail_share_hidden:
       return Object.assign({}, state, { shareShow: false } )
+    case seek_selected_type_data:
+      return Object.assign({}, state, { selectedTypesData: action.payload } )
     default:
       return state
   }

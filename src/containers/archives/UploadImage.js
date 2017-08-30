@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Platform, Alert, Statu
 import { NavigationActions } from 'react-navigation'
 import ImagePicker from 'react-native-image-crop-picker'
 import { primaryColor, loginBackgroundColor } from '../../common/constants'
-import { tokenKey, deviceLabel } from '../../common/strings'
+import { tokenKey, deviceLabel, internalServerError } from '../../common/strings'
 import { uploadImage } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { postFormDataPort } from '../../utils/fetchMethod'
@@ -170,7 +170,7 @@ export default class UploadImage extends Component {
     .then(async token => {
       let res = await postFormDataPort(`${postDeviceImages}?deviceId=${deviceId}&token=${token}`, formData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

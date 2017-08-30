@@ -1,8 +1,9 @@
 import React, { Component }from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, WebView } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, WebView, StyleSheet, Keyboard } from 'react-native'
+import { RichTextEditor, RichTextToolbar } from 'react-native-zss-rich-text-editor'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, titleColor } from '../../common/constants'
-import { pushOrder, cancel, publish, pushOrderPlaceholder1, pushOrderPlaceholder2, pushOrderPlaceholder3, tokenKey } from '../../common/strings'
+import { pushOrder, cancel, publish, pushOrderPlaceholder1, pushOrderPlaceholder2, pushOrderPlaceholder3, tokenKey, internalServerError } from '../../common/strings'
 import { pushOrderS } from '../../styles'
 import { postNewOrder } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
@@ -34,12 +35,15 @@ export default class PushOrder extends Component {
         order_category: pushOrderPlaceholder3,
         order_content: '',
         categoryPress: false,
+        richToolbarShow: false,
       }
       orderTypesData.map((item, index)=> {
         orderStateObj[`categoryHanding${index}`] = false
       })
       return orderStateObj
     })(props)
+    this.getHTML = this.getHTML.bind(this);
+    this.setFocusHandlers = this.setFocusHandlers.bind(this);
   }
 
   componentDidMount() {  
@@ -47,6 +51,28 @@ export default class PushOrder extends Component {
       pressPublishConfirm: () => this.pressPublishConfirm(), 
     })
   }
+
+  // componentWillMount() {
+  //   this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this))
+  //   this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this))
+  // }
+
+  // _keyboardDidShow(e){
+  //     this.setState({
+  //       richToolbarShow: true,
+  //     })
+  //   }
+
+  // _keyboardDidHide(e){
+  //   this.setState({
+  //     richToolbarShow: false,
+  //   })
+  // }
+
+  // componentWillUnmount() {
+  //   this.keyboardDidShowListener.remove()
+  //   this.keyboardDidHideListener.remove()
+  // }
 
   pressPublishConfirm() {
     let { order_title, order_category, order_content } = this.state
@@ -84,7 +110,7 @@ export default class PushOrder extends Component {
       }
       let res = await postPort(`${postNewOrder}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -133,16 +159,16 @@ export default class PushOrder extends Component {
   }
 
   render() {
-    let { categoryPress, order_category } = this.state
+    let { categoryPress, order_category, richToolbarShow } = this.state
       , bodyForDisplay = '<p>Wow this is an <b>AMAZING</b> demo!</p>'
     return (
       <ScrollView style={pushOrderS.wrap}>
-        
         <TextInput 
           style={pushOrderS.textInput}
           placeholder={pushOrderPlaceholder1} 
           placeholderTextColor={subTitleColor}
           underlineColorAndroid='transparent'
+          maxLength={128}
           onChangeText={this.onChangeOtitle.bind(this)}
           selectTextOnFocus={true}
           autoCapitalize='none'
@@ -179,15 +205,66 @@ export default class PushOrder extends Component {
           multiline={true} 
           numberOfLines={50} 
           underlineColorAndroid='transparent'
+          maxLength={1000}
           onChangeText={this.onChangeOcontent.bind(this)}
           selectTextOnFocus={true}
           autoCapitalize='none'
         />
-        
       </ScrollView>
     )
   }
+
+  onEditorInitialized() {
+    this.setFocusHandlers();
+    this.getHTML();
+  }
+
+  async getHTML() {
+    const titleHtml = await this.richtext.getTitleHtml();
+    const contentHtml = await this.richtext.getContentHtml();
+    //alert(titleHtml + ' ' + contentHtml)
+  }
+
+  setFocusHandlers() {
+    this.richtext.setTitleFocusHandler(() => {
+      //alert('title focus');
+    });
+    this.richtext.setContentFocusHandler(() => {
+      //alert('content focus');
+    });
+  }
 }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     height: 480,
+//     flexDirection: 'column',
+//     backgroundColor: '#fff',
+//     paddingTop: 40,
+//   },
+//   richText: {
+//     height: '100%',
+//     alignItems:'center',
+//     justifyContent: 'center',
+//     backgroundColor: 'transparent',
+//   },
+// });
+
+// {
+//   <View style={styles.container}>
+//           <RichTextEditor
+//               ref={(r)=>this.richtext = r}
+//               style={styles.richText}
+//               initialTitleHTML={null}
+//               initialContentHTML={'Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>'}
+//               editorInitializedCallback={() => this.onEditorInitialized()}
+//           />
+//           <RichTextToolbar getEditor={() => this.richtext}/>
+//         </View> 
+//         <KeyboardSpacer/>
+// }
+
+  
 
 // <KeyboardAvoidingView behavior={'padding'} >
 // </KeyboardAvoidingView>

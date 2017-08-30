@@ -3,7 +3,7 @@ import { View, Text, Image, Alert } from 'react-native'
 import TabBarItem from '../components/units/TabBarItem'
 import DiagnosisTab from '../components/units/DiagnosisTab'
 import DiagnoseCategory from '../components/DiagnoseCategory'
-import { tokenKey } from '../common/strings'
+import { tokenKey, internalServerError } from '../common/strings'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
 import { getBugs, getCate } from '../apis'
@@ -50,12 +50,12 @@ export default class Diagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        diagnoseAC.normalCate(res.data)
+        diagnoseAC.getDiagnoseData(res.data) 
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -70,12 +70,12 @@ export default class Diagnose extends Component {
     .then(async token => {
       let res = await getPort(`${getCate}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        diagnoseAC.getDiagnoseData({
+        diagnoseAC.getDiagCate({
           allCateData: res.data,
           selectedCate: res.data[0].text,
         })
@@ -91,11 +91,11 @@ export default class Diagnose extends Component {
   pressTab(dt) {
     this.state.allCateData.map((itemTabType, index)=> {
       if(dt == index) {
-        diagnoseAC.getDiagCate({
+        diagnoseAC.selectCate({
           [`tabTypeRow${dt}`]: true,
           selectedCate: itemTabType.text,
         })
-      } else diagnoseAC.selectCate({[`tabTypeRow${index}`]: false})
+      } else diagnoseAC.normalCate({[`tabTypeRow${index}`]: false})
     })
   }
 

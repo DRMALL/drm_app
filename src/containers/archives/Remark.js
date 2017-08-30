@@ -2,7 +2,7 @@ import React, { Component }from 'react'
 import { View, Text, ScrollView, TouchableOpacity, TextInput, StatusBar } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { primaryColor, mainColor, subTitleColor } from '../../common/constants'
-import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey, deviceLabel } from '../../common/strings'
+import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey, deviceLabel, internalServerError } from '../../common/strings'
 import { checkToken } from '../../utils/handleToken'
 import { postPort } from '../../utils/fetchMethod'
 import { postDeviceRemark } from '../../apis'
@@ -44,7 +44,7 @@ export default class Remark extends Component {
       }
       let res = await postPort(`${postDeviceRemark}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

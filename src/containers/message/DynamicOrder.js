@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import Button from '../../components/units/Button'
 import Loading from '../../components/units/Loading'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
-import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey } from '../../common/strings'
+import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey, internalServerError } from '../../common/strings'
 import { dynamicOrder } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { getPort, postPort } from '../../utils/fetchMethod'
@@ -54,7 +54,7 @@ export default class DynamicOrder extends Component {
         }
         let res = await postPort(`${setOneNoticesRead}?token=${token}`, bodyData)
         if(!res) {
-          Alert.alert('错误', 'Internal Server Error',
+          Alert.alert('错误', internalServerError,
             [ {text: 'OK', onPress: () => 'OK'}, ],
             { cancelable: false }
           )
@@ -76,7 +76,7 @@ export default class DynamicOrder extends Component {
     .then(async token => {
       let res = await getPort(`${getNoticesOne}?id=${msgId}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -104,7 +104,7 @@ export default class DynamicOrder extends Component {
       }
       let res = await postPort(`${setOrderSolved}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

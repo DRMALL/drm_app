@@ -1,51 +1,13 @@
 import React, { Component }from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import { NavigationActions } from 'react-navigation'
-import { primaryColor, mainColor, subTitleColor, backgroundColor } from '../../common/constants'
-import { timeLineScreening, cancel, confirm, pleaseSelectStartTime, pleaseSelectEndTime, deviceLabel } from '../../common/strings'
+import { primaryColor, mainColor, subTitleColor, backgroundColor, lightGreenColor, lightRedColor } from '../../common/constants'
+import { timeLineScreening, cancel, confirm, pleaseSelectStartTime, pleaseSelectEndTime, deviceLabel, comeBack } from '../../common/strings'
 import { calendars } from '../../styles'
 
 import DayList from '../../components/archives/DayList'
-
-const splitDate = (date)=> {
-  let objectDate = { year: null, month: null, day: null, week: null, hour: null, minute: null, second: null}
-    , dateRe = typeof date == 'date' ? date : new Date(date)
-  objectDate.year = dateRe.getFullYear()
-  objectDate.month = dateRe.getMonth() + 1
-  objectDate.day = dateRe.getDate()
-  objectDate.week = dateRe.getDay()
-  objectDate.hour = dateRe.getHours()
-  objectDate.minute = dateRe.getMinutes()
-  objectDate.second = dateRe.getSeconds()
-  return objectDate
-}
-
-const monthToDays = (year, month)=> {
-  let month0 = month < 10 ? `0${month}` : `${month}`
-    , month1 = (month+1) < 10 ? `0${month+1}` : `${month+1}`
-    , startMonthDay = `${year}-${month0}-01`
-    , endMonthDay = month == 12 ? `${year+1}-01-01` : `${year}-${month1}-01`
-    , startWeek = new Date(startMonthDay).getDay()
-    , timeSlot = new Date(endMonthDay).getTime() - new Date(startMonthDay).getTime()
-    , slotLength = timeSlot/(24*60*60*1000)
-    , timeSlotArr = []
-    , timeSlotArrTD = []
-  for(var w = 0; w < startWeek; w++) {
-    timeSlotArr.push('')
-  }
-  for(var i = 1; i <= slotLength; i++) {
-    timeSlotArr.push(`${i}`)
-  }
-  //ListView二维数组
-  for(var tol = 0; tol < (timeSlotArr.length/7); tol++) {
-    var sectionArr = []
-    for(var rnum = 0; rnum < 7; rnum++) {
-      sectionArr.push(timeSlotArr[tol*7 + rnum])
-    }
-    timeSlotArrTD.push(sectionArr)
-  }
-  return timeSlotArrTD
-}
+import splitDate from '../../funcs/splitDate'
+import monthToDays from '../../funcs/monthToDays'
 
 const gobackIcon = require('../../images/navigation_icons/goback.png')
 const intoIcon = require('../../images/navigation_icons/into.png')
@@ -56,8 +18,8 @@ export default class Calendars extends Component {
       backgroundColor: primaryColor,
     },
     headerTitle: <Text style={{ fontSize: 20, color: mainColor, alignSelf: 'center' }} >{timeLineScreening}</Text>,
-    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 15}} onPress={() => navigation.goBack()}>
-      <Text style={{ fontSize: 15, color: mainColor}}>{cancel}</Text>
+    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 15}} onPress={() => navigation.state.params.clearState()}>
+      <Text style={{ fontSize: 15, color: mainColor}}>{navigation.state.params.backCancel ? cancel : comeBack}</Text>
     </TouchableOpacity>,
     headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.comeToDetail()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{confirm}</Text>
@@ -89,8 +51,33 @@ export default class Calendars extends Component {
 
   componentDidMount() {
     this.props.navigation.setParams({
+      backCancel: false,
+      clearState: this.clearState.bind(this),
       comeToDetail: this.comeToDetail.bind(this),
     })
+  }
+
+  componentWillMount() {
+    //this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().message) )
+  }
+
+  clearState() {
+    let { navigation } = this.props
+      , { startTimestamp } = this.state
+    if(startTimestamp) {
+      this.props.navigation.setParams({
+        backCancel: false,
+      })
+      this.setState({
+        startTime: '',
+        startTimestamp: 0,
+        endTime: '',
+        endTimestamp: 0, 
+        pointNum: 0,
+        selectTextTF: false,
+        resetTime: false,
+      })
+    } else navigation.goBack()
   }
 
   comeToDetail() {
@@ -143,6 +130,9 @@ export default class Calendars extends Component {
   }
 
   pressDayItem(dayTime, dayStamp) {
+    this.props.navigation.setParams({
+      backCancel: true,
+    })
     this.setState( bfoState=> {
       return {
         startTimestamp: bfoState.resetTime ? dayStamp : 
@@ -165,10 +155,10 @@ export default class Calendars extends Component {
     let weekArr = ['日','一','二','三','四','五','六']
     let { year, month, dayArray, selectTextTF } = this.state
     return (
-      <ScrollView style={calendars.wrap}>
+      <View style={calendars.wrap}>
         <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
-        <Text style={calendars.selectText}>{selectTextTF ? pleaseSelectEndTime : pleaseSelectStartTime}</Text>
-        <View style={{backgroundColor: mainColor}}>
+        <Text style={[calendars.selectText, {color: selectTextTF ? lightRedColor : lightGreenColor}]}>{selectTextTF ? pleaseSelectEndTime : pleaseSelectStartTime}</Text>
+        <ScrollView style={{backgroundColor: mainColor}}>
           <View style={calendars.ymView}>
             <TouchableOpacity style={{padding: 10}} onPress={this.pressMinusMonth.bind(this)}>
               <Image source={gobackIcon}/>
@@ -187,8 +177,8 @@ export default class Calendars extends Component {
           </View>
           <DayList data={dayArray} state={this.state} pressDayItem={this.pressDayItem.bind(this)}/>
           <View style={{paddingBottom: 20}}/>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }

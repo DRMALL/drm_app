@@ -1,4 +1,5 @@
 import { mainColor, mainColorPressed, backgroundColor, subTitleColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -7,7 +8,7 @@ export default {
   },
   empty: {
     height: 10,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColorPressed,
   },
@@ -37,7 +38,7 @@ export default {
   oneCategoryTouch: {
     paddingHorizontal: 16,
     paddingVertical: 10,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

@@ -1,4 +1,5 @@
 import { mainColor, primaryColor, backgroundColor, contentColor, subTitleColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   header: {
@@ -49,7 +50,7 @@ export default {
   fixText: {
     paddingHorizontal: 16,
     paddingVertical: 10,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   deleteSweep: {
@@ -66,14 +67,14 @@ export default {
   historyView: {
     paddingHorizontal: 4, 
     paddingVertical: 20,
-    borderTopWidth: 0.5, 
-    borderBottomWidth: 0.5, 
+    borderTopWidth: StyleSheet.hairlineWidth, 
+    borderBottomWidth: StyleSheet.hairlineWidth, 
     borderColor: backgroundColor, 
   },
   touchHistory: {
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: subTitleColor,
     borderRadius: 3,
   },
@@ -86,7 +87,7 @@ export default {
     height: 60,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
   hotSearchIcon: {

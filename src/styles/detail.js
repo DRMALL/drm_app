@@ -1,4 +1,5 @@
 import { mainColor, lightBlueColor, contentColor, backgroundColor, mainColorPressed, subTitleColor, titleColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   headerView: {
@@ -54,7 +55,7 @@ export default {
     paddingVertical: 2,
     fontSize: 12,
     color: lightBlueColor,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 3,
     borderColor: lightBlueColor,
     marginRight: 8,
@@ -73,7 +74,7 @@ export default {
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColorPressed,
   },
@@ -101,7 +102,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
   },
 
@@ -135,7 +136,7 @@ export default {
     marginVertical: 10,
     marginHorizontal: 20,
     padding: 10,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 5,
     borderColor: mainColorPressed, 
     backgroundColor: mainColorPressed,
@@ -144,16 +145,16 @@ export default {
     right: 5, 
     height: 12, 
     width: 12, 
-    borderWidth: 0.5, 
+    borderWidth: StyleSheet.hairlineWidth, 
     borderRadius: 6, 
   },
   shortTerm: {
     height: 6, 
-    borderLeftWidth: 1, 
+    borderLeftWidth: 1, //StyleSheet.hairlineWidth, 
     borderColor: subTitleColor,
   },
   longTerm: {
-    borderLeftWidth: 1, 
+    borderLeftWidth: 1, //StyleSheet.hairlineWidth, 
     borderColor: subTitleColor,
   },
   typeText: {

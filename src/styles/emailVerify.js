@@ -1,4 +1,5 @@
 import { mainColor, backgroundColor, mainColorPressed, subTitleColor, primaryColor, loginBackgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -16,7 +17,7 @@ export default {
     height: 50,
     paddingLeft: 15,
     paddingRight: 120,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
@@ -37,7 +38,7 @@ export default {
   vCodeInput: {
     height: 50,
     paddingHorizontal: 15,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

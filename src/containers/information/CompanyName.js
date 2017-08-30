@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { companyName, save, tokenKey } from '../../common/strings'
+import { companyName, save, tokenKey, internalServerError } from '../../common/strings'
+import replaced from '../../funcs/replace'
 import { updateInfo } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
@@ -28,7 +29,7 @@ export default class CompanyName extends Component {
     super(props)
     let { company_name } = props.navigation.state.params
     this.state = {
-      company_name: company_name === 'null' || company_name === 'undefined' ? '' : company_name,
+      company_name: company_name === 'null' || company_name === 'undefined' ? '' : replaced.trim(company_name),
     }
   }
 
@@ -42,11 +43,17 @@ export default class CompanyName extends Component {
     checkToken(tokenKey)
     .then(async token => {
       let bodyData = {
-        company_name: this.state.company_name,
+        company_name: replaced.trim(this.state.company_name),
+      }
+      if(bodyData.company_name === '' || bodyData.company_name === 'null') {
+        return Alert.alert('错误', '公司名称不能为空',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
       let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

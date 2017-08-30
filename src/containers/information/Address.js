@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { postalAddress, save, tokenKey } from '../../common/strings'
+import { postalAddress, save, tokenKey, internalServerError } from '../../common/strings'
+import replaced from '../../funcs/replace'
 import { updateInfo } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
@@ -30,7 +31,7 @@ export default class Address extends Component {
     super(props)
     let { postal_address } = props.navigation.state.params
     this.state = {
-      postal_address: postal_address === 'null' || postal_address === 'undefined' ? '' : postal_address,
+      postal_address: postal_address === 'null' || postal_address === 'undefined' ? '' : replaced.trim(postal_address),
     }
   }
 
@@ -44,11 +45,17 @@ export default class Address extends Component {
     checkToken(tokenKey)
     .then(async token => {
       let bodyData = {
-        address: this.state.postal_address,
+        address: replaced.trim(this.state.postal_address),
+      }
+      if(bodyData.address === '' || bodyData.address === 'null') {
+        return Alert.alert('错误', '通讯地址不能为空',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
       let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

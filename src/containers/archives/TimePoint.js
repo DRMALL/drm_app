@@ -4,9 +4,10 @@ import { NavigationActions } from 'react-navigation'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, contentColor } from '../../common/constants'
-import { newTimeLine, cancel, publish, timelineType, createdTime, pleaseSelect, tokenKey, deviceLabel } from '../../common/strings'
+import { newTimeLine, cancel, publish, timelineType, createdTime, pleaseSelect, tokenKey, deviceLabel, internalServerError } from '../../common/strings'
 import { allLineTypeData } from '../../utils/virtualData'
 import { timePoint } from '../../styles'
+import replaced from '../../funcs/replace'
 import { checkToken } from '../../utils/handleToken'
 import { postPort } from '../../utils/fetchMethod'
 import { postDeviceTimelines } from '../../apis'
@@ -23,7 +24,7 @@ export default class TimePoint extends Component {
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 15}} onPress={() => navigation.goBack()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{cancel}</Text>
     </TouchableOpacity>,
-    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.postTimelines()}>
+    headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 15}} onPress={() => navigation.state.params.pressPostTimelines()}>
       <Text style={{ fontSize: 15, color: mainColor}}>{publish}</Text>
     </TouchableOpacity>,
   });
@@ -48,8 +49,31 @@ export default class TimePoint extends Component {
 
   componentDidMount() {
     this.props.navigation.setParams({
-      postTimelines: this.postTimelines.bind(this),
+      pressPostTimelines: this.pressPostTimelines.bind(this),
     })
+  }
+
+  pressPostTimelines() {
+    let { selectOne, tline_description } = this.state
+    if(selectOne == '请选择') {
+      Alert.alert('警告', '请选择类型',
+        [{text: 'OK', onPress: () => 'OK'},],
+        { cancelable: false }
+      )
+    } else if(replaced.trim(tline_description) == '') {
+      Alert.alert('警告', '文本不能为空',
+        [{text: 'OK', onPress: () => 'OK'},],
+        { cancelable: false }
+      )
+    } else {
+      Alert.alert('提示', '确定发布？',
+        [ 
+          {text: '取消', onPress: () => 'NO'},
+          {text: '确定', onPress: () => this.postTimelines()},
+        ],
+        { cancelable: false }
+      )
+    }
   }
 
   postTimelines() {
@@ -60,49 +84,37 @@ export default class TimePoint extends Component {
         deviceId: navigation.state.params.deviceId,
         line_type: this.state.selectOne,
         line_time: this.state.date,
-        line_des: this.state.tline_description,
+        line_des: replaced.trim(this.state.tline_description),
       }
-      if(bodyData.line_type == '请选择') {
-        Alert.alert('警告', '请选择类型',
-          [{text: 'OK', onPress: () => 'OK'},],
+      let res = await postPort(`${postDeviceTimelines}?token=${token}`, bodyData)
+      if(!res) {
+        Alert.alert('错误', internalServerError,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
-      } else if(bodyData.line_des == '') {
-        Alert.alert('警告', '文本不能为空',
-          [{text: 'OK', onPress: () => 'OK'},],
-          { cancelable: false }
-        )
+      } else if(res.code == 201) {
+        const resetAction = NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ 
+              routeName: 'main', 
+              params: {},
+              action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
+            }),
+            NavigationActions.navigate({ 
+              routeName: 'detail', 
+              params: {
+                deviceId: navigation.state.params.deviceId, 
+              }, 
+            })
+          ]
+        })
+        navigation.dispatch(resetAction)
       } else {
-        let res = await postPort(`${postDeviceTimelines}?token=${token}`, bodyData)
-        if(!res) {
-          Alert.alert('错误', 'Internal Server Error',
-            [ {text: 'OK', onPress: () => 'OK'}, ],
-            { cancelable: false }
-          )
-        } else if(res.code == 201) {
-          const resetAction = NavigationActions.reset({
-            index: 1,
-            actions: [
-              NavigationActions.navigate({ 
-                routeName: 'main', 
-                params: {},
-                action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
-              }),
-              NavigationActions.navigate({ 
-                routeName: 'detail', 
-                params: {
-                  deviceId: navigation.state.params.deviceId, 
-                }, 
-              })
-            ]
-          })
-          navigation.dispatch(resetAction)
-        } else {
-          Alert.alert('错误', JSON.stringify(res.message),
-            [ {text: 'OK', onPress: () => 'OK'}, ],
-            { cancelable: false }
-          )
-        }
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
     })
   }

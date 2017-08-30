@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 import { lightBlueColor, subTitleColor, contentColor } from '../../common/constants'
 import { seekTab } from '../../styles'
 
@@ -12,7 +12,7 @@ export default props => {
   return (
     <View style={seekTab.tabView}>
       <TouchableOpacity 
-        style={[seekTab.tabTouch, {borderRightWidth: 0.5, borderColor: subTitleColor}]} 
+        style={[seekTab.tabTouch, {borderRightWidth: StyleSheet.hairlineWidth, borderColor: subTitleColor}]} 
         activeOpacity={0.8} 
         onPress={()=> openModal(`seekPartRow`)}
       >

@@ -1,4 +1,5 @@
 import { mainColor, mainColorPressed, subTitleColor, contentColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   modalWrap: {
@@ -11,7 +12,7 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: mainColorPressed,
   },
   textClass: {

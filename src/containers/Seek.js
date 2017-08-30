@@ -51,11 +51,11 @@ export default class Seek extends Component {
   }
 
   render() {
-    let { seekPartRow, seekTypeRow, topView, secondView, isRefreshing } = this.state
+    let { seekPartRow, seekTypeRow, topView, secondView, isRefreshing, selectedTypesData } = this.state
       , { openModal } = seekAC
     return(
       <View style={{paddingBottom: 80}}>
-        <SeekTab partsData={seekPartsData} typesData={seekTypesData} state={this.state} openModal={openModal} />
+        <SeekTab state={this.state} openModal={openModal} />
         <View style={{height: '100%'}}>
           <View style={[!seekPartRow && !seekTypeRow ? topView : secondView, {height: '100%', paddingBottom: 50}]}>
             <SeekCategory isRefreshing={isRefreshing} onSeekRefresh={this.onSeekRefresh.bind(this)} {...this.props} />
@@ -64,7 +64,7 @@ export default class Seek extends Component {
             <SeekPartsColumn partsData={seekPartsData} state={this.state} />
           </View>
           <View style={[topView, {height: seekTypeRow ? '100%' : 0}]}>
-            <SeekTypesColumn typesData={seekTypesData} state={this.state} />
+            <SeekTypesColumn typesData={selectedTypesData} state={this.state} />
           </View>
         </View>
       </View>
@@ -110,7 +110,7 @@ const SeekTypesColumn = props => {
               activeOpacity={0.8}
               onPress={()=> pressTypeColumn(t, typesData)}
             >
-              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.types}</Text>
+              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem}</Text>
             </TouchableOpacity>)
           }
         </ScrollView>

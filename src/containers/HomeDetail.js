@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Alert, Platform, WebView, Dimensions } from 'react-native'
 import moment from 'moment'
 import { primaryColor, mainColor, loginBorderColor, loginBackgroundColor } from '../common/constants'
-import { tokenKey } from '../common/strings'
+import { tokenKey, internalServerError } from '../common/strings'
 import Loading2 from '../components/units/Loading2'
 import ShareModal from '../components/units/ShareModal'
 import { seekDetail, detail } from '../styles'
@@ -53,7 +53,7 @@ export default class HomeDetail extends Component {
     .then(async token => {
       let res = await getPort(`${getNewsOne}?id=${id}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

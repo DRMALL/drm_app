@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { phoneNumber, save, tokenKey } from '../../common/strings'
+import { phoneNumber, save, tokenKey, internalServerError } from '../../common/strings'
 import { updateInfo } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
@@ -44,9 +44,15 @@ export default class Phone extends Component {
       let bodyData = {
         phone: this.state.phone_number,
       }
+      // if(bodyData.phone === '' || bodyData.phone === null) {
+      //   return Alert.alert('错误', '联系电话不能为空',
+      //     [ {text: 'OK', onPress: () => 'OK'}, ],
+      //     { cancelable: false }
+      //   )
+      // }
       let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

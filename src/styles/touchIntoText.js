@@ -1,4 +1,5 @@
 import { mainColor, subTitleColor, loginBorderColor, titleColor, backgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -11,7 +12,7 @@ export default {
     height: 60,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

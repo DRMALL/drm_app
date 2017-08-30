@@ -1,4 +1,5 @@
 import { subTitleColor, backgroundColor, mainColor, contentColor, loginBackgroundColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
 //Seek
@@ -10,7 +11,7 @@ export default {
     height: 55,
     paddingHorizontal: 16,
     justifyContent: 'center',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
@@ -38,17 +39,17 @@ export default {
   },
   materialLongCodeView: {
     width: '28%',
-    borderRightWidth: 0.5,
+    borderRightWidth: StyleSheet.hairlineWidth,
     borderColor: subTitleColor,
   },
   materialNameView: {
     width: '26%',
-    borderRightWidth: 0.5,
+    borderRightWidth: StyleSheet.hairlineWidth,
     borderColor: subTitleColor,
   },
   materialModelsView: {
     width: '28%',
-    borderRightWidth: 0.5,
+    borderRightWidth: StyleSheet.hairlineWidth,
     borderColor: subTitleColor,
   },
   materialUnitesView: {
@@ -66,7 +67,7 @@ export default {
     paddingLeft: 16,
     paddingRight: 28,
     paddingVertical: 20,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },

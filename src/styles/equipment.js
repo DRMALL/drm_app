@@ -1,4 +1,5 @@
 import { mainColor, titleColor, backgroundColor, subTitleColor, loginBackgroundColor, contentColor } from '../common/constants'
+import { StyleSheet } from 'react-native'
 
 export default {
   wrap: {
@@ -8,7 +9,7 @@ export default {
   fixText: {
     height: 40,
     fontSize: 16,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     paddingVertical: 9,
     paddingLeft: 15,
@@ -39,7 +40,7 @@ export default {
     height: 40,
     alignItems: 'center',
     flexDirection: 'row',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     paddingLeft: 15,
   },
@@ -58,7 +59,7 @@ export default {
     height: 60,
     alignItems: 'center',
     flexDirection: 'row',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     paddingLeft: 15,
     backgroundColor: mainColor,
@@ -75,7 +76,7 @@ export default {
     height: 40,
     alignItems: 'center',
     flexDirection: 'row',
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: backgroundColor,
     paddingLeft: 15,
     backgroundColor: backgroundColor

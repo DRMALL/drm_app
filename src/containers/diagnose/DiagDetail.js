@@ -1,7 +1,7 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView, Dimensions } from 'react-native'
 import { primaryColor, mainColor } from '../../common/constants'
-import { unsolvedGoToPushOrder, tokenKey } from '../../common/strings'
+import { unsolvedGoToPushOrder, tokenKey, internalServerError } from '../../common/strings'
 import { diagDetail } from '../../styles'
 import Button from '../../components/units/Button'
 import ShareModal from '../../components/units/ShareModal'
@@ -13,6 +13,8 @@ import { diagnosisData } from '../../utils/virtualData'
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../../images/navigation_icons/empty.png')
 const shareIcon = require('../../images/navigation_icons/share.png')
+
+let windowWidth = Math.round((Dimensions.get('window').width-60))
 
 export default class DiagDetail extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -60,7 +62,7 @@ export default class DiagDetail extends Component {
     .then(async token => {
       let res = await getPort(`${getBug}?id=${bugsId}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -83,6 +85,18 @@ export default class DiagDetail extends Component {
     })
   }
 
+  handleDiagDom() {
+    const injectdScript = `
+      (function () {
+        const arr = document.getElementsByTagName(\"img\")
+        let height = null
+        for (let i = 0; i < arr.length; i ++) {
+          arr[i].width = ${windowWidth}
+        }
+      } () )`
+    return injectdScript
+  }
+
   render() {
     let { navigation } = this.props
       , { oneBugData, shareShow, topView, nextView } = this.state
@@ -91,12 +105,18 @@ export default class DiagDetail extends Component {
     return (
       <View>
         <View style={[diagDetail.wrap, shareShow ? nextView : topView]}>
-          <ScrollView>
+          <ScrollView style={{height: '100%'}}>
             <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
             <Text style={diagDetail.kindText}>{categoryText}</Text>
-            <View style={{height: Math.round(contentLength*3/2), paddingHorizontal: 16}}>
+            <View style={{height: contentLength < 500 ? 650 : Math.round(contentLength*3/2), paddingHorizontal: 16 }}>
               <WebView 
                 style={{height: '100%'}}
+                automaticallyAdjustContentInsets={false}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                scrollEnabled={false}
+                // onMessage={this.onMessage.bind(this)}
+                injectedJavaScript={this.handleDiagDom()}
                 source={{html: oneBugData.content}}
               />
             </View>

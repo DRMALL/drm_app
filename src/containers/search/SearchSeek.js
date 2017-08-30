@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Platform, StatusBar } from 'react-native'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Platform, StatusBar, Alert } from 'react-native'
 import { mainColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
-import { inputPartsKeywords, historicalRecord, hotSearch, tokenKey } from '../../common/strings'
+import { inputPartsKeywords, historicalRecord, hotSearch, tokenKey, internalServerError } from '../../common/strings'
 import { search, diagnose } from '../../styles'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
@@ -58,7 +58,7 @@ export default class SearchSeek extends Component {
     .then(async token => {
       let res = await getPort(`${getBugsHot}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -84,7 +84,7 @@ export default class SearchSeek extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -106,7 +106,7 @@ export default class SearchSeek extends Component {
     .then(async token => {
       let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
@@ -141,13 +141,20 @@ export default class SearchSeek extends Component {
   }
 
   pressDeleteSweep() {
-    getKeyNum('seek')
-    .then( num => {
-      clearWord('seek', num)
-    })
-    this.setState({
-      historyData: [],
-    })
+    Alert.alert('提示', '是否删除历史记录',
+      [ {text: '取消', onPress: () => 'no'}, 
+        {text: '确定', onPress: () => {
+         getKeyNum('seek')
+          .then( num => {
+            clearWord('seek', num)
+          })
+          this.setState({
+            historyData: [],
+          })
+        }},
+      ],
+      { cancelable: false }
+    )
   }
 
 

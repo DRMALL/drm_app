@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { other, search } from '../../styles'
 import { primaryColor } from '../../common/constants'
-import { userName, save, tokenKey } from '../../common/strings'
+import { userName, save, tokenKey, internalServerError } from '../../common/strings'
+import replaced from '../../funcs/replace'
 import { updateInfo } from '../../apis'
 import { postPort } from '../../utils/fetchMethod'
 import { checkToken, depositToken, clearToken } from '../../utils/handleToken'
@@ -28,7 +29,7 @@ export default class UserName extends Component {
     super(props)
     let { user_name } = props.navigation.state.params
     this.state = {
-      user_name: user_name === 'null' ? '' : user_name,
+      user_name: user_name === 'null' ? '' : replaced.trim(user_name),
     }
   }
 
@@ -39,14 +40,26 @@ export default class UserName extends Component {
   }
 
   pressSaveName() {
+    const illCharRE = /[`~!@#$%^&*+<>?:"{},.\/;'[\]\\|]/im
     checkToken(tokenKey)
     .then(async token => {
       let bodyData = {
-        name: this.state.user_name,
+        name: replaced.trim(this.state.user_name),
+      }
+      if(bodyData.name === '' || bodyData.name === 'null') {
+        return Alert.alert('错误', '用户名不能为空',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(illCharRE.test(bodyData.name)) {
+        return Alert.alert('错误', '用户名含非法字符',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
       }
       let res = await postPort(`${updateInfo}?token=${token}`, bodyData)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

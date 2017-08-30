@@ -44,6 +44,7 @@ export const seek_type_T = 'SEEK_TYPE_TRUE'
 export const seek_type_F = 'SEEK_TYPE_FALSE'
 export const seek_detail_share_show = 'SEEK_DETAIL_SHARE_SHOW'
 export const seek_detail_share_hidden = 'SEEK_DETAIL_SHARE_HIDDEN'
+export const seek_selected_type_data = 'SEEK_SELECTED_TYPE_DATA'
 
   //statu
 export const statu_refresh_T = 'STATU_REFRESH_TRUE'

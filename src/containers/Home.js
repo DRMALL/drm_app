@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, Button, StatusBar, Alert } from 'react-native'
 import { primaryColor, loginBackgroundColor } from '../common/constants'
-import { tokenKey } from '../common/strings'
+import { tokenKey, internalServerError } from '../common/strings'
 import TabBarItem from '../components/units/TabBarItem'
 import Loading from '../components/units/Loading'
 import HomeList from '../components/HomeList'
@@ -51,7 +51,7 @@ export default class Home extends Component {
     .then(async token => {
       let res = await getPort(`${getNews}?token=${token}`)
       if(!res) {
-        Alert.alert('错误', 'Internal Server Error',
+        Alert.alert('错误', internalServerError,
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )
