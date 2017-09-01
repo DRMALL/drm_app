@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
 import moment from 'moment'
 import { mainColor, primaryColor, subTitleColor, contentColor, loginBackgroundColor } from '../../common/constants'
-import { inputDeviceTypes, historicalRecord, hotSearch, tokenKey, inTheEnd, internalServerError } from '../../common/strings'
+import { inputDeviceTypes, historicalRecord, hotSearch, inTheEnd } from '../../common/strings'
 import { search, device, home } from '../../styles'
-import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
-import { checkToken } from '../../utils/handleToken'
-import { getPort } from '../../utils/fetchMethod'
-import { getDevicesSearch, getDevicesHots } from '../../apis'
+import { getWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import Loading from '../../components/units/Loading'
 
 import store from '../../utils/store'
 import deviceAC from '../../actions/deviceAC'
+import getDeviceHotword from '../../funcs/search/getDeviceHotword'
+import getDeviceOnchange from '../../funcs/search/getDeviceOnchange'
+import getDeviceSubmit from '../../funcs/search/getDeviceSubmit'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
@@ -35,7 +35,7 @@ export default class SearchDevice extends Component {
 
   componentDidMount () {
     let diagwordRe = []
-    this.getBugsHotword()
+    getDeviceHotword()
     getKeyNum('device')
     .then( num => {
       getWord('device', num)
@@ -56,78 +56,9 @@ export default class SearchDevice extends Component {
     this.unsubscribe()
   }
 
-  getBugsHotword() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getDevicesHots}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        deviceAC.getHotword(res.data)
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  getBugsOnchange(text) {
-    deviceAC.setJumpData({
-      text: text,
-      jumpData: text == '' ? false : true,
-    })
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getDevicesSearch}?type=onchange&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        deviceAC.getDeviceData(res.data)
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  getBugsSubmit() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getDevicesSearch}?type=submit&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        let prevHistoryData = this.state.historyData
-        if(res.data.text != null && res.data.text != undefined) {
-          prevHistoryData = [res.data.text].concat(prevHistoryData)
-          deviceAC.setHistoryData(prevHistoryData)
-          saveWord('device', prevHistoryData)
-        }
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
   pressTextTouch(text) {
-    this.getBugsOnchange(text)
-    this.getBugsSubmit()
+    getDeviceOnchange(text)
+    getDeviceSubmit()
   }
 
   pressDeleteSweep() {
@@ -148,7 +79,6 @@ export default class SearchDevice extends Component {
   render() {
     let { navigation } = this.props
       , { deviceData, historyData, hotwordData, jumpData } = this.state
-      , { pressCleanText } = deviceAC
       , dataDeviceView
     if(!deviceData) {
       dataDeviceView = <Loading animating={!deviceData ? true : false}/>
@@ -165,9 +95,6 @@ export default class SearchDevice extends Component {
         <HeaderSearch 
           state={this.state} 
           navigation={navigation} 
-          onChangeText={this.getBugsOnchange.bind(this)}
-          onSubmitEditing={this.getBugsSubmit.bind(this)}
-          cleanText={()=> pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
           {dataDeviceView}
@@ -241,7 +168,8 @@ const DeviceItem = props => {
 }
 
 const HeaderSearch = props => {
-  let { state, navigation, onChangeText, onSubmitEditing, cleanText } = props
+  let { state, navigation, cleanText } = props
+    , { pressCleanText } = deviceAC
   return (
     <View style={search.header}>
       <TouchableOpacity style={search.touchBack} onPress={()=> navigation.goBack()}>
@@ -256,12 +184,12 @@ const HeaderSearch = props => {
           underlineColorAndroid='transparent'
           autoFocus={true}
           value={state.text}
-          onChangeText={onChangeText}
-          onSubmitEditing={onSubmitEditing}
+          onChangeText={getDeviceOnchange}
+          onSubmitEditing={getDeviceSubmit}
         />
         <Image style={search.searchIcon} source={searchIcon}/>
         {
-          state.text != '' ? <TouchableOpacity style={search.cancelTouch} onPress={cleanText}>
+          state.text != '' ? <TouchableOpacity style={search.cancelTouch} onPress={pressCleanText}>
             <Image style={search.cancelIcon} source={cancelIcon}/>
           </TouchableOpacity> : <Image style={{height: 0}}/>
         }

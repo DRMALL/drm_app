@@ -97,7 +97,9 @@ export default StackNavigator({
       headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', {name: 'Information'})}>
         <Image source={userIcon}/>
       </TouchableOpacity>,
-      headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} onPress={() => navigation.navigate('message', {name: 'Message'})}>
+      headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} 
+        onPress={()=> navigation.navigate('message', {disabledPress: true})}
+      >
         <Image source={infoIcon}/>
       </TouchableOpacity>,
     }),

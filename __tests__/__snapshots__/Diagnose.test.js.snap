@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Diagnose test 1`] = `
+<View
+  style={
+    Object {
+      "height": "100%",
+      "paddingBottom": 45,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "borderColor": "rgba(0,0,0,.06)",
+        "borderWidth": 0.5,
+      }
+    }
+  >
+    <RCTScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+    >
+      <View />
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#F7F7F7",
+        "height": "100%",
+      }
+    }
+  >
+    <RCTScrollView
+      refreshControl={
+        <RefreshControlMock
+          colors={
+            Array [
+              "#ff0000",
+              "#00ff00",
+              "#0000ff",
+            ]
+          }
+          onRefresh={[Function]}
+          progressBackgroundColor="#fff"
+          refreshing={false}
+          title="下拉刷新"
+          titleColor="rgba(0,0,0,.6)"
+        />
+      }
+    >
+      <RCTRefreshControl />
+      <View />
+    </RCTScrollView>
+  </View>
+</View>
+`;

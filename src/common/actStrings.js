@@ -21,6 +21,7 @@ export const home_share_show = 'HOME_SHARE_SHOW'
 export const home_share_hidden = 'HOME_SHARE_HIDDEN'
 export const home_webview_height = 'HOME_WEBVIEW_HEIGHT'
 export const home_webview_heightcash = 'HOME_WEBVIEW_HEIGHTCASH'
+export const home_routes_msgpress = 'HOME_ROUTES_MSGPRESS'
 
   //information
 export const info_data_get = 'INFO_DATA_GET'
@@ -51,6 +52,7 @@ export const statu_refresh_T = 'STATU_REFRESH_TRUE'
 export const statu_refresh_F = 'STATU_REFRESH_FALSE'
 export const statu_tab_select = 'STATU_TAB_SELECT'
 export const statu_tab_normal = 'STATU_TAB_NORMAL'
+export const statu_datalist_get = 'STATU_DATALIST_GET'
 
   //device
 export const device_history_set = 'DEVICE_HISTORY_SET'

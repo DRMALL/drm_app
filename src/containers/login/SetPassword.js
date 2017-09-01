@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { primaryColor, lightBlueColor, mainColor } from '../../common/constants'
 import { resettingPassword, newPassword, verifyNewPassword, confirm } from '../../common/strings'
 import { setPassword } from '../../styles'
@@ -20,8 +20,24 @@ export default class SetPassword extends Component {
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
   });
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      newWord: '',
+      newWordVer: '',
+    }
+  }
+
   pressConfirm() {
-    this.props.navigation.navigate('login')
+    let { newWord, newWordVer } = this.state
+    if(newWord != '' && newWord == newWordVer) {
+      this.props.navigation.navigate('login')
+    } else {
+      Alert.alert('错误', '密码不一致',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    }
   }
 
   render() {
@@ -31,14 +47,14 @@ export default class SetPassword extends Component {
         <TextInput 
           style={setPassword.input}
           underlineColorAndroid="transparent"
-          onChangeText={(text)=> 'this.setState({})'}
+          onChangeText={(newWord)=> this.setState({newWord})}
           selectTextOnFocus={true}
         />
         <Text style={setPassword.fixText}>{verifyNewPassword}</Text>
         <TextInput 
           style={setPassword.input}
           underlineColorAndroid="transparent"
-          onChangeText={(text)=> 'this.setState({})'}
+          onChangeText={(newWordVer)=> this.setState({newWordVer})}
           selectTextOnFocus={true}
         />
         <View style={setPassword.buttonView}>
@@ -46,7 +62,7 @@ export default class SetPassword extends Component {
             style={setPassword.button} 
             title={confirm} 
             titleStyle={setPassword.buttonText} 
-            onPress={this.pressConfirm}
+            onPress={this.pressConfirm.bind(this)}
           />
         </View>
       </View>

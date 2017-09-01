@@ -11,7 +11,7 @@ const shareIcon = require('../../images/navigation_icons/share.png')
 const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 
 export default props => {
-  let { picData, navigation,  } = props
+  let { picData, navigation } = props
     , { showShare } = homeDetailAC
   let picsDataView = []
   for(var i = 0; i < picData.length; i++) {

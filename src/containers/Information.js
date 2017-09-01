@@ -23,6 +23,9 @@ import { getInfo } from '../apis'
 
 import store from '../utils/store'
 import infoAC from '../actions/infoAC'
+import getInformation from '../funcs/information/getInformation'
+import confirmLogOut from '../funcs/information/confirmLogOut'
+import pressLogOut from '../funcs/information/pressLogOut'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../images/navigation_icons/empty.png')
@@ -44,7 +47,7 @@ export default class Information extends Component {
     this.state = store.getState().information
   }
   componentDidMount() {
-    this.getInformation()
+    getInformation()
   }
 
   componentWillMount() {
@@ -53,55 +56,6 @@ export default class Information extends Component {
 
   componentWillUnmount(){
     this.unsubscribe()
-  }
-
-  getInformation() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getInfo}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        infoAC.getInfomationData({
-          user_name: res.data.name,
-          company_name: res.data.company_name,
-          phone_number: res.data.phone,
-          postal_address: res.data.address,
-        })
-      } else if(res.code == 404) {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  confirmLogOut() {
-    clearToken()
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'login'}),
-      ]
-    })
-    this.props.navigation.dispatch(resetAction)
-  }
-
-  pressLogOut() {
-    Alert.alert('提示', '您将退出？',
-      [ {text: '取消', onPress: () => 'OK'}, 
-        {text: '确定', onPress: () => this.confirmLogOut()}, ],
-      { cancelable: false }
-    )
   }
 
   render() {
@@ -140,7 +94,7 @@ export default class Information extends Component {
             titleStyle={information.buttonText} 
             style={information.buttonView} 
             activeOpacity={0.8}
-            onPress={()=> this.pressLogOut()}
+            onPress={()=> pressLogOut(this.props)}
           />
         </View>
       </View>

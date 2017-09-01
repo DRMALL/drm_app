@@ -53,25 +53,25 @@ export default class SearchStatus extends Component {
   }
 
   getBugsHotword() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugsHot}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        this.setState({
-          hotwordData: res.data,
-        })
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
+    // checkToken(tokenKey)
+    // .then(async token => {
+    //   let res = await getPort(`${getBugsHot}?token=${token}`)
+    //   if(!res) {
+    //     Alert.alert('错误', internalServerError,
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   } else if(res.code == 200) {
+    //     this.setState({
+    //       hotwordData: res.data,
+    //     })
+    //   } else {
+    //     Alert.alert('错误', JSON.stringify(res.message),
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   }
+    // })
   }
 
   getBugsOnchange(text) {
@@ -79,52 +79,52 @@ export default class SearchStatus extends Component {
       text: text,
       jumpData: text == '' ? false : true,
     })
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        this.setState({
-          bugsData: res.data,
-        })
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
+    // checkToken(tokenKey)
+    // .then(async token => {
+    //   let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
+    //   if(!res) {
+    //     Alert.alert('错误', internalServerError,
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   } else if(res.code == 200) {
+    //     this.setState({
+    //       bugsData: res.data,
+    //     })
+    //   } else {
+    //     Alert.alert('错误', JSON.stringify(res.message),
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   }
+    // })
   }
 
   getBugsSubmit() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        let prevHistoryData = this.state.historyData
-        if(res.data.text != null && res.data.text != undefined) {
-          prevHistoryData = [res.data.text].concat(prevHistoryData)
-          this.setState({
-            historyData: prevHistoryData,
-          })
-          saveWord('statu', prevHistoryData)
-        }
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
+    // checkToken(tokenKey)
+    // .then(async token => {
+    //   let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
+    //   if(!res) {
+    //     Alert.alert('错误', internalServerError,
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   } else if(res.code == 200) {
+    //     let prevHistoryData = this.state.historyData
+    //     if(res.data.text != null && res.data.text != undefined) {
+    //       prevHistoryData = [res.data.text].concat(prevHistoryData)
+    //       this.setState({
+    //         historyData: prevHistoryData,
+    //       })
+    //       saveWord('statu', prevHistoryData)
+    //     }
+    //   } else {
+    //     Alert.alert('错误', JSON.stringify(res.message),
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   }
+    // })
   }
 
   pressCleanText() {

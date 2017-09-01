@@ -1,0 +1,307 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Device test 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 100,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#F7F7F7",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderBottomWidth": 0.5,
+          "borderColor": "rgba(0,0,0,.06)",
+          "flexDirection": "row",
+          "height": 50,
+          "justifyContent": "space-around",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "borderColor": "rgba(0,0,0,.06)",
+            "borderLeftWidth": 0.5,
+            "borderRightWidth": 0.5,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingVertical": 10,
+            "width": "33.333%",
+          }
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15,
+                "marginRight": 5,
+              },
+              Object {
+                "color": "rgba(0,0,0,.6)",
+              },
+            ]
+          }
+        >
+          分类
+        </Text>
+        <Image
+          source={1}
+        />
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "borderColor": "rgba(0,0,0,.06)",
+            "borderLeftWidth": 0.5,
+            "borderRightWidth": 0.5,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingVertical": 10,
+            "width": "33.333%",
+          }
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15,
+                "marginRight": 5,
+              },
+              Object {
+                "color": "rgba(0,0,0,.6)",
+              },
+            ]
+          }
+        >
+          排序
+        </Text>
+        <Image
+          source={1}
+        />
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "borderColor": "rgba(0,0,0,.06)",
+            "borderLeftWidth": 0.5,
+            "borderRightWidth": 0.5,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingVertical": 10,
+            "width": "33.333%",
+          }
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 15,
+                "marginRight": 5,
+              },
+              Object {
+                "color": "rgba(0,0,0,.6)",
+              },
+            ]
+          }
+        >
+          筛选
+        </Text>
+        <Image
+          source={1}
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "height": "100%",
+          "paddingBottom": 50,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "position": "relative",
+            "zIndex": 3,
+          }
+        }
+      >
+        <RCTScrollView
+          dataSource={
+            ListViewDataSource {
+              "items": 0,
+            }
+          }
+          enableEmptySections={true}
+          refreshControl={
+            <RefreshControlMock
+              colors={
+                Array [
+                  "#ff0000",
+                  "#00ff00",
+                  "#0000ff",
+                ]
+              }
+              onRefresh={[Function]}
+              progressBackgroundColor="#fff"
+              refreshing={false}
+              title="下拉刷新"
+              titleColor="rgba(0,0,0,.6)"
+            />
+          }
+          renderRow={[Function]}
+          renderScrollComponent={[Function]}
+          style={
+            Object {
+              "height": "100%",
+            }
+          }
+        >
+          <RCTRefreshControl />
+          <View />
+        </RCTScrollView>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "position": "relative",
+              "zIndex": 3,
+            },
+            Object {
+              "height": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "position": "relative",
+              "zIndex": 3,
+            },
+            Object {
+              "height": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "position": "relative",
+              "zIndex": 3,
+            },
+            Object {
+              "height": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;

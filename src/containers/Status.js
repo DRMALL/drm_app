@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
-import socket from 'socket.io-client'
 import { subTitleColor, loginBackgroundColor } from '../common/constants'
 import { all, onState, offState } from '../common/strings'
 import StatusCategory from '../components/StatusCategory'
@@ -10,6 +9,7 @@ import { statusList } from '../utils/virtualData'
 
 import store from '../utils/store'
 import statuAC from '../actions/statuAC'
+import socketConnectStatu from '../funcs/status/socketConnectStatu'
 
 const statusIconSelected = require('../images/tabbar_icons/tabbar_monitor_selected_x.png')
     , statusIconNormal = require('../images/tabbar_icons/tabbar_monitor_normal.png')
@@ -32,7 +32,7 @@ export default class Status extends Component {
   }
 
   componentDidMount() {
-    this.socketConnectStatu()
+    // socketConnectStatu()
   }
 
   componentWillMount() {
@@ -43,33 +43,9 @@ export default class Status extends Component {
     this.unsubscribe()
   }
 
-  socketConnectStatu() {
-    this.io = socket(`http://139.129.44.18:17954?token=900150983cd24fb0d6963f7d28e17f72&key=&values=&timestamps=`)
-    this.io.on('connect', ()=> {
-      // this.setState(()=> {
-      //   return {
-      //     connect: 'connect',
-      //   }
-      // })
-      console.log('connect')
-    })
-    this.io.on('message', (res) => {
-      // this.setState(res)
-      console.log('message')
-    })
-    this.io.on('disconnect', ()=> {
-      // this.setState(()=> {
-      //   return {
-      //     connect: 'disconnect',
-      //   }
-      // })
-      console.log('disconnect')
-    })
-  }
-
   onStatusRefresh() {
     statuAC.isRefresh()
-    // this.getNewsList()
+    // funcs()
     setTimeout(() => {
       statuAC.isnotRefresh()
     }, 2000)

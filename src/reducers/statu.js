@@ -4,6 +4,7 @@ import {
   statu_refresh_F,
   statu_tab_select,
   statu_tab_normal,
+  statu_datalist_get,
 } from '../common/actStrings'
 
 const statu = (()=> {
@@ -12,6 +13,7 @@ const statu = (()=> {
     statusArr: statusArr,
     situation: all,
     isRefreshing: false,
+    statusListData: [],
   }
   statusArr.map((item, index)=> {
     if(index == 0) statuStateObj[`StatuTabRow${index}`] = true
@@ -30,6 +32,8 @@ export default (state = statu, action) => {
       return Object.assign({}, state, action.payload)
     case statu_tab_normal:
       return Object.assign({}, state, action.payload)
+    case statu_datalist_get:
+      return Object.assign({}, state, { statusListData: action.payload })
     default:
       return state
   }

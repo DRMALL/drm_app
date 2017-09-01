@@ -113,7 +113,12 @@ export default class DynamicOrder extends Component {
           index: 1,
           actions: [
             NavigationActions.navigate({ routeName: 'main'}),
-            NavigationActions.navigate({ routeName: 'message'}),
+            NavigationActions.navigate({ 
+              routeName: 'message', 
+              params: {
+                disabledPress: true, 
+              },
+            }),
           ]
         })
         this.props.navigation.dispatch(resetAction)

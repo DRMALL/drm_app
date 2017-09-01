@@ -3,14 +3,12 @@ import { View, Text, Image, Alert } from 'react-native'
 import TabBarItem from '../components/units/TabBarItem'
 import DiagnosisTab from '../components/units/DiagnosisTab'
 import DiagnoseCategory from '../components/DiagnoseCategory'
-import { tokenKey, internalServerError } from '../common/strings'
-import { checkToken } from '../utils/handleToken'
-import { getPort } from '../utils/fetchMethod'
-import { getBugs, getCate } from '../apis'
 // import { diagnosisTabData } from '../utils/virtualData'
 
 import store from '../utils/store'
 import diagnoseAC from '../actions/diagnoseAC'
+import getDiagnosis from '../funcs/diagnose/getDiagnosis'
+import getDiagnoseCate from '../funcs/diagnose/getDiagnoseCate'
 
 const diagnoseIconSelected = require('../images/tabbar_icons/tabbar_diagnosis_selected_x.png')
     , diagnoseIconNormal = require('../images/tabbar_icons/tabbar_diagnosis_normal.png')
@@ -33,8 +31,8 @@ export default class Diagnose extends Component {
   }
 
   componentDidMount() {
-    this.getDiagnosis()
-    this.getDiagnoseCate()
+    getDiagnosis()
+    getDiagnoseCate()
   }
 
   componentWillMount() {
@@ -43,60 +41,6 @@ export default class Diagnose extends Component {
 
   componentWillUnmount(){
     this.unsubscribe()
-  }
-
-  getDiagnosis() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        diagnoseAC.getDiagnoseData(res.data) 
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  getDiagnoseCate() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getCate}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        diagnoseAC.getDiagCate({
-          allCateData: res.data,
-          selectedCate: res.data[0].text,
-        })
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  pressTab(dt) {
-    this.state.allCateData.map((itemTabType, index)=> {
-      if(dt == index) {
-        diagnoseAC.selectCate({
-          [`tabTypeRow${dt}`]: true,
-          selectedCate: itemTabType.text,
-        })
-      } else diagnoseAC.normalCate({[`tabTypeRow${index}`]: false})
-    })
   }
 
   onDiagRefresh() {
@@ -117,7 +61,7 @@ export default class Diagnose extends Component {
     })
     return(
       <View style={{height: '100%', paddingBottom: 45}}>
-        <DiagnosisTab state={this.state} diagData={allCateData} pressTab={this.pressTab.bind(this)}/>
+        <DiagnosisTab state={this.state} diagData={allCateData} />
         <DiagnoseCategory diagnoseData={sortDiagnoseData} isRefreshing={isRefreshing} onDiagRefresh={this.onDiagRefresh.bind(this)} {...this.props} />
       </View>
     )

@@ -7,6 +7,7 @@ import {
   home_share_hidden,
   home_webview_height,
   home_webview_heightcash,
+  home_routes_msgpress,
 } from '../common/actStrings'
 
 const home = {
@@ -18,6 +19,7 @@ const home = {
   nextView: {position: 'absolute', zIndex: 2},
   height: 0,
   heightCash: 0,
+  routesMsgTF: false,
 }
 
 export default (state = home, action) => {
@@ -38,6 +40,8 @@ export default (state = home, action) => {
       return Object.assign({}, state, { height: action.payload })
     case home_webview_heightcash:
       return Object.assign({}, state, { heightCash: action.payload })
+    case home_routes_msgpress:
+      return Object.assign({}, state, { routesMsgTF: action.payload })
     default:
       return state
   }

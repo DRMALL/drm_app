@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, Image, Button, StatusBar, Alert } from 'react-native'
+import { View, Text, Image, Button, StatusBar } from 'react-native'
 import { primaryColor, loginBackgroundColor } from '../common/constants'
-import { tokenKey, internalServerError } from '../common/strings'
 import TabBarItem from '../components/units/TabBarItem'
 import Loading from '../components/units/Loading'
 import HomeList from '../components/HomeList'
-import { checkToken } from '../utils/handleToken'
-import { getPort } from '../utils/fetchMethod'
-import { getNews } from '../apis'
-import { homeList } from '../utils/virtualData'
 
 import store from '../utils/store'
-import getHomeData from '../actions/getHomeData'
 import homeDetailAC from '../actions/homeDetailAC'
+import getNewsList from '../funcs/home/getNewsList'
 
 const homeIconSelected = require('../images/tabbar_icons/tabbar_home_selected.png')
     , homeIconNormal = require('../images/tabbar_icons/tabbar_home_normal.png')
@@ -35,7 +30,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    this.getNewsList()
+    getNewsList()
   }
 
   componentWillMount() {
@@ -44,26 +39,6 @@ export default class Home extends Component {
 
   componentWillUnmount(){
     this.unsubscribe()
-  }
-
-  getNewsList() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getNews}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        getHomeData(res.data)
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
   }
 
   onHomeRefresh() {

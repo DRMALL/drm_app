@@ -1,15 +1,19 @@
 import statuAC from './statuAC'
 import store from '../utils/store'
 
-describe('home page get data', () => {
-  // test('unknown', () => {
-  //   statuAC()
-  //   expect(store.getState().home.newsListData).toBe(undefined)
-  // })
+describe('statu actions', () => {
+  test('isRefresh', () => {
+    statuAC.isRefresh()
+    expect(store.getState().statu.isRefreshing).toBeTruthy()
+  })
 
-  // test('exist value', () => {
-  //   const homeListEQ = [{data: '1'}, {data: '2'}]
-  //   statuAC(homeListEQ)
-  //   expect(store.getState().home.newsListData).toEqual(expect.arrayContaining(homeListEQ))
-  // })
+  test('isnotRefresh', () => {
+    statuAC.isnotRefresh()
+    expect(store.getState().statu.isRefreshing).toBeFalsy()
+  })
+
+  test('pressStatusTab', () => {
+    statuAC.pressStatusTab(0)
+    expect(store.getState().statu.StatuTabRow0).toBeTruthy()
+  })
 })

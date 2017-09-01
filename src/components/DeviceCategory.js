@@ -68,12 +68,14 @@ export default class DeviceCategory extends Component {
   }
 
   openModal(which) {
-    this.setState({
-      classifyRow: which == 'classifyRow' ? !this.state.classifyRow : false,
-      sortRow: which == 'sortRow' ? !this.state.sortRow : false,
-      filterRow: which == 'filterRow' ? !this.state.filterRow : false,
-      filterSearch: false,
-    })
+    if(this.state.isMounted) {
+      this.setState({
+        classifyRow: which == 'classifyRow' ? !this.state.classifyRow : false,
+        sortRow: which == 'sortRow' ? !this.state.sortRow : false,
+        filterRow: which == 'filterRow' ? !this.state.filterRow : false,
+        filterSearch: false,
+      })
+    }
   }
 
   getAllDevices2() {
@@ -252,11 +254,13 @@ export default class DeviceCategory extends Component {
   }
 
   onDeviceRefresh() {
-    this.setState({isRefreshing: true})
-    this.getAllDevices()
-    setTimeout(() => {
-      this.setState({isRefreshing: false})
-    }, 2000)
+    if(this.state.isMounted) {
+      this.setState({isRefreshing: true})
+      this.getAllDevices()
+      setTimeout(() => {
+        this.setState({isRefreshing: false})
+      }, 2000)
+    }
   }
 
   render() {

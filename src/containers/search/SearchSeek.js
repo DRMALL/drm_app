@@ -8,7 +8,6 @@ import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBugs, getBugsHot } from '../../apis'
 import Loading from '../../components/units/Loading'
-import {  } from '../../utils/virtualData'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
@@ -37,6 +36,10 @@ export default class SearchSeek extends Component {
   }
 
   componentDidMount () {
+    Alert.alert('提示', '非后端数据，暂不支持搜索',
+      [ {text: 'OK', onPress: () => 'OK'}, ],
+      { cancelable: false }
+    )
     let diagwordRe = []
     this.getBugsHotword()
     getKeyNum('seek')
@@ -46,33 +49,33 @@ export default class SearchSeek extends Component {
         diagword.map((item, d)=> {
           diagwordRe = diagwordRe.concat(item[1])
         })
-        this.setState({
-          historyData: diagwordRe,
-        })
+        // this.setState({
+        //   historyData: diagwordRe,
+        // })
       })
     })
   }
 
   getBugsHotword() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugsHot}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        this.setState({
-          hotwordData: res.data,
-        })
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
+    // checkToken(tokenKey)
+    // .then(async token => {
+    //   let res = await getPort(`${getBugsHot}?token=${token}`)
+    //   if(!res) {
+    //     Alert.alert('错误', internalServerError,
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   } else if(res.code == 200) {
+    //     this.setState({
+    //       hotwordData: res.data,
+    //     })
+    //   } else {
+    //     Alert.alert('错误', JSON.stringify(res.message),
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   }
+    // })
   }
 
   getBugsOnchange(text) {
@@ -80,52 +83,52 @@ export default class SearchSeek extends Component {
       text: text,
       jumpData: text == '' ? false : true,
     })
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        this.setState({
-          bugsData: res.data,
-        })
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
+    // checkToken(tokenKey)
+    // .then(async token => {
+    //   let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
+    //   if(!res) {
+    //     Alert.alert('错误', internalServerError,
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   } else if(res.code == 200) {
+    //     this.setState({
+    //       bugsData: res.data,
+    //     })
+    //   } else {
+    //     Alert.alert('错误', JSON.stringify(res.message),
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   }
+    // })
   }
 
   getBugsSubmit() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        let prevHistoryData = this.state.historyData
-        if(res.data.text != null && res.data.text != undefined) {
-          prevHistoryData = [res.data.text].concat(prevHistoryData)
-          this.setState({
-            historyData: prevHistoryData,
-          })
-          saveWord('seek', prevHistoryData)
-        }
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
+    // checkToken(tokenKey)
+    // .then(async token => {
+    //   let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
+    //   if(!res) {
+    //     Alert.alert('错误', internalServerError,
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   } else if(res.code == 200) {
+    //     let prevHistoryData = this.state.historyData
+    //     if(res.data.text != null && res.data.text != undefined) {
+    //       prevHistoryData = [res.data.text].concat(prevHistoryData)
+    //       this.setState({
+    //         historyData: prevHistoryData,
+    //       })
+    //       saveWord('seek', prevHistoryData)
+    //     }
+    //   } else {
+    //     Alert.alert('错误', JSON.stringify(res.message),
+    //       [ {text: 'OK', onPress: () => 'OK'}, ],
+    //       { cancelable: false }
+    //     )
+    //   }
+    // })
   }
 
   pressCleanText() {

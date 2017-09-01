@@ -1,15 +1,15 @@
 import infoAC from './infoAC'
 import store from '../utils/store'
 
-describe('home page get data', () => {
-  // test('unknown', () => {
-  //   infoAC()
-  //   expect(store.getState().home.newsListData).toBe(undefined)
-  // })
-
-  // test('exist value', () => {
-  //   const homeListEQ = [{data: '1'}, {data: '2'}]
-  //   infoAC(homeListEQ)
-  //   expect(store.getState().home.newsListData).toEqual(expect.arrayContaining(homeListEQ))
-  // })
+describe('info actions', () => {
+  test('getInfomationData', () => {
+    const infoEQ = {
+      user_name: 'test',
+      company_name: 'test',
+      phone_number: 'test',
+      postal_address: 'test',
+    }
+    infoAC.getInfomationData(infoEQ)
+    expect(store.getState().information).toEqual(expect.objectContaining(infoEQ))
+  })
 })

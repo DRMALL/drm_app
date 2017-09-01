@@ -5,6 +5,7 @@ import {
   statu_refresh_F,
   statu_tab_select,
   statu_tab_normal,
+  statu_datalist_get,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -25,6 +26,10 @@ const pressStatusTab = (index)=> {
       })
     } else dispatch(statu_tab_normal, {[`StatuTabRow${i}`]: false})
   })
+}
+
+const getStatusData = (payload)=> {
+  dispatch(statu_datalist_get, payload)
 }
 
 export default {

@@ -7,6 +7,7 @@ import {
   home_share_hidden,
   home_webview_height,
   home_webview_heightcash,
+  home_routes_msgpress,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -37,6 +38,10 @@ const changeWVHeightCash = (payload)=> {
   dispatch(home_webview_heightcash, payload)
 }
 
+const changeMsgPress = (payload)=> {
+  dispatch(home_routes_msgpress, payload)
+}
+
 export default {
   isRefresh,
   isnotRefresh,
@@ -45,4 +50,5 @@ export default {
   hiddenShare,
   changeWVHeight,
   changeWVHeightCash,
+  changeMsgPress,
 }

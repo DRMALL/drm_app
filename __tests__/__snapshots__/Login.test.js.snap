@@ -1,0 +1,274 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login test 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F7F7F7",
+        "height": "110%",
+        "justifyContent": "center",
+      },
+      Object {
+        "height": "103.5%",
+        "top": -20,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "height": 60,
+      }
+    }
+  />
+  <Image
+    source={1}
+    style={
+      Object {
+        "height": 100,
+        "marginBottom": 20,
+        "resizeMode": "contain",
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 20,
+        "lineHeight": 35,
+      }
+    }
+  >
+    多元热流体设备
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 20,
+        "lineHeight": 35,
+      }
+    }
+  >
+    信息及用户管理系统
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Array [
+        Object {
+          "fontSize": 20,
+          "lineHeight": 35,
+        },
+        Object {
+          "lineHeight": 48,
+          "marginBottom": 40,
+        },
+      ]
+    }
+  >
+    MMHFD
+  </Text>
+  <View
+    keyboardVerticalOffset={0}
+    onLayout={[Function]}
+    style={
+      Array [
+        undefined,
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <TextInput
+      autoCapitalize="none"
+      blurOnSubmit={true}
+      onChangeText={[Function]}
+      placeholder="请输入邮箱"
+      selectTextOnFocus={true}
+      style={
+        Object {
+          "alignSelf": "center",
+          "backgroundColor": "#fff",
+          "borderColor": "#7B7B7B",
+          "borderRadius": 6,
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": 10,
+          "opacity": 0.5,
+          "paddingLeft": 15,
+          "width": 280,
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <TextInput
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        onBlur={undefined}
+        onChangeText={[Function]}
+        onFocus={undefined}
+        onSubmitEditing={undefined}
+        placeholder="请输入密码"
+        secureTextEntry={true}
+        selectTextOnFocus={true}
+        style={
+          Object {
+            "alignSelf": "center",
+            "backgroundColor": "#fff",
+            "borderColor": "#7B7B7B",
+            "borderRadius": 6,
+            "borderWidth": 1,
+            "height": 40,
+            "marginBottom": 10,
+            "opacity": 0.5,
+            "paddingLeft": 15,
+            "width": 280,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 7,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 10,
+          }
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <Image
+          source={1}
+          style={
+            Object {
+              "marginBottom": 10,
+              "resizeMode": "contain",
+              "width": 25,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#579df2",
+        "borderRadius": 6,
+        "height": 40,
+        "justifyContent": "center",
+        "opacity": 1,
+        "width": 280,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 15,
+          "overflow": "hidden",
+        }
+      }
+    >
+      登录
+    </Text>
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 40,
+        "justifyContent": "center",
+        "margin": 20,
+        "opacity": 1,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#7B7B7B",
+          "fontSize": 15,
+          "opacity": 0.5,
+        }
+      }
+    >
+      忘记密码?
+    </Text>
+  </View>
+</View>
+`;

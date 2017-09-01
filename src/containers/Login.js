@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Alert, StatusBar, Platform } from 'react-native'
+import { View, Text, TextInput, Image, KeyboardAvoidingView, StatusBar, Platform } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationActions } from 'react-navigation'
 import { 
@@ -11,17 +11,15 @@ import {
   loginText, 
   loginForgetWord, 
   tokenKey,
-  internalServerError, 
 } from '../common/strings'
 import { login } from '../styles'
 import Button from '../components/units/Button'
 import TextInputImg from '../components/units/TextInputImg'
-import { checkToken, depositToken, clearToken } from '../utils/handleToken'
-import { postPort } from '../utils/fetchMethod'
-import { signIn } from '../apis'
+import { checkToken, clearToken } from '../utils/handleToken'
 
 import store from '../utils/store'
 import loginAC from '../actions/loginAC'
+import loginPressButton from '../funcs/login/loginPressButton'
 
 const loginScreenLogo = require('../images/login_screen_logo.png')
 const loginPasswordShow = require('../images/login_password_show.png')
@@ -68,28 +66,6 @@ export default class Login extends Component {
     this.unsubscribe()
   }
 
-  async loginPressButton() {
-    let bodyData = {
-      email: this.state.textEmail,
-      password: this.state.textWord,
-    }
-    let res = await postPort(signIn, bodyData)
-    if(!res) {
-      Alert.alert('错误', internalServerError,
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    } else if(res.code == 201) {
-      depositToken(tokenKey, res.data)
-      this.props.navigation.dispatch(resetAction)
-    } else {
-      Alert.alert('错误', '邮箱或密码输入有误',
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    }
-  }
-
   forgetPressButton() {
     this.props.navigation.navigate('emailVerify')
   }
@@ -134,7 +110,7 @@ export default class Login extends Component {
           title={loginText}
           titleStyle={login.touchLoginText}
           style={login.touchOpacity} 
-          onPress={this.loginPressButton.bind(this)}
+          onPress={()=> loginPressButton(this.props)}
         />
         <Button 
           title={loginForgetWord}

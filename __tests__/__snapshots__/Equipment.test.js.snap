@@ -1,0 +1,670 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Equipment test 1`] = `
+<RCTScrollView
+  style={
+    Object {
+      "backgroundColor": "#F7F7F7",
+      "width": "100%",
+    }
+  }
+>
+  <View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "color": "rgba(0,0,0,.3)",
+          "fontSize": 16,
+          "height": 40,
+          "paddingLeft": 15,
+          "paddingVertical": 9,
+        }
+      }
+    >
+      运行状态
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "fontSize": 18,
+          "height": 60,
+          "paddingLeft": 15,
+          "paddingVertical": 19,
+        }
+      }
+    >
+      异常
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "color": "rgba(0,0,0,.3)",
+          "fontSize": 16,
+          "height": 40,
+          "paddingLeft": 15,
+          "paddingVertical": 9,
+        }
+      }
+    >
+      运行图示（点击图片放大）
+    </Text>
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "height": 280,
+          "paddingHorizontal": 20,
+          "paddingVertical": 10,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              undefined,
+            ]
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Image
+            source={1}
+            style={
+              Object {
+                "backgroundColor": "#fff",
+                "height": 260,
+                "resizeMode": "contain",
+                "width": "100%",
+              }
+            }
+          />
+        </View>
+      </View>
+      <Modal
+        hardwareAccelerated={false}
+        transparent={true}
+        visible={false}
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "black",
+              "height": 1334,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "top": 0,
+              "width": 750,
+            }
+          }
+        />
+        <View
+          onMoveShouldSetResponder={[Function]}
+          onMoveShouldSetResponderCapture={[Function]}
+          onResponderEnd={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderReject={[Function]}
+          onResponderRelease={[Function]}
+          onResponderStart={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onStartShouldSetResponderCapture={[Function]}
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "flex": 1,
+              "height": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "top": 0,
+              "width": 0,
+            }
+          }
+        >
+          <Image
+            source={1}
+            style={
+              Object {
+                "backgroundColor": "#fff",
+                "height": 260,
+                "resizeMode": "contain",
+                "width": "100%",
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "top": 0,
+              "width": 750,
+            }
+          }
+        >
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "white",
+                  "fontSize": 35,
+                  "lineHeight": 40,
+                  "shadowColor": "black",
+                  "shadowOffset": Object {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.8,
+                  "shadowRadius": 1.5,
+                  "textAlign": "center",
+                  "width": 40,
+                }
+              }
+            >
+              ×
+            </Text>
+          </View>
+        </View>
+      </Modal>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 40,
+          "paddingLeft": 15,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0,0,0,.3)",
+            "fontSize": 16,
+          }
+        }
+      >
+        指标数据
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(0,0,0,.6)",
+              "fontSize": 12,
+            },
+            Object {
+              "position": "absolute",
+              "right": 15,
+            },
+          ]
+        }
+      >
+        更新时间: undefined
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "rgba(0,0,0,.06)",
+          }
+        }
+      >
+        <View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#fff",
+                "borderColor": "rgba(0,0,0,.06)",
+                "borderWidth": 0.5,
+                "flexDirection": "row",
+                "height": 60,
+                "opacity": 1,
+                "paddingLeft": 15,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "rgba(0,0,0,.6)",
+                  },
+                ]
+              }
+            >
+              本类别数据名称1
+            </Text>
+            <Image
+              source={1}
+              style={
+                Object {
+                  "position": "absolute",
+                  "right": 15,
+                  "width": 15,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#fff",
+              }
+            }
+          />
+        </View>
+        <View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#fff",
+                "borderColor": "rgba(0,0,0,.06)",
+                "borderWidth": 0.5,
+                "flexDirection": "row",
+                "height": 60,
+                "opacity": 1,
+                "paddingLeft": 15,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "rgba(0,0,0,.6)",
+                  },
+                ]
+              }
+            >
+              本类别数据名称2
+            </Text>
+            <Image
+              source={1}
+              style={
+                Object {
+                  "position": "absolute",
+                  "right": 15,
+                  "width": 15,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#fff",
+              }
+            }
+          />
+        </View>
+        <View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#fff",
+                "borderColor": "rgba(0,0,0,.06)",
+                "borderWidth": 0.5,
+                "flexDirection": "row",
+                "height": 60,
+                "opacity": 1,
+                "paddingLeft": 15,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "rgba(0,0,0,.6)",
+                  },
+                ]
+              }
+            >
+              本类别数据名称3
+            </Text>
+            <Image
+              source={1}
+              style={
+                Object {
+                  "position": "absolute",
+                  "right": 15,
+                  "width": 15,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#fff",
+              }
+            }
+          />
+        </View>
+        <View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#fff",
+                "borderColor": "rgba(0,0,0,.06)",
+                "borderWidth": 0.5,
+                "flexDirection": "row",
+                "height": 60,
+                "opacity": 1,
+                "paddingLeft": 15,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "rgba(0,0,0,.6)",
+                  },
+                ]
+              }
+            >
+              本类别数据名称4
+            </Text>
+            <Image
+              source={1}
+              style={
+                Object {
+                  "position": "absolute",
+                  "right": 15,
+                  "width": 15,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#fff",
+              }
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "color": "rgba(0,0,0,.3)",
+          "fontSize": 16,
+          "height": 40,
+          "paddingLeft": 15,
+          "paddingVertical": 9,
+        }
+      }
+    >
+      运行日志
+    </Text>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0,0,0,.6)",
+            "fontSize": 15,
+            "lineHeight": 22,
+            "paddingLeft": 15,
+          }
+        }
+      >
+        2017-05-01 15:21:32  设备点火
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0,0,0,.6)",
+            "fontSize": 15,
+            "lineHeight": 22,
+            "paddingLeft": 15,
+          }
+        }
+      >
+        2017-05-02 15:21:32  设备点火
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0,0,0,.6)",
+            "fontSize": 15,
+            "lineHeight": 22,
+            "paddingLeft": 15,
+          }
+        }
+      >
+        2017-05-03 15:21:32  设备点火
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0,0,0,.6)",
+            "fontSize": 15,
+            "lineHeight": 22,
+            "paddingLeft": 15,
+          }
+        }
+      >
+        2017-05-04 15:21:32  设备点火
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "rgba(0,0,0,.6)",
+            "fontSize": 15,
+            "lineHeight": 22,
+            "paddingLeft": 15,
+          }
+        }
+      >
+        2017-05-05 15:21:32  设备点火
+      </Text>
+    </View>
+  </View>
+</RCTScrollView>
+`;

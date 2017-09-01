@@ -20,15 +20,44 @@ export default class EmailVerify extends Component {
     headerRight: <Image style={{marginLeft: 20}} source={emptyIcon}/>,
   });
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      emailVer: '',
+      codeVer: '',
+    }
+  }
+
   pressNext() {
-    this.props.navigation.navigate('setPassword')
+    if(this.state.codeVer == '666666' && this.state.emailVer.indexOf('@') > 0) {
+      this.props.navigation.navigate('setPassword')
+    } else {
+      Alert.alert('错误', '验证错误',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    }
   }
 
   pressSendCode() {
-    Alert.alert('提示', '已发送验证码！',
-      [ {text: 'OK', onPress: () => 'OK'}, ],
-      { cancelable: false }
-    )
+    if(this.state.emailVer != '') {
+      if(this.state.emailVer.indexOf('@') > 0) {
+        Alert.alert('提示', '已发送验证码！',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else {
+        Alert.alert('错误', '无效的邮箱！',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    } else {
+      Alert.alert('提示', '请输入邮箱！',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    }
   }
 
   render() {
@@ -39,8 +68,9 @@ export default class EmailVerify extends Component {
           <TextInput 
             style={emailVerify.emailInput}
             underlineColorAndroid="transparent"
-            onChangeText={(text)=> 'this.setState({})'}
+            onChangeText={(emailVer)=> this.setState({emailVer})}
             selectTextOnFocus={true}
+            maxLength={30}
           />
           <View style={emailVerify.getVCodeView}>
             <Button 
@@ -48,7 +78,7 @@ export default class EmailVerify extends Component {
               title={getVCode} 
               titleStyle={{color: lightBlueColor}}
               activeOpacity={0.6} 
-              onPress={this.pressSendCode}
+              onPress={this.pressSendCode.bind(this)}
             />
           </View>
         </View>
@@ -56,8 +86,10 @@ export default class EmailVerify extends Component {
         <TextInput 
           style={emailVerify.vCodeInput}
           underlineColorAndroid="transparent"
-          onChangeText={(text)=> 'this.setState({})'}
+          onChangeText={(codeVer)=> this.setState({codeVer})}
           selectTextOnFocus={true}
+          maxLength={10}
+          placeholder={'eg: 666666'}
         />
         <View style={emailVerify.nextButtonView}>
           <Button 

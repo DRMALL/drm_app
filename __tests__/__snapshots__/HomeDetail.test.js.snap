@@ -1,0 +1,395 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeDetail test 1`] = `
+<View
+  style={
+    Object {
+      "height": "103.5%",
+      "top": -20,
+    }
+  }
+>
+  <RCTScrollView
+    alwaysBounceHorizontal={undefined}
+    alwaysBounceVertical={true}
+    onContentSizeChange={null}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={undefined}
+    onResponderTerminationRequest={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    onScrollShouldSetResponder={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    scrollEventThrottle={undefined}
+    sendMomentumEvents={false}
+    style={
+      Array [
+        Object {
+          "flexDirection": "column",
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "overflow": "scroll",
+        },
+        Array [
+          Object {
+            "backgroundColor": "#fff",
+          },
+          Object {
+            "position": "relative",
+            "zIndex": 3,
+          },
+        ],
+      ]
+    }
+  >
+    <RCTScrollContentView
+      collapsable={false}
+      removeClippedSubviews={undefined}
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "height": 220,
+            "justifyContent": "center",
+            "width": "100%",
+          }
+        }
+      >
+        <ActivityIndicator
+          animating={true}
+          color="#999999"
+          hidesWhenStopped={true}
+          size="large"
+          style={
+            Object {
+              "height": 50,
+            }
+          }
+        />
+      </View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(0,0,0,.8)",
+              "fontSize": 20,
+            },
+            Object {
+              "paddingHorizontal": 16,
+            },
+          ]
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+            },
+            Object {
+              "paddingHorizontal": 16,
+              "paddingTop": 15,
+            },
+          ]
+        }
+      >
+        0000-00-00
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 0,
+            "paddingHorizontal": 16,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <RCTWebView
+            allowsInlineMediaPlayback={undefined}
+            automaticallyAdjustContentInsets={false}
+            bounces={undefined}
+            contentInset={undefined}
+            dataDetectorTypes={undefined}
+            decelerationRate={0.99}
+            injectedJavaScript="
+              (function () {
+                const arr = document.getElementsByTagName(\\"img\\")
+                let height = null
+                for (let i = 0; i < arr.length; i ++) {
+                  arr[i].width = 690
+                }
+                function changeHeight() {
+                  if (document.body.scrollHeight != height) {
+                    height = document.body.scrollHeight
+                    if (window.postMessage) {
+                      window.postMessage(JSON.stringify({
+                        type: 'setHeight',
+                        height: height,
+                      }))
+                    }
+                  }
+                }
+                setInterval(changeHeight, 100)
+              } () )"
+            mediaPlaybackRequiresUserAction={undefined}
+            messagingEnabled={true}
+            onLoadingError={[Function]}
+            onLoadingFinish={[Function]}
+            onLoadingStart={[Function]}
+            onMessage={[Function]}
+            onShouldStartLoadWithRequest={undefined}
+            scalesPageToFit={undefined}
+            scrollEnabled={false}
+            source={
+              Object {
+                "html": undefined,
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                },
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                Object {
+                  "height": "100%",
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+    </RCTScrollContentView>
+  </RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {
+          "position": "relative",
+          "zIndex": 3,
+        },
+        Object {
+          "display": "none",
+          "height": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "black",
+          "height": "100%",
+          "opacity": 0.5,
+          "position": "relative",
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F7F7F7",
+          "bottom": 0,
+          "position": "absolute",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 20,
+            "paddingHorizontal": 16,
+            "paddingVertical": 10,
+          }
+        }
+      >
+        分享到
+      </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "paddingHorizontal": 16,
+          }
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "marginRight": 20,
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Image
+            source={1}
+            style={
+              Object {
+                "height": 66,
+                "resizeMode": "contain",
+                "width": 66,
+              }
+            }
+          />
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 14,
+                "paddingVertical": 10,
+              }
+            }
+          >
+            微信
+          </Text>
+        </View>
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "marginRight": 20,
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Image
+            source={1}
+            style={
+              Object {
+                "height": 66,
+                "resizeMode": "contain",
+                "width": 66,
+              }
+            }
+          />
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 14,
+                "paddingVertical": 10,
+              }
+            }
+          >
+            微博
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "borderColor": "rgba(0,0,0,.06)",
+            "borderWidth": 0.5,
+            "justifyContent": "center",
+            "opacity": 1,
+            "width": "100%",
+          }
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 20,
+              "paddingVertical": 10,
+            }
+          }
+        >
+          取消
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

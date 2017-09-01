@@ -1,21 +1,17 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import Loading from '../components/units/Loading'
 import { primaryColor, mainColor } from '../common/constants'
 import { messageText, 
         allSetAsRead, 
         inTheEnd, 
-        tokenKey, 
-        internalServerError,
 } from '../common/strings'
 import { message } from '../styles'
-import { checkToken } from '../utils/handleToken'
-import { getPort, postPort } from '../utils/fetchMethod'
-import { getNotices, setAllNoticesRead } from '../apis'
 
 import MessageItem from '../components/message/MessageItem'
 import store from '../utils/store'
-import messageAC from '../actions/messageAC'
+import postNoticeRead from '../funcs/message/postNoticeRead'
+import getNotices from '../funcs/message/getNotices'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 
@@ -41,11 +37,11 @@ export default class Message extends Component {
   componentDidMount() {
     this.props.navigation.setParams({  
       setAllRead: () => {
-        this.postNoticeRead()
+        postNoticeRead(this.props)
       }, 
       disabledPress: false,
     })
-    this.getNotices()
+    getNotices()
   }
 
   componentWillMount() {
@@ -54,53 +50,6 @@ export default class Message extends Component {
 
   componentWillUnmount(){
     this.unsubscribe()
-  }
-
-  postNoticeRead() {
-    this.props.navigation.setParams({ 
-      disabledPress: true,
-    })
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await postPort(`${setAllNoticesRead}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 201) {
-        Alert.alert('通知', '全部已设置成已读',
-          [ {text: 'OK', onPress: () => this.props.navigation.setParams({ disabledPress: false }) }, ],
-          { cancelable: false }
-        )
-        this.getNotices()
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  getNotices() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getNotices}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        messageAC.getAll(res.data)
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
   }
 
   render() {

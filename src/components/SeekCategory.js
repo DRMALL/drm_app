@@ -1,14 +1,28 @@
 import React, { Component } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, RefreshControl } from 'react-native'
-import { materialLongCode, materialName, materialModels, materialUnites, inTheEnd } from '../common/strings'
+import { materialLongCode, materialName, materialModels, materialUnites, inTheEnd, allParts, allTypes } from '../common/strings'
 import { lightBlueColor, contentColor, mainColor, subTitleColor, loginBackgroundColor } from '../common/constants'
 import { seek, home } from '../styles'
 import { seekData } from '../utils/virtualData'
+import store from '../utils/store'
 
 export default class SeekCategory extends Component {
   render() {
     let { navigation, isRefreshing, onSeekRefresh } = this.props
-      , seekDataLength = seekData.length
+      , { selectedPart, selectedType } = store.getState().seek
+      , selectDataArr = []
+    if(selectedPart !== allParts) {
+      seekData.map((seekOne, indexs)=> {
+        if(selectedPart === seekOne.materialName) {
+          if(selectedType !== allTypes) {
+            if(selectedType == seekOne.models) {
+              selectDataArr.push(seekOne)
+            }
+          } else selectDataArr.push(seekOne)
+        }
+      })
+    } else selectDataArr = seekData
+    let seekDataLength = selectDataArr.length
     return (
       <View style={seek.wrap}>
         <View style={{backgroundColor: mainColor}}>
@@ -28,6 +42,7 @@ export default class SeekCategory extends Component {
           </View>
         </View>
         <ScrollView 
+          style={{height: '100%'}}
           refreshControl={<RefreshControl 
             refreshing={isRefreshing}
             onRefresh={onSeekRefresh}
@@ -38,7 +53,7 @@ export default class SeekCategory extends Component {
           />}
         >
           {
-            seekData.map((item, s)=> <SeekDataItem key={s} item={item} s={s} seekDataLength={seekDataLength} navigation={navigation}/>)
+            selectDataArr.map((item, s)=> <SeekDataItem key={s} item={item} s={s} seekDataLength={seekDataLength} navigation={navigation}/>)
           }
         </ScrollView>
       </View>

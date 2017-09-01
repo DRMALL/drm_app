@@ -1,0 +1,519 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Information test 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F7F7F7",
+      "height": "100%",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "borderColor": "rgba(0,0,0,.06)",
+        "borderWidth": 0.5,
+        "color": "rgba(0,0,0,.3)",
+        "fontSize": 16,
+        "height": 40,
+        "paddingLeft": 15,
+        "paddingVertical": 11,
+      }
+    }
+  >
+    基本资料
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "position": "relative",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 60,
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 18,
+            "left": 15,
+            "opacity": 0.8,
+            "position": "absolute",
+            "textAlign": "left",
+          }
+        }
+      >
+        用户名
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        style={
+          Object {
+            "color": "rgba(0,0,0,.3)",
+            "fontSize": 16,
+            "position": "absolute",
+            "right": 40,
+            "textAlign": "right",
+            "width": 180,
+          }
+        }
+      >
+        
+      </Text>
+      <Image
+        source={1}
+        style={
+          Object {
+            "position": "absolute",
+            "right": 15,
+            "tintColor": "rgba(0,0,0,.8)",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "position": "relative",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 60,
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 18,
+            "left": 15,
+            "opacity": 0.8,
+            "position": "absolute",
+            "textAlign": "left",
+          }
+        }
+      >
+        公司名称
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        style={
+          Object {
+            "color": "rgba(0,0,0,.3)",
+            "fontSize": 16,
+            "position": "absolute",
+            "right": 40,
+            "textAlign": "right",
+            "width": 180,
+          }
+        }
+      >
+        
+      </Text>
+      <Image
+        source={1}
+        style={
+          Object {
+            "position": "absolute",
+            "right": 15,
+            "tintColor": "rgba(0,0,0,.8)",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "position": "relative",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 60,
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 18,
+            "left": 15,
+            "opacity": 0.8,
+            "position": "absolute",
+            "textAlign": "left",
+          }
+        }
+      >
+        联系电话
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        style={
+          Object {
+            "color": "rgba(0,0,0,.3)",
+            "fontSize": 16,
+            "position": "absolute",
+            "right": 40,
+            "textAlign": "right",
+            "width": 180,
+          }
+        }
+      >
+        
+      </Text>
+      <Image
+        source={1}
+        style={
+          Object {
+            "position": "absolute",
+            "right": 15,
+            "tintColor": "rgba(0,0,0,.8)",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "position": "relative",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 60,
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 18,
+            "left": 15,
+            "opacity": 0.8,
+            "position": "absolute",
+            "textAlign": "left",
+          }
+        }
+      >
+        通讯地址
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        style={
+          Object {
+            "color": "rgba(0,0,0,.3)",
+            "fontSize": 16,
+            "position": "absolute",
+            "right": 40,
+            "textAlign": "right",
+            "width": 180,
+          }
+        }
+      >
+        
+      </Text>
+      <Image
+        source={1}
+        style={
+          Object {
+            "position": "absolute",
+            "right": 15,
+            "tintColor": "rgba(0,0,0,.8)",
+          }
+        }
+      />
+    </View>
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "borderColor": "rgba(0,0,0,.06)",
+        "borderWidth": 0.5,
+        "color": "rgba(0,0,0,.3)",
+        "fontSize": 16,
+        "height": 40,
+        "paddingLeft": 15,
+        "paddingVertical": 11,
+      }
+    }
+  >
+    安全设置
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "position": "relative",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "borderColor": "rgba(0,0,0,.06)",
+          "borderWidth": 0.5,
+          "flexDirection": "row",
+          "height": 60,
+          "opacity": 1,
+          "width": "100%",
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 18,
+            "left": 15,
+            "opacity": 0.8,
+            "position": "absolute",
+            "textAlign": "left",
+          }
+        }
+      >
+        修改密码
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        style={
+          Object {
+            "color": "rgba(0,0,0,.3)",
+            "fontSize": 16,
+            "position": "absolute",
+            "right": 40,
+            "textAlign": "right",
+            "width": 180,
+          }
+        }
+      />
+      <Image
+        source={1}
+        style={
+          Object {
+            "position": "absolute",
+            "right": 15,
+            "tintColor": "rgba(0,0,0,.8)",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "#fff",
+          "borderRadius": 10,
+          "borderWidth": 0.5,
+          "justifyContent": "center",
+          "marginTop": 30,
+          "opacity": 1,
+          "paddingHorizontal": 120,
+          "paddingVertical": 15,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#4DADF7",
+            "fontSize": 18,
+          }
+        }
+      >
+        退出登录
+      </Text>
+    </View>
+  </View>
+</View>
+`;

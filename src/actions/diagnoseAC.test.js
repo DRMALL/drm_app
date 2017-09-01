@@ -13,47 +13,52 @@ describe('diagnose actions', () => {
   })
 
   test('getDiagnoseData', () => {
-    diagnoseAC.getDiagnoseData()
-    expect(store.getState().diagnose.newsListData).toBe(undefined)
+    const diagEQ = [{diag1: '1'}, {diag2: '2'}]
+    diagnoseAC.getDiagnoseData(diagEQ)
+    expect(store.getState().diagnose.allDiagnoseData).toEqual(expect.arrayContaining(diagEQ))
   })
 
   test('getDiagCate', () => {
-    diagnoseAC.getDiagCate()
-    expect(store.getState().diagnose.newsListData).toEqual(expect.arrayContaining())
+    const diagCateEQ = [{cate1: '1'}, {cate2: '2'}]
+    diagnoseAC.getDiagCate({allCateData: diagCateEQ})
+    expect(store.getState().diagnose.allCateData).toEqual(expect.arrayContaining(diagCateEQ))
   })
 
   test('selectCate', () => {
-    diagnoseAC.selectCate()
-    expect(store.getState().diagnose.newsListData).toBe(undefined)
+    diagnoseAC.selectCate({tabTypeRow0: true})
+    expect(store.getState().diagnose.tabTypeRow0).toBeTruthy()
   })
 
   test('normalCate', () => {
-    diagnoseAC.normalCate()
-    expect(store.getState().diagnose.newsListData).toEqual(expect.arrayContaining())
+    diagnoseAC.normalCate({tabTypeRow0: false})
+    expect(store.getState().diagnose.tabTypeRow0).toBeFalsy()
   })
 
   test('setHistoryData', () => {
-    diagnoseAC.setHistoryData()
-    expect(store.getState().diagnose.newsListData).toBe(undefined)
+    const diagHisEQ = [{his1: '1'}, {his2: '2'}]
+    diagnoseAC.setHistoryData(diagHisEQ)
+    expect(store.getState().diagnose.historyData).toEqual(expect.arrayContaining(diagHisEQ))
   })
 
   test('getHotword', () => {
-    diagnoseAC.getHotword()
-    expect(store.getState().diagnose.newsListData).toEqual(expect.arrayContaining())
+    const diagHotsEQ = [{hot1: '1'}, {hot2: '2'}]
+    diagnoseAC.getHotword(diagHotsEQ)
+    expect(store.getState().diagnose.hotwordData).toEqual(expect.arrayContaining(diagHotsEQ))
   })
 
   test('setJumpData', () => {
-    diagnoseAC.setJumpData()
-    expect(store.getState().diagnose.newsListData).toBe(undefined)
+    diagnoseAC.setJumpData({jumpData: false})
+    expect(store.getState().diagnose.jumpData).toBeFalsy()
   })
 
   test('getBugsData', () => {
-    diagnoseAC.getBugsData()
-    expect(store.getState().diagnose.newsListData).toEqual(expect.arrayContaining())
+    const diagSearchEQ = [{search1: '1'}, {search2: '2'}]
+    diagnoseAC.getBugsData(diagSearchEQ)
+    expect(store.getState().diagnose.bugsData).toEqual(expect.arrayContaining(diagSearchEQ))
   })
 
   test('pressCleanText', () => {
     diagnoseAC.pressCleanText()
-    expect(store.getState().diagnose.newsListData).toBe(undefined)
+    expect(store.getState().diagnose.jumpData).toBeFalsy()
   })
 })

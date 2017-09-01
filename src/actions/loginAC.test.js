@@ -1,15 +1,14 @@
 import loginAC from './loginAC'
 import store from '../utils/store'
 
-describe('home page get data', () => {
-  // test('unknown', () => {
-  //   loginAC()
-  //   expect(store.getState().home.newsListData).toBe(undefined)
-  // })
+describe('login actions', () => {
+  test('changeLoginEmail', () => {
+    loginAC.changeLoginEmail('test@qq.com')
+    expect(store.getState().login.textEmail).toBe('test@qq.com')
+  })
 
-  // test('exist value', () => {
-  //   const homeListEQ = [{data: '1'}, {data: '2'}]
-  //   loginAC(homeListEQ)
-  //   expect(store.getState().home.newsListData).toEqual(expect.arrayContaining(homeListEQ))
-  // })
+  test('changeLoginWord', () => {
+    loginAC.changeLoginWord('test@qq.com')
+    expect(store.getState().login.textWord).toBe('test@qq.com')
+  })
 })
