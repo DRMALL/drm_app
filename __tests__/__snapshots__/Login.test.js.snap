@@ -80,6 +80,12 @@ exports[`Login test 1`] = `
   >
     MMHFD
   </Text>
+  <ActivityIndicator
+    animating={false}
+    color="#999999"
+    hidesWhenStopped={true}
+    size="large"
+  />
   <View
     keyboardVerticalOffset={0}
     onLayout={[Function]}
@@ -231,44 +237,13 @@ exports[`Login test 1`] = `
     </Text>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hitSlop={undefined}
-    isTVSelectable={true}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
       Object {
         "height": 40,
         "justifyContent": "center",
         "margin": 20,
-        "opacity": 1,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
-  >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "color": "#7B7B7B",
-          "fontSize": 15,
-          "opacity": 0.5,
-        }
-      }
-    >
-      忘记密码?
-    </Text>
-  </View>
+  />
 </View>
 `;

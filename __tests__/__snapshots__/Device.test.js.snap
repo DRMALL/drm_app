@@ -203,40 +203,31 @@ exports[`Device test 1`] = `
           }
         }
       >
-        <RCTScrollView
-          dataSource={
-            ListViewDataSource {
-              "items": 0,
-            }
-          }
-          enableEmptySections={true}
-          refreshControl={
-            <RefreshControlMock
-              colors={
-                Array [
-                  "#ff0000",
-                  "#00ff00",
-                  "#0000ff",
-                ]
-              }
-              onRefresh={[Function]}
-              progressBackgroundColor="#fff"
-              refreshing={false}
-              title="下拉刷新"
-              titleColor="rgba(0,0,0,.6)"
-            />
-          }
-          renderRow={[Function]}
-          renderScrollComponent={[Function]}
+        <View
           style={
             Object {
+              "alignItems": "center",
+              "backgroundColor": "#F7F7F7",
               "height": "100%",
+              "justifyContent": "center",
+              "width": "100%",
             }
           }
         >
-          <RCTRefreshControl />
-          <View />
-        </RCTScrollView>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "rgba(0,0,0,.3)",
+                "fontSize": 18,
+              }
+            }
+          >
+            暂无内容
+          </Text>
+        </View>
       </View>
       <View
         style={
