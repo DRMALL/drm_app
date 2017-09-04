@@ -14,6 +14,7 @@ export default props => {
   let finalDs = ds.cloneWithRows(props.data)
     , navigation = props.navigation
     , dataLength = props.data.length
+    , equipmentData = props.equipmentData
     , { isRefreshing } = store.getState().statu
   return(
     <ListView 
@@ -26,27 +27,33 @@ export default props => {
         titleColor={contentColor}
       />}
       dataSource={finalDs}
-      renderRow={(rowData, sectionID, rowID) => <StatusListItem rowData={rowData} rowID={rowID} dataLength={dataLength} navigation={navigation}/>}
+      renderRow={(rowData, sectionID, rowID) => <StatusListItem rowData={rowData} rowID={rowID} dataLength={dataLength} equipmentData={equipmentData} navigation={navigation}/>}
       enableEmptySections={true}
     />
   )
 }
 
-const StatusListItem = ({ rowData, rowID, dataLength, navigation }) => {
-  const { photo, deviceNo, deviceState, stopTime } = rowData
+const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation }) => {
+  const { _id, images, name, number, stopTime } = rowData
+  let deviceState = false
+  equipmentData.map((eqItem, index)=> {
+    if(number == eqItem.number) {
+      deviceState = true
+    }
+  })
   return(
     <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={status.wrap} activeOpacity={0.8} onPress={() => navigation.navigate('equipment', {statuItemData: rowData})}>
-        <Image source={photo} style={status.img} />
+      <TouchableOpacity style={status.wrap} activeOpacity={0.8} onPress={() => navigation.navigate('equipment', {statuItemId: _id, statuItemNumber: number})}>
+        <Image source={{uri: images[0].url}} style={status.img} />
         <View style={status.nextView}>
           <View style={status.cover}>
-            <Text style={status.NoText} numberOfLines={2}>{deviceNo}</Text>
+            <Text style={status.NoText} numberOfLines={2}>{`${name} (${number})`}</Text>
             <TouchableOpacity style={[status.touch, {borderColor: deviceState ? lightGreenColor : lightRedColor}]}>
               <Text style={[status.touchText, {color: deviceState ? lightGreenColor : lightRedColor}]}>{deviceState ? onState : offState}</Text>
             </TouchableOpacity>
           </View>
           <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={2}>{deviceState ? online : offline}</Text>
-          <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={3}>{deviceState ? '' : onToOffText + stopTime}</Text>
+          <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={3}>{deviceState ? '' : onToOffText + (stopTime || '2017-09-04')}</Text>
         </View>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>

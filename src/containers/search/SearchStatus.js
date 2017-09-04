@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
-import { mainColor, primaryColor, subTitleColor, contentColor } from '../../common/constants'
-import { inputDeviceNumber, historicalRecord, hotSearch, tokenKey, internalServerError } from '../../common/strings'
-import { search, diagnose } from '../../styles'
+import { mainColor, primaryColor, subTitleColor, contentColor, lightGreenColor, lightRedColor } from '../../common/constants'
+import { inputDeviceNumber, historicalRecord, hotSearch, tokenKey, internalServerError, onState, offState, online, offline, onToOffText, inTheEnd } from '../../common/strings'
+import { search, status, home } from '../../styles'
 import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
-import { getBugs, getBugsHot } from '../../apis'
+import { getDevicesHots, getMoniterdevsSearch } from '../../apis'
 import Loading from '../../components/units/Loading'
+
+import store from '../../utils/store'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
@@ -29,7 +31,7 @@ export default class SearchStatus extends Component {
     this.state = {
       text: '',
       jumpData: false,
-      bugsData: [],
+      statusData: [],
       historyData: [],
       hotwordData: [],
     }
@@ -53,25 +55,25 @@ export default class SearchStatus extends Component {
   }
 
   getBugsHotword() {
-    // checkToken(tokenKey)
-    // .then(async token => {
-    //   let res = await getPort(`${getBugsHot}?token=${token}`)
-    //   if(!res) {
-    //     Alert.alert('错误', internalServerError,
-    //       [ {text: 'OK', onPress: () => 'OK'}, ],
-    //       { cancelable: false }
-    //     )
-    //   } else if(res.code == 200) {
-    //     this.setState({
-    //       hotwordData: res.data,
-    //     })
-    //   } else {
-    //     Alert.alert('错误', JSON.stringify(res.message),
-    //       [ {text: 'OK', onPress: () => 'OK'}, ],
-    //       { cancelable: false }
-    //     )
-    //   }
-    // })
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await getPort(`${getDevicesHots}?token=${token}`)
+      if(!res) {
+        Alert.alert('错误', internalServerError,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 200) {
+        this.setState({
+          hotwordData: res.data,
+        })
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
   }
 
   getBugsOnchange(text) {
@@ -79,25 +81,25 @@ export default class SearchStatus extends Component {
       text: text,
       jumpData: text == '' ? false : true,
     })
-    // checkToken(tokenKey)
-    // .then(async token => {
-    //   let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
-    //   if(!res) {
-    //     Alert.alert('错误', internalServerError,
-    //       [ {text: 'OK', onPress: () => 'OK'}, ],
-    //       { cancelable: false }
-    //     )
-    //   } else if(res.code == 200) {
-    //     this.setState({
-    //       bugsData: res.data,
-    //     })
-    //   } else {
-    //     Alert.alert('错误', JSON.stringify(res.message),
-    //       [ {text: 'OK', onPress: () => 'OK'}, ],
-    //       { cancelable: false }
-    //     )
-    //   }
-    // })
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await getPort(`${getMoniterdevsSearch}?search=${this.state.text}&token=${token}`)
+      if(!res) {
+        Alert.alert('错误', internalServerError,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 200) {
+        this.setState({
+          statusData: res.data,
+        })
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
   }
 
   getBugsSubmit() {
@@ -110,14 +112,14 @@ export default class SearchStatus extends Component {
     //       { cancelable: false }
     //     )
     //   } else if(res.code == 200) {
-    //     let prevHistoryData = this.state.historyData
-    //     if(res.data.text != null && res.data.text != undefined) {
-    //       prevHistoryData = [res.data.text].concat(prevHistoryData)
-    //       this.setState({
-    //         historyData: prevHistoryData,
-    //       })
-    //       saveWord('statu', prevHistoryData)
-    //     }
+        let prevHistoryData = this.state.historyData
+        if(this.state.text != '' && this.state.text != undefined) {
+          prevHistoryData = [this.state.text].concat(prevHistoryData)
+          this.setState({
+            historyData: prevHistoryData,
+          })
+          saveWord('statu', prevHistoryData)
+        }
     //   } else {
     //     Alert.alert('错误', JSON.stringify(res.message),
     //       [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -159,14 +161,14 @@ export default class SearchStatus extends Component {
 
   render() {
     let { navigation } = this.props
-      , { bugsData, historyData, hotwordData, jumpData } = this.state
+      , { statusData, historyData, hotwordData, jumpData } = this.state
       , dataBugsView
-    if(!bugsData) {
-      dataBugsView = <Loading animating={!bugsData ? true : false}/>
+    if(!statusData) {
+      dataBugsView = <Loading animating={!statusData ? true : false}/>
     } else {
       dataBugsView = <ScrollView>
         {
-          bugsData.map((bugOne, index)=> <DiagBugsItem key={index} bugOne={bugOne} navigation={navigation} />)
+          statusData.map((statuOne, index)=> <DiagBugsItem key={index} statuOne={statuOne} navigation={navigation} dataLength={statusData.length} rowID={index} />)
         }
       </ScrollView>
     }
@@ -219,16 +221,33 @@ export default class SearchStatus extends Component {
 }
 
 const DiagBugsItem = props => {
-  let { bugOne, navigation } = props
+  let { statuOne, navigation, dataLength, rowID } = props
+  const { _id, images, name, number, stopTime } = statuOne
+  let equipmentData = store.getState().statu.equipmentData
+  let deviceState = false
+  equipmentData.map((eqItem, index)=> {
+    if(number == eqItem.number) {
+      deviceState = true
+    }
+  })
   return (
     <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {bugsId: bugOne._id, bugsTitle: bugOne.title, categoryText: bugOne.category.text})}>
-        <View style={diagnose.titleView}>
-          <Text style={diagnose.titleText}>{bugOne.title}</Text>
+      <TouchableOpacity style={status.wrap} activeOpacity={0.8} onPress={() => navigation.navigate('equipment', {statuItemId: _id, statuItemNumber: number})}>
+        <Image source={{uri: images[0].url}} style={status.img} />
+        <View style={status.nextView}>
+          <View style={status.cover}>
+            <Text style={status.NoText} numberOfLines={2}>{`${name} (${number})`}</Text>
+            <TouchableOpacity style={[status.touch, {borderColor: deviceState ? lightGreenColor : lightRedColor}]}>
+              <Text style={[status.touchText, {color: deviceState ? lightGreenColor : lightRedColor}]}>{deviceState ? onState : offState}</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={2}>{deviceState ? online : offline}</Text>
+          <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={3}>{deviceState ? '' : onToOffText + (stopTime || '2017-09-04')}</Text>
         </View>
-        <Text style={{color: contentColor, fontWeight: 'bold' }}>{bugOne.content}</Text>
-        <Text style={diagnose.kindsText}>{bugOne.category.text}</Text>
       </TouchableOpacity>
+      <View style={{backgroundColor: mainColor, opacity: 1}}>
+        <Text style={[home.endText, rowID == (dataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+      </View>
     </View>
   )
 }

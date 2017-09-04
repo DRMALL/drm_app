@@ -10,9 +10,10 @@ export default {
     backgroundColor: mainColor,
   },
   img: {
-    width: 45,
-    height: 45,
-    resizeMode: 'contain',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    resizeMode: 'cover',
     marginLeft: 15,
     top: 20,
   },

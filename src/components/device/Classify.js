@@ -3,10 +3,12 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { lightBlueColor, contentColor, backgroundColor, mainColor, subTitleColor } from '../../common/constants'
 import { classify } from '../../styles'
 
+import deviceAC from '../../actions/deviceAC'
+
 const intoIcon = require('../../images/navigation_icons/into.png')
 
 export default props => {
-  let { data, state, pressClass, changeClassKinds, deviceData } = props
+  let { data, state, changeClassKinds, deviceData } = props
   let allKinds = []
     , allNum = 0
   data.forEach((one)=> {
@@ -22,7 +24,7 @@ export default props => {
   return (
     <View style={classify.modalWrap}>
       <ScrollView style={{width: '50%', backgroundColor: backgroundColor}}>
-        {data.map((item, i)=> <ClassRow key={i} item={item} index={i} state={state} deviceData={deviceData} pressClass={pressClass} />)}
+        {data.map((item, i)=> <ClassRow key={i} item={item} index={i} state={state} deviceData={deviceData} />)}
       </ScrollView>
       <ScrollView style={{width: '50%'}}>
           {
@@ -36,7 +38,8 @@ export default props => {
 }
 
 const ClassRow = props => {
-  let { item, index, state, pressClass, deviceData } = props
+  let { item, index, state, deviceData } = props
+    , { pressClass } = deviceAC
     , selectClassRow = state[`classRow${index}`]
   return (
     <TouchableOpacity style={[classify.classTouch, {backgroundColor: selectClassRow ? mainColor : backgroundColor}]} activeOpacity={0.8} onPress={()=> pressClass(index)}>
@@ -77,7 +80,7 @@ class KindRow extends Component {
   }
 
   render() {
-    let { item, j, deviceData } = this.props
+    let { item, j, deviceData, state } = this.props
     let { kinds } = item
     let allKindNum = 0
     kinds.forEach((one)=> {

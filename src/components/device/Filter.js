@@ -5,6 +5,8 @@ import { mainColor, lightBlueColor, contentColor, loginBorderColor } from '../..
 import { filter } from '../../styles'
 import Button from '../units/Button'
 
+import deviceAC from '../../actions/deviceAC'
+
 export default props => {
   let { data, cityData, state, pressBotton, pressConfirmReturn, pressFilterParams } = props
     , { confirmPress, cleanPress } = state
@@ -14,7 +16,7 @@ export default props => {
     <View style={filter.modalWrap}>
       <View>
         {
-          data.map((item, i)=> <FilterClassItem key={i} classItem={item} state={state} pressFilterParams={pressFilterParams}/>)
+          data.map((item, i)=> <FilterClassItem key={i} classItem={item} state={state} />)
         }
       </View>
       <View style={filter.buttonView}>
@@ -59,7 +61,7 @@ class FilterClassItem extends Component {cleanPress
     this.props.classItem.kinds.map((kind, k)=> {
       if(f == k) {
         // this.setState({ [`filterRow${f}`]: !this.state[`filterRow${f}`] })
-        this.props.pressFilterParams(kind.type, kind.text)
+        deviceAC.pressFilterParams(kind.type, kind.text)
       } else this.setState({ [`filterRow${k}`]: false })
     })
   }

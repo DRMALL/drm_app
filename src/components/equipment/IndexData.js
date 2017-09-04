@@ -2,6 +2,7 @@ import React, { Component }from 'react'
 import { View, Text, Image, ListView, TouchableOpacity, Alert } from 'react-native'
 import { lightBlueColor, contentColor, mainColor, backgroundColor } from '../../common/constants'
 import { equipment } from '../../styles'
+import normIndexPD from '../../utils/normIndexPD'
 
 const dropdownNormal = require('../../images/dropdown_normal.png')
 const dropdownSelected = require('../../images/dropdown_selected.png')
@@ -11,7 +12,7 @@ export default class IndexData extends Component {
   constructor(props) {
     super(props)
     this.state = (props => {
-      // logic
+      // logic 
       let obj = {}
       props.indexData.map((item, index) => {
         obj[`row${index}`] = false
@@ -38,7 +39,7 @@ export default class IndexData extends Component {
 }
 
 
-const IndexDataItem = ({ rowData, state, open, index, navigation }) => {
+const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemData }) => {
   let { title, textArr } = rowData
   let selectRow = state[`row${index}`]
   textArr = selectRow ? textArr : [] 
@@ -49,21 +50,20 @@ const IndexDataItem = ({ rowData, state, open, index, navigation }) => {
         <Image style={equipment.imgTouch} source={selectRow ? dropdownSelected : dropdownNormal} />
       </TouchableOpacity>
       <View style={{backgroundColor: mainColor}}>
-        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation}/>)}
+        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation} equipmentItemData={equipmentItemData}/>)}
       </View>
     </View>
   )
 }
 
 const DataItemRow = props => {
-  let { navigation } = props
+  let { item, navigation, equipmentItemData } = props
   return (
     <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram')}>
-      <Text style={equipment.iDataItemText}>{props.item.text}</Text>
-      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{props.item.num}</Text>
-      <Text style={[equipment.iDataItemText2, {right: 45}]}>{props.item.unit}</Text>
+      <Text style={equipment.iDataItemText}>{item.text}</Text>
+      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{equipmentItemData ? normIndexPD(item.text, equipmentItemData.data) : 'NN.NN'}</Text>
+      <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unit}</Text>
       <Image style={equipment.iDataItemImg} source={intoIcon} />
     </TouchableOpacity>
   )
-  
 }

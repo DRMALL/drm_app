@@ -12,70 +12,31 @@ import { getPort } from '../utils/fetchMethod'
 import { getDevices, getDeviceAddress } from '../apis'
 import { deviceArchivesList, classifyData, sortData, filterData } from '../utils/virtualData'
 
+import store from '../utils/store'
+import deviceAC from '../actions/deviceAC'
+
 const dropdownNormal = require('../images/dropdown_normal.png')
 const dropdownSelected = require('../images/dropdown_selected.png')
 
 export default class DeviceCategory extends Component {
   constructor(props) {
     super(props)
-    this.state = (props => {
-      let stateObj = {
-        isMounted: false,
-        isRefreshing: false,
-        classifyRow: false,
-        sortRow: false,
-        filterRow: false,
-        classRowNum: classifyData.length+1, 
-        classRow0: true,
-        classKindsType: '',
-        classKinds: '全部',
-        classj: 0,
-        kindk: 0,
-        confirmPress: false,
-        cleanPress: false,
-        sortTypesNum: 1,
-        filtercc: 'null',
-        filterpressure: 'null',
-        filtercombustible: 'null',
-        filteraddress: 'null',
-        filterSearch: false,
-        topView: {position: 'relative', zIndex: 3},
-        middleView: {width: '100%', position: 'absolute', zIndex: 2},
-        allDevicesData: [],
-        allDevicesData2: [],
-        allCities: [],
-      }
-      sortData.map((sortText, index)=> {
-        if(index == 0) stateObj[`sortRow${index}`] = true
-        else stateObj[`sortRow${index}`] = false
-      })
-      classifyData.map((item, index) => {
-        stateObj[`classRow${index+1}`] = false
-      })
-      return stateObj
-    })(props)
+    this.state = store.getState().device
   }
 
   componentDidMount() {
-    this.setState({isMounted: true})
+    deviceAC.deviceInitializeState(sortData, classifyData)
     this.getAllDevices()
     this.getAllDevices2()
     this.getHotCities()
   }
 
-  componentWillUnmount(){
-    this.setState({isMounted: false})
+  componentWillMount() {
+    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().device) )
   }
 
-  openModal(which) {
-    if(this.state.isMounted) {
-      this.setState({
-        classifyRow: which == 'classifyRow' ? !this.state.classifyRow : false,
-        sortRow: which == 'sortRow' ? !this.state.sortRow : false,
-        filterRow: which == 'filterRow' ? !this.state.filterRow : false,
-        filterSearch: false,
-      })
-    }
+  componentWillUnmount(){
+    this.unsubscribe()
   }
 
   getAllDevices2() {
@@ -83,11 +44,7 @@ export default class DeviceCategory extends Component {
     .then(async token => {
       let res = await getPort(`${getDevices}?token=${token}`)
       if(res.code == 200) {
-        if(this.state.isMounted) {
-          this.setState({
-            allDevicesData2: res.data,
-          })
-        }
+        deviceAC.setAllDevices2(res.data)
       }
     })
   }
@@ -107,33 +64,17 @@ export default class DeviceCategory extends Component {
         sortTypesNum } = this.state
       if(filterSearch) {
         res = await getPort(`${getDevices}?cc=${filtercc}&pressure=${filterpressure}&combustible=${filtercombustible}&address=${filteraddress}&token=${token}`)
+      } else if(classKinds !== '全部') {
+        res = await getPort(`${getDevices}?type=${classKindsType}&value=${classKinds}&token=${token}`)
       } else if(sortTypesNum == 1) {
         res = await getPort(`${getDevices}?createTime=asc&token=${token}`)
       } else if(sortTypesNum == 2) {
         res = await getPort(`${getDevices}?createTime=desc&token=${token}`)
-      } else if(classKinds !== '全部') {
-        res = await getPort(`${getDevices}?type=${classKindsType}&value=${classKinds}&token=${token}`)
       } else {
         res = await getPort(`${getDevices}?token=${token}`)
       }
       if(res.code == 200) {
-        if(this.state.isMounted) {
-          if(this.state.cleanPress) {
-            this.setState({
-              allDevicesData: res.data,
-              cleanPress: false,
-            })
-          } else {
-            this.setState({
-              allDevicesData: res.data,
-              filtercc: filterSearch ? filtercc : 'null',
-              filterpressure: filterSearch ? filterpressure : 'null',
-              filtercombustible: filterSearch ? filtercombustible : 'null',
-              filteraddress: filterSearch ? filteraddress : 'null',
-              filterRow: false,
-            })
-          }
-        }
+        deviceAC.setAllDevices(res.data)
       }
     })
   }
@@ -143,140 +84,58 @@ export default class DeviceCategory extends Component {
     .then(async token => {
       let res = await getPort(`${getDeviceAddress}?token=${token}`)
       if(res.code == 200) {
-        if(this.state.isMounted) {
-          this.setState({
-            allCities: res.data,
-          })
-        }
+        deviceAC.setAllCities(res.data)
       }
     })
   }
 
-  pressClass(index) {
-    let lengthNum = this.state.classRowNum
-    for(let i = 0; i < lengthNum; i++) {
-      if(this.state.isMounted) {
-        if(index == i) {
-          this.setState({[`classRow${index}`]: true})
-        }
-        else this.setState({[`classRow${i}`]: false})
-      }
-    }
-  }
-
   pressBotton(which) {
-    if(this.state.isMounted) {
-      this.setState(bfoState=> {
-        return {
-          [which]: !this.state[which],
-          filterSearch: false,
-          confirmPress: false,
-          filtercc: !bfoState.cleanPress ? 'null' : bfoState.filtercc,
-          filterpressure: !bfoState.cleanPress ? 'null' : bfoState.filterpressure,
-          filtercombustible: !bfoState.cleanPress ? 'null' : bfoState.filtercombustible,
-          filteraddress: !bfoState.cleanPress ? 'null' : bfoState.filteraddress,
-        }
-      })
-    }
+    deviceAC.setBottonState(which)
     if(which == 'cleanPress' && !this.state[which]) this.getAllDevices()
   }
 
-  pressFilterParams(type, kind) {
-    let { filtercc, filterpressure, filtercombustible, filteraddress } = this.state
-    if(this.state.isMounted) {
-      switch(type) {
-        case 'cc': {
-          this.setState({
-            filtercc: kind == filtercc ? 'null' : kind,
-          })
-        }break
-        case 'pressure': {
-          this.setState({
-            filterpressure: kind == filterpressure ? 'null' : kind,
-          })
-        }break
-        case 'combustible': {
-          this.setState({
-            filtercombustible: kind == filtercombustible ? 'null' : kind,
-          })
-        }break
-        default: {
-          this.setState({
-            filteraddress: kind == filteraddress ? 'null' : kind,
-          })
-        }
-      }
-    }
-  }
-
   pressConfirmReturn() {
-    if(this.state.isMounted) {
-      this.setState({
-        filterSearch: true,
-        filterRow: false,
-      })
-    }
+    deviceAC.setFilterSearchTrue()
     this.getAllDevices()
   }
 
   pressSort(s) {
     sortData.map((sortText, index)=> {
-      if(this.state.isMounted) {
-        if(s == index) {
-          this.setState({ 
-            [`sortRow${s}`]: !this.state[`sortRow${s}`], 
-            sortTypesNum: !this.state[`sortRow${s}`] ? s+1 : 0,
-            sortRow: !this.state[`sortRow${s}`] ? false : true,
-            classj: !this.state[`sortRow${s}`] ? 0 : this.state.classj,
-            kindk: !this.state[`sortRow${s}`] ? 0 : this.state.kindk,
-          })
-        } else this.setState({ [`sortRow${index}`]: false })
-      }
+      if(s == index) {
+        deviceAC.sortTabPress(s)
+      } else deviceAC.sortTabNormal(index)
     })
     this.getAllDevices()
   }
 
   changeClassKinds(j, k, type, kind) {
-    let stNum = this.state.sortTypesNum-1
-    if(this.state.isMounted) {
-      this.setState({
-        classj: j,
-        kindk: k,
-        classKindsType: type,
-        classKinds: kind,
-        classifyRow: false,
-        sortTypesNum: 1,
-        sortRow0: true,
-        [`sortRow${stNum}`]: false,
-      })
-    }
+    deviceAC.selectClassKind(j, k, type, kind)
     this.getAllDevices()
   }
 
   onDeviceRefresh() {
-    if(this.state.isMounted) {
-      this.setState({isRefreshing: true})
-      this.getAllDevices()
-      setTimeout(() => {
-        this.setState({isRefreshing: false})
-      }, 2000)
-    }
+    deviceAC.isRefresh()
+    this.getAllDevices()
+    setTimeout(() => {
+      deviceAC.isnotRefresh()
+    }, 2000)
   }
 
   render() {
     let { isRefreshing, classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities } = this.state
+      , { openModal } = deviceAC
     return(
       <View style={device.wrap}>
         <View style={device.archivesTab}>
-          <TouchableOpacity style={device.touchTab} activeOpacity={0.8} onPress={()=> this.openModal('classifyRow')}>
+          <TouchableOpacity style={device.touchTab} activeOpacity={0.8} onPress={()=> openModal('classifyRow')}>
             <Text style={[device.archivesTabText, {color: classifyRow ? lightBlueColor : contentColor}]}>{deviceKindClassify}</Text>
             <Image source={classifyRow ? dropdownSelected : dropdownNormal} />
           </TouchableOpacity>
-          <TouchableOpacity style={device.touchTab} activeOpacity={0.8} onPress={()=> this.openModal('sortRow')}>
+          <TouchableOpacity style={device.touchTab} activeOpacity={0.8} onPress={()=> openModal('sortRow')}>
             <Text style={[device.archivesTabText, {color: sortRow ? lightBlueColor : contentColor}]}>{deviceKindSort}</Text>
             <Image source={sortRow ? dropdownSelected : dropdownNormal} />
           </TouchableOpacity>
-          <TouchableOpacity style={device.touchTab} activeOpacity={0.8} onPress={()=> this.openModal('filterRow')}>
+          <TouchableOpacity style={device.touchTab} activeOpacity={0.8} onPress={()=> openModal('filterRow')}>
             <Text style={[device.archivesTabText, {color: filterRow ? lightBlueColor : contentColor}]}>{deviceKindFilter}</Text>
             <Image source={filterRow ? dropdownSelected : dropdownNormal} />
           </TouchableOpacity>
@@ -291,10 +150,9 @@ export default class DeviceCategory extends Component {
                 <Classify data={classifyData} 
                   deviceData={allDevicesData2}
                   state={this.state} 
-                  pressClass={this.pressClass.bind(this)} 
                   changeClassKinds={this.changeClassKinds.bind(this)}
                 />
-                <TouchableOpacity activeOpacity={0.8} onPress={()=> this.openModal('classifyRow')}>
+                <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('classifyRow')}>
                   <View style={device.halfOpacityView} />
                 </TouchableOpacity>
               </View> : <View style={{height: 0}}/>
@@ -307,7 +165,7 @@ export default class DeviceCategory extends Component {
                   state={this.state} 
                   pressSort={this.pressSort.bind(this)}
                 />
-                <TouchableOpacity activeOpacity={0.8} onPress={()=> this.openModal('sortRow')}>
+                <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('sortRow')}>
                   <View style={device.halfOpacityView} />
                 </TouchableOpacity>
               </View> : <View style={{height: 0}}/>
@@ -321,9 +179,8 @@ export default class DeviceCategory extends Component {
                   state={this.state} 
                   pressBotton={this.pressBotton.bind(this)} 
                   pressConfirmReturn={this.pressConfirmReturn.bind(this)} 
-                  pressFilterParams={this.pressFilterParams.bind(this)}
                 />
-                <TouchableOpacity activeOpacity={0.8} onPress={()=> this.openModal('filterRow')}>
+                <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('filterRow')}>
                   <View style={device.halfOpacityView} />
                 </TouchableOpacity>
               </ScrollView> : <View style={{height: 0}}/>

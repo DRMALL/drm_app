@@ -24,4 +24,6 @@ export const getNoticesOne = apiUrl + 'notices/one'
 export const setAllNoticesRead = apiUrl + 'notices/all/read'
 export const setOneNoticesRead = apiUrl + 'notices/one/read'
 export const setOrderSolved = apiUrl + 'order/solved'
+export const getMoniterdevs = apiUrl + 'moniterdevs'
+export const getMoniterdevsSearch = apiUrl + 'moniterdevs/search'
 
