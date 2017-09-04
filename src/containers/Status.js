@@ -36,12 +36,11 @@ export default class Status extends Component {
   }
 
   componentDidMount() {
-    socketConnectStatu()
+    socketConnectStatu(this.props.navigation)
     this.getAllMoniterdev()
   }
 
   componentWillMount() {
-    // statuAC.getEquipData({})
     this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().statu) )
   }
 
@@ -61,7 +60,8 @@ export default class Status extends Component {
 
   onStatusRefresh() {
     statuAC.isRefresh()
-    // funcs()
+    statuAC.getEquipData({})
+    this.getAllMoniterdev()
     setTimeout(() => {
       statuAC.isnotRefresh()
     }, 2000)
@@ -91,7 +91,7 @@ export default class Status extends Component {
     return(
       <View style={{height: '100%', backgroundColor: loginBackgroundColor}}>
         <StatusTab tabData={statusArr} state={this.state} />
-        <StatusCategory data={statusTabList} equipmentData={equipmentData} onStatusRefresh={this.onStatusRefresh} {...this.props} />
+        <StatusCategory data={statusTabList} equipmentData={equipmentData} onStatusRefresh={this.onStatusRefresh.bind(this)} {...this.props} />
       </View>
     )
   }

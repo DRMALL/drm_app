@@ -8,7 +8,7 @@ import Device from './Device'
 import Status from './Status'
 import Diagnose from './Diagnose'
 import Seek from './Seek'
-import { primaryColor, subTitleColor, backgroundColor } from '../common/constants'
+import { primaryColor, subTitleColor, backgroundColor, lightRedColor } from '../common/constants'
 import { homeLabel, diagnoseLabel, deviceLabel, seekLabel, statusLabel } from '../common/strings'
 import { home } from '../styles'
 
@@ -38,6 +38,8 @@ import SearchSeek from './search/SearchSeek'
 import SearchStatus from './search/SearchStatus'
 import HomeDetail from './HomeDetail'
 import Datagram from './equipment/Datagram'
+
+import store from '../utils/store'
 
 const userIcon = require('../images/navigation_icons/user.png')
 const infoIcon = require('../images/navigation_icons/info.png')
@@ -98,9 +100,12 @@ export default StackNavigator({
         <Image source={userIcon}/>
       </TouchableOpacity>,
       headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} 
-        onPress={()=> navigation.navigate('message', {disabledPress: true})}
+        onPress={()=> {
+          navigation.navigate('message', {disabledPress: true})
+        }}
       >
         <Image source={infoIcon}/>
+        
       </TouchableOpacity>,
     }),
   },
@@ -184,4 +189,11 @@ export default StackNavigator({
     screenInterpolator: CardStackStyleInterpolator.forHorizontal,  
   }),
 })
+
+//<View style={
+        //     navigation.state.params.msgRedShow ? 
+        //     {width: 8, height: 8, borderRadius: 4, backgroundColor: lightRedColor, position: 'absolute', top: 10, }
+        //      : {}
+        //   }
+        // />
 

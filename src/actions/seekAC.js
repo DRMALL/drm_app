@@ -63,6 +63,7 @@ const pressPartColumn = (p, seekPartsData)=> {
       dispatch(seek_part_T, {
         selectedPart: partColumnOne ? partItem.parts : allParts,
         [`partColumn${p}`]: partColumnOne,
+        seekPartRow: partColumnOne ? false : seekState.seekPartRow,
       })
       dispatch(seek_selected_type_data, partColumnOne ? partItem.types : [])
     }
@@ -84,6 +85,7 @@ const pressTypeColumn = (t, seekTypesData)=> {
       dispatch(seek_type_T, {
         selectedType: typeColumnOne ? typeItem : allTypes,
         [`typeColumn${t}`]: typeColumnOne,
+        seekTypeRow: typeColumnOne ? false : seekState.seekTypeRow,
       })
     }
     else dispatch(seek_type_F, {[`typeColumn${index}`]: false})

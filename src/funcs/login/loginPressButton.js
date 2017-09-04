@@ -7,6 +7,7 @@ import { postPort } from '../../utils/fetchMethod'
 import { signIn } from '../../apis'
 
 import store from '../../utils/store'
+import loginAC from '../../actions/loginAC'
 
 const resetAction = NavigationActions.reset({
   index: 0,
@@ -28,6 +29,7 @@ export default async (props) => {
       { cancelable: false }
     )
   } else if(res.code == 201) {
+    loginAC.changeShowSchedule(false)
     depositToken(tokenKey, res.data)
     props.navigation.dispatch(resetAction)
   } else {

@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, lightBlueColor, lightRedColor, backgroundColor, loginBackgroundColor } from '../common/constants'
+import { mainColor, subTitleColor, lightBlueColor, lightRedColor, backgroundColor, loginBackgroundColor, titleColor } from '../common/constants'
 import { StyleSheet } from 'react-native'
 
 export default {
@@ -20,7 +20,8 @@ export default {
   },
   titleText: {
     width: 230,
-    fontSize: 17,
+    fontSize: 16,
+    color: titleColor,
   },
   solvedText: {
     paddingVertical: 1,

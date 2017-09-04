@@ -9,8 +9,8 @@ import Filter from './device/Filter'
 import Sort from './device/Sort'
 import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
-import { getDevices, getDeviceAddress } from '../apis'
-import { deviceArchivesList, classifyData, sortData, filterData } from '../utils/virtualData'
+import { getDevices, getDeviceAddress, getDeviceCcsort, getDevicePresort, getDeviceFuelsort } from '../apis'
+import { classifyData, sortData, filterData } from '../utils/virtualData'
 
 import store from '../utils/store'
 import deviceAC from '../actions/deviceAC'
@@ -25,7 +25,14 @@ export default class DeviceCategory extends Component {
   }
 
   componentDidMount() {
-    deviceAC.deviceInitializeState(sortData, classifyData)
+    this.getCcsort().then((ccsort)=> {
+      this.getPresort().then((presort)=> {
+        this.getFuelsort().then((fuelsort)=> {
+          let mergeData = [ccsort, presort, fuelsort]
+          deviceAC.deviceInitializeState(sortData, mergeData)
+        })
+      })
+    })
     this.getAllDevices()
     this.getAllDevices2()
     this.getHotCities()
@@ -79,6 +86,48 @@ export default class DeviceCategory extends Component {
     })
   }
 
+  getCcsort() {
+    return new Promise((resovle, reject)=> {
+      checkToken(tokenKey)
+      .then(async token => {
+        let res = await getPort(`${getDeviceCcsort}?token=${token}`)
+        if(res.code == 200) {
+          deviceAC.setCcsort(res.data).then((newdata)=> {
+            resovle(newdata)
+          })
+        }
+      })
+    })
+  }
+
+  getPresort() {
+    return new Promise((resovle, reject)=> {
+      checkToken(tokenKey)
+      .then(async token => {
+        let res = await getPort(`${getDevicePresort}?token=${token}`)
+        if(res.code == 200) {
+          deviceAC.setPresort(res.data).then((newdata)=> {
+            resovle(newdata)
+          })
+        }
+      })
+    })
+  }
+
+  getFuelsort() {
+    return new Promise((resovle, reject)=> {
+      checkToken(tokenKey)
+      .then(async token => {
+        let res = await getPort(`${getDeviceFuelsort}?token=${token}`)
+        if(res.code == 200) {
+          deviceAC.setFuelsort(res.data).then((newdata)=> {
+            resovle(newdata)
+          })
+        }
+      })
+    })
+  }
+
   getHotCities() {
     checkToken(tokenKey)
     .then(async token => {
@@ -95,7 +144,7 @@ export default class DeviceCategory extends Component {
   }
 
   pressConfirmReturn() {
-    deviceAC.setFilterSearchTrue()
+    deviceAC.setFilterSearchTrue(sortData)
     this.getAllDevices()
   }
 
@@ -122,8 +171,9 @@ export default class DeviceCategory extends Component {
   }
 
   render() {
-    let { isRefreshing, classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities } = this.state
+    let { isRefreshing, classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities, ccsort, presort, fuelsort } = this.state
       , { openModal } = deviceAC
+    let mergeData = ccsort.class == undefined ? classifyData : [ccsort, presort, fuelsort]
     return(
       <View style={device.wrap}>
         <View style={device.archivesTab}>
@@ -147,7 +197,7 @@ export default class DeviceCategory extends Component {
           <View style={[topView, {height: classifyRow ? '100%' : 0}]}>
             {
               classifyRow ? <View style={{height: '100%'}}>
-                <Classify data={classifyData} 
+                <Classify data={mergeData} 
                   deviceData={allDevicesData2}
                   state={this.state} 
                   changeClassKinds={this.changeClassKinds.bind(this)}
@@ -174,7 +224,7 @@ export default class DeviceCategory extends Component {
           <View style={[topView, {height: filterRow ? '100%' : 0}]}>
             {
               filterRow ? <ScrollView style={{height: '100%'}}>
-                <Filter data={filterData} 
+                <Filter data={mergeData} 
                   cityData={allCities} 
                   state={this.state} 
                   pressBotton={this.pressBotton.bind(this)} 

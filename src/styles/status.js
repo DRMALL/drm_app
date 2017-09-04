@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, backgroundColor, contentColor } from '../common/constants'
+import { mainColor, subTitleColor, backgroundColor, contentColor, titleColor } from '../common/constants'
 import { StyleSheet } from 'react-native'
 
 export default {
@@ -30,11 +30,13 @@ export default {
   },
   NoText: {
     width: '100%',
-    fontSize: 18, 
+    fontSize: 16, 
+    color: titleColor,
   },
   text: {
+    height: 23,
     width: '83%',
-    fontSize: 16,
+    fontSize: 14,
     color: contentColor,
   },
   touch: {

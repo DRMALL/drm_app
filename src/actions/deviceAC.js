@@ -25,6 +25,9 @@ import {
   device_class_kind_select,
   device_refresh_T,
   device_refresh_F,
+  device_device_ccsort,
+  device_device_presort,
+  device_device_fuelsort,
 } from '../common/actStrings'
 
 const setHistoryData = (payload)=> {
@@ -140,8 +143,16 @@ const pressFilterParams = (type, kind)=> {
   }
 }
 
-const setFilterSearchTrue = ()=> {
-  dispatch(device_filter_search_T)
+const setFilterSearchTrue = (sortData)=> {
+  let stateObj = {
+    filterSearch: true, 
+    filterRow: false,
+  }
+  sortData.map((sortText, index)=> {
+    if(index == 0) stateObj[`sortRow${index}`] = true
+    else stateObj[`sortRow${index}`] = false
+  })
+  dispatch(device_filter_search_T, stateObj)
 }
 
 const sortTabPress = (s)=> {
@@ -152,6 +163,7 @@ const sortTabPress = (s)=> {
     sortRow: !state[`sortRow${s}`] ? false : true,
     classj: !state[`sortRow${s}`] ? 0 : state.classj,
     kindk: !state[`sortRow${s}`] ? 0 : state.kindk,
+    classKinds: !state[`sortRow${s}`] ? '全部' : state.classKinds,
   })
 }
 
@@ -183,6 +195,57 @@ const isnotRefresh = ()=> {
   dispatch(device_refresh_F)
 }
 
+const setCcsort = (data)=> {
+  return new Promise((resovle, reject)=> {
+    let sortCC = {
+      class: '排量',
+      kinds: [],
+    }
+    data.forEach((item, i)=> {
+      sortCC.kinds.push({
+        text: item.text,
+        type: 'cc',
+      })
+    })
+    dispatch(device_device_ccsort, sortCC)
+    resovle(sortCC)
+  })
+}
+
+const setPresort = (data)=> {
+  return new Promise((resovle, reject)=> {
+    let sortPRE = {
+      class: '压力范围',
+      kinds: [],
+    }
+    data.forEach((item, i)=> {
+      sortPRE.kinds.push({
+        text: item.text,
+        type: 'pressure',
+      })
+    })
+    dispatch(device_device_presort, sortPRE)
+    resovle(sortPRE)
+  })
+}
+
+const setFuelsort = (data)=> {
+  return new Promise((resovle, reject)=> {
+    let sortFUEL = {
+      class: '使用燃料',
+      kinds: [],
+    }
+    data.forEach((item, i)=> {
+      sortFUEL.kinds.push({
+        text: item.text,
+        type: 'combustible',
+      })
+    })
+    dispatch(device_device_fuelsort, sortFUEL)
+    resovle(sortFUEL)
+  })
+}
+
 export default {
   setHistoryData,
   getHotword,
@@ -203,4 +266,7 @@ export default {
   selectClassKind,
   isRefresh,
   isnotRefresh,
+  setCcsort,
+  setPresort,
+  setFuelsort,
 }

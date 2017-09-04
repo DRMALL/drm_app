@@ -251,7 +251,7 @@ const DiagBugsItem = props => {
           </Text> 
         </View>
         <View style={{paddingVertical: 5}}>
-          <Text style={{color: contentColor, fontWeight: 'bold' }} numberOfLines={3}>
+          <Text style={{color: contentColor, fontSize: 14 }} numberOfLines={3}>
             { contentArr }
           </Text>
         </View>

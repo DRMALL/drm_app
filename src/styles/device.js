@@ -1,4 +1,4 @@
-import { mainColor, subTitleColor, lightBlueColor, backgroundColor, loginBackgroundColor, contentColor } from '../common/constants'
+import { mainColor, subTitleColor, lightBlueColor, backgroundColor, loginBackgroundColor, contentColor, titleColor } from '../common/constants'
 import { StyleSheet } from 'react-native'
 
 export default {
@@ -58,7 +58,9 @@ export default {
     justifyContent: 'center',
   },
   archivesItemNo: {
+    width: 190,
     fontSize: 16,
+    color: titleColor,
   },
   archivesItemTime: {
     marginRight: 16,
@@ -87,6 +89,7 @@ export default {
   archivesItemDetail: {
     width: '100%',
     lineHeight: 23,
+    fontSize: 14,
     color: contentColor,
     paddingRight: 16,
   },

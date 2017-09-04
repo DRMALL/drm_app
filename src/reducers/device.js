@@ -23,6 +23,9 @@ import {
   device_class_kind_select,
   device_refresh_T,
   device_refresh_F,
+  device_device_ccsort,
+  device_device_presort,
+  device_device_fuelsort,
 } from '../common/actStrings'
 
 const device = {
@@ -54,6 +57,9 @@ const device = {
   allDevicesData: [],
   allDevicesData2: [],
   allCities: [],
+  ccsort: {},
+  presort: {},
+  fuelsort: {},
 }
 
 export default (state = device, action) => {
@@ -96,7 +102,7 @@ export default (state = device, action) => {
     case device_filter_address:
       return Object.assign({}, state, {filteraddress: action.payload})
     case device_filter_search_T:
-      return Object.assign({}, state, {filterSearch: true, filterRow: false,})// classKinds: '全部',
+      return Object.assign({}, state, action.payload)// classKinds: '全部',
     case device_sorttab_press:
       return Object.assign({}, state, action.payload)
     case device_sorttab_normal:
@@ -107,6 +113,12 @@ export default (state = device, action) => {
       return Object.assign({}, state, { isRefreshing: true } )
     case device_refresh_F:
       return Object.assign({}, state, { isRefreshing: false } )
+    case device_device_ccsort:
+      return Object.assign({}, state, { ccsort: action.payload})
+    case device_device_presort:
+      return Object.assign({}, state, { presort: action.payload } )
+    case device_device_fuelsort:
+      return Object.assign({}, state, { fuelsort: action.payload } )
     default:
       return state
   }

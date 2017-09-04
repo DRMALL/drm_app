@@ -8,6 +8,8 @@ import {
   statu_datalist_get,
   statu_equipdata_get,
   statu_equipitemdata_set,
+  statu_equipitemnumdata_set,
+  statu_msgred_show,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -63,6 +65,14 @@ const setEqItemData = (payload)=> {
   dispatch(statu_equipitemdata_set, payload)
 }
 
+const setEqNumItemData = (payload)=> {
+  dispatch(statu_equipitemnumdata_set, payload)
+}
+
+const setMsgRedShow = (payload)=> {
+  dispatch(statu_msgred_show, payload)
+}
+
 export default {
   isRefresh,
   isnotRefresh,
@@ -70,4 +80,6 @@ export default {
   getStatusData,
   getEquipData,
   setEqItemData,
+  setEqNumItemData,
+  setMsgRedShow,
 }

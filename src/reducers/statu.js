@@ -7,6 +7,8 @@ import {
   statu_datalist_get,
   statu_equipdata_get,
   statu_equipitemdata_set,
+  statu_equipitemnumdata_set,
+  statu_msgred_show,
 } from '../common/actStrings'
 
 const statu = (()=> {
@@ -18,6 +20,8 @@ const statu = (()=> {
     statusListData: [],
     equipmentData: [],
     equipmentItemData: {},
+    eqNumberData: {},
+    msgRedShow: false,
   }
   statusArr.map((item, index)=> {
     if(index == 0) statuStateObj[`StatuTabRow${index}`] = true
@@ -42,6 +46,10 @@ export default (state = statu, action) => {
       return Object.assign({}, state, action.payload)
     case statu_equipitemdata_set: 
       return Object.assign({}, state, { equipmentItemData: action.payload })
+    case statu_equipitemnumdata_set: 
+      return Object.assign({}, state, { eqNumberData: action.payload })
+    case statu_msgred_show: 
+      return Object.assign({}, state, { msgRedShow: action.payload })
     default:
       return state
   }

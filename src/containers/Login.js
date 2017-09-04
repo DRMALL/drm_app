@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, KeyboardAvoidingView, StatusBar, Platform } from 'react-native'
+import { View, Text, TextInput, Image, KeyboardAvoidingView, StatusBar, Platform, ActivityIndicator } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationActions } from 'react-navigation'
 import { 
@@ -43,6 +43,9 @@ export default class Login extends Component {
   constructor(props) {
     super(props)
     this.state = store.getState().login
+    console.ignoredYellowBox = [
+      'Setting a timer'
+    ]
   }
 
   componentDidMount() {
@@ -71,8 +74,8 @@ export default class Login extends Component {
   }
 
   render() {
-    let { textEmail, textWord } = this.state
-      , { changeLoginEmail, changeLoginWord } = loginAC
+    let { textEmail, textWord, showSchedule } = this.state
+      , { changeLoginEmail, changeLoginWord, changeShowSchedule } = loginAC
     return (
       <View style={[login.wrap, Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}]}>
         <StatusBar hidden={true}/>
@@ -81,6 +84,7 @@ export default class Login extends Component {
         <Text style={login.text}>{drmOne}</Text>
         <Text style={login.text}>{drmTwo}</Text>
         <Text style={[login.text, {lineHeight: 48, marginBottom: 40}]}>{drmThree}</Text>
+        <ActivityIndicator animating={showSchedule} size='large'/>
         <KeyboardAvoidingView behavior={'padding'} >
           <TextInput 
             style={login.textInput}
@@ -110,15 +114,22 @@ export default class Login extends Component {
           title={loginText}
           titleStyle={login.touchLoginText}
           style={login.touchOpacity} 
-          onPress={()=> loginPressButton(this.props)}
+          onPress={()=> {
+            changeShowSchedule(true)
+            loginPressButton(this.props)
+          }}
         />
-        <Button 
-          title={loginForgetWord}
-          titleStyle={login.touchForgetText}
-          style={{height: 40, margin: 20, justifyContent: "center" }} 
-          onPress={this.forgetPressButton.bind(this)}
-        />
+        <View style={{height: 40, margin: 20, justifyContent: "center" }}/>
       </View>
     )
   }
 }
+
+// {
+//           <Button 
+//           title={loginForgetWord}
+//           titleStyle={login.touchForgetText}
+//           style={{height: 40, margin: 20, justifyContent: "center" }} 
+//           onPress={this.forgetPressButton.bind(this)}
+//         />
+//         }

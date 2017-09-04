@@ -4,12 +4,15 @@ import moment from 'moment'
 import socket from 'socket.io-client'
 import { Navigator } from 'react-native-deprecated-custom-components'
 import Lightbox from 'react-native-lightbox'
-import { equipmentName, equipmentRunState, equipmentRunImg, equipmentIndexData, indexDataUpdateTime, equipmentRunningLog } from '../common/strings'
+import { equipmentName, equipmentRunState, equipmentRunImg, equipmentIndexData, indexDataUpdateTime, equipmentRunningLog, internalServerError, tokenKey } from '../common/strings'
 import { subTitleColor, primaryColor } from '../common/constants'
 import { equipment } from '../styles'
 import { equipmentDataList, equipmentLogList } from '../utils/virtualData'
 import IndexData from '../components/equipment/IndexData'
 import RunningLog from '../components/equipment/RunningLog'
+import { checkToken } from '../utils/handleToken'
+import { getPort } from '../utils/fetchMethod'
+import { getMoniterdevsNum } from '../apis'
 
 import store from '../utils/store'
 import statuAC from '../actions/statuAC'
@@ -37,6 +40,7 @@ export default class Equipment extends Component {
 
   componentDidMount() {
     statuAC.getEquipData({})
+    this.getMonNumData()
     // this.io = socket(`https://api.wardenger.me/socket`)
     // this.io.on('connect', ()=> {
     //   console.log('connect')
@@ -71,8 +75,29 @@ export default class Equipment extends Component {
     this.unsubscribe()
   }
 
+  getMonNumData() {
+    checkToken(tokenKey)
+    .then(async token => {
+      let { statuItemNumber } = this.props.navigation.state.params
+      let res = await getPort(`${getMoniterdevsNum}?number=${statuItemNumber}&token=${token}`)
+      if(!res) {
+        Alert.alert('错误', internalServerError,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 200) {
+        statuAC.setEqNumItemData(res.data)
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
+  }
+
   render() {
-    let { equipmentData } = this.state
+    let { equipmentData, eqNumberData } = this.state
       , { statuItemNumber } = this.props.navigation.state.params
       , isNormal = false
       , equipmentItemData = {}
@@ -86,22 +111,27 @@ export default class Equipment extends Component {
       <ScrollView style={equipment.wrap}>
         <Text style={equipment.fixText}>{equipmentRunState}</Text>
         <Text style={equipment.stateText}>{isNormal ? '正常' : '异常'}</Text>
-        <Text style={equipment.fixText}>{equipmentRunImg}</Text>
-        <Lightbox style={equipment.imgView}>
-          <Image style={equipment.img} source={pic4}/> 
-        </Lightbox>
+        
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>
           <Text style={[equipment.fix3Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + `${moment(equipmentItemData.rnTimestamp).format('YYYY-MM-DD hh:mm')}`}</Text>
         </View>
         <View style={equipment.dataView}>
-          <IndexData indexData={equipmentDataList} equipmentItemData={equipmentItemData} {...this.props}/>
+          <IndexData indexData={equipmentDataList} equipmentItemData={equipmentItemData} eqNumberData={eqNumberData} {...this.props}/>
         </View>
-        <Text style={equipment.fixText}>{equipmentRunningLog}</Text>
-        <View style={equipment.logView}>
-          { equipmentLogList.map((log, i)=> <RunningLog key={i} log={log} /> ) }
-        </View>
+        
       </ScrollView>
     )
   }
 }
+
+// {
+//   <Text style={equipment.fixText}>{equipmentRunImg}</Text>
+//         <Lightbox style={equipment.imgView}>
+//           <Image style={equipment.img} source={pic4}/> 
+//         </Lightbox>
+//   <Text style={equipment.fixText}>{equipmentRunningLog}</Text>
+//         <View style={equipment.logView}>
+//           { equipmentLogList.map((log, i)=> <RunningLog key={i} log={log} /> ) }
+//         </View>
+// }

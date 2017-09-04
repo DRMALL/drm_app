@@ -3,6 +3,7 @@ import { View, Text, Image, ListView, TouchableOpacity, Alert, RefreshControl } 
 import { online, offline, onToOffText, onState, offState, inTheEnd } from '../common/strings'
 import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor, contentColor } from '../common/constants'
 import { status, home } from '../styles'
+import EmptyContent from '../components/units/EmptyContent'
 
 import store from '../utils/store'
 import statuAC from '../actions/statuAC'
@@ -16,6 +17,7 @@ export default props => {
     , dataLength = props.data.length
     , equipmentData = props.equipmentData
     , { isRefreshing } = store.getState().statu
+  if(dataLength == 0) return <EmptyContent />
   return(
     <ListView 
       refreshControl={<RefreshControl 
@@ -47,7 +49,7 @@ const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation 
         <Image source={{uri: images[0].url}} style={status.img} />
         <View style={status.nextView}>
           <View style={status.cover}>
-            <Text style={status.NoText} numberOfLines={2}>{`${name} (${number})`}</Text>
+            <Text style={status.NoText} numberOfLines={1}>{`${name} (${number})`}</Text>
             <TouchableOpacity style={[status.touch, {borderColor: deviceState ? lightGreenColor : lightRedColor}]}>
               <Text style={[status.touchText, {color: deviceState ? lightGreenColor : lightRedColor}]}>{deviceState ? onState : offState}</Text>
             </TouchableOpacity>

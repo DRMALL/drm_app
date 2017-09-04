@@ -4,10 +4,12 @@ import { solved, unsolved, inTheEnd } from '../common/strings'
 import { lightBlueColor, contentColor, subTitleColor, loginBackgroundColor, mainColor } from '../common/constants'
 import { diagnose, home } from '../styles'
 import { diagnosisData } from '../utils/virtualData'
+import EmptyContent from '../components/units/EmptyContent'
 
 export default props => {
   let { navigation, diagnoseData, isRefreshing, onDiagRefresh } = props
     , diagnoseDataLength = diagnoseData.length
+  if(diagnoseDataLength == 0) return <EmptyContent />
   return (
     <View style={diagnose.wrap}>
       <ScrollView 

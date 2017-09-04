@@ -87,7 +87,7 @@ class KindRow extends Component {
       allKindNum += one.num
     })
     let whole = [{
-      title: '全部',
+      text: '全部',
       type: '',
       num: allKindNum,
     }]
@@ -109,20 +109,20 @@ const KindItemRow = props => {
   deviceData.forEach((deviceOne)=> {
     switch(kindItem.type) {
       case 'cc': {
-        if(kindItem.title == deviceOne.cc) thisKindNum += 1
+        if(kindItem.text == deviceOne.cc) thisKindNum += 1
       };break
       case 'pressure': {
-        if(kindItem.title == deviceOne.pressure) thisKindNum += 1
+        if(kindItem.text == deviceOne.pressure) thisKindNum += 1
       };break
       case 'combustible': {
-        if(kindItem.title == deviceOne.combustible) thisKindNum += 1
+        if(kindItem.text == deviceOne.combustible) thisKindNum += 1
       };break
       default: thisKindNum = deviceData.length
     }
   })
   return (
-    <TouchableOpacity style={classify.classTouch} activeOpacity={0.8} onPress={()=> pressKind(j, index, kindItem.type, kindItem.title)}>
-      <Text style={[classify.textClass, {color: selectKindRow ? lightBlueColor : contentColor}]}>{kindItem.title}</Text>
+    <TouchableOpacity style={classify.classTouch} activeOpacity={0.8} onPress={()=> pressKind(j, index, kindItem.type, kindItem.text)}>
+      <Text style={[classify.textClass, {color: selectKindRow ? lightBlueColor : contentColor}]}>{kindItem.text}</Text>
       <View style={[classify.numBorder, {backgroundColor: selectKindRow ? lightBlueColor : subTitleColor, marginRight: 15}]}>
         <Text style={classify.textNum}>{thisKindNum}</Text>
       </View>

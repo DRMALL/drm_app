@@ -3,6 +3,7 @@ import { View, Text, Image, ListView, TouchableOpacity, RefreshControl } from 'r
 import { mainColor, contentColor } from '../common/constants'
 import { inTheEnd } from '../common/strings'
 import { home } from '../styles'
+import EmptyContent from '../components/units/EmptyContent'
 
 const picMaskIcon = require('../images/navigation_icons/pic_mask.png')
 
@@ -12,6 +13,7 @@ export default props => {
   })
   let finalDs = ds.cloneWithRows(props.data)
     , dataLength = props.data.length
+  if(dataLength == 0) return <EmptyContent />
   return(
     <ListView 
       refreshControl={<RefreshControl 

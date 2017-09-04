@@ -45,7 +45,7 @@ export default class Diagnose extends Component {
 
   onDiagRefresh() {
     diagnoseAC.isRefresh()
-    this.getDiagnosis()
+    getDiagnosis()
     setTimeout(() => {
       diagnoseAC.isnotRefresh()
     }, 2000)

@@ -610,6 +610,16 @@ export const filterData = [
         type: 'cc',
         num: 1234,
       },
+      {
+        text: '三发生器',
+        type: 'cc',
+        num: 1234,
+      },
+      {
+        text: '四发生器',
+        type: 'cc',
+        num: 1234,
+      },
     ],
     num: 1234
   },

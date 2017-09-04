@@ -26,4 +26,8 @@ export const setOneNoticesRead = apiUrl + 'notices/one/read'
 export const setOrderSolved = apiUrl + 'order/solved'
 export const getMoniterdevs = apiUrl + 'moniterdevs'
 export const getMoniterdevsSearch = apiUrl + 'moniterdevs/search'
+export const getDeviceCcsort = apiUrl + 'devices/ccsort'
+export const getDevicePresort = apiUrl + 'devices/presort'
+export const getDeviceFuelsort = apiUrl + 'devices/fuelsort'
+export const getMoniterdevsNum = apiUrl + 'moniterdevs/number'
 

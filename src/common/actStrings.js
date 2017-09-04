@@ -29,6 +29,7 @@ export const info_data_get = 'INFO_DATA_GET'
   //login
 export const login_email = 'LOGIN_EMAIL'
 export const login_word = 'LOGIN_WORD'
+export const login_show_schedule = 'LOGIN_SHOW_SCHEDULE'
 
   //message
 export const msg_all_get = 'MESSAGE_ALL_GET'
@@ -55,6 +56,8 @@ export const statu_tab_normal = 'STATU_TAB_NORMAL'
 export const statu_datalist_get = 'STATU_DATALIST_GET'
 export const statu_equipdata_get = 'STATU_EQUIPDATA_GET'
 export const statu_equipitemdata_set = 'STATU_EQUIPITEMDATA_SET'
+export const statu_equipitemnumdata_set = 'STATU_EQUIPITEMNUMDATA_SET'
+export const statu_msgred_show = 'STATU_MSGRED_SHOW'
 
   //device
 export const device_history_set = 'DEVICE_HISTORY_SET'
@@ -81,5 +84,8 @@ export const device_sorttab_normal = 'DEVICE_SORTTAB_NORMAL'
 export const device_class_kind_select = 'DEVICE_CLASS_KIND_SELECT'
 export const device_refresh_T = 'DEVICE_REFRESH_T'
 export const device_refresh_F = 'DEVICE_REFRESH_F'
+export const device_device_ccsort = 'DEVICE_DEVICE_CCSORT'
+export const device_device_presort = 'DEVICE_DEVICE_PRESORT'
+export const device_device_fuelsort = 'DEVICE_DEVICE_FUELSORT'
 
 

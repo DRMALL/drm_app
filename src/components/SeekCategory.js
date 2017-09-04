@@ -5,6 +5,7 @@ import { lightBlueColor, contentColor, mainColor, subTitleColor, loginBackground
 import { seek, home } from '../styles'
 import { seekData } from '../utils/virtualData'
 import store from '../utils/store'
+import EmptyContent from '../components/units/EmptyContent'
 
 export default class SeekCategory extends Component {
   render() {
@@ -41,21 +42,24 @@ export default class SeekCategory extends Component {
             </View>
           </View>
         </View>
-        <ScrollView 
-          style={{height: '100%'}}
-          refreshControl={<RefreshControl 
-            refreshing={isRefreshing}
-            onRefresh={onSeekRefresh}
-            colors={['#ff0000', '#00ff00', '#0000ff']}
-            progressBackgroundColor={mainColor}
-            title='下拉刷新'
-            titleColor={contentColor}
-          />}
-        >
-          {
-            selectDataArr.map((item, s)=> <SeekDataItem key={s} item={item} s={s} seekDataLength={seekDataLength} navigation={navigation}/>)
-          }
-        </ScrollView>
+        {
+          seekDataLength == 0 ? <EmptyContent /> : 
+          <ScrollView 
+            style={{height: '100%'}}
+            refreshControl={<RefreshControl 
+              refreshing={isRefreshing}
+              onRefresh={onSeekRefresh}
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor={mainColor}
+              title='下拉刷新'
+              titleColor={contentColor}
+            />}
+          >
+            {
+              selectDataArr.map((item, s)=> <SeekDataItem key={s} item={item} s={s} seekDataLength={seekDataLength} navigation={navigation}/>)
+            }
+          </ScrollView>
+        }
       </View>
     )
   }

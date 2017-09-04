@@ -36,6 +36,8 @@ export default class Detail extends Component {
       oneDeviceData: {},
       photos: null,
       downUpPress: false,
+      showdatu: false,
+      enlargeUrl: 'null',
     }
   }
 
@@ -90,15 +92,27 @@ export default class Detail extends Component {
     this.props.navigation.navigate('uploadImage', {deviceId: deviceId})
   }
 
+  pressHeaderPicEnlarge(url) {
+    console.log(url)
+    this.setState({
+      showdatu: true,
+      enlargeUrl: url,
+    })
+  }
+
   render() {
     let { navigation } = this.props
-      , { oneDeviceData, isRefreshing, adDataSource, photos, downUpPress } = this.state
+      , { oneDeviceData, isRefreshing, adDataSource, photos, downUpPress, showdatu, enlargeUrl } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark, classify } = oneDeviceData
       , nameNumLength = `${name + number}`.split('').length
     // if (!images) return <Loading animating={!images ? true : false}/>
     return (
       <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
+        <TouchableOpacity style={showdatu ? {width: '100%', height: '100%', position: 'absolute', zIndex: 3} : {display: 'none'}} onPress={()=> this.setState({showdatu: false})} >
+          <Image style={{width: '100%', height: '100%', resizeMode: 'contain', backgroundColor: 'rgba(52,52,52,.9)'}} source={{uri: enlargeUrl}}/>
+        </TouchableOpacity>
         <ScrollView 
+          style={{position: 'relative', zIndex: 2}}
           refreshControl={<RefreshControl 
             refreshing={isRefreshing}
             onRefresh={this.onIsRefresh.bind(this)}
@@ -109,7 +123,12 @@ export default class Detail extends Component {
           <StatusBar hidden={true}/>
           <View style={detail.wrap}>
             { !images ? <Loading2 animating={!images ? true : false} /> : 
-              <SwiperHeader picsData={images} navigation={navigation} pressUploadPic={this.pressUploadPic.bind(this)}/>
+              <SwiperHeader 
+                picsData={images} 
+                navigation={navigation} 
+                pressUploadPic={this.pressUploadPic.bind(this)} 
+                pressHeaderPicEnlarge={this.pressHeaderPicEnlarge.bind(this)}
+              />
             }
             <View style={nameNumLength > 17 ? detail.titleViewColumn : detail.titleViewRow}>
               <Text style={detail.titleText}>{`${name} (${number})`}</Text>
@@ -159,7 +178,7 @@ export default class Detail extends Component {
 }
 
 const SwiperHeader = props => {
-  let { picsData, navigation, pressUploadPic } = props
+  let { picsData, navigation, pressUploadPic, pressHeaderPicEnlarge } = props
   let picsDataView = []
   for(var i = 0; i < picsData.length+1; i++) {
     if(i == picsData.length) {
@@ -167,11 +186,12 @@ const SwiperHeader = props => {
         <TouchUploadPic key={i} pressUploadPic={pressUploadPic}/>
       )
     } else {
+      let picEnlarge = `${picsData[i].url}`
       picsDataView.push(
-        <View key={i} style={detail.picsView}>
+        <TouchableOpacity key={i} style={detail.picsView} onPress={()=> pressHeaderPicEnlarge(picEnlarge)} >
           <Image style={detail.pics} source={{uri: picsData[i].url}}/>
           <Image style={{width: '100%', height: '100%', resizeMode: 'stretch', position: 'absolute' }} source={picMaskIcon}/>
-        </View>
+        </TouchableOpacity>
       )
     }
   }

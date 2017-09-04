@@ -43,7 +43,7 @@ export default class Home extends Component {
 
   onHomeRefresh() {
     homeDetailAC.isRefresh()
-    this.getNewsList()
+    getNewsList()
     setTimeout(() => {
       homeDetailAC.isnotRefresh()
     }, 2000)

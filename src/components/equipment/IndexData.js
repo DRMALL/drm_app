@@ -39,7 +39,7 @@ export default class IndexData extends Component {
 }
 
 
-const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemData }) => {
+const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemData, eqNumberData }) => {
   let { title, textArr } = rowData
   let selectRow = state[`row${index}`]
   textArr = selectRow ? textArr : [] 
@@ -50,20 +50,22 @@ const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemD
         <Image style={equipment.imgTouch} source={selectRow ? dropdownSelected : dropdownNormal} />
       </TouchableOpacity>
       <View style={{backgroundColor: mainColor}}>
-        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation} equipmentItemData={equipmentItemData}/>)}
+        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation} equipmentItemData={equipmentItemData} eqNumberData={eqNumberData}/>)}
       </View>
     </View>
   )
 }
 
 const DataItemRow = props => {
-  let { item, navigation, equipmentItemData } = props
+  let { item, navigation, equipmentItemData, eqNumberData } = props
   return (
-    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram')}>
+    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> 'ok'}>
       <Text style={equipment.iDataItemText}>{item.text}</Text>
-      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{equipmentItemData ? normIndexPD(item.text, equipmentItemData.data) : 'NN.NN'}</Text>
+      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{equipmentItemData.number ? normIndexPD(item.text, equipmentItemData.data) : normIndexPD(item.text, eqNumberData.data)}</Text>
       <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unit}</Text>
       <Image style={equipment.iDataItemImg} source={intoIcon} />
     </TouchableOpacity>
   )
 }
+
+////navigation.navigate('datagram')

@@ -106,4 +106,16 @@ export default {
     fontSize: 20,
     paddingVertical: 10,
   },
+
+  emptyView: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: loginBackgroundColor,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: subTitleColor,
+  },
 }
