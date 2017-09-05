@@ -165,4 +165,18 @@ export default {
     lineHeight: 17, 
     color: subTitleColor,
   },
+
+  //
+  enlargeTouchView: {
+    width: '100%', 
+    height: '100%', 
+    position: 'absolute', 
+    zIndex: 6,
+  },
+  enlargeImg: {
+    width: '100%', 
+    height: '100%', 
+    resizeMode: 'contain', 
+    backgroundColor: 'rgba(52,52,52,.9)',
+  },
 }

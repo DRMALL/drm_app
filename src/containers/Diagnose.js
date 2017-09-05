@@ -7,6 +7,7 @@ import DiagnoseCategory from '../components/DiagnoseCategory'
 
 import store from '../utils/store'
 import diagnoseAC from '../actions/diagnoseAC'
+import deviceAC from '../actions/deviceAC'
 import getDiagnosis from '../funcs/diagnose/getDiagnosis'
 import getDiagnoseCate from '../funcs/diagnose/getDiagnoseCate'
 

@@ -1,8 +1,8 @@
 import React, { Component }from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import { NavigationActions } from 'react-navigation'
-import { primaryColor, mainColor, subTitleColor, backgroundColor, lightGreenColor, lightRedColor } from '../../common/constants'
-import { timeLineScreening, cancel, confirm, pleaseSelectStartTime, pleaseSelectEndTime, deviceLabel, comeBack } from '../../common/strings'
+import { primaryColor, mainColor, subTitleColor, backgroundColor, lightBlueColor, lightGreenColor, lightRedColor } from '../../common/constants'
+import { timeLineScreening, cancel, confirm, pleaseSelcetStartEnd, pleaseSelectStartTime, pleaseSelectEndTime, deviceLabel, comeBack } from '../../common/strings'
 import { calendars } from '../../styles'
 
 import DayList from '../../components/archives/DayList'
@@ -153,11 +153,14 @@ export default class Calendars extends Component {
 
   render() {
     let weekArr = ['日','一','二','三','四','五','六']
-    let { year, month, dayArray, selectTextTF } = this.state
+    let { year, month, dayArray, selectTextTF, startTimestamp } = this.state
     return (
       <View style={calendars.wrap}>
         <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
-        <Text style={[calendars.selectText, {color: selectTextTF ? lightRedColor : lightGreenColor}]}>{selectTextTF ? pleaseSelectEndTime : pleaseSelectStartTime}</Text>
+        <Text style={[
+          calendars.selectText, 
+          {color: startTimestamp == 0 ? subTitleColor : (selectTextTF ? lightRedColor : lightGreenColor)}
+        ]}>{startTimestamp == 0 ? pleaseSelcetStartEnd : (selectTextTF ? pleaseSelectEndTime : pleaseSelectStartTime)}</Text>
         <ScrollView style={{backgroundColor: mainColor}}>
           <View style={calendars.ymView}>
             <TouchableOpacity style={{padding: 10}} onPress={this.pressMinusMonth.bind(this)}>

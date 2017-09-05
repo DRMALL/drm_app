@@ -19,18 +19,12 @@ import { checkToken, clearToken } from '../utils/handleToken'
 
 import store from '../utils/store'
 import loginAC from '../actions/loginAC'
+import getMsgReadAll from '../funcs/login/getMsgReadAll'
 import loginPressButton from '../funcs/login/loginPressButton'
 
 const loginScreenLogo = require('../images/login_screen_logo.png')
 const loginPasswordShow = require('../images/login_password_show.png')
 const loginPasswordHide = require('../images/login_password_hide.png')
-
-const resetAction = NavigationActions.reset({
-  index: 0,
-  actions: [
-    NavigationActions.navigate({ routeName: 'main'}),
-  ]
-})
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -51,7 +45,17 @@ export default class Login extends Component {
   componentDidMount() {
     checkToken(tokenKey)
     .then(token => {
-      if(token) this.props.navigation.dispatch(resetAction)
+      if(token) {
+        getMsgReadAll(token).then((readed)=> {
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'main', params: { msgRedShow: readed ? false : true } }),
+            ]
+          })
+          this.props.navigation.dispatch(resetAction)
+        })
+      }
     })
     loginAC.changeLoginEmail('')
     loginAC.changeLoginWord('')

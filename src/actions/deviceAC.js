@@ -28,6 +28,7 @@ import {
   device_device_ccsort,
   device_device_presort,
   device_device_fuelsort,
+  device_setallrow_false,
 } from '../common/actStrings'
 
 const setHistoryData = (payload)=> {
@@ -246,6 +247,11 @@ const setFuelsort = (data)=> {
   })
 }
 
+const setAllRowFalse = ()=> {
+  // console.log('1')
+  dispatch(device_setallrow_false)
+}
+
 export default {
   setHistoryData,
   getHotword,
@@ -269,4 +275,5 @@ export default {
   setCcsort,
   setPresort,
   setFuelsort,
+  setAllRowFalse,
 }

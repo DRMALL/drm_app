@@ -93,7 +93,6 @@ export default class Detail extends Component {
   }
 
   pressHeaderPicEnlarge(url) {
-    console.log(url)
     this.setState({
       showdatu: true,
       enlargeUrl: url,
@@ -108,8 +107,8 @@ export default class Detail extends Component {
     // if (!images) return <Loading animating={!images ? true : false}/>
     return (
       <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
-        <TouchableOpacity style={showdatu ? {width: '100%', height: '100%', position: 'absolute', zIndex: 3} : {display: 'none'}} onPress={()=> this.setState({showdatu: false})} >
-          <Image style={{width: '100%', height: '100%', resizeMode: 'contain', backgroundColor: 'rgba(52,52,52,.9)'}} source={{uri: enlargeUrl}}/>
+        <TouchableOpacity style={showdatu ? detail.enlargeTouchView : {display: 'none'}} onPress={()=> this.setState({showdatu: false})} >
+          <Image style={detail.enlargeImg} source={{uri: enlargeUrl}}/>
         </TouchableOpacity>
         <ScrollView 
           style={{position: 'relative', zIndex: 2}}
@@ -131,7 +130,7 @@ export default class Detail extends Component {
               />
             }
             <View style={nameNumLength > 17 ? detail.titleViewColumn : detail.titleViewRow}>
-              <Text style={detail.titleText}>{`${name} (${number})`}</Text>
+              <Text style={detail.titleText}>{`${name ? name : '设备名'} (${number ? number : '0000'})`}</Text>
               <Text style={detail.titleTime}>{moment(createdAt).format('YYYY-MM-DD')}</Text>
             </View>
             <View style={detail.lebalView}>

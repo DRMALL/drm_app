@@ -3,6 +3,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { inputPartsKeywords, inputDeviceFault, inputDeviceNumber, inputDeviceTypes } from '../common/strings'
 import { headerTitle } from '../styles'
 
+import deviceAC from '../actions/deviceAC'
+
 const searchIcon = require('../images/navigation_icons/search.png')
 
 export default ({ navigation, navigate }) => {

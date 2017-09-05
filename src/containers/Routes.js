@@ -81,7 +81,7 @@ const Main = TabNavigator(
         height: 0,
         // display: 'none'
       },
-    }
+    },
   }
 )
 
@@ -96,16 +96,21 @@ export default StackNavigator({
         backgroundColor: primaryColor,
       },
       headerTitle: <HeaderTitle navigation={navigation}/>,
-      headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', {name: 'Information'})}>
+      headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', { recordMsgRed: navigation.state.params.msgRedShow })}>
         <Image source={userIcon}/>
       </TouchableOpacity>,
       headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} 
         onPress={()=> {
-          navigation.navigate('message', {disabledPress: true})
+          navigation.navigate('message', {disabledPress: true, gobackParams: navigation.state.params.msgRedShow ? false : true})
         }}
       >
         <Image source={infoIcon}/>
-        
+        <View style={
+            navigation.state.params.msgRedShow ? 
+            {width: 8, height: 8, borderRadius: 4, backgroundColor: lightRedColor, position: 'absolute', top: 10, }
+             : {}
+          }
+        />
       </TouchableOpacity>,
     }),
   },
@@ -185,15 +190,11 @@ export default StackNavigator({
     screen: Datagram,
   }
 }, {
+  initialRouteName: 'login',
+  initialRouteParams: { initPara: '初始页面参数' },
   transitionConfig:()=>({  
     screenInterpolator: CardStackStyleInterpolator.forHorizontal,  
   }),
 })
 
-//<View style={
-        //     navigation.state.params.msgRedShow ? 
-        //     {width: 8, height: 8, borderRadius: 4, backgroundColor: lightRedColor, position: 'absolute', top: 10, }
-        //      : {}
-        //   }
-        // />
 

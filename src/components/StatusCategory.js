@@ -54,8 +54,8 @@ const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation 
               <Text style={[status.touchText, {color: deviceState ? lightGreenColor : lightRedColor}]}>{deviceState ? onState : offState}</Text>
             </TouchableOpacity>
           </View>
-          <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={2}>{deviceState ? online : offline}</Text>
-          <Text style={[status.text, {lineHeight: deviceState ? 20 : 28}]} numberOfLines={3}>{deviceState ? '' : onToOffText + (stopTime || '2017-09-04')}</Text>
+          <Text style={[status.text, {lineHeight: deviceState ? 20 : 22}]} numberOfLines={2}>{deviceState ? online : offline}</Text>
+          <Text style={[status.text, {lineHeight: deviceState ? 20 : 22}]} numberOfLines={3}>{deviceState ? '' : onToOffText + (stopTime || '2017-09-04')}</Text>
         </View>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>

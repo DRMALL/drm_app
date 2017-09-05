@@ -112,11 +112,17 @@ export default class DynamicOrder extends Component {
         const resetAction = NavigationActions.reset({
           index: 1,
           actions: [
-            NavigationActions.navigate({ routeName: 'main'}),
+            NavigationActions.navigate({ 
+              routeName: 'main',
+              params: {
+                msgRedShow: false, 
+              },
+            }),
             NavigationActions.navigate({ 
               routeName: 'message', 
               params: {
                 disabledPress: true, 
+                gobackParams: true,
               },
             }),
           ]

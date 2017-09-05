@@ -9,6 +9,45 @@ exports[`HomeDetail test 1`] = `
     }
   }
 >
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "display": "none",
+        "opacity": 1,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Image
+      source={
+        Object {
+          "uri": "null",
+        }
+      }
+      style={
+        Object {
+          "backgroundColor": "rgba(52,52,52,.9)",
+          "height": "100%",
+          "resizeMode": "contain",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
   <RCTScrollView
     alwaysBounceHorizontal={undefined}
     alwaysBounceVertical={true}

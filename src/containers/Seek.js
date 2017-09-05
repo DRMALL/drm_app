@@ -10,6 +10,7 @@ import { seekPartsData, seekTypesData } from '../utils/virtualData'
 
 import store from '../utils/store'
 import seekAC from '../actions/seekAC'
+import deviceAC from '../actions/deviceAC'
 
 const seekIconSelected = require('../images/tabbar_icons/tabbar_search_selected_x.png')
     , seekIconNormal = require('../images/tabbar_icons/tabbar_search_normal.png')

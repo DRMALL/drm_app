@@ -8,6 +8,8 @@ import {
   home_webview_height,
   home_webview_heightcash,
   home_routes_msgpress,
+  home_headerpic_enlarge,
+  home_headerpic_shut,
 } from '../common/actStrings'
 
 const home = {
@@ -20,6 +22,8 @@ const home = {
   height: 0,
   heightCash: 0,
   routesMsgTF: false,
+  showdatu: false,
+  enlargeUrl: 'null',
 }
 
 export default (state = home, action) => {
@@ -42,6 +46,10 @@ export default (state = home, action) => {
       return Object.assign({}, state, { heightCash: action.payload })
     case home_routes_msgpress:
       return Object.assign({}, state, { routesMsgTF: action.payload })
+    case home_headerpic_enlarge:
+      return Object.assign({}, state, { showdatu: true, enlargeUrl: action.payload })
+    case home_headerpic_shut:
+      return Object.assign({}, state, { showdatu: false })
     default:
       return state
   }

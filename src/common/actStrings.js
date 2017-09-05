@@ -22,6 +22,8 @@ export const home_share_hidden = 'HOME_SHARE_HIDDEN'
 export const home_webview_height = 'HOME_WEBVIEW_HEIGHT'
 export const home_webview_heightcash = 'HOME_WEBVIEW_HEIGHTCASH'
 export const home_routes_msgpress = 'HOME_ROUTES_MSGPRESS'
+export const home_headerpic_enlarge = 'HOME_HEADERPIC_ENLARGE'
+export const home_headerpic_shut = 'HOME_HEADERPIC_SHUT'
 
   //information
 export const info_data_get = 'INFO_DATA_GET'
@@ -87,5 +89,6 @@ export const device_refresh_F = 'DEVICE_REFRESH_F'
 export const device_device_ccsort = 'DEVICE_DEVICE_CCSORT'
 export const device_device_presort = 'DEVICE_DEVICE_PRESORT'
 export const device_device_fuelsort = 'DEVICE_DEVICE_FUELSORT'
+export const device_setallrow_false = 'DEVICE_SETALLROW_FALSE'
 
 

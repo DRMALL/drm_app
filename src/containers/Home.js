@@ -7,6 +7,7 @@ import HomeList from '../components/HomeList'
 
 import store from '../utils/store'
 import homeDetailAC from '../actions/homeDetailAC'
+import deviceAC from '../actions/deviceAC'
 import getNewsList from '../funcs/home/getNewsList'
 
 const homeIconSelected = require('../images/tabbar_icons/tabbar_home_selected.png')
@@ -31,6 +32,7 @@ export default class Home extends Component {
 
   componentDidMount() {
     getNewsList()
+    // deviceAC.setAllRowFalse()
   }
 
   componentWillMount() {

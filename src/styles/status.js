@@ -34,7 +34,6 @@ export default {
     color: titleColor,
   },
   text: {
-    height: 23,
     width: '83%',
     fontSize: 14,
     color: contentColor,

@@ -13,7 +13,9 @@ import { statusList } from '../utils/virtualData'
 
 import store from '../utils/store'
 import statuAC from '../actions/statuAC'
+import deviceAC from '../actions/deviceAC'
 import socketConnectStatu from '../funcs/status/socketConnectStatu'
+import socketClose from '../funcs/status/socketClose'
 
 const statusIconSelected = require('../images/tabbar_icons/tabbar_monitor_selected_x.png')
     , statusIconNormal = require('../images/tabbar_icons/tabbar_monitor_normal.png')
@@ -36,7 +38,8 @@ export default class Status extends Component {
   }
 
   componentDidMount() {
-    socketConnectStatu(this.props.navigation)
+    this.io = socket(`https://api.wardenger.me/socket`)
+    socketConnectStatu(this.io, this.props.navigation)
     this.getAllMoniterdev()
   }
 
@@ -45,6 +48,7 @@ export default class Status extends Component {
   }
 
   componentWillUnmount(){
+    this.io.close()
     this.unsubscribe()
   }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import Loading from '../components/units/Loading'
 import { primaryColor, mainColor } from '../common/constants'
 import { messageText, 
@@ -15,13 +16,24 @@ import getNotices from '../funcs/message/getNotices'
 
 const gobackWhiteIcon = require('../images/navigation_icons/goback_white.png')
 
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'main', params: { msgRedShow: false } }),
+  ]
+})
+
 export default class Message extends Component {
   static navigationOptions = ({ navigation })=> ({
     headerStyle: {
       backgroundColor: primaryColor,
     },
     headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{messageText}</Text>,
-    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
+    headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} 
+      onPress={() => {
+        navigation.state.params.gobackParams ? navigation.goBack() : navigation.dispatch(resetAction)
+      } 
+    }>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
     headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 20}} onPress={()=> navigation.state.params.setAllRead()} disabled={navigation.state.params.disabledPress}>

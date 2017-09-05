@@ -8,6 +8,8 @@ import {
   home_webview_height,
   home_webview_heightcash,
   home_routes_msgpress,
+  home_headerpic_enlarge,
+  home_headerpic_shut,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -42,6 +44,14 @@ const changeMsgPress = (payload)=> {
   dispatch(home_routes_msgpress, payload)
 }
 
+const enlargeHeaderPic = (payload)=> {
+  dispatch(home_headerpic_enlarge, payload)
+}
+
+const shutHeaderPic = ()=> {
+  dispatch(home_headerpic_shut)
+}
+
 export default {
   isRefresh,
   isnotRefresh,
@@ -51,4 +61,6 @@ export default {
   changeWVHeight,
   changeWVHeightCash,
   changeMsgPress,
+  enlargeHeaderPic,
+  shutHeaderPic,
 }

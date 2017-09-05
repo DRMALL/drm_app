@@ -43,6 +43,7 @@ const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemD
   let { title, textArr } = rowData
   let selectRow = state[`row${index}`]
   textArr = selectRow ? textArr : [] 
+  let eqNumberDataRe = eqNumberData ? eqNumberData : {}
   return (
     <View>
       <TouchableOpacity style={equipment.dataTouch} activeOpacity={0.8} onPress={()=> open(`row${index}`)}>
@@ -50,7 +51,7 @@ const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemD
         <Image style={equipment.imgTouch} source={selectRow ? dropdownSelected : dropdownNormal} />
       </TouchableOpacity>
       <View style={{backgroundColor: mainColor}}>
-        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation} equipmentItemData={equipmentItemData} eqNumberData={eqNumberData}/>)}
+        {textArr.map((textone, i)=> <DataItemRow key={i} item={textone} navigation={navigation} equipmentItemData={equipmentItemData} eqNumberData={eqNumberDataRe}/>)}
       </View>
     </View>
   )

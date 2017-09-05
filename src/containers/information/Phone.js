@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import { other } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { phoneNumber, save, tokenKey, internalServerError } from '../../common/strings'
@@ -39,6 +40,7 @@ export default class Phone extends Component {
   }
 
   pressSavePhone() {
+    let { infoRecordMsgRed } = this.props.navigation.state.params
     checkToken(tokenKey)
     .then(async token => {
       let bodyData = {
@@ -57,7 +59,24 @@ export default class Phone extends Component {
           { cancelable: false }
         )
       } else if(res.code == 201) {
-        this.props.navigation.navigate('information')
+        const resetAction = NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ 
+              routeName: 'main',
+              params: {
+                msgRedShow: infoRecordMsgRed, 
+              },
+            }),
+            NavigationActions.navigate({ 
+              routeName: 'information', 
+              params: {
+                recordMsgRed: infoRecordMsgRed,
+              },
+            }),
+          ]
+        })
+        this.props.navigation.dispatch(resetAction)
       } else if(res.code == 402) {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],

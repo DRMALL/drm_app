@@ -26,6 +26,7 @@ import {
   device_device_ccsort,
   device_device_presort,
   device_device_fuelsort,
+  device_setallrow_false,
 } from '../common/actStrings'
 
 const device = {
@@ -119,6 +120,8 @@ export default (state = device, action) => {
       return Object.assign({}, state, { presort: action.payload } )
     case device_device_fuelsort:
       return Object.assign({}, state, { fuelsort: action.payload } )
+    case device_setallrow_false:
+      return Object.assign({}, state, { classifyRow: false, sortRow: false, filterRow: false } )
     default:
       return state
   }

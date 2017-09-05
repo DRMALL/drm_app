@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import { other, search } from '../../styles'
 import { primaryColor } from '../../common/constants'
 import { userName, save, tokenKey, internalServerError } from '../../common/strings'
@@ -40,6 +41,7 @@ export default class UserName extends Component {
   }
 
   pressSaveName() {
+    let { infoRecordMsgRed } = this.props.navigation.state.params
     const illCharRE = /[`~!@#$%^&*+<>?:"{},.\/;'[\]\\|]/im
     checkToken(tokenKey)
     .then(async token => {
@@ -64,7 +66,24 @@ export default class UserName extends Component {
           { cancelable: false }
         )
       } else if(res.code == 201) {
-        this.props.navigation.navigate('information')
+        const resetAction = NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ 
+              routeName: 'main',
+              params: {
+                msgRedShow: infoRecordMsgRed, 
+              },
+            }),
+            NavigationActions.navigate({ 
+              routeName: 'information', 
+              params: {
+                recordMsgRed: infoRecordMsgRed,
+              },
+            }),
+          ]
+        })
+        this.props.navigation.dispatch(resetAction)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],

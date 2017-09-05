@@ -46,11 +46,14 @@ export default class HomeDetail extends Component {
 
   render() {
     let { navigation } = this.props
-      , { newsOneData, shareShow, topView, nextView, height } = this.state
-      , { hiddenShare } = homeDetailAC
+      , { newsOneData, shareShow, topView, nextView, height, showdatu, enlargeUrl } = this.state
+      , { hiddenShare, shutHeaderPic } = homeDetailAC
       , contentLength = newsOneData.content ? newsOneData.content.split('').length : 0
     return (
       <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
+        <TouchableOpacity style={showdatu ? detail.enlargeTouchView : {display: 'none'}} onPress={()=> shutHeaderPic()} >
+          <Image style={detail.enlargeImg} source={{uri: enlargeUrl}}/>
+        </TouchableOpacity>
         <ScrollView style={[{backgroundColor: mainColor}, shareShow ? nextView : topView]}>
           <StatusBar hidden={true}/>
           {

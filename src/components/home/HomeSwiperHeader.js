@@ -12,14 +12,15 @@ const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 
 export default props => {
   let { picData, navigation } = props
-    , { showShare } = homeDetailAC
+    , { showShare, enlargeHeaderPic } = homeDetailAC
   let picsDataView = []
   for(var i = 0; i < picData.length; i++) {
+    let picEnlarge = `${picData[i].url}`
     picsDataView.push(
-      <View key={i} style={seekDetail.picsView}> 
+      <TouchableOpacity key={i} style={seekDetail.picsView} onPress={()=> enlargeHeaderPic(picEnlarge)}> 
         <Image style={seekDetail.pics} source={{uri: picData[i].url}} />
         <Image style={{width: '100%', height: '100%', resizeMode: 'stretch', position: 'absolute' }} source={picMaskIcon}/>
-      </View>
+      </TouchableOpacity>
     )
   }
   return (
