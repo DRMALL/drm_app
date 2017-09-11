@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert } from 'react-native'
-import { tokenKey, inTheEnd, internalServerError } from '../../common/strings'
+import { tokenKey, internalServerError } from '../../common/strings'
 import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getDevicesHots } from '../../apis'

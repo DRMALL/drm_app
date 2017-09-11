@@ -10,7 +10,6 @@ const changeLoginWord = (textWord)=> {
 }
 
 const changeShowSchedule = (payload)=> {
-  console.log(payload)
   dispatch(login_show_schedule, payload)
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, ListView, TouchableOpacity, RefreshControl } from 'react-native'
+import { View, Text, Image, ListView, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import { mainColor, contentColor } from '../common/constants'
 import { inTheEnd } from '../common/strings'
 import { home } from '../styles'
@@ -13,7 +13,20 @@ export default props => {
   })
   let finalDs = ds.cloneWithRows(props.data)
     , dataLength = props.data.length
-  if(dataLength == 0) return <EmptyContent />
+  if(dataLength == 0) return (
+    <ScrollView
+      refreshControl={<RefreshControl 
+        refreshing={props.isRefreshing}
+        onRefresh={props.onHomeRefresh}
+        colors={['#ff0000', '#00ff00', '#0000ff']}
+        progressBackgroundColor={mainColor}
+        title='下拉刷新'
+        titleColor={contentColor}
+      />}
+    >
+      <EmptyContent />
+    </ScrollView>
+  )
   return(
     <ListView 
       refreshControl={<RefreshControl 

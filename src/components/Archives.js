@@ -13,7 +13,20 @@ export default props => {
   let archivesDataDs = ds.cloneWithRows(props.archivesData)
     , navigation = props.navigation
     , archivesDataLength = props.archivesData.length
-  if(archivesDataLength == 0) return <EmptyContent />
+  if(archivesDataLength == 0) return (
+    <ScrollView
+      refreshControl={<RefreshControl 
+        refreshing={props.isRefreshing}
+        onRefresh={props.onDeviceRefresh}
+        colors={['#ff0000', '#00ff00', '#0000ff']}
+        progressBackgroundColor={mainColor}
+        title='下拉刷新'
+        titleColor={contentColor}
+      />}
+    >
+      <EmptyContent />
+    </ScrollView>
+  )
   return(
     <ListView 
       refreshControl={<RefreshControl 

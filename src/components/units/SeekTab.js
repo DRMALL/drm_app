@@ -8,7 +8,7 @@ const dropdownSelected = require('../../images/dropdown_selected.png')
 
 export default props => {
   let { state, openModal } = props
-    , { seekPartRow, seekTypeRow, selectedPart, selectedType } = state
+    , { seekPartRow, seekTypeRow, selectedPart, selectedType, typeTouchDisabled } = state
   return (
     <View style={seekTab.tabView}>
       <TouchableOpacity 
@@ -23,9 +23,10 @@ export default props => {
         style={seekTab.tabTouch} 
         activeOpacity={0.8} 
         onPress={()=> openModal(`seekTypeRow`)}
+        disabled={typeTouchDisabled}
       >
-        <Text style={[seekTab.tabText, seekTypeRow ? {color: lightBlueColor} : {}]}>{selectedType}</Text>
-        <Image source={seekTypeRow ? dropdownSelected : dropdownNormal}/>
+        <Text style={[seekTab.tabText, seekTypeRow ? {color: lightBlueColor} : {}, , typeTouchDisabled ? {opacity: 0.5} : {}]}>{selectedType}</Text>
+        <Image style={typeTouchDisabled ? {opacity: 0.5} : {}} source={seekTypeRow ? dropdownSelected : dropdownNormal}/>
       </TouchableOpacity>
     </View>
   )

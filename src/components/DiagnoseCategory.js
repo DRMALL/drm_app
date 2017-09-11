@@ -9,10 +9,10 @@ import EmptyContent from '../components/units/EmptyContent'
 export default props => {
   let { navigation, diagnoseData, isRefreshing, onDiagRefresh } = props
     , diagnoseDataLength = diagnoseData.length
-  if(diagnoseDataLength == 0) return <EmptyContent />
   return (
     <View style={diagnose.wrap}>
       <ScrollView 
+        style={{height: '100%'}}
         refreshControl={<RefreshControl 
           refreshing={isRefreshing}
           onRefresh={onDiagRefresh}
@@ -23,6 +23,7 @@ export default props => {
         />}
       >
         {
+          diagnoseDataLength == 0 ? <EmptyContent /> : 
           diagnoseData.map((item, d)=> <DiagnosisItem key={d} item={item} d={d} diagnoseDataLength={diagnoseDataLength} navigation={navigation}/>)
         }
       </ScrollView>

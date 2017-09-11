@@ -31,8 +31,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    getNewsList()
-    // deviceAC.setAllRowFalse()
+    getNewsList(this.props.navigation)
   }
 
   componentWillMount() {
@@ -45,7 +44,7 @@ export default class Home extends Component {
 
   onHomeRefresh() {
     homeDetailAC.isRefresh()
-    getNewsList()
+    getNewsList(this.props.navigation)
     setTimeout(() => {
       homeDetailAC.isnotRefresh()
     }, 2000)
@@ -55,7 +54,7 @@ export default class Home extends Component {
     let { newsListData, isRefreshing } = this.state
     if(!newsListData) return <Loading animating={!newsListData ? true : false}/>
     return(
-      <View style={{backgroundColor: loginBackgroundColor}}>
+      <View style={{backgroundColor: loginBackgroundColor, height: '100%'}}>
         <StatusBar hidden={false} backgroundColor={primaryColor} barStyle='light-content'/>
         <View>
           <HomeList data={newsListData} isRefreshing={isRefreshing} onHomeRefresh={this.onHomeRefresh.bind(this)} {...this.props} />

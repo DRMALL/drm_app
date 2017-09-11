@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Image, KeyboardAvoidingView, StatusBar, Platform, ActivityIndicator } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 import { NavigationActions } from 'react-navigation'
 import { 
   drmOne, 
@@ -113,27 +114,28 @@ export default class Login extends Component {
             imgSourceT={loginPasswordShow}
             imgSourceF={loginPasswordHide}
           />
+          <Button 
+            title={loginText}
+            titleStyle={login.touchLoginText}
+            style={login.touchOpacity} 
+            onPress={()=> {
+              changeShowSchedule(true)
+              loginPressButton(this.props)
+            }}
+          />
         </KeyboardAvoidingView>
         <Button 
-          title={loginText}
-          titleStyle={login.touchLoginText}
-          style={login.touchOpacity} 
-          onPress={()=> {
-            changeShowSchedule(true)
-            loginPressButton(this.props)
-          }}
+          title={loginForgetWord}
+          titleStyle={login.touchForgetText}
+          style={{height: 40, margin: 20, justifyContent: "center" }} 
+          onPress={this.forgetPressButton.bind(this)}
         />
-        <View style={{height: 40, margin: 20, justifyContent: "center" }}/>
+        {
+          Platform.OS === 'ios' ? <KeyboardSpacer/> : false
+        }
       </View>
     )
   }
 }
 
-// {
-//           <Button 
-//           title={loginForgetWord}
-//           titleStyle={login.touchForgetText}
-//           style={{height: 40, margin: 20, justifyContent: "center" }} 
-//           onPress={this.forgetPressButton.bind(this)}
-//         />
-//         }
+//<View style={{height: 40, margin: 20, justifyContent: "center" }}/>

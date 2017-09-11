@@ -60,7 +60,7 @@ const IndexDataItem = ({ rowData, state, open, index, navigation, equipmentItemD
 const DataItemRow = props => {
   let { item, navigation, equipmentItemData, eqNumberData } = props
   return (
-    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> 'ok'}>
+    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram')}>
       <Text style={equipment.iDataItemText}>{item.text}</Text>
       <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{equipmentItemData.number ? normIndexPD(item.text, equipmentItemData.data) : normIndexPD(item.text, eqNumberData.data)}</Text>
       <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unit}</Text>
@@ -69,4 +69,5 @@ const DataItemRow = props => {
   )
 }
 
-////navigation.navigate('datagram')
+//
+//

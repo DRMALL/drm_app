@@ -9,6 +9,7 @@ import { seekDetail } from '../../styles'
 
 import store from '../../utils/store'
 import seekAC from '../../actions/seekAC'
+import getPartOneData from '../../funcs/seek/getPartOneData'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const shareIcon = require('../../images/navigation_icons/share.png')
@@ -30,20 +31,24 @@ export default class SeekDetail extends Component {
     this.state = store.getState().seek
   }
 
+  componentDidMount() {
+    let { seekId } = this.props.navigation.state.params
+    getPartOneData(seekId)
+  }
+
   componentWillMount() {
     this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().seek) )
   }
 
   componentWillUnmount(){
+    seekAC.setOnePart({})
     this.unsubscribe()
   }
 
   render() {
-    let { seekItem } = this.props.navigation.state.params
-      , { navigation } = this.props
-      , { shareShow, topView, secondView } = this.state
+    let { navigation } = this.props
+      , { shareShow, topView, secondView, oneSeekPartData } = this.state
       , { pressShareCancel } = seekAC
-      // , seekItem = seekData[0]
     return (
       <View style={Platform.OS === 'ios' ? {top: -20, height: '103.5%'} : {height: '100%'}}>
         <ScrollView style={[{width: '100%'}, shareShow ? secondView : topView]}>
@@ -53,19 +58,19 @@ export default class SeekDetail extends Component {
             <Text style={seekDetail.fixText}>{partParameter}</Text>
             <View style={seekDetail.textView}>
               <Text style={seekDetail.fixItemText}>{materialLongCode}</Text>
-              <Text style={seekDetail.seekItemText}>{seekItem.longCode}</Text>
+              <Text style={seekDetail.seekItemText}>{oneSeekPartData.code || '0.0.0'}</Text>
             </View>
             <View style={seekDetail.textView}>
               <Text style={seekDetail.fixItemText}>{materialName}</Text>
-              <Text style={seekDetail.seekItemText}>{seekItem.materialName}</Text>
+              <Text style={seekDetail.seekItemText}>{oneSeekPartData.name || ''}</Text>
             </View>
             <View style={seekDetail.textView}>
               <Text style={seekDetail.fixItemText}>{materialModels}</Text>
-              <Text style={seekDetail.seekItemText}>{seekItem.models}</Text>
+              <Text style={seekDetail.seekItemText}>{oneSeekPartData.model || 'a-b-c'}</Text>
             </View>
             <View style={seekDetail.textView}>
               <Text style={seekDetail.fixItemText}>{materialUnites}</Text>
-              <Text style={seekDetail.seekItemText}>{seekItem.unites}</Text>
+              <Text style={seekDetail.seekItemText}>{oneSeekPartData.unit || ''}</Text>
             </View>
             <Text style={seekDetail.fixText}>{applicableEquipment}</Text>
             <Text style={seekDetail.itemText}>纯氧复合热载体发生器</Text>

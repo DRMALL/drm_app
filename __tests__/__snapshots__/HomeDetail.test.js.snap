@@ -159,7 +159,7 @@ exports[`HomeDetail test 1`] = `
       <View
         style={
           Object {
-            "height": 0,
+            "height": -65,
             "paddingHorizontal": 16,
           }
         }
@@ -206,7 +206,7 @@ exports[`HomeDetail test 1`] = `
             onMessage={[Function]}
             onShouldStartLoadWithRequest={undefined}
             scalesPageToFit={undefined}
-            scrollEnabled={false}
+            scrollEnabled={undefined}
             source={
               Object {
                 "html": undefined,

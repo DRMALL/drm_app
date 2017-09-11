@@ -1,17 +1,20 @@
 import React, { Component }from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, WebView, StyleSheet, Keyboard } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, WebView, StyleSheet, Keyboard, Platform } from 'react-native'
 import { RichTextEditor, RichTextToolbar } from 'react-native-zss-rich-text-editor'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import ImagePicker from 'react-native-image-crop-picker'
 import { primaryColor, mainColor, subTitleColor, lightBlueColor, titleColor } from '../../common/constants'
 import { pushOrder, cancel, publish, pushOrderPlaceholder1, pushOrderPlaceholder2, pushOrderPlaceholder3, tokenKey, internalServerError } from '../../common/strings'
 import { pushOrderS } from '../../styles'
-import { postNewOrder } from '../../apis'
-import { postPort } from '../../utils/fetchMethod'
+import { postNewOrder, postOrderUpload, postOrderDelimg } from '../../apis'
+import { postPort, postFormDataPort } from '../../utils/fetchMethod'
 import { checkToken } from '../../utils/handleToken'
 import { orderTypesData } from '../../utils/virtualData'
 
 const dropdownNormal = require('../../images/dropdown_normal.png')
 const dropdownSelected = require('../../images/dropdown_selected.png')
+const add2Icon = require('../../images/add2.png')
+const deleteIcon = require('../../images/delete.png')
 
 export default class PushOrder extends Component {
   static navigationOptions = ({ navigation })=> ({
@@ -36,14 +39,15 @@ export default class PushOrder extends Component {
         order_content: '',
         categoryPress: false,
         richToolbarShow: false,
+        worderImg: [],
+        noOpen: false,
+        uploadRes: { code: 201 },
       }
       orderTypesData.map((item, index)=> {
         orderStateObj[`categoryHanding${index}`] = false
       })
       return orderStateObj
     })(props)
-    this.getHTML = this.getHTML.bind(this);
-    this.setFocusHandlers = this.setFocusHandlers.bind(this);
   }
 
   componentDidMount() {  
@@ -53,25 +57,9 @@ export default class PushOrder extends Component {
   }
 
   // componentWillMount() {
-  //   this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this))
-  //   this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this))
-  // }
-
-  // _keyboardDidShow(e){
-  //     this.setState({
-  //       richToolbarShow: true,
-  //     })
-  //   }
-
-  // _keyboardDidHide(e){
-  //   this.setState({
-  //     richToolbarShow: false,
-  //   })
   // }
 
   // componentWillUnmount() {
-  //   this.keyboardDidShowListener.remove()
-  //   this.keyboardDidHideListener.remove()
   // }
 
   pressPublishConfirm() {
@@ -102,11 +90,12 @@ export default class PushOrder extends Component {
   pressPublish() {
     checkToken(tokenKey)
     .then(async token => {
-      let { order_title, order_category, order_content } = this.state
+      let { order_title, order_category, order_content, worderImg } = this.state
       let bodyData = {
         title: order_title,
         category: order_category,
         content: order_content,
+        images: worderImg,
       }
       let res = await postPort(`${postNewOrder}?token=${token}`, bodyData)
       if(!res) {
@@ -150,6 +139,124 @@ export default class PushOrder extends Component {
     })
   }
 
+  openPicLib() {
+    return new Promise((resovle, reject)=> {
+      let dataToPost = [ ]
+      if(Platform.OS === 'ios'){
+        ImagePicker.openPicker({
+          width: 480,
+          height: 300,
+          multiple: true,
+          waitAnimationEnd: false,
+          compressImageQuality: 0.5,
+          mediaType: 'photo',
+        }).then(images => {
+          for (var i=0; i<images.length; i++) {
+            dataToPost.push({
+              uri: images[i].path,
+              width: images[i].width,
+              height: images[i].height,
+              mime: images[i].mime,
+            })
+          }
+          resovle(dataToPost)
+        }).catch(e =>
+          Alert.alert('错误', '调取相册出错',
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        )
+      } else {
+        ImagePicker.openPicker({
+          width: 480,
+          height: 300,
+          cropping: false,
+          cropperCircleOverlay: false,
+          compressImageMaxWidth: 480,
+          compressImageMaxHeight: 640,
+          compressImageQuality: 0.5,
+          mediaType: 'photo',
+          compressVideoPreset: 'MediumQuality'
+        }).then(image => {
+          dataToPost.push({
+            uri: image.path,
+            width: image.width,
+            height: image.height,
+            mime: image.mime
+          })
+          resovle(dataToPost)
+        }).catch(e => 
+          Alert.alert('错误', '调取相册出错',
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        )
+      }
+    })
+  }
+
+  uploadOrderImg() {
+    this.setState({ noOpen: true, })
+    setTimeout(()=> this.setState({ noOpen: false, }), 2000)
+    checkToken(tokenKey)
+    .then(token => {
+      this.openPicLib().then(async (dataToPost)=> {
+        let formData = new FormData()
+        for(var i = 0;i < dataToPost.length; i++){
+          var uri = dataToPost[i].uri
+          var index = uri.lastIndexOf("\/")
+          var name  = uri.substring(index + 1, uri.length)
+          let file = {uri: uri, type: 'multipart/form-data', name: name } 
+          formData.append('order', file)
+        }
+        let res = await postFormDataPort(`${postOrderUpload}?token=${token}`, formData)
+        let worderImgNew = this.state.worderImg
+        if(res.code == 201) {
+          this.setState({
+            worderImg: worderImgNew.concat([res.data]),
+            uploadRes: res,
+          })
+        } else {
+          this.setState({
+            worderImg: worderImgNew,
+            uploadRes: res,
+          })
+        }
+      })
+    })
+  }
+
+  delOrderImg(url) {
+    checkToken(tokenKey)
+    .then(async token => {
+      let bodyData = {
+        url: url,
+      }
+      let res = await postPort(`${postOrderDelimg}?token=${token}`, bodyData)
+      if(!res) {
+        Alert.alert('错误', `${internalServerError}或操作有误`,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 201) {
+        let worderImgDel = []
+        this.state.worderImg.forEach((imgItem, index)=> {
+          if(imgItem.url !== url) {
+            worderImgDel.push(imgItem)
+          }
+        })
+        this.setState({
+          worderImg: worderImgDel,
+        })
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
+  }
+
   onChangeOtitle(order_title) {
     this.setState({ order_title })
   }
@@ -159,8 +266,27 @@ export default class PushOrder extends Component {
   }
 
   render() {
-    let { categoryPress, order_category, richToolbarShow } = this.state
-      , bodyForDisplay = '<p>Wow this is an <b>AMAZING</b> demo!</p>'
+    let { categoryPress, order_category, richToolbarShow, worderImg, noOpen, uploadRes } = this.state
+      , renderOrderImg = []
+    for(var i = 0; i < worderImg.length+1; i++) {
+      if(i == worderImg.length && i < 6) {
+        renderOrderImg.push(
+          <TouchableOpacity key={i} onPress={()=> this.uploadOrderImg()} disabled={noOpen}>
+            <Image style={pushOrderS.worderImage} source={add2Icon}/>
+          </TouchableOpacity>
+        )
+      } else if(i < 6) {
+        let worderImgUrl = `${worderImg[i].url}`
+        renderOrderImg.push(
+          <View key={i} >
+            <Image style={pushOrderS.worderImage} source={{uri: worderImg[i].url}}/>
+            <TouchableOpacity style={{position: 'absolute', bottom: 11, right: 11}} onPress={()=> this.delOrderImg(worderImgUrl)}>
+              <Image style={{width: 30, height: 30,}} source={deleteIcon}/>
+            </TouchableOpacity>
+          </View>
+        )
+      }
+    }
     return (
       <ScrollView style={pushOrderS.wrap}>
         <TextInput 
@@ -198,7 +324,10 @@ export default class PushOrder extends Component {
           }
         </View>
         <View style={pushOrderS.empty}/>
-        
+        <View style={pushOrderS.worderImageView}>
+          { renderOrderImg }
+        </View>
+        <Text style={[pushOrderS.warningText, uploadRes && uploadRes.code == 201 ? {display: 'none'} : {}]}>{ !uploadRes.code ? internalServerError : (uploadRes.code == 413 ? '图片过大或数量超限' : (uploadRes.code == 201 ? '' : uploadRes.message))}</Text>
         <TextInput 
           style={[pushOrderS.textInput2, {marginTop: 15}]} 
           placeholder={pushOrderPlaceholder2} 
@@ -214,42 +343,7 @@ export default class PushOrder extends Component {
       </ScrollView>
     )
   }
-
-  onEditorInitialized() {
-    this.setFocusHandlers();
-    this.getHTML();
-  }
-
-  async getHTML() {
-    const titleHtml = await this.richtext.getTitleHtml();
-    const contentHtml = await this.richtext.getContentHtml();
-    //alert(titleHtml + ' ' + contentHtml)
-  }
-
-  setFocusHandlers() {
-    this.richtext.setTitleFocusHandler(() => {
-      //alert('title focus');
-    });
-    this.richtext.setContentFocusHandler(() => {
-      //alert('content focus');
-    });
-  }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     height: 480,
-//     flexDirection: 'column',
-//     backgroundColor: '#fff',
-//     paddingTop: 40,
-//   },
-//   richText: {
-//     height: '100%',
-//     alignItems:'center',
-//     justifyContent: 'center',
-//     backgroundColor: 'transparent',
-//   },
-// });
 
 // {
 //   <View style={styles.container}>
@@ -265,7 +359,28 @@ export default class PushOrder extends Component {
 //         <KeyboardSpacer/>
 // }
 
-  
+  // onEditorInitialized() {
+  //   this.setFocusHandlers();
+  //   this.getHTML();
+  // }
+
+  // async getHTML() {
+  //   const titleHtml = await this.richtext.getTitleHtml();
+  //   const contentHtml = await this.richtext.getContentHtml();
+  //   //alert(titleHtml + ' ' + contentHtml)
+  // }
+
+  // setFocusHandlers() {
+  //   this.richtext.setTitleFocusHandler(() => {
+  //     //alert('title focus');
+  //   });
+  //   this.richtext.setContentFocusHandler(() => {
+  //     //alert('content focus');
+  //   });
+  // }
+
+  // this.getHTML = this.getHTML.bind(this);
+    // this.setFocusHandlers = this.setFocusHandlers.bind(this);
 
 // <KeyboardAvoidingView behavior={'padding'} >
 // </KeyboardAvoidingView>

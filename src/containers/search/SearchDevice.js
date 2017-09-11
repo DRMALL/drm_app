@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
-import moment from 'moment'
-import { mainColor, primaryColor, subTitleColor, contentColor, loginBackgroundColor } from '../../common/constants'
-import { inputDeviceTypes, historicalRecord, hotSearch, inTheEnd } from '../../common/strings'
-import { search, device, home } from '../../styles'
+import { mainColor, primaryColor, loginBackgroundColor } from '../../common/constants'
+import { historicalRecord, hotSearch } from '../../common/strings'
+import { search } from '../../styles'
 import { getWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import Loading from '../../components/units/Loading'
+import DeviceHeaderSearch from '../../components/search/DeviceHeaderSearch'
+import DeviceItem from '../../components/search/DeviceItem'
+import EmptyContent from '../../components/units/EmptyContent'
 
 import store from '../../utils/store'
 import deviceAC from '../../actions/deviceAC'
@@ -13,9 +15,7 @@ import getDeviceHotword from '../../funcs/search/getDeviceHotword'
 import getDeviceOnchange from '../../funcs/search/getDeviceOnchange'
 import getDeviceSubmit from '../../funcs/search/getDeviceSubmit'
 
-const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
-const cancelIcon = require('../../images/navigation_icons/cancel.png')
 const deleteSweepIcon = require('../../images/navigation_icons/delete_sweep.png')
 
 export default class SearchDevice extends Component {
@@ -83,7 +83,9 @@ export default class SearchDevice extends Component {
     if(!deviceData) {
       dataDeviceView = <Loading animating={!deviceData ? true : false}/>
     } else {
-      dataDeviceView = <ScrollView>
+      dataDeviceView = deviceData == 0 ? <ScrollView style={jumpData ? {height: '100%', backgroundColor: loginBackgroundColor} : {display: 'none'}}>
+        <EmptyContent />
+      </ScrollView> : <ScrollView>
         {
           deviceData.map((deviceOne, index)=> <DeviceItem key={index} index={index} deviceDataLength={deviceData.length} deviceOne={deviceOne} navigation={navigation} />)
         }
@@ -92,7 +94,7 @@ export default class SearchDevice extends Component {
     return (
       <View style={{height: '100%'}}>
         <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
-        <HeaderSearch 
+        <DeviceHeaderSearch 
           state={this.state} 
           navigation={navigation} 
         />
@@ -132,68 +134,4 @@ export default class SearchDevice extends Component {
       </View>
     )
   }
-}
-
-const DeviceItem = props => {
-  let { deviceOne, index, deviceDataLength, navigation } = props
-    , nameNumLength = `${deviceOne.name + deviceOne.number}`.split('').length
-  return (
-    <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('detail', {deviceId: deviceOne._id})}> 
-        <Image style={device.archivesItemImg} source={{uri: deviceOne.images[0].url}} />
-        <View style={device.archivesItemOther}>
-          <View style={nameNumLength < 16 ? device.archivesNoTime : device.archivesNoTime2}>
-            <Text style={device.archivesItemNo}>{`${deviceOne.name} (${deviceOne.number})`}</Text>
-            <Text style={device.archivesItemTime}>{moment(deviceOne.createdAt).format('YYYY-MM-DD')}</Text>
-          </View>
-          <View style={device.archivesItemLabsView}>
-            <View style={device.archivesItemLabBorder}>
-              <Text style={device.archivesItemLab}>{deviceOne.cc}</Text>
-            </View>
-            <View style={device.archivesItemLabBorder}>
-              <Text style={device.archivesItemLab}>{deviceOne.pressure}</Text>
-            </View>
-            <View style={device.archivesItemLabBorder}>
-              <Text style={device.archivesItemLab}>{deviceOne.combustible}</Text>
-            </View>
-          </View>
-          <Text style={device.archivesItemDetail}>{deviceOne.description}</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={{backgroundColor: mainColor, opacity: 1}}>
-        <Text style={[home.endText, index == (deviceDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
-      </View>
-    </View>
-  )
-}
-
-const HeaderSearch = props => {
-  let { state, navigation, cleanText } = props
-    , { pressCleanText } = deviceAC
-  return (
-    <View style={search.header}>
-      <TouchableOpacity style={search.touchBack} onPress={()=> navigation.goBack()}>
-        <Image source={gobackWhiteIcon}/>
-      </TouchableOpacity>
-      <View style={search.inputView}>
-        <TextInput 
-          autoCapitalize='none' 
-          style={search.inputText} 
-          placeholder={inputDeviceTypes} 
-          placeholderTextColor={subTitleColor}
-          underlineColorAndroid='transparent'
-          autoFocus={true}
-          value={state.text}
-          onChangeText={getDeviceOnchange}
-          onSubmitEditing={getDeviceSubmit}
-        />
-        <Image style={search.searchIcon} source={searchIcon}/>
-        {
-          state.text != '' ? <TouchableOpacity style={search.cancelTouch} onPress={pressCleanText}>
-            <Image style={search.cancelIcon} source={cancelIcon}/>
-          </TouchableOpacity> : <Image style={{height: 0}}/>
-        }
-      </View>
-    </View>
-  )
 }

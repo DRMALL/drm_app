@@ -19,7 +19,7 @@ export default async (props) => {
   let res = await postPort(signIn, bodyData)
   if(!res) {
     Alert.alert('错误', internalServerError,
-      [ {text: 'OK', onPress: () => 'OK'}, ],
+      [ {text: 'OK', onPress: () => loginAC.changeShowSchedule(false)}, ],
       { cancelable: false }
     )
   } else if(res.code == 201) {
@@ -36,7 +36,7 @@ export default async (props) => {
     })
   } else {
     Alert.alert('错误', '邮箱或密码输入有误',
-      [ {text: 'OK', onPress: () => 'OK'}, ],
+      [ {text: 'OK', onPress: () => loginAC.changeShowSchedule(false)}, ],
       { cancelable: false }
     )
   }

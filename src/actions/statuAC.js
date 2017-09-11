@@ -10,6 +10,11 @@ import {
   statu_equipitemdata_set,
   statu_equipitemnumdata_set,
   statu_msgred_show,
+  statu_search_historydata,
+  statu_search_hotworddata,
+  statu_search_jumpdata,
+  statu_search_data_set,
+  statu_search_clean_text,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -73,6 +78,29 @@ const setMsgRedShow = (payload)=> {
   dispatch(statu_msgred_show, payload)
 }
 
+const setHistoryData = (payload)=> {
+  dispatch(statu_search_historydata, payload)
+}
+
+const setHotwordData = (payload)=> {
+  dispatch(statu_search_hotworddata, payload)
+}
+
+const setJumpData = (text)=> {
+  dispatch(statu_search_jumpdata, {
+    text: text,
+    jumpData: text == '' ? false : true,
+  })
+}
+
+const setStatusData = (payload)=> {
+  dispatch(statu_search_data_set, payload)
+}
+
+const pressCleanText = ()=> {
+  dispatch(statu_search_clean_text)
+}
+
 export default {
   isRefresh,
   isnotRefresh,
@@ -82,4 +110,9 @@ export default {
   setEqItemData,
   setEqNumItemData,
   setMsgRedShow,
+  setHistoryData,
+  setHotwordData,
+  setJumpData,
+  setStatusData,
+  pressCleanText,
 }

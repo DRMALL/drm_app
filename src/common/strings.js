@@ -8,6 +8,7 @@ export const diagnoseLabel = '故障诊断'
 export const seekLabel = '配件检索'
 
 export const tokenKey = 'drmAppToken'
+export const saltKey = 'newteoiscoming'
 export const loginInputEmail = '请输入邮箱'
 export const loginInputWord = '请输入密码'
 export const loginText = '登录'

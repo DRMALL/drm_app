@@ -192,6 +192,49 @@ exports[`Login test 1`] = `
         />
       </View>
     </View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#579df2",
+          "borderRadius": 6,
+          "height": 40,
+          "justifyContent": "center",
+          "opacity": 1,
+          "width": 280,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#fff",
+            "fontSize": 15,
+            "overflow": "hidden",
+          }
+        }
+      >
+        登录
+      </Text>
+    </View>
   </View>
   <View
     accessibilityComponentType={undefined}
@@ -209,13 +252,10 @@ exports[`Login test 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "alignItems": "center",
-        "backgroundColor": "#579df2",
-        "borderRadius": 6,
         "height": 40,
         "justifyContent": "center",
+        "margin": 20,
         "opacity": 1,
-        "width": 280,
       }
     }
     testID={undefined}
@@ -227,22 +267,28 @@ exports[`Login test 1`] = `
       ellipsizeMode="tail"
       style={
         Object {
-          "color": "#fff",
+          "color": "#7B7B7B",
           "fontSize": 15,
-          "overflow": "hidden",
+          "opacity": 0.5,
         }
       }
     >
-      登录
+      忘记密码?
     </Text>
   </View>
   <View
     style={
-      Object {
-        "height": 40,
-        "justifyContent": "center",
-        "margin": 20,
-      }
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+        },
+        Object {
+          "height": 0,
+        },
+        undefined,
+      ]
     }
   />
 </View>

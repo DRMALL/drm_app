@@ -86,5 +86,6 @@ export default {
     width: 102, 
     height: 60, 
     margin: 4,
+    backgroundColor: subTitleColor,
   },
 }

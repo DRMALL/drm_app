@@ -227,7 +227,7 @@ const TimeLineForm = props => {
       {
         timelineData.length > 0 ? 
         timelineData.sort((a, b)=> {
-          return new Date(b.line_time) - new Date(a.line_time)
+          return new Date(a.line_time) - new Date(b.line_time)
         }).map((lineItem, l)=> <LineItem key={l} lineItem={lineItem} l={l} total={timelineData.length} />) : 
         <View style={{height: 50, backgroundColor: mainColor}}/>
       }

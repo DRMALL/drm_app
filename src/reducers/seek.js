@@ -11,6 +11,18 @@ import {
   seek_detail_share_show,
   seek_detail_share_hidden,
   seek_selected_type_data,
+  seek_setallrow_false,
+  seek_part_first_get,
+  seek_part_second_get,
+  seek_allpart_get,
+  seek_onepart_get,
+  seek_search_historydata,
+  seek_search_hotworddata,
+  seek_search_jumpdata,
+  seek_search_data_set,
+  seek_search_clean_text,
+  seek_type_disabled_T,
+  seek_type_disabled_F,
 } from '../common/actStrings'
 
 const seek = {
@@ -23,6 +35,16 @@ const seek = {
   secondView: {position: 'absolute', zIndex: 2},
   shareShow: false,
   selectedTypesData: [],
+  seekPartsFirstData: [],
+  seekTypesSecondData: [],
+  allSeekPartData: [],
+  oneSeekPartData: {},
+  text: '',
+  jumpData: false,
+  searchSeekData: [],
+  historyData: [],
+  hotwordData: [],
+  typeTouchDisabled: true,
 }
 
 export default (state = seek, action) => {
@@ -49,6 +71,30 @@ export default (state = seek, action) => {
       return Object.assign({}, state, { shareShow: false } )
     case seek_selected_type_data:
       return Object.assign({}, state, { selectedTypesData: action.payload } )
+    case seek_setallrow_false:
+      return Object.assign({}, state, { seekPartRow: false, seekTypeRow: false, } )
+    case seek_part_first_get:
+      return Object.assign({}, state, { seekPartsFirstData: action.payload } )
+    case seek_part_second_get:
+      return Object.assign({}, state, { seekTypesSecondData: action.payload } )
+    case seek_allpart_get:
+      return Object.assign({}, state, { allSeekPartData: action.payload } )
+    case seek_onepart_get:
+      return Object.assign({}, state, { oneSeekPartData: action.payload } )
+    case seek_search_historydata:
+      return Object.assign({}, state, { historyData: action.payload } )
+    case seek_search_hotworddata:
+      return Object.assign({}, state, { hotwordData: action.payload } )
+    case seek_search_jumpdata:
+      return Object.assign({}, state, action.payload )
+    case seek_search_data_set:
+      return Object.assign({}, state, { searchSeekData: action.payload } )
+    case seek_search_clean_text:
+      return Object.assign({}, state, { text: '', jumpData: false, } )
+    case seek_type_disabled_T:
+      return Object.assign({}, state, { typeTouchDisabled: true } )
+    case seek_type_disabled_F:
+      return Object.assign({}, state, { typeTouchDisabled: false, } )
     default:
       return state
   }

@@ -30,4 +30,17 @@ export const getDeviceCcsort = apiUrl + 'devices/ccsort'
 export const getDevicePresort = apiUrl + 'devices/presort'
 export const getDeviceFuelsort = apiUrl + 'devices/fuelsort'
 export const getMoniterdevsNum = apiUrl + 'moniterdevs/number'
+export const postOrderUpload = apiUrl + 'order/upload'
+export const postOrderDelimg = apiUrl + 'order/delimg'
+export const getPartSearch = apiUrl + 'parts/search'
+export const getPartHots = apiUrl + 'parts/hots'
+export const getPartFirst = apiUrl + 'parts/first'
+export const getPartSecond = apiUrl + 'parts/second'
+export const getPartOne = apiUrl + 'parts/one'
+export const postFindpass = apiUrl + 'findpass'
+export const postCheckcode = apiUrl + 'checkcode'
+export const postResetpass = apiUrl + 'resetpass'
+
+
+
 

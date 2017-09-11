@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { primaryColor, lightBlueColor, mainColor } from '../../common/constants'
-import { resettingPassword, email, verificationCode, getVCode, next } from '../../common/strings'
+import { resettingPassword, email, verificationCode, getVCode, next, saltKey, internalServerError } from '../../common/strings'
 import { emailVerify } from '../../styles'
+import { postPort } from '../../utils/fetchMethod'
+import { postFindpass, postCheckcode } from '../../apis'
 import Button from '../../components/units/Button'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
@@ -23,29 +25,41 @@ export default class EmailVerify extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loginEmail: '',
       emailVer: '',
       codeVer: '',
     }
   }
 
-  pressNext() {
-    if(this.state.codeVer == '666666' && this.state.emailVer.indexOf('@') > 0) {
-      this.props.navigation.navigate('setPassword')
-    } else {
-      Alert.alert('错误', '验证错误',
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    }
-  }
-
-  pressSendCode() {
+  async pressSendCode() {
     if(this.state.emailVer != '') {
       if(this.state.emailVer.indexOf('@') > 0) {
-        Alert.alert('提示', '已发送验证码！',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
+        let bodyData = {
+          salt: saltKey,
+          email: this.state.emailVer,
+        }
+        let res = await postPort(`${postFindpass}`, bodyData)
+        if(!res) {
+          Alert.alert('错误', internalServerError,
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        } else if(res.code == 200) {
+          Alert.alert('提示', '已发送验证码！',
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        } else if(res.code == 477) {
+          Alert.alert('错误', '无效的邮箱！',
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        } else {
+          Alert.alert('错误', JSON.stringify(res.message),
+            [ {text: 'OK', onPress: () => 'OK'}, ],
+            { cancelable: false }
+          )
+        }
       } else {
         Alert.alert('错误', '无效的邮箱！',
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -60,6 +74,40 @@ export default class EmailVerify extends Component {
     }
   }
 
+  async pressNext() {
+    if(this.state.codeVer != '') {
+      let bodyData = {
+        salt: saltKey,
+        email: this.state.emailVer,
+        code: this.state.codeVer,
+      }
+      let res = await postPort(`${postCheckcode}`, bodyData)
+      if(!res) {
+        Alert.alert('错误', internalServerError,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 201) {
+        this.props.navigation.navigate('setPassword', {emailVer: this.state.emailVer})
+      } else if(res.code == 422) {
+        Alert.alert('错误', '输入的验证码不正确',
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    } else {
+      Alert.alert('错误', '验证错误',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    }
+  }
+
   render() {
     return (
       <View style={emailVerify.wrap}>
@@ -67,7 +115,8 @@ export default class EmailVerify extends Component {
         <View style={{justifyContent: 'center'}}>
           <TextInput 
             style={emailVerify.emailInput}
-            underlineColorAndroid="transparent"
+            underlineColorAndroid='transparent'
+            autoCapitalize='none'
             onChangeText={(emailVer)=> this.setState({emailVer})}
             selectTextOnFocus={true}
             maxLength={30}
@@ -85,11 +134,11 @@ export default class EmailVerify extends Component {
         <Text style={emailVerify.fixText}>{verificationCode}</Text>
         <TextInput 
           style={emailVerify.vCodeInput}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
+          autoCapitalize='none'
           onChangeText={(codeVer)=> this.setState({codeVer})}
           selectTextOnFocus={true}
           maxLength={10}
-          placeholder={'eg: 666666'}
         />
         <View style={emailVerify.nextButtonView}>
           <Button 

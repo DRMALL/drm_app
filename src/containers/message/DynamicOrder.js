@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert, ActivityIndicator, RefreshControl } from 'react-native'
 import moment from 'moment'
 import { NavigationActions } from 'react-navigation'
 import Button from '../../components/units/Button'
 import Loading from '../../components/units/Loading'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
 import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey, internalServerError } from '../../common/strings'
-import { dynamicOrder } from '../../styles'
+import { dynamicOrder, detail } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { getPort, postPort } from '../../utils/fetchMethod'
 import { getNoticesOne, setOneNoticesRead, setOrderSolved } from '../../apis'
@@ -30,7 +30,11 @@ export default class DynamicOrder extends Component {
     super(props)
     this.state = {
       isMounted: false,
+      isRefreshing: false,
       oneNoticeData: null,
+      showdatu: false, 
+      enlargeUrl: 'null',
+      backLoading: false,
     }
   }
 
@@ -96,6 +100,7 @@ export default class DynamicOrder extends Component {
   }
 
   postOrderSolved() {
+    this.setState({ backLoading: true })
     checkToken(tokenKey)
     .then(async token => {
       let { oneNoticeData } = this.state
@@ -128,10 +133,7 @@ export default class DynamicOrder extends Component {
           ]
         })
         this.props.navigation.dispatch(resetAction)
-        // Alert.alert('提示', '发送成功',
-        //   [ {text: 'OK', onPress: () => 'OK'}, ],
-        //   { cancelable: false }
-        // )
+        this.setState({ backLoading: false })
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -141,53 +143,84 @@ export default class DynamicOrder extends Component {
     })
   }
 
+  pressOrderImgEnlarge(url) {
+    this.setState({
+      showdatu: true,
+      enlargeUrl: url,
+    })
+  }
+
+  onIsRefresh() {
+    this.setState({isRefreshing: true})
+    this.getNotice()
+    setTimeout(() => {
+      this.setState({isRefreshing: false})
+    }, 2000)
+  }
+
   render() {
-    let { oneNoticeData } = this.state
+    let { oneNoticeData, showdatu, enlargeUrl, backLoading, isRefreshing } = this.state
       , { navigation } = this.props
     if (!oneNoticeData) return <Loading animating={!oneNoticeData ? true : false}/>
     return (
-      <ScrollView style={dynamicOrder.wrap}>
-        <Text style={dynamicOrder.fixContentText}>{orderContent}</Text>
-        <View style={dynamicOrder.orderView}>
-          <Text style={dynamicOrder.titleText}>{oneNoticeData.des}</Text>
-          <Text style={dynamicOrder.describeText}>{oneNoticeData.order.content}</Text>
-          {
-            oneNoticeData.pics ? <View style={dynamicOrder.picsView}>
-              {
-                oneNoticeData.pics.map((picItem, p)=> <OrderImg key={p} picItem={picItem} index={p}/>)
-              }
-            </View> : <View />
-          }
-        </View>
-        <View style={dynamicOrder.returnTimeView}>
-          <Text style={dynamicOrder.fixReturnText}>{orderReturn}</Text>
-          <Text style={dynamicOrder.returnTime}>{moment(new Date(oneNoticeData.createdAt)).format('YYYY-MM-DD')}</Text>
-        </View>
-        <Text style={dynamicOrder.returnDescribe}>{oneNoticeData.order.feedback}</Text>
-        <View style={dynamicOrder.buttonView}>
-          <Button 
-            style={dynamicOrder.unsolvedButton} 
-            title={unsolved} 
-            titleStyle={{color: contentColor}} 
-            activeOpacity={0.8} 
-            onPress={()=> navigation.navigate('pushOrder')} 
-          />
-          <Button 
-            style={dynamicOrder.solvedButton} 
-            title={solved} 
-            titleStyle={{color: mainColor}} 
-            activeOpacity={0.8} 
-            onPress={()=> this.postOrderSolved()} 
-          />
-        </View>
-      </ScrollView>
+      <View style={{height: '100%'}}>
+        <ActivityIndicator style={backLoading ? detail.enlargeTouchView : {display: 'none'}} animating={backLoading} size='large'/>
+        <TouchableOpacity style={showdatu ? detail.enlargeTouchView : {display: 'none'}} onPress={()=> this.setState({showdatu: false})} >
+          <Image style={detail.enlargeImg} source={{uri: enlargeUrl}}/>
+        </TouchableOpacity>
+        <ScrollView 
+          style={dynamicOrder.wrap}
+          refreshControl={<RefreshControl 
+            refreshing={isRefreshing}
+            onRefresh={this.onIsRefresh.bind(this)}
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor={mainColor}
+          />}
+        >
+          <Text style={dynamicOrder.fixContentText}>{orderContent}</Text>
+          <View style={dynamicOrder.orderView}>
+            <Text style={dynamicOrder.titleText}>{oneNoticeData.des}</Text>
+            <Text style={dynamicOrder.describeText}>{oneNoticeData.order.content}</Text>
+            {
+              oneNoticeData.order && oneNoticeData.order.images[0] ? <View style={dynamicOrder.picsView}>
+                {
+                  oneNoticeData.order.images.map((picItem, p)=> <OrderImg key={p} picItem={picItem.url} index={p} pressOrderImgEnlarge={this.pressOrderImgEnlarge.bind(this)}/>)
+                }
+              </View> : <View />
+            }
+          </View>
+          <View style={dynamicOrder.returnTimeView}>
+            <Text style={dynamicOrder.fixReturnText}>{orderReturn}</Text>
+            <Text style={dynamicOrder.returnTime}>{moment(new Date(oneNoticeData.createdAt)).format('YYYY-MM-DD')}</Text>
+          </View>
+          <Text style={dynamicOrder.returnDescribe}>{oneNoticeData.order.feedback}</Text>
+          <View style={dynamicOrder.buttonView}>
+            <Button 
+              style={dynamicOrder.unsolvedButton} 
+              title={unsolved} 
+              titleStyle={{color: contentColor}} 
+              activeOpacity={0.8} 
+              onPress={()=> navigation.navigate('pushOrder')} 
+            />
+            <Button 
+              style={dynamicOrder.solvedButton} 
+              title={solved} 
+              titleStyle={{color: mainColor}} 
+              activeOpacity={0.8} 
+              onPress={()=> this.postOrderSolved()} 
+            />
+          </View>
+        </ScrollView>
+      </View>
     )
   }
 }
 
 const OrderImg= props => {
-  let { picItem, index } = props
+  let { picItem, index, pressOrderImgEnlarge } = props
   return (
-    <Image style={dynamicOrder.img} source={picItem}/>
+    <TouchableOpacity onPress={()=> pressOrderImgEnlarge(`${picItem}`)}>
+      <Image style={dynamicOrder.img} source={{uri: picItem}}/>
+    </TouchableOpacity>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, ListView, TouchableOpacity, Alert, RefreshControl } from 'react-native'
+import { View, Text, Image, ListView, TouchableOpacity, Alert, RefreshControl, ScrollView } from 'react-native'
 import { online, offline, onToOffText, onState, offState, inTheEnd } from '../common/strings'
 import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor, contentColor } from '../common/constants'
 import { status, home } from '../styles'
@@ -17,7 +17,20 @@ export default props => {
     , dataLength = props.data.length
     , equipmentData = props.equipmentData
     , { isRefreshing } = store.getState().statu
-  if(dataLength == 0) return <EmptyContent />
+  if(dataLength == 0) return (
+    <ScrollView
+      refreshControl={<RefreshControl 
+        refreshing={isRefreshing}
+        onRefresh={props.onStatusRefresh}
+        colors={['#ff0000', '#00ff00', '#0000ff']}
+        progressBackgroundColor={mainColor}
+        title='下拉刷新'
+        titleColor={contentColor}
+      />}
+    >
+      <EmptyContent />
+    </ScrollView>
+  )
   return(
     <ListView 
       refreshControl={<RefreshControl 

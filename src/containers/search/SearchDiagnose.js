@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native'
-import { mainColor, primaryColor, subTitleColor, contentColor, mainColorPressed, lightBlueColor } from '../../common/constants'
-import { inputDeviceFault, historicalRecord, hotSearch, unsolvedGoToPushOrder, tokenKey, internalServerError } from '../../common/strings'
-import { search, diagnose, diagDetail } from '../../styles'
+import { mainColor, primaryColor, mainColorPressed, loginBackgroundColor } from '../../common/constants'
+import { historicalRecord, hotSearch, unsolvedGoToPushOrder } from '../../common/strings'
+import { search, diagDetail } from '../../styles'
+import { getWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
 import Button from '../../components/units/Button'
 import Loading from '../../components/units/Loading'
-import { getWord, saveWord, clearWord, getKeyNum } from '../../utils/searchBuffer'
-import replaced from '../../funcs/replace'
-import { checkToken } from '../../utils/handleToken'
-import { getPort } from '../../utils/fetchMethod'
-import { getBugs, getBugsHot } from '../../apis'
+import DiagBugsItem from '../../components/search/DiagBugsItem'
+import DiagHeaderSearch from '../../components/search/DiagHeaderSearch'
+import EmptyContent from '../../components/units/EmptyContent'
 
 import store from '../../utils/store'
 import diagnoseAC from '../../actions/diagnoseAC'
+import getBugsHotword from '../../funcs/search/getBugsHotword'
+import getBugsOnchange from '../../funcs/search/getBugsOnchange'
+import getBugsSubmit from '../../funcs/search/getBugsSubmit'
 
-const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const searchIcon = require('../../images/navigation_icons/search.png')
-const cancelIcon = require('../../images/navigation_icons/cancel.png')
 const deleteSweepIcon = require('../../images/navigation_icons/delete_sweep.png')
 
 export default class SearchDiagnose extends Component {
@@ -36,7 +36,7 @@ export default class SearchDiagnose extends Component {
 
   componentDidMount () {
     let diagwordRe = []
-    this.getBugsHotword()
+    getBugsHotword()
     getKeyNum('diagnose')
     .then( num => {
       getWord('diagnose', num)
@@ -57,78 +57,9 @@ export default class SearchDiagnose extends Component {
     this.unsubscribe()
   }
 
-  getBugsHotword() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugsHot}?token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        diagnoseAC.getHotword(res.data)
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  getBugsOnchange(text) {
-    diagnoseAC.setJumpData({
-      text: text,
-      jumpData: text == '' ? false : true,
-    })
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?type=onchange&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        diagnoseAC.getBugsData(res.data)
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
-  getBugsSubmit() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getBugs}?type=submit&search=${this.state.text}&token=${token}`)
-      if(!res) {
-        Alert.alert('错误', internalServerError,
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      } else if(res.code == 200) {
-        let prevHistoryData = this.state.historyData
-        if(res.data.text != null && res.data.text != undefined) {
-          prevHistoryData = [res.data.text].concat(prevHistoryData)
-          diagnoseAC.setHistoryData(prevHistoryData)
-          saveWord('diagnose', prevHistoryData)
-        }
-      } else {
-        Alert.alert('错误', JSON.stringify(res.message),
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
-      }
-    })
-  }
-
   pressTextTouch(text) {
-    this.getBugsOnchange(text)
-    this.getBugsSubmit()
+    getBugsOnchange(text)
+    getBugsSubmit()
   }
 
   pressDeleteSweep() {
@@ -154,7 +85,9 @@ export default class SearchDiagnose extends Component {
     if(!bugsData) {
       dataBugsView = <Loading animating={!bugsData ? true : false}/>
     } else {
-      dataBugsView = <ScrollView>
+      dataBugsView = bugsData == 0 ? <ScrollView style={jumpData ? {height: '100%', backgroundColor: loginBackgroundColor} : {display: 'none'}}>
+        <EmptyContent />
+      </ScrollView> : <ScrollView>
         {
           bugsData.map((bugOne, index)=> <DiagBugsItem key={index} state={this.state} bugOne={bugOne} navigation={navigation} />)
         }
@@ -163,11 +96,9 @@ export default class SearchDiagnose extends Component {
     return (
       <View style={{height: '100%'}}>
         <StatusBar backgroundColor={primaryColor} barStyle='light-content'/>
-        <HeaderSearch 
+        <DiagHeaderSearch 
           state={this.state} 
           navigation={navigation} 
-          onChangeText={this.getBugsOnchange.bind(this)}
-          onSubmitEditing={this.getBugsSubmit.bind(this)}
           cleanText={()=> pressCleanText()}
         />
         <View style={{height: jumpData ? '100%' : 0, backgroundColor: mainColor}}>
@@ -214,79 +145,4 @@ export default class SearchDiagnose extends Component {
       </View>
     )
   }
-}
-
-const DiagBugsItem = props => {
-  let { state, bugOne, navigation } = props
-    , titleArr = []
-    , contentArr = []
-  if(bugOne.title) {
-    let splitTitleArr = replaced.strArr(`${bugOne.title}`, state.text)
-    for(var i = 0; i < splitTitleArr.length; i++) {
-      if(i == splitTitleArr.length-1) {
-        titleArr.push(<Text key={(i*2)}>{splitTitleArr[i]}</Text>)
-      } else {
-        titleArr.push(<Text key={(i*2)}>{splitTitleArr[i]}</Text>)
-        titleArr.push(<Text key={(i*2+1)} style={{color: lightBlueColor}}>{state.text}</Text>)
-      }
-    }
-  }
-  if(bugOne.content) {
-    let splitContentArr = replaced.strArr(replaced.trim(`${bugOne.content}`), state.text)
-    for(var i = 0; i < splitContentArr.length; i++) {
-      if(i == splitContentArr.length-1) {
-        contentArr.push(<Text key={(i*2)}>{splitContentArr[i]}</Text>)
-      } else {
-        contentArr.push(<Text key={(i*2)}>{splitContentArr[i]}</Text>)
-        contentArr.push(<Text key={(i*2+1)} style={{color: lightBlueColor}}>{state.text}</Text>)
-      }
-    }
-  }
-  return (
-    <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {bugsId: bugOne._id, bugsTitle: bugOne.title, categoryText: bugOne.category.text})}>
-        <View style={diagnose.titleView}>
-          <Text style={[diagnose.titleText, {width: '100%'}]}>
-            { titleArr }
-          </Text> 
-        </View>
-        <View style={{paddingVertical: 5}}>
-          <Text style={{color: contentColor, fontSize: 14 }} numberOfLines={3}>
-            { contentArr }
-          </Text>
-        </View>
-        <Text style={diagnose.kindsText}>{bugOne.category.text ? bugOne.category.text : '暂无分类'}</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
-const HeaderSearch = props => {
-  let { state, navigation, onChangeText, onSubmitEditing, cleanText } = props
-  return (
-    <View style={search.header}>
-      <TouchableOpacity style={search.touchBack} onPress={()=> navigation.goBack()}>
-        <Image source={gobackWhiteIcon}/>
-      </TouchableOpacity>
-      <View style={search.inputView}>
-        <TextInput 
-          autoCapitalize='none' 
-          style={search.inputText} 
-          placeholder={inputDeviceFault} 
-          placeholderTextColor={subTitleColor}
-          underlineColorAndroid='transparent'
-          autoFocus={true}
-          value={state.text}
-          onChangeText={onChangeText}
-          onSubmitEditing={onSubmitEditing}
-        />
-        <Image style={search.searchIcon} source={searchIcon}/>
-        {
-          state.text != '' ? <TouchableOpacity style={search.cancelTouch} onPress={cleanText}>
-            <Image style={search.cancelIcon} source={cancelIcon}/>
-          </TouchableOpacity> : <Image style={{height: 0}}/>
-        }
-      </View>
-    </View>
-  )
 }

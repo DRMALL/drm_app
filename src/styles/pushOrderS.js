@@ -1,4 +1,4 @@
-import { mainColor, mainColorPressed, backgroundColor, subTitleColor } from '../common/constants'
+import { mainColor, mainColorPressed, backgroundColor, subTitleColor, lightRedColor } from '../common/constants'
 import { StyleSheet } from 'react-native'
 
 export default {
@@ -18,6 +18,7 @@ export default {
     fontSize: 15,
   },
   textInput2: {
+    height: 400,
     textAlignVertical: 'top',
     paddingHorizontal: 16,
     fontSize: 15,
@@ -45,5 +46,26 @@ export default {
   oneCategoryText: {
     fontSize: 14,
     color: subTitleColor,
+  },
+  worderImageView: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    paddingHorizontal: 16,
+    paddingTop: 20,
+  },
+  worderImage: {
+    width: 60,
+    height: 60, 
+    marginRight: 10,
+    marginBottom: 10,
+    backgroundColor: subTitleColor,
+  },
+  warningText: {
+    paddingHorizontal: 16,
+    paddingVertical: 5,
+    fontSize: 12,
+    color: lightRedColor,
   },
 }

@@ -72,6 +72,7 @@ export default {
     backgroundColor: mainColor,
   },
   text: {
+    textAlign: 'center',
     fontSize: 14,
     color: contentColor,
   },

@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView, Dimensions } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView, Dimensions, RefreshControl } from 'react-native'
 import { primaryColor, mainColor } from '../../common/constants'
 import { unsolvedGoToPushOrder, tokenKey, internalServerError } from '../../common/strings'
 import { diagDetail } from '../../styles'
@@ -37,6 +37,7 @@ export default class DiagDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isRefreshing: false,
       oneBugData: {},
       shareShow: false,
       topView: {position: 'relative', zIndex: 3},
@@ -79,6 +80,14 @@ export default class DiagDetail extends Component {
     })
   }
 
+  onIsRefresh() {
+    this.setState({isRefreshing: true})
+    this.getOneBug()
+    setTimeout(() => {
+      this.setState({isRefreshing: false})
+    }, 2000)
+  }
+
   pressShareCancel() {
     this.setState({
       shareShow: false,
@@ -99,13 +108,21 @@ export default class DiagDetail extends Component {
 
   render() {
     let { navigation } = this.props
-      , { oneBugData, shareShow, topView, nextView } = this.state
+      , { oneBugData, shareShow, topView, nextView, isRefreshing } = this.state
       , { categoryText } = navigation.state.params
       , contentLength = oneBugData.content ? oneBugData.content.split('').length : 0
     return (
       <View>
         <View style={[diagDetail.wrap, shareShow ? nextView : topView]}>
-          <ScrollView style={{height: '100%'}}>
+          <ScrollView 
+            style={{height: '100%'}}
+            refreshControl={<RefreshControl 
+              refreshing={isRefreshing}
+              onRefresh={this.onIsRefresh.bind(this)}
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor={mainColor}
+            />}
+          >
             <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
             <Text style={diagDetail.kindText}>{categoryText}</Text>
             <View style={{height: contentLength < 500 ? 650 : Math.round(contentLength*3/2), paddingHorizontal: 16 }}>

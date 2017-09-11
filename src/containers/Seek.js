@@ -10,7 +10,9 @@ import { seekPartsData, seekTypesData } from '../utils/virtualData'
 
 import store from '../utils/store'
 import seekAC from '../actions/seekAC'
-import deviceAC from '../actions/deviceAC'
+import getAllPartsData from '../funcs/seek/getAllPartsData'
+import getFirstPartData from '../funcs/seek/getFirstPartData'
+import getSecondPartData from '../funcs/seek/getSecondPartData'
 
 const seekIconSelected = require('../images/tabbar_icons/tabbar_search_selected_x.png')
     , seekIconNormal = require('../images/tabbar_icons/tabbar_search_normal.png')
@@ -32,7 +34,10 @@ export default class Seek extends Component {
   }
 
   componentDidMount() {
-    seekAC.createPartTypeState(seekPartsData, seekTypesData)
+    getAllPartsData()
+    getFirstPartData().then((seekFirstData)=> {
+      seekAC.createPartTypeState(seekFirstData, [])
+    })
   }
 
   componentWillMount() {
@@ -52,20 +57,22 @@ export default class Seek extends Component {
   }
 
   render() {
-    let { seekPartRow, seekTypeRow, topView, secondView, isRefreshing, selectedTypesData } = this.state
+    let { seekPartRow, seekTypeRow, topView, secondView, isRefreshing, 
+          seekPartsFirstData, seekTypesSecondData, allSeekPartData 
+        } = this.state
       , { openModal } = seekAC
     return(
       <View style={{paddingBottom: 80}}>
         <SeekTab state={this.state} openModal={openModal} />
         <View style={{height: '100%'}}>
           <View style={[!seekPartRow && !seekTypeRow ? topView : secondView, {height: '100%', paddingBottom: 50}]}>
-            <SeekCategory isRefreshing={isRefreshing} onSeekRefresh={this.onSeekRefresh.bind(this)} {...this.props} />
+            <SeekCategory isRefreshing={isRefreshing} allSeekData={allSeekPartData} onSeekRefresh={this.onSeekRefresh.bind(this)} {...this.props} />
           </View>
           <View style={[topView, {height: seekPartRow ? '100%' : 0}]}>
-            <SeekPartsColumn partsData={seekPartsData} state={this.state} />
+            <SeekPartsColumn partsData={seekPartsFirstData} state={this.state} />
           </View>
           <View style={[topView, {height: seekTypeRow ? '100%' : 0}]}>
-            <SeekTypesColumn typesData={selectedTypesData} state={this.state} />
+            <SeekTypesColumn typesData={seekTypesSecondData} state={this.state} />
           </View>
         </View>
       </View>
@@ -86,7 +93,7 @@ const SeekPartsColumn = props => {
               activeOpacity={0.8}
               onPress={()=> pressPartColumn(p, partsData)}
             >
-              <Text style={[seek.itemText, state[`partColumn${p}`] ? {color: lightBlueColor} : {}]}>{partItem.parts}</Text>
+              <Text style={[seek.itemText, state[`partColumn${p}`] ? {color: lightBlueColor} : {}]}>{partItem.name}</Text>
             </TouchableOpacity>)
           }
         </ScrollView>
@@ -111,7 +118,7 @@ const SeekTypesColumn = props => {
               activeOpacity={0.8}
               onPress={()=> pressTypeColumn(t, typesData)}
             >
-              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem}</Text>
+              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.model}</Text>
             </TouchableOpacity>)
           }
         </ScrollView>

@@ -6,42 +6,28 @@ import { seek, home } from '../styles'
 import { seekData } from '../utils/virtualData'
 import store from '../utils/store'
 import EmptyContent from '../components/units/EmptyContent'
+import CaptionFix from './seek/CaptionFix'
 
 export default class SeekCategory extends Component {
   render() {
-    let { navigation, isRefreshing, onSeekRefresh } = this.props
+    let { navigation, isRefreshing, allSeekData, onSeekRefresh } = this.props
       , { selectedPart, selectedType } = store.getState().seek
       , selectDataArr = []
     if(selectedPart !== allParts) {
-      seekData.map((seekOne, indexs)=> {
-        if(selectedPart === seekOne.materialName) {
+      allSeekData.map((seekOne, indexs)=> {
+        if(selectedPart === seekOne.name) {
           if(selectedType !== allTypes) {
-            if(selectedType == seekOne.models) {
+            if(selectedType == seekOne.model) {
               selectDataArr.push(seekOne)
             }
           } else selectDataArr.push(seekOne)
         }
       })
-    } else selectDataArr = seekData
+    } else selectDataArr = allSeekData
     let seekDataLength = selectDataArr.length
     return (
       <View style={seek.wrap}>
-        <View style={{backgroundColor: mainColor}}>
-          <View style={seek.captionView}>
-            <View style={seek.materialLongCodeView}>
-              <Text style={seek.captionText}>{materialLongCode}</Text>
-            </View>
-            <View style={seek.materialNameView}>
-              <Text style={seek.captionText}>{materialName}</Text>
-            </View>
-            <View style={seek.materialModelsView}>
-              <Text style={seek.captionText}>{materialModels}</Text>
-            </View>
-            <View style={seek.materialUnitesView}>
-              <Text style={seek.captionText}>{materialUnites}</Text>
-            </View>
-          </View>
-        </View>
+        <CaptionFix />
         {
           seekDataLength == 0 ? <EmptyContent /> : 
           <ScrollView 
@@ -69,11 +55,11 @@ const SeekDataItem = props => {
   let { item, s, seekDataLength, navigation } = props
   return (
     <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {name: 'SeekDetail', seekItem: item})}>
-        <Text style={seek.text}>{item.longCode}</Text>
-        <Text style={seek.text}>{item.materialName}</Text>
-        <Text style={seek.text}>{item.models}</Text>
-        <Text style={seek.text}>{item.unites}</Text>
+      <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {seekId: item._id})}>
+        <Text style={[seek.text, {width: '24%'}]}>{item.code}</Text>
+        <Text style={[seek.text, {width: '26%'}]}>{item.name}</Text>
+        <Text style={[seek.text, {width: '34%'}]}>{item.model}</Text>
+        <Text style={[seek.text, {width: '6%'}]}>{item.unit}</Text>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
         <Text style={[home.endText, s == (seekDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>

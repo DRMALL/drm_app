@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import Loading from '../components/units/Loading'
-import { primaryColor, mainColor } from '../common/constants'
+import { primaryColor, mainColor, contentColor } from '../common/constants'
 import { messageText, 
         allSetAsRead, 
         inTheEnd, 
@@ -11,6 +11,7 @@ import { message } from '../styles'
 
 import MessageItem from '../components/message/MessageItem'
 import store from '../utils/store'
+import messageAC from '../actions/messageAC'
 import postNoticeRead from '../funcs/message/postNoticeRead'
 import getNotices from '../funcs/message/getNotices'
 
@@ -64,16 +65,34 @@ export default class Message extends Component {
     this.unsubscribe()
   }
 
+  onStatusRefresh() {
+    messageAC.isRefresh()
+    getNotices()
+    setTimeout(() => {
+      messageAC.isnotRefresh()
+    }, 2000)
+  }
+
   render() {
     let { navigation } = this.props
-      , { noticeData } = this.state
+      , { noticeData, isRefreshing } = this.state
 
     if(!noticeData) return <Loading animating={!noticeData ? true : false}/>
     noticeData.sort((a, b)=> {
       return new Date(b.order.time) - new Date(a.order.time)
     })
     return (
-      <ScrollView style={message.scrollView}>
+      <ScrollView 
+        style={message.scrollView}
+        refreshControl={<RefreshControl 
+          refreshing={isRefreshing}
+          onRefresh={this.onStatusRefresh}
+          colors={['#ff0000', '#00ff00', '#0000ff']}
+          progressBackgroundColor={mainColor}
+          title='下拉刷新'
+          titleColor={contentColor}
+        />}
+      >
         { noticeData.map((msgItem, i)=> <MessageItem key={i} msgItem={msgItem} navigation={navigation}/>) }
         <Text style={message.endText}>{inTheEnd}</Text>
       </ScrollView>
