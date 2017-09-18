@@ -22,14 +22,14 @@ index.android.js和index.ios.js为RN项目的入口文件，都指向到src/inde
 
 > ———— drm_app
 >> ———— src
->>> ———— actions （更改store的action文件）
->>> ———— apis （与后端API对接的URL）
->>> ———— common （固定的字符串，样式及action的type名）
->>> ———— components （存放页面所关联的组件）
->>> ———— containers （存放页面）
->>> ———— funcs （函数）
->>> ———— images （本项目图片）
->>> ———— reducers （存放redux相关的reducer文件）
->>> ———— styles （样式）
->>> ———— utils （请求方式、AsyncStorage存取、转换、虚拟数据）
+>>> ———— actions （更改store的action文件）    
+>>> ———— apis （与后端API对接的URL）    
+>>> ———— common （固定的字符串，样式及action的type名）    
+>>> ———— components （存放页面所关联的组件）    
+>>> ———— containers （存放页面）    
+>>> ———— funcs （函数）    
+>>> ———— images （本项目图片）    
+>>> ———— reducers （存放redux相关的reducer文件）    
+>>> ———— styles （样式）    
+>>> ———— utils （请求方式、AsyncStorage存取、转换、虚拟数据）    
 
