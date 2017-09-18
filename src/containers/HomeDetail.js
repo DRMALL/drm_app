@@ -32,6 +32,7 @@ export default class HomeDetail extends Component {
   }
 
   componentDidMount() {
+    homeDetailAC.changeWVHeight(0)
     homeDetailAC.getOneData({})
     getNewsOne(this.props)
   }
@@ -42,6 +43,7 @@ export default class HomeDetail extends Component {
 
   componentWillUnmount(){
     this.unsubscribe()
+    homeDetailAC.changeWVHeight(0)
   }
 
   render() {

@@ -17,7 +17,13 @@ export default (props)=> {
         { cancelable: false }
       )
     } else if(res.code == 201) {
-      homeDetailAC.getOneData(res.data)
+      if(res.data === null) {
+        Alert.alert('提示', '暂无内容,请刷新再试',
+          [ {text: 'OK', onPress: () => 'ok'}, ],
+          { cancelable: false }
+        )
+        props.navigation.goBack()
+      } else homeDetailAC.getOneData(res.data)
     } else {
       Alert.alert('错误', JSON.stringify(res.message),
         [ {text: 'OK', onPress: () => 'OK'}, ],

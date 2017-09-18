@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView, Dimensions, RefreshControl } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Alert, WebView, Dimensions, RefreshControl, Platform } from 'react-native'
 import { primaryColor, mainColor } from '../../common/constants'
 import { unsolvedGoToPushOrder, tokenKey, internalServerError } from '../../common/strings'
 import { diagDetail } from '../../styles'
@@ -42,9 +42,12 @@ export default class DiagDetail extends Component {
       shareShow: false,
       topView: {position: 'relative', zIndex: 3},
       nextView: {position: 'absolute', zIndex: 2},
+      wbHeight: 0,
     }
   }
+  
   componentDidMount() {  
+    this.setState({wbHeight: 0})
     this.props.navigation.setParams({  
       share: () => this.shareFun(), 
     })
@@ -94,21 +97,16 @@ export default class DiagDetail extends Component {
     })
   }
 
-  handleDiagDom() {
-    const injectdScript = `
-      (function () {
-        const arr = document.getElementsByTagName(\"img\")
-        let height = null
-        for (let i = 0; i < arr.length; i ++) {
-          arr[i].width = ${windowWidth}
-        }
-      } () )`
-    return injectdScript
+  webviewNavigationChange(navState) {
+    let height = parseInt(navState.title) || 500
+    if(height > 0) {
+      this.setState({wbHeight: height + 100})
+    }
   }
 
   render() {
     let { navigation } = this.props
-      , { oneBugData, shareShow, topView, nextView, isRefreshing } = this.state
+      , { oneBugData, shareShow, topView, nextView, isRefreshing, wbHeight } = this.state
       , { categoryText } = navigation.state.params
       , contentLength = oneBugData.content ? oneBugData.content.split('').length : 0
     return (
@@ -125,16 +123,17 @@ export default class DiagDetail extends Component {
           >
             <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
             <Text style={diagDetail.kindText}>{categoryText}</Text>
-            <View style={{height: contentLength < 500 ? 650 : Math.round(contentLength*3/2), paddingHorizontal: 16 }}>
+            <View style={{ paddingHorizontal: 16, height: wbHeight }}>
               <WebView 
                 style={{height: '100%'}}
                 automaticallyAdjustContentInsets={false}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
-                scrollEnabled={false}
-                // onMessage={this.onMessage.bind(this)}
-                injectedJavaScript={this.handleDiagDom()}
+                // scrollEnabled={false}
+                injectedJavaScript={Platform.OS === 'ios' ? this.handleDiagDomIos() : this.handleDiagDomAndroid()}
+                onNavigationStateChange={this.webviewNavigationChange.bind(this)}
                 source={{html: oneBugData.content}}
+                decelerationRate='fast'
               />
             </View>
           </ScrollView>
@@ -151,6 +150,46 @@ export default class DiagDetail extends Component {
         <ShareModal state={this.state} pressShareCancel={this.pressShareCancel.bind(this)}/>
       </View>
     )
+  }
+
+  handleDiagDomIos() {
+    const injectdScript = `
+      const arr = document.getElementsByTagName(\"img\");
+      var height = null;
+      for (var i = 0; i < arr.length; i ++) {
+        arr[i].width = ${windowWidth};
+      }
+      document.title = document.documentElement.scrollHeight;
+    `
+    return injectdScript
+  }
+
+  handleDiagDomAndroid() {
+    const injectdScript = `
+      const arr = document.getElementsByTagName(\"img\");
+      var height = null;
+      for (var i = 0; i < arr.length; i ++) {
+        arr[i].width = ${windowWidth};
+      }
+      var wrapper = document.createElement("div");  
+      wrapper.id = "height-wrapper";  
+      while (document.body.firstChild) {  
+        wrapper.appendChild(document.body.firstChild);  
+      }  
+      document.body.appendChild(wrapper);  
+      var i = 0;  
+      function updateHeight() {  
+        document.title = wrapper.clientHeight;  
+        window.location.hash = ++i;  
+      }  
+      updateHeight();  
+      window.addEventListener("load", function() {  
+        updateHeight();  
+        setTimeout(updateHeight, 1000);  
+      });  
+      window.addEventListener("resize", updateHeight);
+    `
+    return injectdScript
   }
 }
 
