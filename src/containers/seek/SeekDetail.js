@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Platform } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, StatusBar, Platform, Dimensions } from 'react-native'
 import Swiper from 'react-native-swiper'
 import ShareModal from '../../components/units/ShareModal'
 import { primaryColor, mainColor, loginBorderColor } from '../../common/constants'
@@ -17,6 +17,7 @@ const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 const pic5 = require('../../images/pic5.png')
 const pic6 = require('../../images/pic6.png')
 const pic7 = require('../../images/pic7.png')
+let swiperHeight = (Dimensions.get('window').width)/3*2
 
 export default class SeekDetail extends Component {
   static navigationOptions = {
@@ -33,7 +34,7 @@ export default class SeekDetail extends Component {
 
   componentDidMount() {
     let { seekId } = this.props.navigation.state.params
-    getPartOneData(seekId)
+    getPartOneData(seekId, this.props)
   }
 
   componentWillMount() {
@@ -54,7 +55,7 @@ export default class SeekDetail extends Component {
         <ScrollView style={[{width: '100%'}, shareShow ? secondView : topView]}>
           <StatusBar hidden={true}/>
           <SeekSwiperHeader navigation={navigation} />
-          <View style={{top: -20}}>
+          <View style={{top: -5}}>
             <Text style={seekDetail.fixText}>{partParameter}</Text>
             <View style={seekDetail.textView}>
               <Text style={seekDetail.fixItemText}>{materialLongCode}</Text>
@@ -90,7 +91,7 @@ const SeekSwiperHeader = props => {
     , { pressShareShow } = seekAC
   return (
     <View style={seekDetail.headerView}>
-      <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>
+      <Swiper height={swiperHeight} dotColor={loginBorderColor} activeDotColor={mainColor}>
         {
           picArr.map((picItem, index)=> <View key={index} style={seekDetail.picsView}>
             <Image style={seekDetail.pics} source={picItem}/>

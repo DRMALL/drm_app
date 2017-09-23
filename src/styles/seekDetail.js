@@ -1,10 +1,10 @@
 import { mainColor, lightBlueColor, contentColor, backgroundColor, mainColorPressed, subTitleColor } from '../common/constants'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 export default {
   headerView: {
     position: 'relative', 
-    top: -10,
+    top: -5,
   },
   gobackIcon: {
     position: 'absolute', 
@@ -19,7 +19,7 @@ export default {
   },
   picsView: {
     width: '100%',
-    height: 220,
+    height: (Dimensions.get('window').width)/3*2,
   },
   pics: {
     width: '100%',

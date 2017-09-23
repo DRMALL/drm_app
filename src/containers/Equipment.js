@@ -41,29 +41,6 @@ export default class Equipment extends Component {
   componentDidMount() {
     statuAC.getEquipData({})
     this.getMonNumData()
-    // this.io = socket(`https://api.wardenger.me/socket`)
-    // this.io.on('connect', ()=> {
-    //   console.log('connect')
-    // })
-    // this.io.on('news', (data) => {
-    //   statuAC.getEquipData(data)
-    //   console.log(data)
-    // })
-    // this.io.on('connect_error', (error) => {
-    //   Alert.alert('错误', '连接错误',
-    //     [ {text: 'OK', onPress: () => this.io.close()}, ],
-    //     { cancelable: false }
-    //   )
-    // })
-    // this.io.on('connect_timeout', (timeout) => {
-    //   Alert.alert('错误', '连接超时',
-    //     [ {text: 'OK', onPress: () => this.io.close()}, ],
-    //     { cancelable: false }
-    //   )
-    // })
-    // this.io.on('disconnect', ()=> {
-    //   console.log('disconnect')
-    // })
   }
 
   componentWillMount() {
@@ -71,11 +48,10 @@ export default class Equipment extends Component {
   }
 
   componentWillUnmount(){
-    // this.io.close()
     this.unsubscribe()
   }
 
-  getMonNumData() {
+  getMonNumData() {    //获取数据库数据，存eqNumberData
     checkToken(tokenKey)
     .then(async token => {
       let { statuItemNumber } = this.props.navigation.state.params
@@ -86,6 +62,13 @@ export default class Equipment extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
+        // if(res.data === null) {
+        //   Alert.alert('提示', '暂无内容,请刷新再试',
+        //     [ {text: 'OK', onPress: () => 'ok'}, ],
+        //     { cancelable: false }
+        //   )
+        //   this.props.navigation.goBack()
+        // } else 
         statuAC.setEqNumItemData(res.data)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
@@ -114,7 +97,11 @@ export default class Equipment extends Component {
         
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>
-          <Text style={[equipment.fix3Text, {position: 'absolute', right: 15}]}>{indexDataUpdateTime + `${moment(equipmentItemData.rnTimestamp).format('YYYY-MM-DD hh:mm')}`}</Text>
+          <Text style={[equipment.fix3Text, {position: 'absolute', right: 15}]}>{
+            indexDataUpdateTime + `${equipmentItemData.rnTimestamp ? moment(equipmentItemData.rnTimestamp).format('YYYY-MM-DD HH:mm') : (
+              eqNumberData ? moment(eqNumberData.updatedAt).format('YYYY-MM-DD HH:mm') : '0000-00-00 00:00'
+            )}`
+          }</Text>
         </View>
         <View style={equipment.dataView}>
           <IndexData indexData={equipmentDataList} equipmentItemData={equipmentItemData} eqNumberData={eqNumberData} {...this.props}/>

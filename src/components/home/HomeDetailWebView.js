@@ -5,6 +5,7 @@ import handleDomIos from '../../funcs/home/handleDomIos'
 import handleDomAndroid from '../../funcs/home/handleDomAndroid'
 import onNavigationStateChange from '../../funcs/home/onNavigationStateChange'
 import store from '../../utils/store'
+import css from '../../utils/css.js'
 
 let windowHeight = Dimensions.get('window').height
 
@@ -15,7 +16,7 @@ export default props => {
     <View style={{ height: viewHeight, paddingHorizontal: 16 }}>
       <WebView 
         style={{height: '100%'}}
-        source={{html: content ? content : '<p></p>'}}
+        source={{html: content ? `<style type="text/css">${css()}</style>${content}` : `<p></p>`}}
         automaticallyAdjustContentInsets={false}
         javaScriptEnabled={true}
         domStorageEnabled={true}

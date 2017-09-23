@@ -44,6 +44,7 @@ export default class HomeDetail extends Component {
   componentWillUnmount(){
     this.unsubscribe()
     homeDetailAC.changeWVHeight(0)
+    homeDetailAC.getOneData({})
   }
 
   render() {
@@ -62,16 +63,18 @@ export default class HomeDetail extends Component {
             !newsOneData.images ? <Loading2 animating={!newsOneData.images ? true : false} /> : 
             <HomeSwiperHeader picData={newsOneData.images} navigation={navigation} />
           }
-          <Text style={[detail.titleText, {paddingHorizontal: 16}]}>{newsOneData.abstract}</Text>
-          <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 15}]}>
+          <Text style={[detail.titleText, {paddingHorizontal: 16, paddingVertical: 20}]}>{newsOneData.abstract}</Text>
+          <Text style={[detail.titleTime, {paddingHorizontal: 16, paddingTop: 25}]}>
             {
               newsOneData.publish_time ? moment(newsOneData.publish_time).format('YYYY-MM-DD') : '0000-00-00'
             }
           </Text>
-          <HomeDetailWebView 
-            contentLength={contentLength} 
-            content={newsOneData.content} 
-          />
+          {
+            newsOneData.content ? <HomeDetailWebView 
+              contentLength={contentLength} 
+              content={newsOneData.content} 
+            /> : <View />
+          }
         </ScrollView>
         <ShareModal state={this.state} pressShareCancel={hiddenShare}/>
       </View>

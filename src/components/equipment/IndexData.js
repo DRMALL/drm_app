@@ -3,6 +3,7 @@ import { View, Text, Image, ListView, TouchableOpacity, Alert } from 'react-nati
 import { lightBlueColor, contentColor, mainColor, backgroundColor } from '../../common/constants'
 import { equipment } from '../../styles'
 import normIndexPD from '../../utils/normIndexPD'
+import normIndexPDO from '../../utils/normIndexPDO'
 
 const dropdownNormal = require('../../images/dropdown_normal.png')
 const dropdownSelected = require('../../images/dropdown_selected.png')
@@ -26,10 +27,13 @@ export default class IndexData extends Component {
   }
 
   render() {
+    let indexDataSec = [{title: '本类别数据名称'}]
     return(
       <View style={{backgroundColor: backgroundColor}}>
         {
-          this.props.indexData.map((item, index) => {
+          this.props.equipmentItemData.number ? indexDataSec.map((item, index) => {
+            return <IndexDataSecItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)} {...this.props}/>
+          }) : this.props.indexData.map((item, index) => {
             return <IndexDataItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)} {...this.props}/>
           })
         }
@@ -62,8 +66,38 @@ const DataItemRow = props => {
   return (
     <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram')}>
       <Text style={equipment.iDataItemText}>{item.text}</Text>
-      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{equipmentItemData.number ? normIndexPD(item.text, equipmentItemData.data) : normIndexPD(item.text, eqNumberData.data)}</Text>
+      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{equipmentItemData.number ? normIndexPDO(item.text, equipmentItemData.data) : normIndexPD(item.text, eqNumberData.data)}</Text>
       <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unit}</Text>
+      <Image style={equipment.iDataItemImg} source={intoIcon} />
+    </TouchableOpacity>
+  )
+}
+
+const IndexDataSecItem = ({ rowData, state, open, index, navigation, equipmentItemData }) => {
+  let { title } = rowData
+  let selectRow = state[`row${index}`]
+  let equipmentItemDataRe = selectRow ? equipmentItemData.data : []
+  return (
+    <View>
+      <TouchableOpacity style={equipment.dataTouch} activeOpacity={0.8} onPress={()=> open(`row${index}`)}>
+        <Text style={[equipment.textTouch, {color: selectRow ? lightBlueColor : contentColor}]}>{title}</Text>
+        <Image style={equipment.imgTouch} source={selectRow ? dropdownSelected : dropdownNormal} />
+      </TouchableOpacity>
+      <View style={{backgroundColor: mainColor}}>
+        {equipmentItemDataRe.map((textone, i)=> <DataItemSecRow key={i} item={textone} navigation={navigation} />)}
+      </View>
+    </View>
+  )
+}
+
+const DataItemSecRow = props => {
+  let { item, navigation } = props
+    , itemKey = Object.keys(item)[0]
+  return (
+    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram', {itemKey: itemKey})}>
+      <Text style={equipment.iDataItemText}>{itemKey}</Text>
+      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{item[itemKey]}</Text>
+      <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unit || '单位'}</Text>
       <Image style={equipment.iDataItemImg} source={intoIcon} />
     </TouchableOpacity>
   )

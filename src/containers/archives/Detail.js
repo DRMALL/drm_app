@@ -1,7 +1,7 @@
 import React, { Component }from 'react'
 import { View, Text, Image, 
         ScrollView, TouchableOpacity, RefreshControl, 
-        StatusBar, Alert, Platform, ActivityIndicator
+        StatusBar, Alert, Platform, ActivityIndicator, Dimensions
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 import moment from 'moment'
@@ -20,6 +20,7 @@ const openDownIcon = require('../../images/navigation_icons/open_down.png')
 const closeUpIcon = require('../../images/navigation_icons/close_up.png')
 const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
 const uploadPic = require('../../images/uploadPic.png')
+let swiperHeight = (Dimensions.get('window').width)/3*2
 
 export default class Detail extends Component {
   static navigationOptions = {
@@ -61,9 +62,17 @@ export default class Detail extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        this.setState({
-          oneDeviceData: res.data,
-        })
+        if(res.data === null) {
+          Alert.alert('提示', '暂无内容,请刷新再试',
+            [ {text: 'OK', onPress: () => 'ok'}, ],
+            { cancelable: false }
+          )
+          this.props.navigation.goBack()
+        } else {
+          this.setState({
+            oneDeviceData: res.data,
+          })
+        }
       } else if(res.code == 503) {
         Alert.alert('错误', '暂无权限查看',
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -196,7 +205,7 @@ const SwiperHeader = props => {
   }
   return (
     <View style={detail.headerView}>
-      <Swiper height={230} dotColor={loginBorderColor} activeDotColor={mainColor}>
+      <Swiper height={swiperHeight} dotColor={loginBorderColor} activeDotColor={mainColor}>
         {picsDataView}
       </Swiper>
       <TouchableOpacity style={detail.gobackIcon} onPress={() => navigation.goBack()}>

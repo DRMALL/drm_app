@@ -9,6 +9,7 @@ import { checkToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getBug } from '../../apis'
 import { diagnosisData } from '../../utils/virtualData'
+import css from '../../utils/css.js'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../../images/navigation_icons/empty.png')
@@ -38,7 +39,7 @@ export default class DiagDetail extends Component {
     super(props)
     this.state = {
       isRefreshing: false,
-      oneBugData: {},
+      oneBugData: null,
       shareShow: false,
       topView: {position: 'relative', zIndex: 3},
       nextView: {position: 'absolute', zIndex: 2},
@@ -52,6 +53,12 @@ export default class DiagDetail extends Component {
       share: () => this.shareFun(), 
     })
     this.getOneBug()
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      oneBugData: null,
+    })
   }
 
   shareFun() {  
@@ -71,9 +78,17 @@ export default class DiagDetail extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
-        this.setState({
-          oneBugData: res.data,
-        })
+        if(res.data === null) {
+          Alert.alert('提示', '暂无内容,请刷新再试',
+            [ {text: 'OK', onPress: () => 'ok'}, ],
+            { cancelable: false }
+          )
+          this.props.navigation.goBack()
+        } else {
+          this.setState({
+            oneBugData: res.data,
+          })
+        }
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
@@ -100,7 +115,7 @@ export default class DiagDetail extends Component {
   webviewNavigationChange(navState) {
     let height = parseInt(navState.title) || 500
     if(height > 0) {
-      this.setState({wbHeight: height + 100})
+      this.setState({wbHeight: height + 80})
     }
   }
 
@@ -108,7 +123,7 @@ export default class DiagDetail extends Component {
     let { navigation } = this.props
       , { oneBugData, shareShow, topView, nextView, isRefreshing, wbHeight } = this.state
       , { categoryText } = navigation.state.params
-      , contentLength = oneBugData.content ? oneBugData.content.split('').length : 0
+    // console.log(wbHeight, oneBugData.content)
     return (
       <View>
         <View style={[diagDetail.wrap, shareShow ? nextView : topView]}>
@@ -121,20 +136,22 @@ export default class DiagDetail extends Component {
               progressBackgroundColor={mainColor}
             />}
           >
-            <Text style={diagDetail.titleText}>{oneBugData.title}</Text>
+            <Text style={diagDetail.titleText}>{oneBugData ? oneBugData.title : ''}</Text>
             <Text style={diagDetail.kindText}>{categoryText}</Text>
             <View style={{ paddingHorizontal: 16, height: wbHeight }}>
-              <WebView 
-                style={{height: '100%'}}
-                automaticallyAdjustContentInsets={false}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                // scrollEnabled={false}
-                injectedJavaScript={Platform.OS === 'ios' ? this.handleDiagDomIos() : this.handleDiagDomAndroid()}
-                onNavigationStateChange={this.webviewNavigationChange.bind(this)}
-                source={{html: oneBugData.content}}
-                decelerationRate='fast'
-              />
+              {
+                oneBugData ? <WebView 
+                  style={{height: '100%'}}
+                  automaticallyAdjustContentInsets={false}
+                  javaScriptEnabled={true}
+                  domStorageEnabled={true}
+                  // scrollEnabled={false}
+                  injectedJavaScript={Platform.OS === 'ios' ? this.handleDiagDomIos() : this.handleDiagDomAndroid()}
+                  onNavigationStateChange={this.webviewNavigationChange.bind(this)}
+                  source={{html: `<style type="text/css">${css()}</style>${oneBugData.content}`}} 
+                  decelerationRate='fast'
+                /> : <View />
+              }
             </View>
           </ScrollView>
           <View style={diagDetail.buttonView}>
@@ -154,7 +171,14 @@ export default class DiagDetail extends Component {
 
   handleDiagDomIos() {
     const injectdScript = `
-      const arr = document.getElementsByTagName(\"img\");
+      const arr = document.getElementsByTagName(\"img\")
+          , blocks = document.getElementsByTagName(\"blockquote\");
+          
+      for (var j = 0; j < blocks.length; j ++) {
+        blocks[j].style.borderLeft = '3px solid #eee';
+        blocks[j].style.margin = '10px 0';
+        blocks[j].style.paddingLeft = '10px';
+      }
       var height = null;
       for (var i = 0; i < arr.length; i ++) {
         arr[i].width = ${windowWidth};
@@ -166,7 +190,14 @@ export default class DiagDetail extends Component {
 
   handleDiagDomAndroid() {
     const injectdScript = `
-      const arr = document.getElementsByTagName(\"img\");
+      const arr = document.getElementsByTagName(\"img\")
+          , blocks = document.getElementsByTagName(\"blockquote\");
+
+      for (var j = 0; j < blocks.length; j ++) {
+        blocks[j].style.borderLeft = '3px solid #eee';
+        blocks[j].style.margin = '10px 0';
+        blocks[j].style.paddingLeft = '10px';
+      }
       var height = null;
       for (var i = 0; i < arr.length; i ++) {
         arr[i].width = ${windowWidth};
@@ -196,3 +227,11 @@ export default class DiagDetail extends Component {
 // <Text style={diagDetail.contentText}>{oneBugData.content}</Text>
 // <Image style={diagDetail.img} source={diagItemData.pic}/>
 //         <Text style={diagDetail.contentText}>{diagItemData.returnDescribe}</Text>
+// handleStyle(data) {
+//     if(data) {
+//       return `<style type="text/css">
+//           ${css()}
+//         </style>
+//       ${data}`
+//     } else return `<p></p>`
+//   }

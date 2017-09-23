@@ -39,3 +39,28 @@ export default (io, navigation)=> {
   })
 
 }
+
+
+// this.io = socket(`https://api.wardenger.me/socket`)
+    // this.io.on('connect', ()=> {
+    //   console.log('connect')
+    // })
+    // this.io.on('news', (data) => {
+    //   statuAC.getEquipData(data)
+    //   console.log(data)
+    // })
+    // this.io.on('connect_error', (error) => {
+    //   Alert.alert('错误', '连接错误',
+    //     [ {text: 'OK', onPress: () => this.io.close()}, ],
+    //     { cancelable: false }
+    //   )
+    // })
+    // this.io.on('connect_timeout', (timeout) => {
+    //   Alert.alert('错误', '连接超时',
+    //     [ {text: 'OK', onPress: () => this.io.close()}, ],
+    //     { cancelable: false }
+    //   )
+    // })
+    // this.io.on('disconnect', ()=> {
+    //   console.log('disconnect')
+    // })

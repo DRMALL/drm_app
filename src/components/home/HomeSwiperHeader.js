@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity, Dimensions } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { primaryColor, mainColor, loginBorderColor } from '../../common/constants'
 import { seekDetail } from '../../styles'
@@ -9,6 +9,7 @@ import homeDetailAC from '../../actions/homeDetailAC'
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const shareIcon = require('../../images/navigation_icons/share.png')
 const picMaskIcon = require('../../images/navigation_icons/pic_mask.png')
+let swiperHeight = (Dimensions.get('window').width)/3*2
 
 export default props => {
   let { picData, navigation } = props
@@ -25,7 +26,7 @@ export default props => {
   }
   return (
     <View style={seekDetail.headerView}>
-      <Swiper height={230} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
+      <Swiper height={swiperHeight} horizontal={true} dotColor={loginBorderColor} activeDotColor={mainColor}>
         {picsDataView}
       </Swiper>
       <TouchableOpacity 

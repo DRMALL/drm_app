@@ -1,5 +1,5 @@
 import { mainColor, lightBlueColor, contentColor, backgroundColor, mainColorPressed, subTitleColor, titleColor } from '../common/constants'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 export default {
   headerView: {
@@ -13,7 +13,7 @@ export default {
   },
   picsView: {
     width: '100%',
-    height: 220,
+    height: (Dimensions.get('window').width)/3*2,
   },
   pics: {
     width: '100%',
@@ -32,6 +32,7 @@ export default {
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
+    paddingTop: 10,
   },
   titleViewColumn: {
     justifyContent: 'center',

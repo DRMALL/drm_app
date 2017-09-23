@@ -8,7 +8,7 @@ import { getPartOne } from '../../apis'
 
 import seekAC from '../../actions/seekAC'
 
-export default (id)=> {
+export default (id, props)=> {
   checkToken(tokenKey)
   .then(async token => {
     let res = await getPort(`${getPartOne}?id=${id}&token=${token}`)
@@ -18,7 +18,13 @@ export default (id)=> {
         { cancelable: false }
       )
     } else if(res.code == 200) {
-      seekAC.setOnePart(res.data)
+      if(res.data === null) {
+        Alert.alert('提示', '暂无内容,请刷新再试',
+          [ {text: 'OK', onPress: () => 'ok'}, ],
+          { cancelable: false }
+        )
+        props.navigation.goBack()
+      } else seekAC.setOnePart(res.data)
     } else {
       Alert.alert('错误', JSON.stringify(res.message),
         [ {text: 'OK', onPress: () => 'OK'}, ],

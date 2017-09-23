@@ -82,6 +82,9 @@ const Main = TabNavigator(
         // display: 'none'
       },
     },
+    initialRouteParams: {
+      msgRedShow: true,
+    },
   }
 )
 
@@ -96,17 +99,17 @@ export default StackNavigator({
         backgroundColor: primaryColor,
       },
       headerTitle: <HeaderTitle navigation={navigation}/>,
-      headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', { recordMsgRed: navigation.state.params.msgRedShow })}>
+      headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', { recordMsgRed: navigation.state.params ? navigation.state.params.msgRedShow : false })}>
         <Image source={userIcon}/>
       </TouchableOpacity>,
       headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} 
         onPress={()=> {
-          navigation.navigate('message', {disabledPress: true, gobackParams: navigation.state.params.msgRedShow ? false : true})
+          navigation.navigate('message', {disabledPress: true, gobackParams: navigation.state.params && navigation.state.params.msgRedShow ? false : true})
         }}
       >
         <Image source={infoIcon}/>
         <View style={
-            navigation.state.params.msgRedShow ? 
+            navigation.state.params && navigation.state.params.msgRedShow ? 
             {width: 8, height: 8, borderRadius: 4, backgroundColor: lightRedColor, position: 'absolute', top: 10, }
              : {}
           }
