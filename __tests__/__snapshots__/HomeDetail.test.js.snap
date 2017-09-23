@@ -134,6 +134,7 @@ exports[`HomeDetail test 1`] = `
             },
             Object {
               "paddingHorizontal": 16,
+              "paddingVertical": 20,
             },
           ]
         }
@@ -149,7 +150,7 @@ exports[`HomeDetail test 1`] = `
             },
             Object {
               "paddingHorizontal": 16,
-              "paddingTop": 15,
+              "paddingTop": 25,
             },
           ]
         }
@@ -159,7 +160,7 @@ exports[`HomeDetail test 1`] = `
       <View
         style={
           Object {
-            "height": -65,
+            "height": 0,
             "paddingHorizontal": 16,
           }
         }
@@ -178,28 +179,22 @@ exports[`HomeDetail test 1`] = `
             contentInset={undefined}
             dataDetectorTypes={undefined}
             decelerationRate={0.99}
-            injectedJavaScript="
-              (function () {
-                const arr = document.getElementsByTagName(\\"img\\")
-                let height = null
-                for (let i = 0; i < arr.length; i ++) {
-                  arr[i].width = 690
-                }
-                function changeHeight() {
-                  if (document.body.scrollHeight != height) {
-                    height = document.body.scrollHeight
-                    if (window.postMessage) {
-                      window.postMessage(JSON.stringify({
-                        type: 'setHeight',
-                        height: height,
-                      }))
-                    }
-                  }
-                }
-                setInterval(changeHeight, 100)
-              } () )"
+            injectedJavaScript=" 
+              const arr = document.getElementsByTagName(\\"img\\")
+                  , blocks = document.getElementsByTagName(\\"blockquote\\");
+          
+              for (var j = 0; j < blocks.length; j ++) {
+                blocks[j].style.borderLeft = '3px solid #eee';
+                blocks[j].style.margin = '10px 0';
+                blocks[j].style.paddingLeft = '10px';
+              }
+              for(var i = 0; i < arr.length; i++) {
+                arr[i].width = 690;
+              };
+              document.title = document.documentElement.scrollHeight;
+            "
             mediaPlaybackRequiresUserAction={undefined}
-            messagingEnabled={true}
+            messagingEnabled={false}
             onLoadingError={[Function]}
             onLoadingFinish={[Function]}
             onLoadingStart={[Function]}
@@ -209,7 +204,7 @@ exports[`HomeDetail test 1`] = `
             scrollEnabled={undefined}
             source={
               Object {
-                "html": undefined,
+                "html": "<p></p>",
               }
             }
             style={
