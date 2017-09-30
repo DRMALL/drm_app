@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DRM</string>
+    <string name="ucrop_label_edit_photo">edit profile photo</string>
 </resources>
