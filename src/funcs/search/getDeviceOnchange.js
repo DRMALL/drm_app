@@ -15,7 +15,7 @@ export default (text)=> {
   checkToken(tokenKey)
   .then(async token => {
     let dvtext = store.getState().device.text
-    let res = await getPort(`${getDevicesSearch}?type=onchange&search=${dvtext}&token=${token}`)
+    let res = await getPort(`${getDevicesSearch}?type=onchange&search=${encodeURIComponent(dvtext)}&token=${token}`)
     if(!res) {
       Alert.alert('错误', internalServerError,
         [ {text: 'OK', onPress: () => 'OK'}, ],

@@ -262,6 +262,12 @@ export default class PushOrder extends Component {
   }
 
   onChangeOcontent(order_content) {
+    if(order_content.split('').length > 1000) {
+      Alert.alert('错误', '文本不能超过1000字',
+        [ {text: 'OK', onPress: () => 'OK'}, ],
+        { cancelable: false }
+      )
+    }
     this.setState({ order_content })
   }
 
@@ -335,7 +341,7 @@ export default class PushOrder extends Component {
           multiline={true} 
           numberOfLines={50} 
           underlineColorAndroid='transparent'
-          maxLength={1000}
+          maxLength={1001}
           onChangeText={this.onChangeOcontent.bind(this)}
           selectTextOnFocus={true}
           autoCapitalize='none'

@@ -50,7 +50,7 @@ export default class EmailVerify extends Component {
             { cancelable: false }
           )
         } else if(res.code == 477) {
-          Alert.alert('错误', '无效的邮箱！',
+          Alert.alert('错误', '邮箱输入错误，请输入正确邮箱！',
             [ {text: 'OK', onPress: () => 'OK'}, ],
             { cancelable: false }
           )
@@ -61,7 +61,7 @@ export default class EmailVerify extends Component {
           )
         }
       } else {
-        Alert.alert('错误', '无效的邮箱！',
+        Alert.alert('错误', '邮箱输入错误，请输入正确邮箱！',
           [ {text: 'OK', onPress: () => 'OK'}, ],
           { cancelable: false }
         )

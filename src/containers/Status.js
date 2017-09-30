@@ -47,7 +47,7 @@ export default class Status extends Component {
     this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().statu) )
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.io.close()
     this.unsubscribe()
   }

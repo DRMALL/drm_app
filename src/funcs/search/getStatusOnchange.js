@@ -13,7 +13,7 @@ export default (text)=> {
   checkToken(tokenKey)
   .then(async token => {
     let statuText = store.getState().statu.text
-    let res = await getPort(`${getMoniterdevsSearch}?search=${statuText}&token=${token}`)
+    let res = await getPort(`${getMoniterdevsSearch}?search=${encodeURIComponent(statuText)}&token=${token}`)
     if(!res) {
       Alert.alert('错误', internalServerError,
         [ {text: 'OK', onPress: () => 'OK'}, ],

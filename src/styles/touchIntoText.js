@@ -16,9 +16,12 @@ export default {
     borderColor: backgroundColor,
     backgroundColor: mainColor,
   },
-  textkey: {
+  textView: {
     position: 'absolute',
     left: 15,
+    flexDirection: 'row',
+  },
+  textkey: {
     fontSize: 18,
     textAlign: 'left',
     opacity: 0.8,

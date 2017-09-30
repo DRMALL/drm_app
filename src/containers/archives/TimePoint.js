@@ -176,6 +176,9 @@ export default class TimePoint extends Component {
             </TouchableOpacity>
             <DateTimePicker 
               isVisible={this.state.isDateTimePickerVisible}
+              titleIOS={'请选择日期'}
+              cancelTextIOS={'取消'}
+              confirmTextIOS={'确认'}
               onConfirm={this._handleDatePicked.bind(this)}
               onCancel={this._hideDateTimePicker.bind(this)}
             />

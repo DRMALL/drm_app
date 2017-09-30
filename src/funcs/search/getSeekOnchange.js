@@ -12,7 +12,7 @@ export default (text)=> {
   checkToken(tokenKey)
   .then(async token => {
     let sektext = store.getState().seek.text
-    let res = await getPort(`${getPartSearch}?type=onchange&search=${sektext}&token=${token}`)
+    let res = await getPort(`${getPartSearch}?type=onchange&search=${encodeURIComponent(sektext)}&token=${token}`)
     if(!res) {
       Alert.alert('错误', internalServerError,
         [ {text: 'OK', onPress: () => 'OK'}, ],

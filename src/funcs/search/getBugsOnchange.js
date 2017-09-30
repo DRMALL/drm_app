@@ -15,7 +15,7 @@ export default (text)=> {
   checkToken(tokenKey)
   .then(async token => {
     let diagtext = store.getState().diagnose.text
-    let res = await getPort(`${getBugs}?type=onchange&search=${diagtext}&token=${token}`)
+    let res = await getPort(`${getBugs}?type=onchange&search=${encodeURIComponent(diagtext)}&token=${token}`)
     if(!res) {
       Alert.alert('错误', internalServerError,
         [ {text: 'OK', onPress: () => 'OK'}, ],

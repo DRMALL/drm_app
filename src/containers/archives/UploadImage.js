@@ -86,10 +86,11 @@ export default class UploadImage extends Component {
         actionButtonShow: false,
       })
     }).catch(e => 
-      Alert.alert('错误', '调取拍照出错',
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
+      console.log(e)
+      // Alert.alert('错误', '调取拍照出错',
+      //   [ {text: 'OK', onPress: () => 'OK'}, ],
+      //   { cancelable: false }
+      // )
     )
   }
 
@@ -118,10 +119,11 @@ export default class UploadImage extends Component {
           actionButtonShow: false,
         })
       }).catch(e =>
-        Alert.alert('错误', '调取相册出错',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
+        console.log(e)
+        // Alert.alert('错误', '调取相册出错',
+        //   [ {text: 'OK', onPress: () => 'OK'}, ],
+        //   { cancelable: false }
+        // )
       )
     }else{
       ImagePicker.openPicker({
@@ -146,10 +148,11 @@ export default class UploadImage extends Component {
           actionButtonShow: false,
         })
       }).catch(e => 
-        Alert.alert('错误', '调取相册出错',
-          [ {text: 'OK', onPress: () => 'OK'}, ],
-          { cancelable: false }
-        )
+        console.log(e)
+        // Alert.alert('错误', '调取相册出错',
+        //   [ {text: 'OK', onPress: () => 'OK'}, ],
+        //   { cancelable: false }
+        // )
       )
     }
   }

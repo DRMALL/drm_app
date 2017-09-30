@@ -10,7 +10,12 @@ export default class TouchIntoText extends Component {
     return (
       <View style= {touchIntoText.wrap}>
         <TouchableOpacity style={touchIntoText.touchable} onPress={onPress} activeOpacity={activeOpacity}>
-          <Text style={touchIntoText.textkey}>{title}</Text>
+          <View style={touchIntoText.textView}>
+            <Text style={touchIntoText.textkey}>{title}</Text>
+            {
+              title == '修改密码' ? <View /> : <Text style={{color: '#F76260', fontSize: 18}}> *</Text>
+            }
+          </View>
           <Text style={touchIntoText.textvalue} numberOfLines={2}>{value}</Text>
           <Image style={touchIntoText.image} source={intoIcon} />
         </TouchableOpacity>

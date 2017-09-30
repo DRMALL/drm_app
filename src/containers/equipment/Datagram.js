@@ -1,5 +1,5 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ListView, TouchableOpacity, WebView } from 'react-native'
+import { View, Text, Image, ListView, TouchableOpacity, WebView, Dimensions } from 'react-native'
 import { primaryColor, contentColor, mainColor, backgroundColor, loginBackgroundColor } from '../../common/constants'
 import { other } from '../../styles'
 // import SplashScreen from 'react-native-splash-screen'
@@ -16,6 +16,21 @@ export default class Datagram extends Component {
       backgroundColor: primaryColor,
     }
   };
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      winWidth: Dimensions.get('window').width,
+      winHeight: Dimensions.get('window').height,
+    }
+  }
+
+  onLayoutChange() {
+    this.setState({
+      winWidth: Dimensions.get('window').width,
+      winHeight: Dimensions.get('window').height,
+    })
+  }
 
   scriptContentFun() {
     let dataData = []
@@ -114,6 +129,9 @@ export default class Datagram extends Component {
 
   render() {
     let { navigation } = this.props
+      , { winWidth, winHeight } = this.state
+      // , winWidth = Dimensions.get('window').width
+      // , winHeight = Dimensions.get('window').height
     let htmlContent = `<!DOCTYPE html>
       <html>
         <head>
@@ -122,12 +140,12 @@ export default class Datagram extends Component {
           <script src="http://echarts.baidu.com/dist/echarts.js"></script>
           <script src="http://momentjs.cn/downloads/moment.min.js"></script>
         </head>
-        <body style="background-color: #F7F7F7">
-          <div id="main" style="width: 360px; height: 240px;"></div>
+        <body style="background-color: #F7F7F7;">
+          <div id="main" style="width: ${winWidth < winHeight ? (winWidth - 20) : winWidth}px; height: ${winWidth < winHeight ? 240 : winHeight - 100}px;"></div>
         </body>
       </html>`
     return(
-      <View style={{height: '100%', width: '100%', paddingVertical: 10, paddingHorizontal: 20, paddingTop: 40, backgroundColor: loginBackgroundColor}}>
+      <View onLayout={this.onLayoutChange.bind(this)} style={{height: '100%', width: '100%', paddingVertical: 10, paddingHorizontal: 20, paddingTop: 40, backgroundColor: loginBackgroundColor}}>
         <TouchableOpacity style={{position: 'absolute', padding: 10}} onPress={()=> navigation.goBack()}>
           <Image style={{resizeMode: 'contain'}} source={cancelIcon}/>
         </TouchableOpacity>
@@ -150,6 +168,10 @@ export default class Datagram extends Component {
 //       SplashScreen.hide()
 //     }, 2000)
 //   }
+
+      // window.addEventListener('resize', ()=> 
+      //   element.stye.width = window.clientWidth
+      // )
 
             // axisLabel: {
             //   formatter: function (value, index) {
