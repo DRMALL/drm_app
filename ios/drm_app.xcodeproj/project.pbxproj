@@ -38,6 +38,8 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9D39A446F2354E5E8B5081B4 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E010D222CBD46CF8AA99291 /* libimageCropPicker.a */; };
+		C759BDD61F83875A003BD1A3 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = C759BDD41F83875A003BD1A3 /* assets */; };
+		C759BDD71F83875A003BD1A3 /* index.ios.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = C759BDD51F83875A003BD1A3 /* index.ios.jsbundle */; };
 		C798457C1F55A9A2000E7A82 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C79845721F55A97D000E7A82 /* libReact-Native-Webview-Bridge.a */; };
 		C7D16D291F3B48AE0048BF58 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D16D121F3B43B90048BF58 /* libRCTCameraRoll.a */; };
 		C7EBF87B1F4ECC95001ACC7B /* ImageCropPickerSDK in Resources */ = {isa = PBXBuildFile; fileRef = C7EBF87A1F4ECC95001ACC7B /* ImageCropPickerSDK */; };
@@ -45,8 +47,6 @@
 		C7EBF8A01F4ECD2D001ACC7B /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7EBF89E1F4ECD2D001ACC7B /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7EBF8A21F4ECD39001ACC7B /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EBF8A11F4ECD39001ACC7B /* QBImagePicker.framework */; };
 		C7EBF8A31F4ECD39001ACC7B /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7EBF8A11F4ECD39001ACC7B /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C7F8BB161F7B38B900C02A85 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = C7F8BB141F7B38B800C02A85 /* assets */; };
-		C7F8BB171F7B38B900C02A85 /* index.ios.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = C7F8BB151F7B38B800C02A85 /* index.ios.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,14 +318,14 @@
 		8E010D222CBD46CF8AA99291 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		99131E1C7FF441F28516FE7F /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		C1BD3064FE49486296603164 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
+		C759BDD41F83875A003BD1A3 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
+		C759BDD51F83875A003BD1A3 /* index.ios.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.ios.jsbundle; path = bundle/index.ios.jsbundle; sourceTree = "<group>"; };
 		C798455A1F55A97D000E7A82 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge-updated/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		C7D16D0A1F3B43B90048BF58 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		C7EBF87A1F4ECC95001ACC7B /* ImageCropPickerSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ImageCropPickerSDK; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK"; sourceTree = "<group>"; };
 		C7EBF89E1F4ECD2D001ACC7B /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EBF8A11F4ECD39001ACC7B /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EBF8A61F4ED11B001ACC7B /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
-		C7F8BB141F7B38B800C02A85 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
-		C7F8BB151F7B38B800C02A85 /* index.ios.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.ios.jsbundle; path = bundle/index.ios.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,8 +466,8 @@
 		13B07FAE1A68108700A75B9A /* drm_app */ = {
 			isa = PBXGroup;
 			children = (
-				C7F8BB141F7B38B800C02A85 /* assets */,
-				C7F8BB151F7B38B800C02A85 /* index.ios.jsbundle */,
+				C759BDD41F83875A003BD1A3 /* assets */,
+				C759BDD51F83875A003BD1A3 /* index.ios.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1019,9 +1019,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				C7F8BB161F7B38B900C02A85 /* assets in Resources */,
+				C759BDD61F83875A003BD1A3 /* assets in Resources */,
 				C7EBF87B1F4ECC95001ACC7B /* ImageCropPickerSDK in Resources */,
-				C7F8BB171F7B38B900C02A85 /* index.ios.jsbundle in Resources */,
+				C759BDD71F83875A003BD1A3 /* index.ios.jsbundle in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
