@@ -27,13 +27,14 @@ export default class IndexData extends Component {
   }
 
   render() {
-    let indexDataSec = [{title: '本类别数据名称'}]
+    let indexDataSec = [{title: '监控状态'}, {title: '电机状态'}]
+    let { equipmentItemData, indexData, eqNumberData } = this.props
     return(
       <View style={{backgroundColor: backgroundColor}}>
         {
-          this.props.equipmentItemData.number ? indexDataSec.map((item, index) => {
+          equipmentItemData.number || (eqNumberData.data && eqNumberData.data.length > 0) ? indexDataSec.map((item, index) => {
             return <IndexDataSecItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)} {...this.props}/>
-          }) : this.props.indexData.map((item, index) => {
+          }) : indexData.map((item, index) => {
             return <IndexDataItem rowData={item} index={index} key={index} state={this.state} open={this.open.bind(this)} {...this.props}/>
           })
         }
@@ -73,10 +74,21 @@ const DataItemRow = props => {
   )
 }
 
-const IndexDataSecItem = ({ rowData, state, open, index, navigation, equipmentItemData }) => {
+const IndexDataSecItem = ({ rowData, state, open, index, navigation, equipmentItemData, eqNumberData }) => {
   let { title } = rowData
   let selectRow = state[`row${index}`]
-  let equipmentItemDataRe = selectRow ? equipmentItemData.data : []
+  let equipDataUse = equipmentItemData.number ? equipmentItemData.data : eqNumberData.data
+  let equipmentItemDataRe = []
+  if(title == '监控状态') {
+    equipDataUse.forEach((dataItem)=> {
+      if(dataItem.quotaClass === 1) equipmentItemDataRe.push(dataItem)
+    })
+  } else {
+    equipDataUse.forEach((dataItem)=> {
+      if(dataItem.quotaClass === 2) equipmentItemDataRe.push(dataItem)
+    })
+  }
+  let equipmentItemDataSelect = selectRow ? equipmentItemDataRe : []
   return (
     <View>
       <TouchableOpacity style={equipment.dataTouch} activeOpacity={0.8} onPress={()=> open(`row${index}`)}>
@@ -84,20 +96,25 @@ const IndexDataSecItem = ({ rowData, state, open, index, navigation, equipmentIt
         <Image style={equipment.imgTouch} source={selectRow ? dropdownSelected : dropdownNormal} />
       </TouchableOpacity>
       <View style={{backgroundColor: mainColor}}>
-        {equipmentItemDataRe.map((textone, i)=> <DataItemSecRow key={i} item={textone} navigation={navigation} />)}
+        {equipmentItemDataSelect.map((textone, i)=> <DataItemSecRow key={i} item={textone} navigation={navigation} number={equipmentItemData.number || eqNumberData.number}/>)}
       </View>
     </View>
   )
 }
 
 const DataItemSecRow = props => {
-  let { item, navigation } = props
-    , itemKey = Object.keys(item)[0]
+  let { item, navigation, number } = props
   return (
-    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram', {itemKey: itemKey})}>
-      <Text style={equipment.iDataItemText}>{itemKey}</Text>
-      <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{item[itemKey]}</Text>
-      <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unit || '单位'}</Text>
+    <TouchableOpacity style={equipment.iDataItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('datagram', {gramNumber: number, gramField: item.orgName})}>
+      <Text style={equipment.iDataItemText}>{item.quotaName}</Text>
+      {
+        item.quotaClass === 1 ? <Text style={[equipment.iDataItemText, {position: 'absolute', right: 70}]}>{item.value}</Text>
+         : <Text style={[equipment.iDataItemText, {position: 'absolute', right: 50}, item.value == 1 ? {color: lightBlueColor } : {}]}>{item.value == 1 ? '打开' : '关闭'}</Text>
+      }
+      {
+        item.quotaClass === 1 ? <Text style={[equipment.iDataItemText2, {right: 45}]}>{item.unitName || '单位'}</Text>
+         : <View />
+      }
       <Image style={equipment.iDataItemImg} source={intoIcon} />
     </TouchableOpacity>
   )

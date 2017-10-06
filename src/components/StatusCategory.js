@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Image, ListView, TouchableOpacity, Alert, RefreshControl, ScrollView } from 'react-native'
+import moment from 'moment'
 import { online, offline, onToOffText, onState, offState, inTheEnd } from '../common/strings'
 import { lightGreenColor, lightRedColor, subTitleColor, loginBackgroundColor, mainColor, contentColor } from '../common/constants'
 import { status, home } from '../styles'
@@ -49,7 +50,7 @@ export default props => {
 }
 
 const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation }) => {
-  const { _id, images, name, number, stopTime } = rowData
+  const { _id, images, name, number, ts, createdAt } = rowData
   let deviceState = false
   equipmentData.map((eqItem, index)=> {
     if(number == eqItem.number) {
@@ -68,7 +69,7 @@ const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation 
             </TouchableOpacity>
           </View>
           <Text style={[status.text, {lineHeight: deviceState ? 20 : 22}]} numberOfLines={2}>{deviceState ? online : offline}</Text>
-          <Text style={[status.text, {lineHeight: deviceState ? 20 : 22}]} numberOfLines={3}>{deviceState ? '' : onToOffText + (stopTime || '2017-09-04')}</Text>
+          <Text style={[status.text, {lineHeight: deviceState ? 20 : 22}]} numberOfLines={3}>{deviceState ? '' : onToOffText + (ts ? moment(new Date(ts)).format('YYYY-MM-DD') : moment(createdAt).format('YYYY-MM-DD'))}</Text>
         </View>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>

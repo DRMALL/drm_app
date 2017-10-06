@@ -1,4 +1,4 @@
-const apiUrl = 'https://api.wardenger.me/app/'//'http://192.168.2.236:3000/app/'
+const apiUrl = 'https://drmtest.sparklog.com/app/'//'http://192.168.2.236:3000/app/'
 
 export const signIn = apiUrl + 'session'
 export const getInfo = apiUrl + 'user'
@@ -30,6 +30,7 @@ export const getDeviceCcsort = apiUrl + 'devices/ccsort'
 export const getDevicePresort = apiUrl + 'devices/presort'
 export const getDeviceFuelsort = apiUrl + 'devices/fuelsort'
 export const getMoniterdevsNum = apiUrl + 'moniterdevs/number'
+export const getMoniterdevsNumField = apiUrl + 'moniterdevs/number/field'
 export const postOrderUpload = apiUrl + 'order/upload'
 export const postOrderDelimg = apiUrl + 'order/delimg'
 export const getPartSearch = apiUrl + 'parts/search'

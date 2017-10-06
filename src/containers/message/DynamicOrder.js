@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import Button from '../../components/units/Button'
 import Loading from '../../components/units/Loading'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
-import { orderDynamic, orderContent, orderReturn, solved, unsolved, tokenKey, internalServerError } from '../../common/strings'
+import { equipAlarm, orderDynamic, alarmContent, orderContent, orderReturn, solved, unsolved, tokenKey, internalServerError } from '../../common/strings'
 import { dynamicOrder, detail } from '../../styles'
 import { checkToken } from '../../utils/handleToken'
 import { getPort, postPort } from '../../utils/fetchMethod'
@@ -19,7 +19,7 @@ export default class DynamicOrder extends Component {
     headerStyle: {
       backgroundColor: primaryColor,
     },
-    headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{orderDynamic}</Text>,
+    headerTitle: <Text style={{ fontSize: 20, color: '#FFF', alignSelf: 'center' }} >{ navigation.state.params.msgType == 'device' ? equipAlarm : orderDynamic}</Text>,
     headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.goBack()}>
       <Image source={gobackWhiteIcon}/>
     </TouchableOpacity>,
@@ -162,6 +162,29 @@ export default class DynamicOrder extends Component {
     let { oneNoticeData, showdatu, enlargeUrl, backLoading, isRefreshing } = this.state
       , { navigation } = this.props
     if (!oneNoticeData) return <Loading animating={!oneNoticeData ? true : false}/>
+    else if(oneNoticeData.types == 'device') return (
+      <View style={{height: '100%'}}>
+        <ActivityIndicator style={backLoading ? detail.enlargeTouchView : {display: 'none'}} animating={backLoading} size='large'/>
+        <ScrollView 
+          style={dynamicOrder.wrap}
+          refreshControl={<RefreshControl 
+            refreshing={isRefreshing}
+            onRefresh={this.onIsRefresh.bind(this)}
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor={mainColor}
+          />}
+        >
+          <Text style={dynamicOrder.fixContentText}>{alarmContent}</Text>
+          <View style={dynamicOrder.orderView}>
+            <Text style={dynamicOrder.titleText}>{oneNoticeData.des}</Text>
+          </View>
+          <View style={[dynamicOrder.returnTimeView, {borderWidth: 0}]}>
+            <Text style={dynamicOrder.fixReturnText}>{''}</Text>
+            <Text style={dynamicOrder.returnTime}>{moment(new Date(oneNoticeData.createdAt)).format('YYYY-MM-DD HH:mm')}</Text>
+          </View>
+        </ScrollView>
+      </View>
+    )
     return (
       <View style={{height: '100%'}}>
         <ActivityIndicator style={backLoading ? detail.enlargeTouchView : {display: 'none'}} animating={backLoading} size='large'/>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator'
 import HeaderTitle from '../components/HeaderTitle'
@@ -66,16 +66,16 @@ const Main = TabNavigator(
         borderColor: backgroundColor,
       },
       tabStyle: {
-        height: 60,
+        height: 55,
       },
       labelStyle: {
         width: '130%',
         alignSelf: 'center',
         fontSize: 12,
-        bottom: 1,
+        bottom: Platform.OS === 'ios' ? 1 : -3,
       },
       iconStyle: {
-        top: 6,
+        top: Platform.OS === 'ios' ? 6 : 9,
       },
       indicatorStyle: {
         height: 0,

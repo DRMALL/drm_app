@@ -93,7 +93,7 @@ export default class Equipment extends Component {
     return (
       <ScrollView style={equipment.wrap}>
         <Text style={equipment.fixText}>{equipmentRunState}</Text>
-        <Text style={equipment.stateText}>{isNormal ? '正常' : '异常'}</Text>
+        <Text style={equipment.stateText}>{isNormal ? '正常运行' : '离线'}</Text>
         
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>

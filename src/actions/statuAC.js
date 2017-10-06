@@ -54,7 +54,7 @@ const getEquipData = (data)=> {
         exist = true
         equipmentData.splice(index, 1, data)
       } else {
-        if((Number(new Date().getTime()) - Number(eqItem.rnTimestamp)) > 30*1000) {
+        if((Number(new Date().getTime()) - Number(eqItem.rnTimestamp)) > 60*1000) {
           equipmentData.splice(index, 1)
         }
       }

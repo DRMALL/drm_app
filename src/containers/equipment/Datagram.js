@@ -1,7 +1,11 @@
 import React, { Component }from 'react'
-import { View, Text, Image, ListView, TouchableOpacity, WebView, Dimensions } from 'react-native'
+import { View, Text, Image, ListView, TouchableOpacity, WebView, Dimensions, Alert } from 'react-native'
 import { primaryColor, contentColor, mainColor, backgroundColor, loginBackgroundColor } from '../../common/constants'
+import { tokenKey, internalServerError } from '../../common/strings'
 import { other } from '../../styles'
+import { getMoniterdevsNumField } from '../../apis'
+import { getPort } from '../../utils/fetchMethod'
+import { checkToken } from '../../utils/handleToken'
 // import SplashScreen from 'react-native-splash-screen'
 
 const datagramPic = require('../../images/datagram.png')
@@ -22,7 +26,37 @@ export default class Datagram extends Component {
     this.state = {
       winWidth: Dimensions.get('window').width,
       winHeight: Dimensions.get('window').height,
+      gramdata: null,
     }
+  }
+
+  componentDidMount() {
+    if(this.props.navigation.state.params) {
+      this.getMoniterDevOne()
+    }
+  }
+
+  getMoniterDevOne() {
+    let { gramNumber, gramField } = this.props.navigation.state.params
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await getPort(`${getMoniterdevsNumField}?number=${gramNumber}&field=${gramField}&token=${token}`)
+      if(!res) {
+        Alert.alert('错误', internalServerError,
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      } else if(res.code == 200) {
+        this.setState({
+          gramdata: res.data.values
+        })
+      } else {
+        Alert.alert('错误', JSON.stringify(res.message),
+          [ {text: 'OK', onPress: () => 'OK'}, ],
+          { cancelable: false }
+        )
+      }
+    })
   }
 
   onLayoutChange() {
@@ -34,9 +68,20 @@ export default class Datagram extends Component {
 
   scriptContentFun() {
     let dataData = []
+      , startTime = 9999999999999
+      , { gramdata } = this.state
+      , dataLen = gramdata && gramdata.length > 1 ? gramdata.length : 1
       , dateDataNum = new Date().getTime()
-    for(var i = 0; i < 200; i++) {
-      dataData.push(`[${(dateDataNum - 86400000*i)}, ${Math.floor(Math.random() * (1001))}],`)
+    if(gramdata) {
+      gramdata.forEach((item)=> {
+        startTime = startTime > item.timeStamp ? item.timeStamp : startTime
+        dataData.push(`[${item.timeStamp}, ${Math.floor(Number(item.num)*10)/10}],`)
+      })
+    } else {
+      startTime = 1000*60*30
+      for(var i = 0; i < 10; i++) {
+        dataData.push(`[${(dateDataNum - 86400000*i)}, ${Math.floor(0*10)/10}],`)    //Math.floor(Math.random() * (1001))
+      }
     }
     dataData.splice(0, 0, '[')
     dataData.push(']')
@@ -66,7 +111,7 @@ export default class Datagram extends Component {
         },
         dataZoom: [
           {
-            startValue: ${new Date().getTime() - 7*86400000},
+            startValue: ${startTime - dataLen*1000*60*30},
           },
           {
             type: 'slider',
@@ -129,7 +174,7 @@ export default class Datagram extends Component {
 
   render() {
     let { navigation } = this.props
-      , { winWidth, winHeight } = this.state
+      , { winWidth, winHeight, gramdata } = this.state
       // , winWidth = Dimensions.get('window').width
       // , winHeight = Dimensions.get('window').height
     let htmlContent = `<!DOCTYPE html>
@@ -144,6 +189,7 @@ export default class Datagram extends Component {
           <div id="main" style="width: ${winWidth < winHeight ? (winWidth - 20) : winWidth}px; height: ${winWidth < winHeight ? 240 : winHeight - 100}px;"></div>
         </body>
       </html>`
+    if(!gramdata && navigation.state.params) return <View />
     return(
       <View onLayout={this.onLayoutChange.bind(this)} style={{height: '100%', width: '100%', paddingVertical: 10, paddingHorizontal: 20, paddingTop: 40, backgroundColor: loginBackgroundColor}}>
         <TouchableOpacity style={{position: 'absolute', padding: 10}} onPress={()=> navigation.goBack()}>

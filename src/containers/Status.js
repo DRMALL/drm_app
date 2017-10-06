@@ -38,7 +38,7 @@ export default class Status extends Component {
   }
 
   componentDidMount() {
-    this.io = socket(`https://api.wardenger.me/socket`)
+    this.io = socket(`https://drmtest.sparklog.com/socket`)
     socketConnectStatu(this.io, this.props.navigation)
     this.getAllMoniterdev()
   }

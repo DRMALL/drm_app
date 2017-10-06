@@ -41,7 +41,7 @@ export default (io, navigation)=> {
 }
 
 
-// this.io = socket(`https://api.wardenger.me/socket`)
+// this.io = socket(`https://drmtest.sparklog.com/socket`)
     // this.io.on('connect', ()=> {
     //   console.log('connect')
     // })
