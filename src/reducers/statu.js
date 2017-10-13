@@ -14,6 +14,7 @@ import {
   statu_search_jumpdata,
   statu_search_data_set,
   statu_search_clean_text,
+  statu_socket_io,
 } from '../common/actStrings'
 
 const statu = (()=> {
@@ -32,6 +33,7 @@ const statu = (()=> {
     statusData: [],
     historyData: [],
     hotwordData: [],
+    socketIo: null,
   }
   statusArr.map((item, index)=> {
     if(index == 0) statuStateObj[`StatuTabRow${index}`] = true
@@ -70,6 +72,8 @@ export default (state = statu, action) => {
       return Object.assign({}, state, { statusData: action.payload } )
     case statu_search_clean_text:
       return Object.assign({}, state, { text: '', jumpData: false, } )
+    case statu_socket_io:
+      return Object.assign({}, state, { socketIo: action.payload } )
     default:
       return state
   }

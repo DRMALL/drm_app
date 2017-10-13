@@ -79,6 +79,7 @@ export const statu_search_hotworddata = 'STATU_SEARCH_HOTWORDDATA'
 export const statu_search_jumpdata = 'STATU_SEARCH_JUMPDATA'
 export const statu_search_data_set = 'STATU_SEARCH_DATA_SET'
 export const statu_search_clean_text = 'STATU_SEARCH_CLEAN_TEXT'
+export const statu_socket_io = 'STATU_SOCKET_IO'
 
   //device
 export const device_history_set = 'DEVICE_HISTORY_SET'

@@ -15,6 +15,7 @@ import {
   statu_search_jumpdata,
   statu_search_data_set,
   statu_search_clean_text,
+  statu_socket_io,
 } from '../common/actStrings'
 
 const isRefresh = ()=> {
@@ -54,7 +55,7 @@ const getEquipData = (data)=> {
         exist = true
         equipmentData.splice(index, 1, data)
       } else {
-        if((Number(new Date().getTime()) - Number(eqItem.rnTimestamp)) > 60*1000) {
+        if((Number(new Date().getTime()) - Number(eqItem.rnTimestamp)) > 600*1000) {
           equipmentData.splice(index, 1)
         }
       }
@@ -101,6 +102,10 @@ const pressCleanText = ()=> {
   dispatch(statu_search_clean_text)
 }
 
+const saveSocketIo = (socketIo)=> {
+  dispatch(statu_socket_io, socketIo)
+}
+
 export default {
   isRefresh,
   isnotRefresh,
@@ -115,4 +120,5 @@ export default {
   setJumpData,
   setStatusData,
   pressCleanText,
+  saveSocketIo,
 }

@@ -8,6 +8,8 @@ import { getPort } from '../../utils/fetchMethod'
 import { checkToken } from '../../utils/handleToken'
 // import SplashScreen from 'react-native-splash-screen'
 
+import store from '../../utils/store'
+
 const datagramPic = require('../../images/datagram.png')
 const cancelIcon = require('../../images/navigation_icons/cancel.png')
 
@@ -31,6 +33,7 @@ export default class Datagram extends Component {
   }
 
   componentDidMount() {
+    store.getState().statu.socketIo.close()
     if(this.props.navigation.state.params) {
       this.getMoniterDevOne()
     }

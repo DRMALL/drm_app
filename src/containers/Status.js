@@ -10,6 +10,7 @@ import { checkToken } from '../utils/handleToken'
 import { getPort } from '../utils/fetchMethod'
 import { getMoniterdevs } from '../apis'
 import { statusList } from '../utils/virtualData'
+// import { io } from '../utils/socket'
 
 import store from '../utils/store'
 import statuAC from '../actions/statuAC'
@@ -38,8 +39,8 @@ export default class Status extends Component {
   }
 
   componentDidMount() {
-    this.io = socket(`https://drmtest.sparklog.com/socket`)
-    socketConnectStatu(this.io, this.props.navigation)
+    // this.io = socket(`https://drmtest.sparklog.com/socket`)
+    // socketConnectStatu(io, this.props.navigation)
     this.getAllMoniterdev()
   }
 
@@ -48,7 +49,7 @@ export default class Status extends Component {
   }
 
   componentWillUnmount() {
-    this.io.close()
+    this.state.socketIo.close()
     this.unsubscribe()
   }
 

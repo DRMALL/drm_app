@@ -38,9 +38,7 @@ const DiagnosisItem = props => {
       <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {bugsId: item._id, bugsTitle: item.title, categoryText: item.category.text})}>
         <View style={diagnose.titleView}>
           <Text style={diagnose.titleText}>{item.title}</Text>
-          {
-            item.isSolved ? <Text style={diagnose.solvedText}>{solved}</Text> : <Text style={diagnose.unsolvedText}>{unsolved}</Text>
-          }
+          
         </View>
         <Text style={diagnose.kindsText}>{item.category.text}</Text>
       </TouchableOpacity>
@@ -50,3 +48,7 @@ const DiagnosisItem = props => {
     </View>
   )
 }
+
+// {
+//             item.isSolved ? <Text style={diagnose.solvedText}>{solved}</Text> : <Text style={diagnose.unsolvedText}>{unsolved}</Text>
+//           }
