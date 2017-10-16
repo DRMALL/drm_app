@@ -39,17 +39,22 @@ export default class Status extends Component {
   }
 
   componentDidMount() {
-    // this.io = socket(`https://drmtest.sparklog.com/socket`)
-    // socketConnectStatu(io, this.props.navigation)
+    this.io = socket(`https://drmtest.sparklog.com/socket`)
+    socketConnectStatu(this.io, this.props.navigation)
     this.getAllMoniterdev()
   }
 
   componentWillMount() {
-    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().statu) )
+    this.unsubscribe = store.subscribe(()=> {
+      // setTimeout(() => {
+        this.setState(store.getState().statu) 
+      // }, 2000)
+    })
   }
 
   componentWillUnmount() {
-    this.state.socketIo.close()
+    this.io.close()
+    // this.state.socketIo.close()
     this.unsubscribe()
   }
 
@@ -65,7 +70,7 @@ export default class Status extends Component {
 
   onStatusRefresh() {
     statuAC.isRefresh()
-    statuAC.getEquipData({})
+    statuAC.getEquipData([{}])
     this.getAllMoniterdev()
     setTimeout(() => {
       statuAC.isnotRefresh()

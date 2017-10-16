@@ -4,13 +4,23 @@ import socket from 'socket.io-client'
 import { NavigationActions } from 'react-navigation'
 import statuAC from '../../actions/statuAC'
 
+let dataArr = []
+  , timeStampArr = []
+
 export default (io, navigation)=> {
   io.on('connect', ()=> {
     console.log('connect')
   })
   io.on('news', (data) => {
-    statuAC.getEquipData(data)
-    // console.log(data)
+    dataArr.push(data)
+    timeStampArr.push(new Date().getTime())
+    let len = dataArr.length
+    if(timeStampArr[len - 1] - timeStampArr[0] > 2000) {
+      // console.log(dataArr, timeStampArr)
+      statuAC.getEquipData(dataArr)
+      dataArr = []
+      timeStampArr = []
+    }
   })
   io.on('orderNotice', (data) => {
     const resetAction = NavigationActions.reset({

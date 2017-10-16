@@ -39,12 +39,16 @@ export default class Equipment extends Component {
   }
 
   componentDidMount() {
-    statuAC.getEquipData({})
+    statuAC.getEquipData([{}])
     this.getMonNumData()
   }
 
   componentWillMount() {
-    this.unsubscribe = store.subscribe(()=> this.setState(store.getState().statu) )
+    this.unsubscribe = store.subscribe(()=> {
+      // setTimeout(() => {
+        this.setState(store.getState().statu) 
+      // }, 2000)
+    })
   }
 
   componentWillUnmount(){
