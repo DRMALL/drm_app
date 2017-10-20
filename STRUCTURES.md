@@ -12,11 +12,11 @@ index.android.js和index.ios.js为RN项目的入口文件，都指向到src/inde
 ```js
 drm_app/    
   │
-  ├── android/        //商城api接口    
+  ├── android/        //安卓包路径，app/build/outputs/apk/app-release.apk    
   │    
-  ├── ios/        //打卡api接口    
+  ├── ios/        //苹果打包时如果有更改，bundle/里需重新bundle    
   │    
-  ├── src/        //获取token、加解密、返回信息等公用函数    
+  ├── src/        //主文件夹    
   │    │
   │    ├── actions/    //（更改store的action文件）    
   │    │    
