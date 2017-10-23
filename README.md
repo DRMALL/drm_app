@@ -33,9 +33,9 @@ clone到本地使用
 首先登录apple开发者账号，下载相关的 Certificates 和 Provisioning Profiles 到本地，并双击生效；      
 在Xcode中，点击左边项目的主文件夹drm_app，右边 General -> Signing中的Automatically manage signing的钩去掉，下面会出现Signing(Debug) 和 Signing(Release) ，在里面选上相对应的Provisioning Profiles证书， 然后在到 Build Settings -> Signing ，也选上:     
 
-![General]()      
+![General](https://github.com/DRMALL/drm_app/blob/master/src/images/QQ20171023-152408.png)      
 
-![Build Settings]()      
+![Build Settings](https://github.com/DRMALL/drm_app/blob/master/src/images/QQ20171023-152437.png)      
 
 接着左上角的stop右边的框中选择 Generic iOS Device ，然后再点击菜单栏中的 Product -> Archive ，开始打包。      
 
