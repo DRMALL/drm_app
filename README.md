@@ -44,7 +44,15 @@ clone到本地使用
   Export -> Ad Hoc -> 全部不选择立即点击Next -> 选择证书，再点击Next -> Export -> 选择保存路径     
   //这样就生成ios的ipa文件    
 ```
+![one](https://github.com/DRMALL/drm_app/blob/master/src/images/onestep.png)    
 
+![two](https://github.com/DRMALL/drm_app/blob/master/src/images/twostep.png)    
+
+![three](https://github.com/DRMALL/drm_app/blob/master/src/images/threestep.png)    
+
+![four](https://github.com/DRMALL/drm_app/blob/master/src/images/fourstep.png)    
+
+![five](https://github.com/DRMALL/drm_app/blob/master/src/images/fivestep.png)    
 
 
 如果内容有更改，删除原assets的文件夹和index.ios.jsbundle， 运行 npm run bundle-ios ， 重新bundle后， 把assets的文件夹和index.ios.jsbundle重新添加进Xcode的drm_app的drm_app文件夹中，再重新打包。      
