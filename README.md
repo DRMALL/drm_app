@@ -18,21 +18,17 @@ clone到本地使用
 ```
 
 第三方依赖库     
-```js
-  ...
-  [moment](http://momentjs.cn/)    //时间格式更改
-  [react-native-image-crop-picker](https://github.com/ivpusic/react-native-image-crop-picker)    //调用手机相机、相册
-  [react-native-keyboard-spacer](https://github.com/Andr3wHur5t/react-native-keyboard-spacer)    //调出键盘，样式适配（没用到）
-  [react-native-lightbox](https://github.com/oblador/react-native-lightbox)    //图片点击放大（之前用到）
-  [react-native-modal-datetime-picker](https://github.com/mmazzarolo/react-native-modal-datetime-picker)    //时间线日期选择
-  [react-native-splash-screen](https://github.com/crazycodeboy/react-native-splash-screen)    //启动页画面
-  [react-native-swiper](https://github.com/leecade/react-native-swiper)    //轮播图
-  [react-native-webview-bridge-updated](https://github.com/enterteg/react-native-webview-bridge-updated)    //在下面富文本插件中用到的webview（没用到）
-  [react-native-zss-rich-text-editor](https://github.com/wix/react-native-zss-rich-text-editor)    //富文本（没用到）
-  [react-navigation](https://github.com/react-community/react-navigation)    //页面跳转，路由
-  [socket.io-client](https://github.com/socketio/socket.io-client)    //socket
-  ...
-```
+  [moment](http://momentjs.cn/)    //时间格式更改      
+  [react-native-image-crop-picker](https://github.com/ivpusic/react-native-image-crop-picker)    //调用手机相机、相册      
+  [react-native-keyboard-spacer](https://github.com/Andr3wHur5t/react-native-keyboard-spacer)    //调出键盘，样式适配（没用到）      
+  [react-native-lightbox](https://github.com/oblador/react-native-lightbox)    //图片点击放大（之前用到）      
+  [react-native-modal-datetime-picker](https://github.com/mmazzarolo/react-native-modal-datetime-picker)    //时间线日期选择      
+  [react-native-splash-screen](https://github.com/crazycodeboy/react-native-splash-screen)    //启动页画面      
+  [react-native-swiper](https://github.com/leecade/react-native-swiper)    //轮播图      
+  [react-native-webview-bridge-updated](https://github.com/enterteg/react-native-webview-bridge-updated)    //在下面富文本插件中用到的webview（没用到）      
+  [react-native-zss-rich-text-editor](https://github.com/wix/react-native-zss-rich-text-editor)    //富文本（没用到）      
+  [react-navigation](https://github.com/react-community/react-navigation)    //页面跳转，路由      
+  [socket.io-client](https://github.com/socketio/socket.io-client)    //socket      
 
 ## 安卓打包
 用Android Studio打开本项目，在底部Terminal（如果没进入drm_app，先用cd drm_app）输入:    
