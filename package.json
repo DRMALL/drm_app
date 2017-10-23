@@ -11,15 +11,11 @@
     "moment": "^2.18.1",
     "react": "16.0.0-alpha.6",
     "react-native": "^0.44.0",
-    "react-native-deprecated-custom-components": "^0.1.1",
-    "react-native-image-crop-picker": "https://github.com/ivpusic/react-native-image-crop-picker.git",
-    "react-native-keyboard-spacer": "^0.3.1",
-    "react-native-lightbox": "^0.6.0",
+    "react-native-image-crop-picker": "^0.18.0",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-modal-datetime-picker": "^4.9.0",
     "react-native-splash-screen": "^2.1.0",
     "react-native-swiper": "^1.5.4",
-    "react-native-webview-bridge-updated": "^1.0.8",
-    "react-native-zss-rich-text-editor": "^1.0.2",
     "react-navigation": "^1.0.0-beta.11",
     "redux": "^3.7.1",
     "socket.io-client": "^2.0.3"
@@ -28,8 +24,8 @@
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "2.0.0",
     "jest": "20.0.4",
-    "react-test-renderer": "16.0.0-alpha.6",
-    "jest-react-native": "^18.0.0"
+    "jest-react-native": "^18.0.0",
+    "react-test-renderer": "16.0.0-alpha.6"
   },
   "jest": {
     "preset": "react-native",
