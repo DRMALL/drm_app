@@ -61,6 +61,7 @@ export default class Seek extends Component {
           seekPartsFirstData, seekTypesSecondData, allSeekPartData 
         } = this.state
       , { openModal } = seekAC
+
     return(
       <View style={{paddingBottom: 80}}>
         <SeekTab state={this.state} openModal={openModal} />
@@ -83,6 +84,7 @@ export default class Seek extends Component {
 const SeekPartsColumn = props => {
   let { partsData, state } = props
     , { openModal, pressPartColumn } = seekAC
+    console.log(partsData[0])
   return (
     <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>

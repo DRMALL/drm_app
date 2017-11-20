@@ -52,18 +52,19 @@ const openModal = (which)=> {
   let seekRow = {}
     , { seekPartRow, seekTypeRow } = store.getState().seek
   switch(which) {
-    case 'seekPartRow': {
+    case 'seekPartRow': 
       seekRow = {
         seekPartRow: !seekPartRow,
         seekTypeRow: false,
       }
-    };break
-    case 'seekTypeRow': {
+      
+    break
+    case 'seekTypeRow': 
       seekRow = {
         seekPartRow: false,
         seekTypeRow: !seekTypeRow,
       }
-    };break
+    break
     default: null
   }
   dispatch(seek_open_modal, seekRow)
