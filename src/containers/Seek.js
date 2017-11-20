@@ -84,7 +84,9 @@ export default class Seek extends Component {
 const SeekPartsColumn = props => {
   let { partsData, state } = props
     , { openModal, pressPartColumn } = seekAC
-    console.log(partsData[0])
+
+  partsData[0] && partsData[0].name != allParts && partsData.unshift({name: allParts})
+
   return (
     <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>
@@ -109,7 +111,8 @@ const SeekPartsColumn = props => {
 
 const SeekTypesColumn = props => {
   let { typesData, state } = props
-    , { openModal, pressTypeColumn } = seekAC
+    , { openModal, pressTypeColumn } = seekAC  
+
   return (
     <View style={{height: '100%'}}>
       <View style={seek.dataColumnView}>
