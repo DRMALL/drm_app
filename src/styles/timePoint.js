@@ -38,6 +38,13 @@ export default {
     borderColor: backgroundColor,
     backgroundColor: mainColorPressed,
   },
+  textAreaInput: {
+    height: '100%',
+    textAlignVertical: 'top', 
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    fontSize: 16, 
+  },
   textInput: {
     textAlignVertical: 'top', 
     paddingHorizontal: 16,

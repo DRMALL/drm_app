@@ -185,11 +185,11 @@ export default class TimePoint extends Component {
           </View>
           <View style={timePoint.emptyView}/>
           <TextInput 
-            style={timePoint.textInput} 
+            style={timePoint.textAreaInput} 
             placeholder={'请输入文字'} 
             placeholderTextColor={subTitleColor}
             multiline={true} 
-            numberOfLines={20} 
+            numberOfLines={200} 
             underlineColorAndroid='transparent' 
             autoCapitalize='none'
             value={this.state.tline_description}
