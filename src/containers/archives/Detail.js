@@ -48,7 +48,8 @@ export default class Detail extends Component {
 
   getOneDevice() {
     let { deviceId, startTime, endTime } = this.props.navigation.state.params
-      , res
+      , res 
+      console.log(endTime)
     checkToken(tokenKey)
     .then(async token => {
       if(startTime != undefined || endTime != undefined) {

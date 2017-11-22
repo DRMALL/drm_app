@@ -1,7 +1,8 @@
 import React from 'react'
-import { Alert } from 'react-native'
+import { Alert, AsyncStorage } from 'react-native'
 import { tokenKey, internalServerError } from '../../common/strings'
 import { checkToken } from '../../utils/handleToken'
+import store from '../../utils/store'
 import { getPort } from '../../utils/fetchMethod'
 import { getNotices } from '../../apis'
 

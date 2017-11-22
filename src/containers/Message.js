@@ -74,6 +74,7 @@ export default class Message extends Component {
   }
 
   render() {
+    getNotices()
     let { navigation } = this.props
       , { noticeData, isRefreshing } = this.state
 

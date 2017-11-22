@@ -18,7 +18,11 @@ export default props => {
   return (
     <View style={message.itemView}>
       <TouchableOpacity style={message.itemTouchView} activeOpacity={0.8} onPress={()=> navigation.navigate('dynamicOrder', { msgId: msgItem._id, msgReaded: msgItem.readed, msgType: msgItem.types })}>
-        <View style={msgItem.readed ? message.empty : message.redDot} />
+        <View style={
+          msgItem.status == 'false' 
+            ? message.empty
+            : msgItem.readed ? message.empty : message.redDot
+        } />
         <View style={message.textPart}>
           <View style={message.topLine}>
             <Text style={message.textTitle}>

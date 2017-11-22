@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert } from 'react-native'
 import { tokenKey, internalServerError } from '../../common/strings'
-import { checkToken } from '../../utils/handleToken'
+import { checkToken, depositToken } from '../../utils/handleToken'
 import { getPort } from '../../utils/fetchMethod'
 import { getInfo } from '../../apis'
 import infoAC from '../../actions/infoAC'
@@ -16,6 +16,7 @@ export default ()=> {
         { cancelable: false }
       )
     } else if(res.code == 200) {
+      depositToken('userInfo', JSON.stringify(res.data))
       infoAC.getInfomationData({
         user_name: res.data.name,
         company_name: res.data.company_name,

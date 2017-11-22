@@ -18,6 +18,8 @@ import Button from '../components/units/Button'
 import TextInputImg from '../components/units/TextInputImg'
 import { checkToken, clearToken } from '../utils/handleToken'
 
+import getInformation from '../funcs/information/getInformation'
+
 import store from '../utils/store'
 import loginAC from '../actions/loginAC'
 import getMsgReadAll from '../funcs/login/getMsgReadAll'
@@ -47,6 +49,7 @@ export default class Login extends Component {
     checkToken(tokenKey)
     .then(token => {
       if(token) {
+        
         getMsgReadAll(token).then((readed)=> {
           const resetAction = NavigationActions.reset({
             index: 0,

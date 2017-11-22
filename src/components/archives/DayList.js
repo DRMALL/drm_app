@@ -40,9 +40,9 @@ const DayItem = props => {
     , dayStateNumber = rowID*7 + index
     , thisDay = `${state.year}-${addZero(state.month)}-${addZero(item)}`
     , thisDayStamp = new Date(thisDay).getTime()
-    , startDayStamp = state.startTimestamp
-    , endDayStamp = state.endTimestamp
-    , heightPointDay = thisDayStamp == startDayStamp || thisDayStamp == endDayStamp ? true : false
+    , startDayStamp = state.startTimestamp 
+    , endDayStamp = state.endTimestamp 
+    , heightPointDay = thisDayStamp  == startDayStamp || thisDayStamp == endDayStamp ? true : false
     , backV1 = thisDayStamp > startDayStamp && thisDayStamp <= endDayStamp ? true : false
     , backV2 = thisDayStamp >= startDayStamp && thisDayStamp < endDayStamp ? true : false
   return (

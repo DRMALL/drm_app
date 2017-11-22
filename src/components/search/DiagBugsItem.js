@@ -10,6 +10,7 @@ export default props => {
   let { state, bugOne, navigation } = props
     , titleArr = []
     , contentArr = []
+
   if(bugOne.title) {
     titleArr = strReplaceHeightLight(bugOne.title, state.text)
   }

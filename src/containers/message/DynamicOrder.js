@@ -161,6 +161,7 @@ export default class DynamicOrder extends Component {
   render() {
     let { oneNoticeData, showdatu, enlargeUrl, backLoading, isRefreshing } = this.state
       , { navigation } = this.props
+    console.log(1111,oneNoticeData)
     if (!oneNoticeData) return <Loading animating={!oneNoticeData ? true : false}/>
     else if(oneNoticeData.types == 'device') return (
       <View style={{height: '100%'}}>
@@ -225,13 +226,15 @@ export default class DynamicOrder extends Component {
               activeOpacity={0.8} 
               onPress={()=> navigation.navigate('pushOrder')} 
             />
-            <Button 
-              style={dynamicOrder.solvedButton} 
-              title={solved} 
-              titleStyle={{color: mainColor}} 
-              activeOpacity={0.8} 
-              onPress={()=> this.postOrderSolved()} 
-            />
+            { 
+              oneNoticeData.isHanlded && <Button 
+                  style={dynamicOrder.solvedButton} 
+                  title={solved} 
+                  titleStyle={{color: mainColor}} 
+                  activeOpacity={0.8} 
+                  onPress={()=> this.postOrderSolved()} 
+                />
+            }
           </View>
         </ScrollView>
       </View>
