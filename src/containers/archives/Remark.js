@@ -2,7 +2,7 @@ import React, { Component }from 'react'
 import { View, Text, ScrollView, TouchableOpacity, TextInput, StatusBar } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { primaryColor, mainColor, subTitleColor } from '../../common/constants'
-import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey, deviceLabel, internalServerError } from '../../common/strings'
+import { editDeviceRemarks, cancel, confirm, remarkPlaceholder, tokenKey, homeLabel, deviceLabel, internalServerError } from '../../common/strings'
 import { checkToken } from '../../utils/handleToken'
 import { postPort } from '../../utils/fetchMethod'
 import { postDeviceRemark } from '../../apis'
@@ -49,23 +49,31 @@ export default class Remark extends Component {
           { cancelable: false }
         )
       } else if(res.code == 201) {
-        const resetAction = NavigationActions.reset({
-          index: 1,
-          actions: [
-            NavigationActions.navigate({ 
-              routeName: 'main', 
-              params: {},
-              action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
-            }),
-            NavigationActions.navigate({ 
-              routeName: 'detail', 
-              params: {
-                deviceId: navigation.state.params.deviceId, 
-              }, 
-            })
-          ]
-        })
-        navigation.dispatch(resetAction)
+        navigation.goBack()
+        // const resetAction = NavigationActions.reset({
+        //   index: 2,
+        //   actions: [
+        //     NavigationActions.navigate({ 
+        //       routeName: 'main', 
+        //       params: {},
+        //       action: NavigationActions.navigate({ routeName: homeLabel}),
+        //     }),
+        //     NavigationActions.navigate({ 
+        //       routeName: 'detail', 
+        //       params: {
+        //         deviceId: navigation.state.params.deviceId, 
+        //       }, 
+        //     }),
+        //   ]
+        // })
+        // const resetAction = NavigationActions.navigate({
+        //     routeName: 'detail',
+        //     params: {
+        //       deviceId: navigation.state.params.deviceId, 
+        //     }, 
+        //     action: NavigationActions.navigate({ routeName: 'detail'})               
+        // })
+        //navigation.dispatch(resetAction)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],

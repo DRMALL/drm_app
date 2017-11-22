@@ -46,11 +46,11 @@ const infoIcon = require('../images/navigation_icons/info.png')
 
 const Main = TabNavigator(
   {
-    [homeLabel]: { screen: Home },
-    [deviceLabel]: { screen: Device },
-    [statusLabel]: { screen: Status },
-    [diagnoseLabel]: { screen: Diagnose },
-    [seekLabel]: { screen: Seek },
+    [homeLabel]: { screen: Home, path: 'home' },
+    [deviceLabel]: { screen: Device, path: 'device' },
+    [statusLabel]: { screen: Status, path: 'status' },
+    [diagnoseLabel]: { screen: Diagnose, path: 'diagnose' },
+    [seekLabel]: { screen: Seek, path: 'seek' },
   }, 
   {
     swipeEnabled: true,
@@ -85,6 +85,7 @@ const Main = TabNavigator(
     initialRouteParams: {
       msgRedShow: true,
     },
+    initialRouteName: homeLabel,
   }
 )
 

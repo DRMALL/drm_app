@@ -109,6 +109,8 @@ export default class Detail extends Component {
   }
 
   render() {
+    this.getOneDevice()
+
     let { navigation } = this.props
       , { oneDeviceData, isRefreshing, adDataSource, photos, downUpPress, showdatu, enlargeUrl } = this.state
       , { _id, images, name, number, cc, pressure, combustible, description, timelines, createdAt, remark, classify } = oneDeviceData
@@ -163,15 +165,17 @@ export default class Detail extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={downUpPress ? {} : {height: 350, overflow: 'hidden'}}>
+            <View style={!downUpPress && timelines && timelines.length > 4 && {height: 350, overflow: 'hidden'}}>
               <TimeLineForm timelineData={timelines == undefined ? [] : timelines} />
             </View>
             <View style={{opacity: 1, backgroundColor: mainColor}}>
-              <TouchableOpacity style={detail.downUpView} onPress={()=> this.setState({downUpPress: !downUpPress})}>
+              {
+                timelines && timelines.length > 4 && <TouchableOpacity style={detail.downUpView} onPress={()=> this.setState({downUpPress: !downUpPress})}>
                 <Image source={downUpPress ? closeUpIcon : openDownIcon}/>
               </TouchableOpacity>
+              }
               <View style={detail.fixTextView}>
-                <Text style={detail.textFix}>{deviceRemarks}</Text>
+                <Text style={detail.textFix}>{deviceRemarks}11</Text>
                 <TouchableOpacity style={detail.touchIcon} activeOpacity={0.6} onPress={()=> navigation.navigate('equipmentRemark', {deviceId: _id, orgDeviceRemark: remark})} >
                   <Image source={editIcon}/>
                 </TouchableOpacity>

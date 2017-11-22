@@ -93,23 +93,24 @@ export default class TimePoint extends Component {
           { cancelable: false }
         )
       } else if(res.code == 201) {
-        const resetAction = NavigationActions.reset({
-          index: 1,
-          actions: [
-            NavigationActions.navigate({ 
-              routeName: 'main', 
-              params: {},
-              action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
-            }),
-            NavigationActions.navigate({ 
-              routeName: 'detail', 
-              params: {
-                deviceId: navigation.state.params.deviceId, 
-              }, 
-            })
-          ]
-        })
-        navigation.dispatch(resetAction)
+        navigation.goBack()
+        // const resetAction = NavigationActions.reset({
+        //   index: 1,
+        //   actions: [
+        //     NavigationActions.navigate({ 
+        //       routeName: 'main', 
+        //       params: {},
+        //       action: NavigationActions.navigate({ routeName: `${deviceLabel}`}),
+        //     }),
+        //     NavigationActions.navigate({ 
+        //       routeName: 'detail', 
+        //       params: {
+        //         deviceId: navigation.state.params.deviceId, 
+        //       }, 
+        //     })
+        //   ]
+        // })
+        // navigation.dispatch(resetAction)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
           [ {text: 'OK', onPress: () => 'OK'}, ],
