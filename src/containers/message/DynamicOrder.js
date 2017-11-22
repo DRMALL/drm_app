@@ -226,15 +226,15 @@ export default class DynamicOrder extends Component {
               activeOpacity={0.8} 
               onPress={()=> navigation.navigate('pushOrder')} 
             />
-            { 
-              oneNoticeData.isHanlded && <Button 
-                  style={dynamicOrder.solvedButton} 
-                  title={solved} 
-                  titleStyle={{color: mainColor}} 
-                  activeOpacity={0.8} 
-                  onPress={()=> this.postOrderSolved()} 
-                />
-            }
+            
+            <Button 
+              style={dynamicOrder.solvedButton} 
+              title={solved} 
+              titleStyle={{color: mainColor}} 
+              activeOpacity={0.8} 
+              onPress={()=> this.postOrderSolved()} 
+            />
+            
           </View>
         </ScrollView>
       </View>
