@@ -7,9 +7,9 @@ import Loading from '../../components/units/Loading'
 import { primaryColor, mainColor, contentColor } from '../../common/constants'
 import { equipAlarm, orderDynamic, alarmContent, orderContent, orderReturn, solved, unsolved, tokenKey, internalServerError } from '../../common/strings'
 import { dynamicOrder, detail } from '../../styles'
-import { checkToken } from '../../utils/handleToken'
+import { checkToken, depositToken } from '../../utils/handleToken'
 import { getPort, postPort } from '../../utils/fetchMethod'
-import { getNoticesOne, setOneNoticesRead, setOrderSolved } from '../../apis'
+import { getOrderOne, getNoticesOne, setOneNoticesRead, setOrderSolved } from '../../apis'
 
 const gobackWhiteIcon = require('../../images/navigation_icons/goback_white.png')
 const emptyIcon = require('../../images/navigation_icons/empty.png')
@@ -35,6 +35,7 @@ export default class DynamicOrder extends Component {
       showdatu: false, 
       enlargeUrl: 'null',
       backLoading: false,
+      isSolved: false,
     }
   }
 
@@ -85,6 +86,7 @@ export default class DynamicOrder extends Component {
           { cancelable: false }
         )
       } else if(res.code == 200) {
+        this.getOrder(res.data.order.id)
         if(this.state.isMounted) {
           this.setState({
             oneNoticeData: res.data,
@@ -158,10 +160,32 @@ export default class DynamicOrder extends Component {
     }, 2000)
   }
 
+  getOrder(id) {
+    checkToken(tokenKey)
+    .then(async token => {
+      let res = await getPort(`${getOrderOne}?id=${id}&token=${token}`)
+      if(!res) {
+        // Alert.alert('错误', internalServerError,
+        //   [ {text: 'OK', onPress: () => 'OK'}, ],
+        //   { cancelable: false }
+        // )
+      } else if(res.code == 200) {
+        if (res.data.isDone) {
+          this.setState({isSolved: true})
+        }
+      } else {
+        // Alert.alert('错误', JSON.stringify(res.message),
+        //   [ {text: 'OK', onPress: () => 'OK'}, ],
+        //   { cancelable: false }
+        // )
+      }
+    })
+  }
+
   render() {
     let { oneNoticeData, showdatu, enlargeUrl, backLoading, isRefreshing } = this.state
       , { navigation } = this.props
-    console.log(1111,oneNoticeData)
+
     if (!oneNoticeData) return <Loading animating={!oneNoticeData ? true : false}/>
     else if(oneNoticeData.types == 'device') return (
       <View style={{height: '100%'}}>
@@ -227,13 +251,15 @@ export default class DynamicOrder extends Component {
               onPress={()=> navigation.navigate('pushOrder')} 
             />
             
-            <Button 
-              style={dynamicOrder.solvedButton} 
-              title={solved} 
-              titleStyle={{color: mainColor}} 
-              activeOpacity={0.8} 
-              onPress={()=> this.postOrderSolved()} 
-            />
+            {
+              !this.state.isSolved && <Button 
+                style={dynamicOrder.solvedButton} 
+                title={solved} 
+                titleStyle={{color: mainColor}} 
+                activeOpacity={0.8} 
+                onPress={()=> this.postOrderSolved()} 
+              />
+            }
             
           </View>
         </ScrollView>
