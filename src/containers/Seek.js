@@ -34,7 +34,7 @@ export default class Seek extends Component {
   }
 
   componentDidMount() {
-    getAllPartsData()
+    //getAllPartsData()
     getFirstPartData().then((seekFirstData)=> {
       seekAC.createPartTypeState(seekFirstData, [])
     })

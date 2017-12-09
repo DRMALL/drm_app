@@ -57,9 +57,9 @@ const SeekDataItem = props => {
     <View style={{backgroundColor: subTitleColor}}>
       <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {seekId: item._id})}>
         <Text style={[seek.text, {width: '24%'}]}>{item.code}</Text>
-        <Text style={[seek.text, {width: '26%'}]}>{item.name}</Text>
-        <Text style={[seek.text, {width: '34%'}]}>{item.model}</Text>
-        <Text style={[seek.text, {width: '6%'}]}>{item.unit}</Text>
+        <Text style={[seek.text, {width: '26%'}]}>{item.levelOne}</Text>
+        <Text style={[seek.text, {width: '25%'}]}>{item.name}</Text>
+        <Text style={[seek.text, {width: '25%'}]}>{item.model}</Text>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
         <Text style={[home.endText, s == (seekDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
