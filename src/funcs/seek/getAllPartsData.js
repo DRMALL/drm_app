@@ -8,22 +8,20 @@ import { getPartSearch } from '../../apis'
 
 import seekAC from '../../actions/seekAC'
 
-export default ()=> {
-  checkToken(tokenKey)
-  .then(async token => {
-    let res = await getPort(`${getPartSearch}?token=${token}`)
-    if(!res) {
-      Alert.alert('错误', internalServerError,
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    } else if(res.code == 200) {
-      seekAC.setAllPart(res.data)
-    } else {
-      Alert.alert('错误', JSON.stringify(res.message),
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    }
-  })
+export default async () => {
+  const token = await checkToken(tokenKey)
+  let res = await getPort(`${getPartSearch}?token=${token}`)
+  if(!res) {
+    Alert.alert('错误', internalServerError,
+      [ {text: 'OK', onPress: () => 'OK'}, ],
+      { cancelable: false }
+    )
+  } else if(res.code == 200) {
+    seekAC.setAllPart(res)
+  } else {
+    Alert.alert('错误', JSON.stringify(res.message),
+      [ {text: 'OK', onPress: () => 'OK'}, ],
+      { cancelable: false }
+    )
+  }
 }

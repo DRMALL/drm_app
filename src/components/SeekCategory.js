@@ -7,8 +7,28 @@ import { seekData } from '../utils/virtualData'
 import store from '../utils/store'
 import EmptyContent from '../components/units/EmptyContent'
 import CaptionFix from './seek/CaptionFix'
+import seekAC from '../actions/seekAC'
 
 export default class SeekCategory extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  onScroll(e) {
+    const { isLoading, allSeekPartData, allSeekPartDataMeta } = store.getState().seek
+    if (isLoading) return 
+
+    if (allSeekPartDataMeta.offset >= allSeekPartDataMeta.count) return
+
+    let y = e.nativeEvent.contentOffset.y
+    let height = e.nativeEvent.layoutMeasurement.height
+    let contentHeight = e.nativeEvent.contentSize.height
+
+    if(y+height>=contentHeight-20){
+      seekAC.loadMore()       
+    }
+  }
+
   render() {
     let { navigation, isRefreshing, allSeekData, onSeekRefresh } = this.props
       , { selectedPart, selectedType } = store.getState().seek
@@ -31,6 +51,8 @@ export default class SeekCategory extends Component {
         {
           seekDataLength == 0 ? <EmptyContent /> : 
           <ScrollView 
+            onScroll={this.onScroll.bind(this)}
+            scrollEventThrottle={50}
             style={{height: '100%'}}
             refreshControl={<RefreshControl 
               refreshing={isRefreshing}

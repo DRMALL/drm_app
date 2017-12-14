@@ -27,6 +27,7 @@ import {
 
 const seek = {
   isRefreshing: false,
+  isLoading: false,
   seekPartRow: false,
   seekTypeRow: false,
   selectedPart: allParts,
@@ -38,6 +39,7 @@ const seek = {
   seekPartsFirstData: [],
   seekTypesSecondData: [],
   allSeekPartData: [],
+  allSeekPartDataMeta: null,
   oneSeekPartData: {},
   text: '',
   jumpData: false,
@@ -49,6 +51,13 @@ const seek = {
 
 export default (state = seek, action) => {
   switch (action.type) {
+    case 'SEEK_LOAD_MORE_START':
+      return Object.assign({}, state, { isLoading: true } )
+    case 'SEEK_LOAD_MORE_SUCCESS':
+      let data = state.allSeekPartData.concat(action.payload.data)
+      return Object.assign({}, state, { allSeekPartData: data, allSeekPartDataMeta: action.payload.meta, isLoading: false } )
+    case 'SEEK_LOAD_MORE_FAILURE':
+      return Object.assign({}, state, { isLoading: false } )
     case seek_refresh_T:
       return Object.assign({}, state, { isRefreshing: true } )
     case seek_refresh_F:
@@ -78,7 +87,7 @@ export default (state = seek, action) => {
     case seek_part_second_get:
       return Object.assign({}, state, { seekTypesSecondData: action.payload } )
     case seek_allpart_get:
-      return Object.assign({}, state, { allSeekPartData: action.payload } )
+      return Object.assign({}, state, { allSeekPartData: action.payload.data, allSeekPartDataMeta: action.payload.meta } )
     case seek_onepart_get:
       return Object.assign({}, state, { oneSeekPartData: action.payload } )
     case seek_search_historydata:

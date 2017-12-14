@@ -28,6 +28,31 @@ import {
 } from '../common/actStrings'
 
 import getSecondPartData from '../funcs/seek/getSecondPartData'
+import { getPort, postPort, postFormDataPort } from '../utils/fetchMethod'
+import { getPartSearch, getPartHots, getPartFirst, getPartSecond, getPartOne } from '../apis'
+import { tokenKey, internalServerError } from '../common/strings'
+import { checkToken } from '../utils/handleToken'
+
+const loadMore = async () => {
+  dispatch('SEEK_LOAD_MORE_START')
+
+  let { allSeekPartDataMeta } = store.getState().seek
+  let { offset, limit } = allSeekPartDataMeta
+  offset += limit
+
+  let token = await checkToken(tokenKey)
+
+  let url = `${getPartSearch}?token=${token}&offset=${offset}`
+  const result = await getPort(url)
+
+  if(result) {
+    dispatch('SEEK_LOAD_MORE_SUCCESS', result)
+  } else {
+    dispatch('SEEK_LOAD_MORE_FAILURE', result)
+  }
+    
+
+}
 
 const isRefresh = ()=> {
   dispatch(seek_refresh_T)
@@ -169,6 +194,7 @@ const setTypeDisabledFalse = ()=> {
 }
 
 export default {
+  loadMore,
   isRefresh,
   isnotRefresh,
   createPartTypeState,
