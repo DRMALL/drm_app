@@ -81,7 +81,7 @@ const SeekDataItem = props => {
         <Text style={[seek.text, {width: '26%'}]}>{item.code}</Text>
         {/*<Text style={[seek.text, {width: '26%'}]}>{item.levelOne}</Text>*/}
         <Text style={[seek.text, {width: '46%'}]}>{item.name}</Text>
-        <Text style={[seek.text, {width: '30%'}]}>{item.model}</Text>
+        <Text style={[seek.text, {width: '28%'}]}>{item.model}</Text>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
         <Text style={[home.endText, s == (seekDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd(isLoading)}</Text>

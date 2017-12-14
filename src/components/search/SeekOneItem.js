@@ -19,10 +19,10 @@ export default props => {
   return (
     <View style={{backgroundColor: subTitleColor}}>
       <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {seekId: sekOne._id})}>
-        <Text style={[seek.text, {width: '24%'}]}>{sekOne.code}</Text>
-        <Text style={[seek.text, {width: '26%'}]}>{sekNameArr}</Text>
-        <Text style={[seek.text, {width: '34%'}]}>{sekModelArr}</Text>
-        <Text style={[seek.text, {width: '6%'}]}>{sekOne.unit}</Text>
+        <Text style={[seek.text, {width: '26%'}]}>{sekOne.code}</Text>
+        <Text style={[seek.text, {width: '46%'}]}>{sekNameArr}</Text>
+        <Text style={[seek.text, {width: '28%'}]}>{sekModelArr}</Text>
+       {/* <Text style={[seek.text, {width: '6%'}]}>{sekOne.unit}</Text>*/}
       </TouchableOpacity>
       <View style={index == (seekDataLength-1) ? {backgroundColor: mainColor, opacity: 1, paddingBottom: 60} : {display: 'none' }}>
         <Text style={home.endText}>{inTheEnd}</Text>
