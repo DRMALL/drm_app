@@ -33,7 +33,23 @@ import { getPartSearch, getPartHots, getPartFirst, getPartSecond, getPartOne } f
 import { tokenKey, internalServerError } from '../common/strings'
 import { checkToken } from '../utils/handleToken'
 
-const loadMore = async () => {
+const getCategory = async (one = null, two = null) => {
+  const token = await checkToken(tokenKey)
+  let url
+  if (one == allParts) one = null
+  if (two == allTypes) two = null
+  if (one && !two) url = `${getPartSearch}?token=${token}&level_one=${one}`
+  if (one && two) url = `${getPartSearch}?token=${token}&level_one=${one}&level_two=${two}`
+  if (!one && !two) url = `${getPartSearch}?token=${token}`
+
+  let result = await getPort(url)
+
+  if(result) {
+    dispatch(seek_allpart_get, result)
+  }  
+}
+
+const loadMore = async (one = null, two = null) => {
   dispatch('SEEK_LOAD_MORE_START')
 
   let { allSeekPartDataMeta } = store.getState().seek
@@ -41,17 +57,21 @@ const loadMore = async () => {
   offset += limit
 
   let token = await checkToken(tokenKey)
+  let url 
 
-  let url = `${getPartSearch}?token=${token}&offset=${offset}`
+  if (one == allParts) one = null
+  if (two == allTypes) two = null
+  if (one && !two) url = `${getPartSearch}?token=${token}&level_one=${one}&offset=${offset}`
+  if (one && two) url = `${getPartSearch}?token=${token}&level_one=${one}&level_two=${two}&offset=${offset}`
+  if (!one && !two) url = `${getPartSearch}?token=${token}&offset=${offset}`
+
   const result = await getPort(url)
 
   if(result) {
     dispatch('SEEK_LOAD_MORE_SUCCESS', result)
   } else {
     dispatch('SEEK_LOAD_MORE_FAILURE', result)
-  }
-    
-
+  }   
 }
 
 const isRefresh = ()=> {
@@ -95,7 +115,7 @@ const openModal = (which)=> {
   dispatch(seek_open_modal, seekRow)
 }
 
-const pressPartColumn = (p, seekPartsData)=> {
+const pressCategoryOne = (p, seekPartsData)=> {
   let seekState = store.getState().seek
   let partColumnOne = !seekState[`partColumn${p}`]
   seekPartsData.map((partItem, index)=> {
@@ -106,29 +126,33 @@ const pressPartColumn = (p, seekPartsData)=> {
         seekPartRow: partColumnOne ? false : seekState.seekPartRow,
       })
       if(partColumnOne) {
-        getSecondPartData(partItem.name).then((seekSecondData)=> {
-          createPartTypeState([], seekSecondData)
-        })
+        getCategory(partItem.name)
+        getSecondPartData(partItem._id)
       } else {
         dispatch(seek_part_second_get, [])
+        getCategory()
       }
       // dispatch(seek_selected_type_data, partColumnOne ? partItem.types : [])
     }
-    else dispatch(seek_part_F, {[`partColumn${index}`]: false})
+    else {
+      dispatch(seek_part_F, {[`partColumn${index}`]: false})
+    }
   })
   dispatch(seek_type_T, { selectedType: allTypes, typeTouchDisabled: partColumnOne ? false : true})
 }
 
-const pressTypeColumn = (t, seekTypesData)=> {
+const pressCategoryTwo = (t, seekTypesData)=> {
   let seekState = store.getState().seek
   let typeColumnOne = !seekState[`typeColumn${t}`]
+
   seekTypesData.map((typeItem, index)=> {
     if(t == index) {
       dispatch(seek_type_T, {
-        selectedType: typeColumnOne ? typeItem.model : allTypes,
+        selectedType: typeColumnOne ? typeItem.name : allTypes,
         [`typeColumn${t}`]: typeColumnOne,
         seekTypeRow: typeColumnOne ? false : seekState.seekTypeRow,
       })
+      getCategory(seekState.selectedPart, typeItem.name)
     }
     else dispatch(seek_type_F, {[`typeColumn${index}`]: false})
   })
@@ -199,8 +223,8 @@ export default {
   isnotRefresh,
   createPartTypeState,
   openModal,
-  pressPartColumn,
-  pressTypeColumn,
+  pressCategoryOne,
+  pressCategoryTwo,
   pressShareShow,
   pressShareCancel,
   setAllRowFalse,

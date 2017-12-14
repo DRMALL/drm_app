@@ -11,9 +11,9 @@ export default props => {
         <View style={seek.materialLongCodeView}>
           <Text style={seek.captionText}>{materialLongCode}</Text>
         </View>
-        <View style={seek.materialUnitesView}>
+        {/*<View style={seek.materialUnitesView}>
           <Text style={seek.captionText}>分类</Text>
-        </View>
+        </View>*/}
         <View style={seek.materialNameView}>
           <Text style={seek.captionText}>{materialName}</Text>
         </View>

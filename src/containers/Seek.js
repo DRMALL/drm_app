@@ -35,9 +35,7 @@ export default class Seek extends Component {
 
   componentDidMount() {
     getAllPartsData()
-    getFirstPartData().then((seekFirstData)=> {
-      seekAC.createPartTypeState(seekFirstData, [])
-    })
+    getFirstPartData()
   }
 
   componentWillMount() {
@@ -58,7 +56,7 @@ export default class Seek extends Component {
 
   render() {
     let { seekPartRow, seekTypeRow, topView, secondView, isRefreshing, 
-          seekPartsFirstData, seekTypesSecondData, allSeekPartData 
+          seekFirstData, seekSecondData, allSeekPartData 
         } = this.state
       , { openModal } = seekAC
 
@@ -70,10 +68,10 @@ export default class Seek extends Component {
             <SeekCategory isRefreshing={isRefreshing} allSeekData={allSeekPartData} onSeekRefresh={this.onSeekRefresh.bind(this)} {...this.props} />
           </View>
           <View style={[topView, {height: seekPartRow ? '100%' : 0}]}>
-            <SeekPartsColumn partsData={seekPartsFirstData} state={this.state} />
+            <SeekCategoryOneColumn partsData={seekFirstData} state={this.state} />
           </View>
           <View style={[topView, {height: seekTypeRow ? '100%' : 0}]}>
-            <SeekTypesColumn typesData={seekTypesSecondData} state={this.state} />
+            <SeekCategoryTwoColumn typesData={seekSecondData} state={this.state} />
           </View>
         </View>
       </View>
@@ -81,9 +79,9 @@ export default class Seek extends Component {
   }
 }
 
-const SeekPartsColumn = props => {
+const SeekCategoryOneColumn = props => {
   let { partsData, state } = props
-    , { openModal, pressPartColumn } = seekAC
+    , { openModal, pressCategoryOne } = seekAC
 
   partsData[0] && partsData[0].name != allParts && partsData.unshift({name: allParts})
 
@@ -95,7 +93,7 @@ const SeekPartsColumn = props => {
             partsData.map((partItem, p)=> <TouchableOpacity key={p} 
               style={seek.itemTouch} 
               activeOpacity={0.8}
-              onPress={()=> pressPartColumn(p, partsData)}
+              onPress={()=> pressCategoryOne(p, partsData)}
             >
               <Text style={[seek.itemText, state[`partColumn${p}`] ? {color: lightBlueColor} : {}]}>{partItem.name}</Text>
             </TouchableOpacity>)
@@ -109,9 +107,11 @@ const SeekPartsColumn = props => {
   )
 }
 
-const SeekTypesColumn = props => {
+const SeekCategoryTwoColumn = props => {
   let { typesData, state } = props
-    , { openModal, pressTypeColumn } = seekAC  
+    , { openModal, pressCategoryTwo } = seekAC  
+
+  typesData[0] && typesData[0].name != allTypes && typesData.unshift({name: allTypes})
 
   return (
     <View style={{height: '100%'}}>
@@ -121,9 +121,9 @@ const SeekTypesColumn = props => {
             typesData.map((typeItem, t)=> <TouchableOpacity key={t} 
               style={seek.itemTouch} 
               activeOpacity={0.8}
-              onPress={()=> pressTypeColumn(t, typesData)}
+              onPress={()=> pressCategoryTwo(t, typesData)}
             >
-              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.model}</Text>
+              <Text style={[seek.itemText, state[`typeColumn${t}`] ? {color: lightBlueColor} : {}]}>{typeItem.name}</Text>
             </TouchableOpacity>)
           }
         </ScrollView>

@@ -36,8 +36,8 @@ const seek = {
   secondView: {position: 'absolute', zIndex: 2},
   shareShow: false,
   selectedTypesData: [],
-  seekPartsFirstData: [],
-  seekTypesSecondData: [],
+  seekFirstData: [],
+  seekSecondData: [],
   allSeekPartData: [],
   allSeekPartDataMeta: null,
   oneSeekPartData: {},
@@ -83,9 +83,9 @@ export default (state = seek, action) => {
     case seek_setallrow_false:
       return Object.assign({}, state, { seekPartRow: false, seekTypeRow: false, } )
     case seek_part_first_get:
-      return Object.assign({}, state, { seekPartsFirstData: action.payload } )
+      return Object.assign({}, state, { seekFirstData: action.payload } )
     case seek_part_second_get:
-      return Object.assign({}, state, { seekTypesSecondData: action.payload } )
+      return Object.assign({}, state, { seekSecondData: action.payload } )
     case seek_allpart_get:
       return Object.assign({}, state, { allSeekPartData: action.payload.data, allSeekPartDataMeta: action.payload.meta } )
     case seek_onepart_get:

@@ -15,7 +15,7 @@ export default class SeekCategory extends Component {
   }
 
   onScroll(e) {
-    const { isLoading, allSeekPartData, allSeekPartDataMeta } = store.getState().seek
+    const { isLoading, allSeekPartData, allSeekPartDataMeta, selectedPart, selectedType } = store.getState().seek
     if (isLoading) return 
 
     if (allSeekPartDataMeta.offset >= allSeekPartDataMeta.count) return
@@ -25,26 +25,26 @@ export default class SeekCategory extends Component {
     let contentHeight = e.nativeEvent.contentSize.height
 
     if(y+height>=contentHeight-20){
-      seekAC.loadMore()       
+      seekAC.loadMore(selectedPart, selectedType)       
     }
   }
 
   render() {
     let { navigation, isRefreshing, allSeekData, onSeekRefresh } = this.props
-      , { selectedPart, selectedType } = store.getState().seek
-      , selectDataArr = []
-    if(selectedPart !== allParts) {
-      allSeekData.map((seekOne, indexs)=> {
-        if(selectedPart === seekOne.name) {
-          if(selectedType !== allTypes) {
-            if(selectedType == seekOne.model) {
-              selectDataArr.push(seekOne)
-            }
-          } else selectDataArr.push(seekOne)
-        }
-      })
-    } else selectDataArr = allSeekData
-    let seekDataLength = selectDataArr.length
+      , { selectedPart, selectedType, isLoading } = store.getState().seek
+    //   , selectDataArr = []
+    // if(selectedPart !== allParts) {
+    //   allSeekData.map((seekOne, indexs)=> {
+    //     if(selectedPart === seekOne.name) {
+    //       if(selectedType !== allTypes) {
+    //         if(selectedType == seekOne.model) {
+    //           selectDataArr.push(seekOne)
+    //         }
+    //       } else selectDataArr.push(seekOne)
+    //     }
+    //   })
+    // } else selectDataArr = allSeekData
+    let seekDataLength = allSeekData.length
     return (
       <View style={seek.wrap}>
         <CaptionFix />
@@ -64,7 +64,7 @@ export default class SeekCategory extends Component {
             />}
           >
             {
-              selectDataArr.map((item, s)=> <SeekDataItem key={s} item={item} s={s} seekDataLength={seekDataLength} navigation={navigation}/>)
+              allSeekData.map((item, s)=> <SeekDataItem key={s} item={item} s={s} isLoading={isLoading} seekDataLength={seekDataLength} navigation={navigation}/>)
             }
           </ScrollView>
         }
@@ -74,17 +74,17 @@ export default class SeekCategory extends Component {
 }
 
 const SeekDataItem = props => {
-  let { item, s, seekDataLength, navigation } = props
+  let { item, s, seekDataLength, navigation, isLoading } = props
   return (
     <View style={{backgroundColor: subTitleColor}}>
       <TouchableOpacity style={seek.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('seekDetail', {seekId: item._id})}>
-        <Text style={[seek.text, {width: '24%'}]}>{item.code}</Text>
-        <Text style={[seek.text, {width: '26%'}]}>{item.levelOne}</Text>
-        <Text style={[seek.text, {width: '25%'}]}>{item.name}</Text>
-        <Text style={[seek.text, {width: '25%'}]}>{item.model}</Text>
+        <Text style={[seek.text, {width: '26%'}]}>{item.code}</Text>
+        {/*<Text style={[seek.text, {width: '26%'}]}>{item.levelOne}</Text>*/}
+        <Text style={[seek.text, {width: '46%'}]}>{item.name}</Text>
+        <Text style={[seek.text, {width: '30%'}]}>{item.model}</Text>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
-        <Text style={[home.endText, s == (seekDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+        <Text style={[home.endText, s == (seekDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd(isLoading)}</Text>
       </View>
     </View>
   )

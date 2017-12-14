@@ -9,6 +9,7 @@ import { getPartSearch } from '../../apis'
 import seekAC from '../../actions/seekAC'
 
 export default async () => {
+
   const token = await checkToken(tokenKey)
   let res = await getPort(`${getPartSearch}?token=${token}`)
   if(!res) {
