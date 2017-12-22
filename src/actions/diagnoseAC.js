@@ -1,5 +1,5 @@
 import dispatch from './dispatch'
-import { 
+import {
   diag_refresh_T,
   diag_refresh_F,
   diag_data_get,

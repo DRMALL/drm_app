@@ -7,13 +7,15 @@ import { diagnosisData } from '../utils/virtualData'
 import EmptyContent from '../components/units/EmptyContent'
 
 export default props => {
-  let { navigation, diagnoseData, isRefreshing, onDiagRefresh } = props
+  let { navigation, diagnoseData, isRefreshing, onDiagRefresh, isLoading, onScroll } = props
     , diagnoseDataLength = diagnoseData.length
   return (
     <View style={diagnose.wrap}>
-      <ScrollView 
+      <ScrollView
         style={{height: '100%'}}
-        refreshControl={<RefreshControl 
+        onScroll={onScroll}
+        scrollEventThrottle={50}
+        refreshControl={<RefreshControl
           refreshing={isRefreshing}
           onRefresh={onDiagRefresh}
           colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -23,8 +25,8 @@ export default props => {
         />}
       >
         {
-          diagnoseDataLength == 0 ? <EmptyContent /> : 
-          diagnoseData.map((item, d)=> <DiagnosisItem key={d} item={item} d={d} diagnoseDataLength={diagnoseDataLength} navigation={navigation}/>)
+          diagnoseDataLength == 0 ? <EmptyContent /> :
+          diagnoseData.map((item, d)=> <DiagnosisItem key={d} item={item} d={d} diagnoseDataLength={diagnoseDataLength} navigation={navigation} isLoading={isLoading} />)
         }
       </ScrollView>
     </View>
@@ -32,18 +34,18 @@ export default props => {
 }
 
 const DiagnosisItem = props => {
-  let { item, d, diagnoseDataLength, navigation } = props
+  let { item, d, diagnoseDataLength, navigation, isLoading } = props
   return (
     <View style={{backgroundColor: subTitleColor}}>
       <TouchableOpacity style={diagnose.touchView} activeOpacity={0.8} onPress={()=> navigation.navigate('diagDetail', {bugsId: item._id, bugsTitle: item.title, categoryText: item.category.text})}>
         <View style={diagnose.titleView}>
           <Text style={diagnose.titleText}>{item.title}</Text>
-          
+
         </View>
         <Text style={diagnose.kindsText}>{item.category.text}</Text>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
-        <Text style={[home.endText, d == (diagnoseDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+        <Text style={[home.endText, d == (diagnoseDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd(isLoading)}</Text>
       </View>
     </View>
   )

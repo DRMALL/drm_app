@@ -6,17 +6,13 @@ import { getPort } from '../../utils/fetchMethod'
 import { getNews } from '../../apis'
 import getHomeData from '../../actions/getHomeData'
 
-export default (navigation)=> {
-  checkToken(tokenKey)
-  .then(async token => {
+export default async navigation => {
+  try {
+    const token = await checkToken(tokenKey)
     let res = await getPort(`${getNews}?token=${token}`)
-    if(!res) {
-      Alert.alert('错误', internalServerError,
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    } else if(res.code == 200) {
-      getHomeData(res.data)
+      
+    if (res.code == 200) {
+      getHomeData(res)
     } else if(res.code == 5050) {
       clearToken()
       navigation.navigate('login')
@@ -26,5 +22,10 @@ export default (navigation)=> {
         { cancelable: false }
       )
     }
-  })
+  } catch (e) {
+    Alert.alert('错误', internalServerError,
+      [ {text: 'OK', onPress: () => 'OK'}, ],
+      { cancelable: false }
+    )
+  }
 }

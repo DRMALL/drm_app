@@ -6,19 +6,14 @@ import { getPort } from '../../utils/fetchMethod'
 import { getCate } from '../../apis'
 import diagnoseAC from '../../actions/diagnoseAC'
 
-export default ()=> {
-  checkToken(tokenKey)
-  .then(async token => {
+export default async ()=> {
+  try {
+    let token = await checkToken(tokenKey)
     let res = await getPort(`${getCate}?token=${token}`)
-    if(!res) {
-      Alert.alert('错误', internalServerError,
-        [ {text: 'OK', onPress: () => 'OK'}, ],
-        { cancelable: false }
-      )
-    } else if(res.code == 200) {
+    if (res.code == 200) {
       diagnoseAC.getDiagCate({
         allCateData: res.data,
-        selectedCate: res.data[0].text,
+        selectedCate: res.data[0]._id,
       })
     } else {
       Alert.alert('错误', JSON.stringify(res.message),
@@ -26,5 +21,11 @@ export default ()=> {
         { cancelable: false }
       )
     }
-  })
+  } catch (e) {
+    Alert.alert('错误', internalServerError,
+      [ {text: 'OK', onPress: () => 'OK'}, ],
+      { cancelable: false }
+    )
+  }
+  return true
 }

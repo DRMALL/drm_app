@@ -51,9 +51,9 @@ const Main = TabNavigator(
     [statusLabel]: { screen: Status, path: 'status' },
     [diagnoseLabel]: { screen: Diagnose, path: 'diagnose' },
     [seekLabel]: { screen: Seek, path: 'seek' },
-  }, 
+  },
   {
-    swipeEnabled: true,
+    swipeEnabled: false,
     animationEnabled: false,
     tabBarPosition: 'bottom',
     tabBarOptions: {
@@ -93,8 +93,8 @@ export default StackNavigator({
   login: {
     screen: Login,
   },
-  main: { 
-    screen: Main, 
+  main: {
+    screen: Main,
     navigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: primaryColor,
@@ -103,14 +103,14 @@ export default StackNavigator({
       headerLeft: <TouchableOpacity style={{padding: 10, paddingLeft: 20}} onPress={() => navigation.navigate('information', { recordMsgRed: navigation.state.params ? navigation.state.params.msgRedShow : false })}>
         <Image source={userIcon}/>
       </TouchableOpacity>,
-      headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}} 
+      headerRight: <TouchableOpacity style={{padding: 10, paddingRight: 18, paddingLeft: 2}}
         onPress={()=> {
           navigation.navigate('message', {disabledPress: true, gobackParams: navigation.state.params && navigation.state.params.msgRedShow ? false : true})
         }}
       >
         <Image source={infoIcon}/>
         <View style={
-            navigation.state.params && navigation.state.params.msgRedShow ? 
+            navigation.state.params && navigation.state.params.msgRedShow ?
             {width: 8, height: 8, borderRadius: 4, backgroundColor: lightRedColor, position: 'absolute', top: 10, }
              : {}
           }
@@ -196,9 +196,7 @@ export default StackNavigator({
 }, {
   initialRouteName: 'login',
   initialRouteParams: { initPara: '初始页面参数' },
-  transitionConfig:()=>({  
-    screenInterpolator: CardStackStyleInterpolator.forHorizontal,  
+  transitionConfig:()=>({
+    screenInterpolator: CardStackStyleInterpolator.forHorizontal,
   }),
 })
-
-

@@ -15,7 +15,7 @@ export default props => {
     , dataLength = props.data.length
   if(dataLength == 0) return (
     <ScrollView
-      refreshControl={<RefreshControl 
+      refreshControl={<RefreshControl
         refreshing={props.isRefreshing}
         onRefresh={props.onHomeRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -28,8 +28,8 @@ export default props => {
     </ScrollView>
   )
   return(
-    <ListView 
-      refreshControl={<RefreshControl 
+    <ListView
+      refreshControl={<RefreshControl
         refreshing={props.isRefreshing}
         onRefresh={props.onHomeRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -37,20 +37,22 @@ export default props => {
         title='下拉刷新'
         titleColor={contentColor}
       />}
+      onScroll={props.onScroll}
+      scrollEventThrottle={50}
       dataSource={finalDs}
-      renderRow={(rowData, sectionID, rowID) => <HomeListItem rowData={rowData} rowID={rowID} dataLength={dataLength} navigation={props.navigation} />} 
+      renderRow={(rowData, sectionID, rowID) => <HomeListItem rowData={rowData} rowID={rowID} dataLength={dataLength} navigation={props.navigation} isLoading={props.isLoading} />}
       enableEmptySections={true}
     />
   )
 }
 
-const HomeListItem = ({ rowData, rowID, dataLength, navigation }) => {
+const HomeListItem = ({ rowData, rowID, dataLength, navigation, isLoading }) => {
   const { _id, title, images, } = rowData
   return(
     <View style={{width: '100%'}}>
-      <TouchableOpacity 
-        style={home.wrap} 
-        activeOpacity={0.8} 
+      <TouchableOpacity
+        style={home.wrap}
+        activeOpacity={0.8}
         onPress={()=> navigation.navigate('homeDetail', {newsId: _id})}
       >
         <Image source={{uri: images[0].url}} style={home.img} />
@@ -59,9 +61,7 @@ const HomeListItem = ({ rowData, rowID, dataLength, navigation }) => {
         </View>
         <Image style={{width: '100%', height: '100%', resizeMode: 'stretch', position: 'absolute' }} source={picMaskIcon}/>
       </TouchableOpacity>
-      <Text style={[home.endText, rowID == (dataLength-1) ? { } : {display: 'none' }]}>{inTheEnd}</Text>
+      <Text style={[home.endText, rowID == (dataLength-1) ? { } : {display: 'none' }]}>{inTheEnd(isLoading)}</Text>
     </View>
   )
 }
-
-
