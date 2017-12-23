@@ -17,10 +17,10 @@ export default props => {
     , navigation = props.navigation
     , dataLength = props.data.length
     , equipmentData = props.equipmentData
-    , { isRefreshing } = store.getState().statu
+    , { isRefreshing, isLoading } = store.getState().statu
   if(dataLength == 0) return (
     <ScrollView
-      refreshControl={<RefreshControl 
+      refreshControl={<RefreshControl
         refreshing={isRefreshing}
         onRefresh={props.onStatusRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -33,8 +33,9 @@ export default props => {
     </ScrollView>
   )
   return(
-    <ListView 
-      refreshControl={<RefreshControl 
+    <ListView
+      scrollEventThrottle={50}
+      refreshControl={<RefreshControl
         refreshing={isRefreshing}
         onRefresh={props.onStatusRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -43,13 +44,13 @@ export default props => {
         titleColor={contentColor}
       />}
       dataSource={finalDs}
-      renderRow={(rowData, sectionID, rowID) => <StatusListItem rowData={rowData} rowID={rowID} dataLength={dataLength} equipmentData={equipmentData} navigation={navigation}/>}
+      renderRow={(rowData, sectionID, rowID) => <StatusListItem rowData={rowData} rowID={rowID} dataLength={dataLength} equipmentData={equipmentData} navigation={navigation} isLoading={isLoading}/>}
       enableEmptySections={true}
     />
   )
 }
 
-const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation }) => {
+const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation, isLoading }) => {
   const { _id, images, name, number, ts, createdAt } = rowData
   let deviceState = false
   equipmentData.map((eqItem, index)=> {
@@ -73,9 +74,8 @@ const StatusListItem = ({ rowData, rowID, dataLength, equipmentData, navigation 
         </View>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
-        <Text style={[home.endText, rowID == (dataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+        <Text style={[home.endText, rowID == (dataLength-1) ? {} : {display: 'none' }]}>{inTheEnd(isLoading)}</Text>
       </View>
     </View>
   )
 }
-

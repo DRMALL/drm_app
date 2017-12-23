@@ -1,5 +1,5 @@
 import { all, onState, offState } from '../common/strings'
-import { 
+import {
   statu_refresh_T,
   statu_refresh_F,
   statu_tab_select,
@@ -20,6 +20,7 @@ import {
 const statu = (()=> {
   let statusArr = [all, onState, offState]
   let statuStateObj = {
+    isLoading: false,
     statusArr: statusArr,
     situation: all,
     isRefreshing: false,
@@ -56,11 +57,11 @@ export default (state = statu, action) => {
       return Object.assign({}, state, { statusListData: action.payload })
     case statu_equipdata_get:
       return Object.assign({}, state, action.payload)
-    case statu_equipitemdata_set: 
+    case statu_equipitemdata_set:
       return Object.assign({}, state, { equipmentItemData: action.payload })
-    case statu_equipitemnumdata_set: 
+    case statu_equipitemnumdata_set:
       return Object.assign({}, state, { eqNumberData: action.payload })
-    case statu_msgred_show: 
+    case statu_msgred_show:
       return Object.assign({}, state, { msgRedShow: action.payload })
     case statu_search_historydata:
       return Object.assign({}, state, { historyData: action.payload } )

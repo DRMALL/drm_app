@@ -27,8 +27,8 @@ export default class Status extends Component {
       <TabBarItem
         tintColor={tintColor}
         focused={focused}
-        normalImage={statusIconNormal} 
-        selectedImage={statusIconSelected} 
+        normalImage={statusIconNormal}
+        selectedImage={statusIconSelected}
       />
     )
   });
@@ -47,7 +47,7 @@ export default class Status extends Component {
   componentWillMount() {
     this.unsubscribe = store.subscribe(()=> {
       // setTimeout(() => {
-        this.setState(store.getState().statu) 
+        this.setState(store.getState().statu)
       // }, 2000)
     })
   }
@@ -68,17 +68,15 @@ export default class Status extends Component {
     })
   }
 
-  onStatusRefresh() {
+  async onStatusRefresh() {
     statuAC.isRefresh()
     statuAC.getEquipData([{}])
-    this.getAllMoniterdev()
-    setTimeout(() => {
-      statuAC.isnotRefresh()
-    }, 2000)
+    await this.getAllMoniterdev()
+    statuAC.isnotRefresh()
   }
 
   render() {
-    let { statusArr, situation, isRefreshing, statusListData, equipmentData } = this.state
+    let { statusArr, situation, isRefreshing, statusListData, equipmentData, isLoading } = store.getState().statu
       , statusTabList = []
     statusListData.map((oneData)=> {
       if(situation == all) statusTabList = statusListData
@@ -101,7 +99,7 @@ export default class Status extends Component {
     return(
       <View style={{height: '100%', backgroundColor: loginBackgroundColor}}>
         <StatusTab tabData={statusArr} state={this.state} />
-        <StatusCategory data={statusTabList} equipmentData={equipmentData} onStatusRefresh={this.onStatusRefresh.bind(this)} {...this.props} />
+        <StatusCategory data={statusTabList} isLoading={isLoading} equipmentData={equipmentData} onStatusRefresh={this.onStatusRefresh.bind(this)} {...this.props} />
       </View>
     )
   }

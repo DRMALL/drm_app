@@ -1,6 +1,6 @@
-// const apiUrl = 'https://drmtest.sparklog.com/app/'
+const apiUrl = 'https://drmtest.sparklog.com/app/'
 // const apiUrl = 'http://192.168.2.252:3000/app/'
-const apiUrl = 'http://192.168.1.101:3000/app/'
+// const apiUrl = 'http://192.168.1.101:3000/app/'
 
 export const signIn = apiUrl + 'session'
 export const getInfo = apiUrl + 'user'
