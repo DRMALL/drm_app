@@ -20,23 +20,23 @@ export default props => {
         }
       </View>
       <View style={filter.buttonView}>
-        <Button 
-          style={filter.button} 
-          title={cleanUp} 
-          titleStyle={filter.buttonTitle} 
-          // onPressIn={()=> pressBotton(`cleanPress`)} 
+        <Button
+          style={filter.button}
+          title={cleanUp}
+          titleStyle={filter.buttonTitle}
+          // onPressIn={()=> pressBotton(`cleanPress`)}
           // delayPressOut={10}
-          // onPressOut={()=> pressBotton(`cleanPress`)} 
+          // onPressOut={()=> pressBotton(`cleanPress`)}
           onPress={()=> pressBotton(`cleanPress`)}
           activeOpacity={0.8}
         />
-        <Button 
-          style={[filter.button, {backgroundColor: lightBlueColor, borderColor: lightBlueColor}]} 
-          title={confirm} 
-          titleStyle={[filter.buttonTitle, {color: mainColor} ]} 
-          // onPressIn={()=> pressBotton(`confirmPress`)} 
+        <Button
+          style={[filter.button, {backgroundColor: lightBlueColor, borderColor: lightBlueColor}]}
+          title={confirm}
+          titleStyle={[filter.buttonTitle, {color: mainColor} ]}
+          // onPressIn={()=> pressBotton(`confirmPress`)}
           // delayPressOut={100}
-          // onPressOut={()=> pressBotton(`confirmPress`)} 
+          // onPressOut={()=> pressBotton(`confirmPress`)}
           onPress={()=> pressConfirmReturn()}
           activeOpacity={0.8}
         />
@@ -67,9 +67,9 @@ class FilterClassItem extends Component {cleanPress
   }
 
   componentWillUpdate() {
-    if(this.props.state.cleanPress) {
-      this.pressFilter()
-    }
+    // if(this.props.state.cleanPress) {
+    //   this.pressFilter()
+    // }
   }
 
   render() {

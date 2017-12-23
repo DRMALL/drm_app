@@ -1,4 +1,4 @@
-import { 
+import {
   device_history_set,
   device_hotword_get,
   device_jump_set,
@@ -30,6 +30,7 @@ import {
 } from '../common/actStrings'
 
 const device = {
+  isLoading: false,
   text: '',
   jumpData: false,
   deviceData: [],
@@ -39,7 +40,7 @@ const device = {
   classifyRow: false,
   sortRow: false,
   filterRow: false,
-  classRowNum: 0,  
+  classRowNum: 0,
   classRow0: true,
   classKindsType: '',
   classKinds: '全部',
@@ -56,7 +57,7 @@ const device = {
   topView: {position: 'relative', zIndex: 3},
   middleView: {width: '100%', position: 'absolute', zIndex: 2},
   allDevicesData: [],
-  allDevicesData2: [],
+  allDevicesDataMeta: null,
   allCities: [],
   ccsort: {},
   presort: {},
@@ -65,6 +66,13 @@ const device = {
 
 export default (state = device, action) => {
   switch (action.type) {
+    case 'DEVICE_LOAD_MORE_START':
+      return Object.assign({}, state, {isLoading: true})
+    case 'DEVICE_LOAD_MORE_SUCCESS':
+      const { data, meta } = action.payload
+      return Object.assign({}, state, {isLoading: false, allDevicesData: state.allDevicesData.concat(data), allDevicesDataMeta: meta})
+    case 'DEVICE_LOAD_MORE_FAILURE':
+      return Object.assign({}, state, {isLoading: false})
     case device_history_set:
       return Object.assign({}, state, {historyData: action.payload} )
     case device_hotword_get:
@@ -81,9 +89,9 @@ export default (state = device, action) => {
     case device_open_modal:
       return Object.assign({}, state, action.payload)
     case device_all_devices2:
-      return Object.assign({}, state, {allDevicesData2: action.payload})
+      return Object.assign({}, state, {allDevicesData: action.payload.data, allDevicesDataMeta: action.payload.meta})
     case device_all_devices_clean:
-      return Object.assign({}, state, {allDevicesData: action.payload, cleanPress: false,})
+      return Object.assign({}, state, {allDevicesData: [], cleanPress: false,})
     case device_all_devices:
       return Object.assign({}, state, action.payload)
     case device_all_cities:

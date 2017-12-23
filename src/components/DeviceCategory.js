@@ -21,69 +21,56 @@ const dropdownSelected = require('../images/dropdown_selected.png')
 export default class DeviceCategory extends Component {
   constructor(props) {
     super(props)
-    this.state = store.getState().device
   }
 
-  componentDidMount() {
-    this.getCcsort().then((ccsort)=> {
-      this.getPresort().then((presort)=> {
-        this.getFuelsort().then((fuelsort)=> {
-          let mergeData = [ccsort, presort, fuelsort]
-          deviceAC.deviceInitializeState(sortData, mergeData)
-        })
-      })
-    })
-    this.getAllDevices()
+  async componentDidMount() {
+    let ccsort = await this.getCcsort()
+    let presort = await this.getPresort()
+    let fuelsort = await this.getFuelsort()
+    let mergeData = [ccsort, presort, fuelsort]
+    deviceAC.deviceInitializeState(sortData, mergeData)
+
+    //this.getAllDevices()
     this.getAllDevices2()
     this.getHotCities()
   }
 
-  componentWillMount() {
-    this.unsubscribe = store.subscribe( ()=> this.setState(store.getState().device) )
+  async getAllDevices2() {
+    let token = await checkToken(tokenKey)
+    let res = await getPort(`${getDevices}?token=${token}`)
+    if(res.code == 200) {
+      deviceAC.setAllDevices2(res)
+    }
   }
 
-  componentWillUnmount(){
-    this.unsubscribe()
-  }
-
-  getAllDevices2() {
-    checkToken(tokenKey)
-    .then(async token => {
-      let res = await getPort(`${getDevices}?token=${token}`)
-      if(res.code == 200) {
-        deviceAC.setAllDevices2(res.data)
-      }
-    })
-  }
-
-  getAllDevices() {
+  async getAllDevices() {
+    let token = await checkToken(tokenKey)
     let res
-    checkToken(tokenKey)
-    .then(async token => {
-      let { 
-        filterSearch, 
-        filtercc, 
-        filterpressure, 
-        filtercombustible, 
-        filteraddress,
-        classKindsType, 
-        classKinds,
-        sortTypesNum } = this.state
-      if(filterSearch) {
-        res = await getPort(`${getDevices}?cc=${filtercc}&pressure=${filterpressure}&combustible=${filtercombustible}&address=${filteraddress}&token=${token}`)
-      } else if(classKinds !== '全部') {
-        res = await getPort(`${getDevices}?type=${classKindsType}&value=${classKinds}&token=${token}`)
-      } else if(sortTypesNum == 1) {
-        res = await getPort(`${getDevices}?createTime=asc&token=${token}`)
-      } else if(sortTypesNum == 2) {
-        res = await getPort(`${getDevices}?createTime=desc&token=${token}`)
-      } else {
-        res = await getPort(`${getDevices}?token=${token}`)
-      }
-      if(res.code == 200) {
-        deviceAC.setAllDevices(res.data)
-      }
-    })
+    let {
+      filterSearch,
+      filtercc,
+      filterpressure,
+      filtercombustible,
+      filteraddress,
+      classKindsType,
+      classKinds,
+      sortTypesNum,
+    } = store.getState().device
+
+    if(filterSearch) {
+      res = await getPort(`${getDevices}?cc=${filtercc}&pressure=${filterpressure}&combustible=${filtercombustible}&address=${filteraddress}&token=${token}`)
+    } else if(classKinds !== '全部') {
+      res = await getPort(`${getDevices}?type=${classKindsType}&value=${classKinds}&token=${token}`)
+    } else if(sortTypesNum == 1) {
+      res = await getPort(`${getDevices}?createTime=asc&token=${token}`)
+    } else if(sortTypesNum == 2) {
+      res = await getPort(`${getDevices}?createTime=desc&token=${token}`)
+    } else {
+      res = await getPort(`${getDevices}?token=${token}`)
+    }
+    if(res.code == 200) {
+      deviceAC.setAllDevices(res)
+    }
   }
 
   getCcsort() {
@@ -140,7 +127,7 @@ export default class DeviceCategory extends Component {
 
   pressBotton(which) {
     deviceAC.setBottonState(which)
-    if(which == 'cleanPress' && !this.state[which]) this.getAllDevices()
+    if(which == 'cleanPress' && !store.getState().device[which]) this.getAllDevices()
   }
 
   pressConfirmReturn() {
@@ -162,16 +149,14 @@ export default class DeviceCategory extends Component {
     this.getAllDevices()
   }
 
-  onDeviceRefresh() {
+  async onDeviceRefresh() {
     deviceAC.isRefresh()
-    this.getAllDevices()
-    setTimeout(() => {
-      deviceAC.isnotRefresh()
-    }, 2000)
+    await this.getAllDevices()
+    deviceAC.isnotRefresh()
   }
 
   render() {
-    let { isRefreshing, classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allDevicesData2, allCities, ccsort, presort, fuelsort } = this.state
+    let { isRefreshing, classifyRow, sortRow, filterRow, topView, middleView, allDevicesData, allCities, ccsort, presort, fuelsort, isLoading } = store.getState().device
       , { openModal } = deviceAC
     let mergeData = ccsort.class == undefined ? classifyData : [ccsort, presort, fuelsort]
     return(
@@ -192,14 +177,14 @@ export default class DeviceCategory extends Component {
         </View>
         <View style={{height: '100%', paddingBottom: 50}}>
           <View style={!classifyRow && !sortRow && !filterRow ? topView : middleView}>
-            <Archives archivesData={allDevicesData} isRefreshing={isRefreshing} onDeviceRefresh={this.onDeviceRefresh.bind(this)} {...this.props} />
+            <Archives archivesData={allDevicesData} isRefreshing={isRefreshing} isLoading={isLoading} onDeviceRefresh={this.onDeviceRefresh.bind(this)} onScroll={this.props.onScroll} {...this.props} />
           </View>
           <View style={[topView, {height: classifyRow ? '100%' : 0}]}>
             {
               classifyRow ? <View style={{height: '100%'}}>
-                <Classify data={mergeData} 
-                  deviceData={allDevicesData2}
-                  state={this.state} 
+                <Classify data={mergeData}
+                  deviceData={allDevicesData}
+                  state={store.getState().device}
                   changeClassKinds={this.changeClassKinds.bind(this)}
                 />
                 <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('classifyRow')}>
@@ -211,8 +196,8 @@ export default class DeviceCategory extends Component {
           <View style={[topView, {height: sortRow ? '100%' : 0}]}>
             {
               sortRow ? <View style={{height: '100%'}}>
-                <Sort data={sortData} 
-                  state={this.state} 
+                <Sort data={sortData}
+                  state={store.getState().device}
                   pressSort={this.pressSort.bind(this)}
                 />
                 <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('sortRow')}>
@@ -224,11 +209,11 @@ export default class DeviceCategory extends Component {
           <View style={[topView, {height: filterRow ? '100%' : 0}]}>
             {
               filterRow ? <ScrollView style={{height: '100%'}}>
-                <Filter data={mergeData} 
-                  cityData={allCities} 
-                  state={this.state} 
-                  pressBotton={this.pressBotton.bind(this)} 
-                  pressConfirmReturn={this.pressConfirmReturn.bind(this)} 
+                <Filter data={mergeData}
+                  cityData={allCities}
+                  state={store.getState().device}
+                  pressBotton={this.pressBotton.bind(this)}
+                  pressConfirmReturn={this.pressConfirmReturn.bind(this)}
                 />
                 <TouchableOpacity activeOpacity={0.8} onPress={()=> openModal('filterRow')}>
                   <View style={device.halfOpacityView} />
@@ -241,4 +226,3 @@ export default class DeviceCategory extends Component {
     )
   }
 }
-

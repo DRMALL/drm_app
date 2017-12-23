@@ -1,6 +1,6 @@
 import dispatch from './dispatch'
 import store from '../utils/store'
-import { 
+import {
   device_history_set,
   device_hotword_get,
   device_jump_set,
@@ -82,10 +82,11 @@ const setAllDevices2 = (payload)=> {
 const setAllDevices = (payload)=> {
   let { cleanPress, filterSearch, filtercc, filterpressure, filtercombustible, filteraddress } = store.getState().device
   if(cleanPress) {
-    dispatch(device_all_devices_clean, payload)
+    dispatch(device_all_devices_clean)
   } else {
     dispatch(device_all_devices, {
-      allDevicesData: payload,
+      allDevicesDataMeta: payload.meta,
+      allDevicesData: payload.data,
       filtercc: filterSearch ? filtercc : 'null',
       filterpressure: filterSearch ? filterpressure : 'null',
       filtercombustible: filterSearch ? filtercombustible : 'null',
@@ -146,7 +147,7 @@ const pressFilterParams = (type, kind)=> {
 
 const setFilterSearchTrue = (sortData)=> {
   let stateObj = {
-    filterSearch: true, 
+    filterSearch: true,
     filterRow: false,
   }
   sortData.map((sortText, index)=> {
@@ -159,7 +160,7 @@ const setFilterSearchTrue = (sortData)=> {
 const sortTabPress = (s)=> {
   let state = store.getState().device
   dispatch(device_sorttab_press, {
-    [`sortRow${s}`]: !state[`sortRow${s}`], 
+    [`sortRow${s}`]: !state[`sortRow${s}`],
     sortTypesNum: !state[`sortRow${s}`] ? s+1 : 0,
     sortRow: !state[`sortRow${s}`] ? false : true,
     classj: !state[`sortRow${s}`] ? 0 : state.classj,
@@ -248,7 +249,6 @@ const setFuelsort = (data)=> {
 }
 
 const setAllRowFalse = ()=> {
-  // console.log('1')
   dispatch(device_setallrow_false)
 }
 

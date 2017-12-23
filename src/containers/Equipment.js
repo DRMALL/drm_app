@@ -44,9 +44,7 @@ export default class Equipment extends Component {
 
   componentWillMount() {
     this.unsubscribe = store.subscribe(()=> {
-      // setTimeout(() => {
-        this.setState(store.getState().statu) 
-      // }, 2000)
+      this.setState(store.getState().statu)
     })
   }
 
@@ -71,7 +69,7 @@ export default class Equipment extends Component {
         //     { cancelable: false }
         //   )
         //   this.props.navigation.goBack()
-        // } else 
+        // } else
         statuAC.setEqNumItemData(res.data)
       } else {
         Alert.alert('错误', JSON.stringify(res.message),
@@ -97,7 +95,7 @@ export default class Equipment extends Component {
       <ScrollView style={equipment.wrap}>
         <Text style={equipment.fixText}>{equipmentRunState}</Text>
         <Text style={equipment.stateText}>{isNormal ? '在线' : '离线'}</Text>
-        
+
         <View style={equipment.twoTextView}>
           <Text style={equipment.fix2Text}>{equipmentIndexData}</Text>
           <Text style={[equipment.fix3Text, {position: 'absolute', right: 15}]}>{
@@ -109,19 +107,8 @@ export default class Equipment extends Component {
         <View style={equipment.dataView}>
           <IndexData indexData={equipmentDataList} equipmentItemData={equipmentItemData} eqNumberData={eqNumberData} {...this.props}/>
         </View>
-        
+
       </ScrollView>
     )
   }
 }
-
-// {
-//   <Text style={equipment.fixText}>{equipmentRunImg}</Text>
-//         <Lightbox style={equipment.imgView}>
-//           <Image style={equipment.img} source={pic4}/> 
-//         </Lightbox>
-//   <Text style={equipment.fixText}>{equipmentRunningLog}</Text>
-//         <View style={equipment.logView}>
-//           { equipmentLogList.map((log, i)=> <RunningLog key={i} log={log} /> ) }
-//         </View>
-// }

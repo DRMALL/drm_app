@@ -15,7 +15,7 @@ export default props => {
     , archivesDataLength = props.archivesData.length
   if(archivesDataLength == 0) return (
     <ScrollView
-      refreshControl={<RefreshControl 
+      refreshControl={<RefreshControl
         refreshing={props.isRefreshing}
         onRefresh={props.onDeviceRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -28,8 +28,10 @@ export default props => {
     </ScrollView>
   )
   return(
-    <ListView 
-      refreshControl={<RefreshControl 
+    <ListView
+      onScroll={props.onScroll}
+      scrollEventThrottle={50}
+      refreshControl={<RefreshControl
         refreshing={props.isRefreshing}
         onRefresh={props.onDeviceRefresh}
         colors={['#ff0000', '#00ff00', '#0000ff']}
@@ -39,18 +41,18 @@ export default props => {
       />}
       style={{height: '100%'}}
       dataSource={archivesDataDs}
-      renderRow={(rowData, sectionID, rowID) => <ArchivesDataItem rowData={rowData} rowID={rowID} archivesDataLength={archivesDataLength} navigation={navigation} />}
+      renderRow={(rowData, sectionID, rowID) => <ArchivesDataItem rowData={rowData} rowID={rowID} archivesDataLength={archivesDataLength} navigation={navigation} isLoading={props.isLoading}/>}
       enableEmptySections={true}
     />
   )
 }
 
-const ArchivesDataItem = ({ rowData, rowID, archivesDataLength, navigation }) => {
+const ArchivesDataItem = ({ rowData, rowID, archivesDataLength, navigation, isLoading }) => {
   const { _id, name, number, images, cc, pressure, combustible, description, createdAt } = rowData
     , nameNumLength = `${name + number}`.split('').length
   return (
     <View style={{backgroundColor: subTitleColor}}>
-      <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('detail', {deviceId: _id})}> 
+      <TouchableOpacity style={device.archivesItemTouch} activeOpacity={0.8} onPress={()=> navigation.navigate('detail', {deviceId: _id})}>
         <Image style={device.archivesItemImg} source={{uri: images[0].url}} />
         <View style={device.archivesItemOther}>
           <View style={device.archivesNoTime}>
@@ -72,11 +74,10 @@ const ArchivesDataItem = ({ rowData, rowID, archivesDataLength, navigation }) =>
         </View>
       </TouchableOpacity>
       <View style={{backgroundColor: loginBackgroundColor, opacity: 1}}>
-        <Text style={[home.endText, rowID == (archivesDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd}</Text>
+        <Text style={[home.endText, rowID == (archivesDataLength-1) ? {} : {display: 'none' }]}>{inTheEnd(isLoading)}</Text>
       </View>
     </View>
   )
 }
 
 //nameNumLength < 13 ? device.archivesNoTime : device.archivesNoTime2
-
